@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 문서는 mybatis의환경 설정에 사용되는 XML문서입니다. -->
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org/DTD config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- DB연결 정보가 저장된 properties파일 정보 설정하기 -->
+	<properties resource="config/dbinfo.properties"></properties>
+	
+	<!-- 기본 설정 셋팅 -->
+	<settings>
+		<!-- 데이터가 null로 전달되었으면 빈칸으로 인식하지 말고 null로 인식해라.. -->
+		<setting name="jdbcTypeForNull" value="NULL"/>
+	</settings>
+	
+	<!-- typeAlias 설정하기 -->
+	<typeAliases>
+<!-- 	<typeAlias type="memberVO.MemberVO" alias="memberVo"/> -->
+	</typeAliases>
+	
+	<!-- DB연결 설정하기 -->
+	<environments default="oracleEnv">
+		<environment id="oracleEnv">
+			<transactionManager type="JDBC"/>
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}"/>
+				<property name="url" value="${url}"/>
+				<property name="username" value="${user}"/>
+				<property name="password" value="${pass}"/>
+			</dataSource>
+			
+		</environment>
+		
+	</environments>	
+	
+	<!--  DB에 사용되는 SQL문이 저장된 mapper파일 등록하는 부분 -->
+	<mappers>
+<!-- 	<mapper resource="mapper/member-mapper.xml"/> -->
+	</mappers>
+	
+</configuration>
