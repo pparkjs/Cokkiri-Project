@@ -68,46 +68,63 @@
     /* 정적위치 기준으로 공간에서 다른요소에 영향을 끼치지 않음 */
     position:relative;
     /* 마우스 올리면 마우스 커서가 선택포인터로 바뀜 */
-    cursor:pointer;
+    /* cursor:pointer; */
+}
+.sidebar{
+  padding-top : 15px;
+  position: absolute;
+  width: 130px;
+  height : 180px;
+  left : -40px;
+  z-index : 100;
+  top : 53px;
+  border-radius: 10px;
+/*   box-shadow: 1px 1px 2px 1px; */
+  background: white;
+  display: none;  
+}
+.navbar__label:hover .sidebar {
+  display: block;
 }
 
 /* input 요소에 체크박스가 체크되어있지 않을때 sidebar에 상태 */
-.sidebar {
+
+/* .sidebar { */
     
-    background: white;
-    /* absolute할려면 부모position있어야함 안그러면 body기준으로 적용됨  */
-    position:absolute; 
-    /* right:167px; */
-    top : 60px;
-    right: 0px;
-    width:100%;
-    height :0px;
-    box-shadow: 1px 1px 2px 1px;
-    z-index:-1;
-    /* 변화에 딜레이를 줘서 움직이는 모션줌 */
-    transition:all .5s;
-    /* border-radius: 10px; */
-    /*
-    이렇게 두면 가장 상단에서 왼쪽에 브라우저 밖에 -300px만큼 위치해 있다.
-    top:0;
-    left:-300px;
-    */ 
-} 
+/*     background: white; */
+/*     absolute할려면 부모position있어야함 안그러면 body기준으로 적용됨  */
+/*     position:absolute;  */
+/*     right:167px; */
+/*     top : 60px; */
+/*     right: 0px; */
+/*     width:100%; */
+/*     height :0px; */
+/*     box-shadow: 1px 1px 2px 1px; */
+/*     z-index:-1; */
+/*     변화에 딜레이를 줘서 움직이는 모션줌 */
+/*     transition:all .5s; */
+/*     border-radius: 10px; */
+/*     /* */
+/*     이렇게 두면 가장 상단에서 왼쪽에 브라우저 밖에 -300px만큼 위치해 있다. */
+/*     top:0; */
+/*     left:-300px; */
+/*     */  */
+/* }  */
 
 /* input의 체크박스가 체크가 되면 인접요소선택자 + 를 이용해 해당 input과의 인접 요소인 label과 그 label의 인접요소인 div로 간다*/
-#mymenu:checked + label + .sidebar{
-    /* right:167px; */
-    /* width:110px; */
+/* #mymenu:checked + label + .sidebar{
     right : 0px;
     width:100%;
     height :70px;
     display: block;
     z-index: 2;
     transition:all .5s;
-}
+}  */
 
-.sidebar__list{display: flex; justify-content: center;  height: 100%;}
-.sidebar__list li {display: flex; justify-content: center; align-items: center; list-style: none; margin-bottom: 6px;  width: 150px; height: 100%; text-align: center;}
+
+
+.sidebar__list{display: flex; flex-direction :column; justify-content: center;  height: 100%;}
+.sidebar__list li {display: flex; justify-content: center; align-items: center; list-style: none; margin-bottom: 6px;  width: 100%; text-align: center;}
 .sidebar__list li a{text-decoration : none;color: black; font-weight: bold; font-size: 16px;}
 .sidebar__list li:hover{background: #3866df;}
 .sidebar__list li a:hover{color: white;}
@@ -234,5 +251,7 @@ animation: slideLeft 1.5s ease-out;}
 .contents_menu{
 	background-color: #2C2A29;
 }
+
+
 
 

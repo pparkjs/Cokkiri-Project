@@ -46,6 +46,7 @@
                 </div>
 
                 <!-- 이런식으로 input의 id와 label의 for을 연결해주면 label클릭시 input이 체크 되거나 체크 해제됨 -->
+               <!-- 
                 <div class="navbar__mymenu">
                     <input type="checkbox" id="mymenu">
                     <label class="navbar__label" for="mymenu">
@@ -61,7 +62,24 @@
                             <li><a href="#">로그아웃</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>  -->
+                  
+                <div class="navbar__mymenu">
+                    <!-- <input type="checkbox" id="mymenu"> -->
+                    <div class="navbar__label" >
+                        <img class="myimage" src="../images/기본프로필.png" alt="기본프로필.png">
+                   		 <div class="sidebar" >
+                       		<ul class="sidebar__list">
+                         	  <li><a href="#">My 프로필</a></li>
+                          	  <li><a href="#">판매내역</a></li>
+                          	  <li><a href="#">관심목록</a></li>
+                          	  <li><a href="#">채팅방</a></li>
+                          	  <li><a href="#">내 글 보기</a></li>
+                          	  <li><a href="#">로그아웃</a></li>
+                     	    </ul>
+                    	</div>
+                    </div>
+                </div>  
             </div>
         </div> 
                
