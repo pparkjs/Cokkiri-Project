@@ -21,13 +21,25 @@
                     
                 </div>
                 <ul class="navbar__board">
-                    <li><a href="#">중고거래</a></li>
+                    <li class="item">
+                   		<a class="a1" href="#">중고거래</a>
+                    	<div class="sub_menu_test">
+                    		<div class="contents_menu">
+                    			<ul>
+                    				<li>테스트2</li>
+                    				<li>테스트2</li>
+                    				<li>테스트2</li>
+                    				<li>테스트2</li>
+                    			</ul>
+                    		</div>
+                    	</div> 
+                    </li>
                     <li><a href="#">비밀게시판</a></li>
                     <li><a href="#">마이플레이스</a></li>
                 </ul>
                 <div class ="navbar__mapLogo">
                     <img src="../images/지도아이콘.png" alt="지도아이콘.png">
-                    <p class="area">지역</p>
+                    <p class="area">지역</p>	
                 </div>
                 <div class ="navbar__alamLogo">
                     <img src="../images/알람.png" alt="알람.png">
