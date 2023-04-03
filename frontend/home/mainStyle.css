@@ -217,3 +217,22 @@ animation: slideLeft 1.5s ease-out;}
 .footer .footer__explain{ font-size: 0.7em; margin-top:2%; margin-left: 20%;}
 .footer .footer__explain p{color : #868b94; font-weight: 700; margin-bottom:5px;}
 .footer .footer__explain span{color : #868b94; font-weight: lighter;}
+
+ /* sub 메뉴바 테스트 */
+.sub_menu_test{
+  width: 100%;
+  position: fixed;
+  left: 0;
+  z-index : 100;
+  top : 60px;
+  display: none;
+}
+.navbar__board .item:hover .sub_menu_test {
+  display: block;
+}
+
+.contents_menu{
+	background-color: #2C2A29;
+}
+
+
