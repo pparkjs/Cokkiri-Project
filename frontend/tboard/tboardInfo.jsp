@@ -328,6 +328,9 @@ $(()=>{
 	btnChage(tboard_id)
 	
 
+	$("#chatBtn").on("click",function(){
+		location.href=`\${path}/chatroom.do?tboard_id=\${tboard_id}`
+	})
 	
 })
 </script>

@@ -7,17 +7,15 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../css/mycss.css">
 <style type="text/css">
-#h2{
-	text-align: center;
-	margin-bottom: 50px; 
-	font-weight: 900;
+.btnactive{
+	background: rgb(51, 207, 255) !important;
+	border: 2px solid black !important;
 }
 .img{
 	width: 200px;
 	height: 200px;
 }
 #out{
-	margin-top: 100px;
 }
 .box{
 	width: 1000px;
@@ -65,14 +63,49 @@
 	border-radius: 12px;
 }
 #searchbar{
+	display:flex;
+	width: 1000px;
+	height:80px;
+	margin: 0 auto;
+	padding-right: 50px;
+	border-top: 2px solid rgb(217, 217, 217);
+	border-bottom: 2px solid rgb(217, 217, 217);
+	justify-content: center;
+	align-items:center;
+	text-align: center;
+}
+#rest{
+	display:flex;
+	flex: 8;
+}
+#searchl{	
+	flex: 8;
+	text-align: center;
+}
+#searchr{
+	flex: 1;
+}
+#btnbar{
+	padding-top: 50px;
+	height:100px;
 	width: 1000px;
 	margin: 0 auto;
-	text-align: right;
-	padding-right: 50px;
+	text-align: center;
 }
-#write{
-	margin-right: 580px;
+
+#btnbar button{
+	width: 80px;
+	height: 40px;
+	margin-left: 10px;
+	margin-right: 10px;
+	border-radius: 20px;
+	border:none;
+	background: rgb(230, 249, 255);
 }
+#btnbar button:hover{
+	background: rgb(204, 243, 255);
+}
+
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
 <script src="../js/tboard.js" type="text/javascript"></script>
@@ -80,6 +113,7 @@
 
 $((ev)=>{
 	page=1;
+	boardstate=null;
 	category=null;
 	sword=null;
 	path="<%=request.getContextPath()%>";
@@ -112,7 +146,7 @@ $((ev)=>{
 	
 	$("#btn").on("click",function(){
 		page=page+1;
-		listRecieve(page,category,sword);
+		listRecieve(page,category,sword,boardstate);
 		
 	})
 	$("#searchbtn").on("click",function(){
@@ -120,7 +154,7 @@ $((ev)=>{
 		category= $("#category option:selected").attr("id");
 		sword = $("#search").val();
 		$(".box").empty();
-		listRecieve(page,category,sword);
+		listRecieve(page,category,sword,boardstate);
 		
 	})
 	
@@ -131,7 +165,19 @@ $((ev)=>{
 		sessionStorage.setItem("category",category);
 		location.href="<%=request.getContextPath()%>/writeForm.do"
 	})
-
+	
+	$(".btns").on("click",function(){
+		$(".btns").removeClass("btnactive");
+		$(this).addClass("btnactive")
+		page=1;
+		boardstate=null;
+		category=null;
+		sword=null;
+		boardstate=$(this).text();
+		listRecieve(page,category,sword,boardstate);
+		
+	})
+	
 })
 
 
@@ -144,16 +190,23 @@ $((ev)=>{
 
 
 		<div id="out">
-		
-		<h2 id="h2">중고 거래</h2>
-		
 		<div id="searchbar">
-			<button id="write">글쓰기</button>
-			<select name="category" id="category">
-				<option id="default">카테고리
-			</select>
-			<input type="text" id="search">
-			<button id="searchbtn">검색</button>
+			<div id="searchl">
+				<select name="category" id="category">
+					<option id="default">카테고리
+				</select>
+				<input type="text" id="search">
+				<button id="searchbtn">검색</button>
+			</div>
+			<div id="rest"></div>	
+			<div id="searchr">
+				<button id="write">글쓰기</button>
+			</div>
+		</div>
+		<div id="btnbar">
+			<button type="button" class="btns">팝니다</button>
+			<button type="button" class="btns">삽니다</button>
+			<button type="button" class="btns">나눔 </button>
 		</div>
 		<div class="box">
 		
@@ -167,8 +220,6 @@ $((ev)=>{
 
 	<%@ include file="/module/footer.jsp" %>
 </div>
-
-
 
 </body>
 </html>

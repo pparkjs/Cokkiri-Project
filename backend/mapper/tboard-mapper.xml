@@ -25,7 +25,8 @@ select * from(
         from (select * from tboard
                 where tboard.MEM_ID in (select mem_id from member where mem_add like '%'||#{region}||'%')
                 <if test="!(sword==null or sword=='')">and (tboard_title like '%'||#{sword}||'%' or tboard_content like '%'||#{sword}||'%')</if>
-                <if test="!(category==null or category=='')">and category_id = ${category}</if>
+                <if test="!(category==null or category=='')">and category_id = #{category}</if>
+                <if test="!(state==null or state=='')">and tboard_state = #{state}</if>
         		order by tboard_cdate desc) b
 )
 where rn between (#{page_num}-1)*12+1 and (#{page_num})*12

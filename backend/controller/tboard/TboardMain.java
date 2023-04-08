@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,7 @@ public class TboardMain extends HttpServlet {
 		String page = request.getParameter("page");
 		String category = request.getParameter("category");
 		String sword = request.getParameter("sword");
+		String state = request.getParameter("state");
 		Map<String, Object> map = new HashMap<>();
 		if (page != null) {
 			map.put("page_num", page);
@@ -49,6 +51,10 @@ public class TboardMain extends HttpServlet {
 
 		if (sword != null) {
 			map.put("sword", sword);
+		}
+		
+		if(state!=null) {
+			map.put("state", state);
 		}
 		
 		/*

@@ -2,11 +2,11 @@
  * 
  */
 
-listRecieve = function(pagenum, category, sword) {
+listRecieve = function(pagenum, category, sword,boardstate) {
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",
-		data: { "page": pagenum, "category": category, "sword": sword },
+		data: { "page": pagenum, "category": category, "sword": sword ,"state":boardstate},
 		dataType: "json",
 		success: function(res) {
 			$.each(res, function(i, v) {
@@ -22,7 +22,7 @@ listRecieve = function(pagenum, category, sword) {
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
 
