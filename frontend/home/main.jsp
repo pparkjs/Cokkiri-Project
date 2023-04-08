@@ -23,7 +23,7 @@
                         <p class="home1__p">아직도 믿음이 안가는 장거리 택배거래<br>
                             우리끼리 직접 만나 거래해요.
                         </p><br><br>
-                        <a class="home1_button" href="#">중고거래 바로가기</a>
+                        <a class="home1_button" href="../tboard/tboard.jsp">중고거래 바로가기</a>
                     </div>
                     <div class="home1__images">
                         <img src="../images/거래2.png" alt="">
