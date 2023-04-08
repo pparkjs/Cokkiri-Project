@@ -31,6 +31,9 @@ public class TboardInfo extends HttpServlet {
 		String id = request.getParameter("id");
 		Long a = Long.parseLong(id);
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
+		
+		int cnt = service.incrementHit(a);
+		
 		TBoardVO boardVO = service.selectTboardInfo(a);
 		List<TImageVO> ilist = service.selecttImgBytboardId(a);
 		MemberVO memberVO = service.selectMemberinfo(boardVO.getMem_id());
@@ -51,7 +54,9 @@ public class TboardInfo extends HttpServlet {
 		request.setAttribute("board", boardVO);
 		request.setAttribute("img", ilist);
 		request.setAttribute("category", category_name);
-		int cnt = service.incrementHit(a);
+		request.setAttribute("mylist", mylist);
+		
+		
 		
 		
 		request.getRequestDispatcher("tboard/tboardInfo.jsp").forward(request, response);

@@ -19,7 +19,7 @@
     html, body { box-sizing: border-box; padding: 0; margin: 0; text-align: center; }
 
     .slideimg{
-    	width: 730px;
+    	width: 750px;
     	height: 500px;
 		border-radius: 12px;
     }
@@ -29,9 +29,9 @@
     .link:hover, .link:focus { color: #9fd6c2; }
     /* container - body */
     #container { width: 1000px; margin: auto; }
-    .slide_wrap { position: relative; width: 730px; margin: auto; }
-    .slide_box { width: 100%; margin: auto; overflow-x: hidden; }
-    .slide_content { display: table; float: left; width: 730px; height: 500px; }
+    .slide_wrap { position: relative; width: 750px; margin: auto; }
+    .slide_box { width: 100%; margin: auto; overflow-x: hidden;}
+    .slide_content { display: table; float: left; width: 750px; height: 500px; }
     .slide_content > p { display: table-cell; vertical-align: middle; text-align: center; font-size: 100px; font-weight: bold; color: #555; }
     .slide_btn_box > button { position: absolute; top: 50%; margin-top: -45px; width: 60px; height: 60px; font-size: 16px; color: #999; background: none; cursor: pointer; border: none;}
     .slide_btn_box > .slide_btn_prev { left: -10px; }
@@ -83,9 +83,8 @@
 }
 
 #content{
-	width:800px;
+	width:750px;
 	margin: 0 auto;
-	border: 1px solid black;
 	min-height: 400px;
 }
 
@@ -133,14 +132,18 @@
 	flex: 1;
 }
 #cont{
-	padding: 80px 10px;
+	padding: 80px 10px 20px 10px;
 	text-align: left;
 }
             
 .img{
-	width: 150px;
-	height: 150px;
+	width: 200px;
+    height: 200px;
 }         
+.title{
+	font-size: 1.3em;
+	text-align: left;
+}     
 #recommend{
 	margin: 0px auto;
 	width: 800px;
@@ -148,12 +151,15 @@
 	text-align: left;
 }
 #recommend h2{
-	margin-top: 40px;
-	margin-bottom: 40px;
+	margin: 40px 0px 40px 20px;
 }
 .ele{
 	display: inline-block;
-	margin: 10px 20px;
+    margin: 10px 19px;
+    padding: 5px;
+    border: 1px solid rgb(217, 217, 217);
+    border-radius: 12px;
+    cursor: pointer;
 }   
 .nm{
 	width: 50px;
@@ -180,6 +186,17 @@
 	background-repeat: no-repeat;
 	background-size: 25px 25px;
 }
+#title{
+	margin-bottom: 5px;
+}
+#cd,#mc{
+	font-size: 0.8em;
+	color: gray;
+	margin-bottom: 5px;
+}
+#price{
+	font-weight: bolder;
+}
         
 
 </style>
@@ -200,7 +217,7 @@ String price = decimalFormat.format(boardVO.getTboard_price());
         <%@ include file="/module/header.jsp" %>
 
 		<div id="out">
-			<div>
+			
 				
 				<div id="tboard_infocontainer">
 				    <div class="slide_wrap">
@@ -264,33 +281,20 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 						</div>
 						<hr>
 						<div id="cont">
-						<h3><%=boardVO.getTboard_title() %></h3>
-						<p><%=category+" "+boardVO.getTboard_cdate() %></p>
+						<h3 id="title"><%=boardVO.getTboard_title() %></h3>
+						<p id="cd"><%=category+" · "+boardVO.getTboard_cdate() %></p>
+						<h4 id="price"><%=price %>&nbsp;원</h4>
 						<br>
-						<h4><%=price %></h4>
-						<br>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p><%=boardVO.getTboard_content() %></p>
-						<p></p>
+						<p><%=boardVO.getTboard_content().replace("\r\n", "<br>") %></p>
+						<br><br><br>
+						<p id="mc">관심 <%=request.getAttribute("mylist") %> · 조회 <%=boardVO.getTboard_hit() %></p>
 						</div>
 						<hr>
 					</div>
 				<div id="recommend" class="box">
-					<hr>
 					<h2>이런 게시글은 어떠세요?</h2>
 				</div>
-			</div>
+		
 		</div>
 
 
@@ -386,6 +390,7 @@ $(()=>{
 	})
 	
 	$(document).on("click","#mbtn",function(){
+		console.log(<%=boardVO.getTboard_id()%>)
 		location.href="<%=request.getContextPath()%>/tboardModifyForm.do?tboard_id=<%=boardVO.getTboard_id()%>"
 	})
 	$(document).on("click","#rbtn",function(){
@@ -408,7 +413,7 @@ $(()=>{
 			}
 		})
 	})
-	
+
 })
 </script>
 </body>

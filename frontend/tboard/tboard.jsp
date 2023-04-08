@@ -10,6 +10,7 @@
 #h2{
 	text-align: center;
 	margin-bottom: 50px; 
+	font-weight: 900;
 }
 .img{
 	width: 200px;
@@ -40,11 +41,25 @@
 	margin: 0;
 }
 .title{
-	font-size: 1.2em;
+	font-size: 1.0em;
+	font-weight: 100;
 	margin-bottom: 5px;
 }
 .price{
-	font-weight: bold;
+	font-weight: 900;
+	font-size: 0.9em;
+	margin-bottom: 5px;
+}
+.add{
+	font-weight: 100;
+	font-size:0.8em;
+	color: rgb(38, 38, 38);
+	margin-bottom: 10px;
+}
+.viewcnt{
+	font-weight:100;
+	font-size: 0.7em;
+	color: gray;
 }
 .img{
 	border-radius: 12px;
@@ -56,7 +71,7 @@
 	padding-right: 50px;
 }
 #write{
-	margin-right: 620px;
+	margin-right: 580px;
 }
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>

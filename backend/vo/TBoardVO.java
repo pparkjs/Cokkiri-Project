@@ -16,6 +16,12 @@ public class TBoardVO {
 
 	
 
+	public int getTboard_hit() {
+		return tboard_hit;
+	}
+	public void setTboard_hit(int tboard_hit) {
+		this.tboard_hit = tboard_hit;
+	}
 	public Long getTboard_id() {
 		return tboard_id;
 	}

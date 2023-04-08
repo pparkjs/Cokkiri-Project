@@ -47,6 +47,15 @@ public class TboardServiceImpl implements ITboardService {
 		List<TBoardAndAttVO> list = new ArrayList<>();
 		for (TBoardVO boardVO : List) {
 			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
+			if(boardVO.getTboard_title().getBytes().length>18) {
+				String title=boardVO.getTboard_title();
+				if(title.length()>16) {
+					boardVO.setTboard_title(title.substring(0, 16)+"..");
+				}else if(title.length()>10){			
+					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
+				}
+				
+			}
 			tBoardAndAttVO.setBoardVO(boardVO);
 
 			List<TImageVO> imgList = dao.selecttImgBytboardId(boardVO.getTboard_id());

@@ -112,6 +112,8 @@ $(()=>{
         code+="}); ";
     }
     out.print(code);
+    
+    
 %>
 	
 	
@@ -122,7 +124,7 @@ $(()=>{
 	$("#title").val("<%=boardVO.getTboard_title()%>");
 	$(".state[value=<%=boardVO.getTboard_state()%>]").prop("checked",true);
 	$("#price").val("<%=boardVO.getTboard_price()%>");
-	$("#content").val("<%=boardVO.getTboard_content()%>");
+	$("#content").val("<%=boardVO.getTboard_content().replace("\r\n", "\\r\\n")%>");
 
       
 

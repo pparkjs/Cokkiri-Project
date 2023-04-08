@@ -26,7 +26,7 @@ listRecieve = function(pagenum, category, sword) {
 
 				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
 
-				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " 찜 " + v["mylist"] + "</p>")
+				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " · 찜 " + v["mylist"] + "</p>")
 
 				$div.append($img).append($ptitle).append($pprice).append($padd).append($pview)
 
@@ -50,7 +50,7 @@ slideImage = function() {
 	slideBtnPrev = document.querySelector('.slide_btn_prev'); // prev button
 	pagination = document.querySelector('.slide_pagination');
 	slideLen = slideContents.length;  // slide length
-	slideWidth = 730; // slide width
+	slideWidth = 750; // slide width
 	slideSpeed = 300; // slide speed
 
 	if (slideLen == 1) {
@@ -59,17 +59,17 @@ slideImage = function() {
 
 	slideList.style.width = slideWidth * (slideLen) + "px";
 
-	let curIndex = 0; // current slide index (except copied slide)
+	curIndex = 0; // current slide index (except copied slide)
 
-	let pageChild = '';
+	pageChild = '';
 	for (var i = 0; i < slideLen; i++) {
 		pageChild += '<li class="dot';
 		pageChild += (i === curIndex) ? ' dot_active' : '';
 		pageChild += '" data-index="' + i + '"><a href="#"></a></li>';
 	}
 	pagination.innerHTML = pageChild;
-	const pageDots = document.querySelectorAll('.dot'); // each dot from pagination
-	let curSlide = slideContents[curIndex];
+	pageDots = document.querySelectorAll('.dot'); // each dot from pagination
+	curSlide = slideContents[curIndex];
 	/** Next Button Event */
 	slideBtnNext.addEventListener('click', function() {
 		if (curIndex <= slideLen - 1) {
@@ -94,18 +94,58 @@ slideImage = function() {
 			slideList.style.transition = slideSpeed + "ms";
 			slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex - 1)) + "px, 0px, 0px)";
 		}
-		if (curIndex - 1 < slideLen) {
+		if (curIndex - 1 > 0) {
 			$(".slide_btn_next").attr("disabled", false);
 		}
 		if (curIndex - 1 == 0) {
 			$(".slide_btn_prev").attr("disabled", true);
 		}
+	
 		curSlide.classList.remove('slide_active');
 		pageDots[(curIndex === slideLen) ? 0 : curIndex].classList.remove('dot_active');
 		curSlide = slideContents[--curIndex];
 		curSlide.classList.add('slide_active');
 		pageDots[curIndex].classList.add('dot_active');
 	});
+	 pagedotActiv();
+}
+
+
+function pagedotActiv(){
+let curDot;
+Array.prototype.forEach.call(pageDots, function (dot, i) {
+  dot.addEventListener('click', function (e) {
+    e.preventDefault();
+    curDot = document.querySelector('.dot_active');
+    curDot.classList.remove('dot_active');
+ 
+    curDot = this;
+    this.classList.add('dot_active');
+ 
+    curSlide.classList.remove('slide_active');
+    curIndex = Number(this.getAttribute('data-index'));
+    	
+    	console.log(curIndex)
+    	console.log(slideLen)
+    	
+    	
+		if (curIndex== slideLen - 1) {
+			$(".slide_btn_next").attr("disabled", true);
+			$(".slide_btn_prev").attr("disabled", false);
+		}else if (curIndex== 0) {
+			$(".slide_btn_prev").attr("disabled", true);
+			$(".slide_btn_next").attr("disabled", false);
+		}else if (0<curIndex<slideLen-1) {
+			$(".slide_btn_prev").attr("disabled", false);
+			$(".slide_btn_next").attr("disabled", false);
+		}
+    
+    curSlide = slideContents[curIndex];
+    curSlide.classList.add('slide_active');
+    slideList.style.transition = slideSpeed + "ms";
+    slideList.style.transform = "translate3d(-" + (slideWidth * (curIndex)) + "px, 0px, 0px)";
+  });
+});
 }
 
 
@@ -114,9 +154,13 @@ slideImage = function() {
 
 
 
+
+
+
+
+
+
 recommendlistRecieve = function(pagenum, category, sword) {
-
-
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",
@@ -126,11 +170,11 @@ recommendlistRecieve = function(pagenum, category, sword) {
 			$.each(res, function(i, v) {
 				$div = $('<div class="ele" id="' + v["boardVO"]["tboard_id"] + '"></div>')
 
-				img = v["fImg"];
+				img = v["fimgid"];
 				if (typeof img == "undefined") {
-					img = "defaultimg/default.PNG"
+					img = `${path}/images/default.PNG`;
 				} else {
-					img = "imgresource/" + img;
+					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
 				$img = $("<img class='img' src='" + img + "'>")
 
@@ -140,7 +184,7 @@ recommendlistRecieve = function(pagenum, category, sword) {
 
 				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
 
-				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_viewcnt"] + " 찜 " + v["mylist"] + "</p>")
+				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " 찜 " + v["mylist"] + "</p>")
 
 				$div.append($img).append($ptitle).append($pprice).append($padd).append($pview)
 
