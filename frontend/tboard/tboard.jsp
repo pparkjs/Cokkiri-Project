@@ -118,9 +118,11 @@ $((ev)=>{
 	sword=null;
 	path="<%=request.getContextPath()%>";
 	if ( ev.persisted || (window.performance && window.performance.navigation.type == 2)) {
-    	page = Number(sessionStorage.getItem("page"));  	
+    	page = Number(sessionStorage.getItem("page")); 
+		
 		categorytmp = sessionStorage.getItem("category");
 		swordtmp = sessionStorage.getItem("sword");
+		boardstatetmp=sessionStorage.getItem("boardstate");
 		
 		if(categorytmp!="null"){
 			category=categorytmp
@@ -128,19 +130,24 @@ $((ev)=>{
 		if(swordtmp!="null"){
 			sword=swordtmp
 		}
+		if(boardstatetmp!="null"){
+			boardstate=boardstatetmp
+		}
     }
 	sessionStorage.clear();
 
 	categoryRecieve()
 	
-
-	listRecieve(page,category,sword);
+	for(i=1; i<=page; i++){
+		listRecieve(page,category,sword,boardstate);
+	}
+	
 	
 	$(document).on("click",".ele",function(){
 		sessionStorage.setItem("page",page);
 		sessionStorage.setItem("sword",sword);
 		sessionStorage.setItem("category",category);
-		
+		sessionStorage.setItem("boardstate",boardstate);
 		location.href="<%=request.getContextPath()%>/tboardInfo.do?id="+$(this).attr("id")		
 	})
 	
@@ -163,6 +170,7 @@ $((ev)=>{
 		sessionStorage.setItem("page",page);
 		sessionStorage.setItem("sword",sword);
 		sessionStorage.setItem("category",category);
+		sessionStorage.setItem("boardstate",boardstate);
 		location.href="<%=request.getContextPath()%>/writeForm.do"
 	})
 	
@@ -170,10 +178,8 @@ $((ev)=>{
 		$(".btns").removeClass("btnactive");
 		$(this).addClass("btnactive")
 		page=1;
-		boardstate=null;
-		category=null;
-		sword=null;
 		boardstate=$(this).text();
+		$(".box").empty();
 		listRecieve(page,category,sword,boardstate);
 		
 	})
