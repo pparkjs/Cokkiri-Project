@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="../css/mycss.css">
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
-<script src="../js/tboard.js" type="text/javascript"></script>
+<script src="../js/tboardWrite.js" type="text/javascript"></script>
 <style type="text/css">
 #out{
 	margin-top: 100px;
@@ -84,97 +84,7 @@ label {
 
 </style>
 <script type="text/javascript"> 
-
-$(()=>{
-	uploadFiles = [];
-	path = "<%=request.getContextPath()%>"
-	categoryRecieve();
-	
-      const realUpload = document.querySelector('.real-upload');
-      const upload = document.querySelector('.upload');
-
-      upload.addEventListener('click', () => realUpload.click());
-
-      realUpload.addEventListener('change', getImageFiles);
-      
-      $("#cancle").on("click",function(){ 	  
-    	  sessionStorage.clear();
-    	  location.href="<%=request.getContextPath()%>/tboardMain.do"   		
-      })
-      
-      $("#save").on("click",function(){ 	  
-    	  	price=$("#price").val()
-    	  	category=$("#category :selected").attr("id")
-    	  	state=$('input[name="state"]:checked').val()//undefind확인
-    	  	title=$("#title").val()
-    	  	content=$("#content").val()
-    	  	
-    	  	
-    	  	if(title==""){
-    	  		alert("제목을 입력해 주세요.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	
-    	  	if(typeof state == "undefined"){
-    	  		alert("판매구매 상태를 확인해 주세요.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	
-    	  	
-    	  	pcheck =/^[0-9]+$/;
-    	  	if(price==""){
-    	  		alert("가격을 입력해주세요.");
-    	  		return ;
-    	  	}else if(!pcheck.test(price)){
-    	  		alert("숫자만 입력 가능합니다.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	if(content==""){
-    	  		alert("내용을 입력해 주세요")
-    	  		return;
-    	  	}
-    	  	
-    	  	
-    	  	formData = new FormData();
-    	  	
-    	  	formData.append("category",category)
-    	  	formData.append("price",price)
-    	  	formData.append("state",state)
-    	  	formData.append("title",title)		
-    	  	formData.append("content",content)		
-    	  			
-    	  	$.each(uploadFiles,function(i,v){
-    	  		formData.append('files',v);
-    	  	})
-    	  	
-    	  	$.ajax({
-				url: `\${path}/tboardWrite.do`,
-				type: "post",
-				processData: false,  // file전송시 필수
-    	    	contentType: false,  // file전송시 필수
-				data: formData,
-				success : function(res){
-					if("true"==res){
-						alert("등록 되었습니다.")
-					}else{
-						alert("등록에 실패했습니다.")
-					}
-					location.href=path+"/tboard/tboard.jsp"
-				},
-				error : function(xhr){
-					alert("상태: "+xhr.status)
-				}
-			})
-
-    	  	
-    	  	
-    	  	
-      })
-       
-})
+path = "<%=request.getContextPath()%>"
 
 </script>
 </head>

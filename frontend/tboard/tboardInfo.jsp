@@ -11,7 +11,7 @@
 <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <script src="js/jquery-3.6.4.min.js" type="text/javascript"></script>
- <script src="js/tboard.js" type="text/javascript"></script>
+ <script src="js/tboardInfo.js" type="text/javascript"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/mycss.css">
 
@@ -107,11 +107,14 @@
 	flex:2;
 	text-align: left;
 }
+
+#chatBtn{
+}
 #rest1{
 	flex: 6;
 }
 #rest2{
-	flex: 1;
+	flex: 0.4;
 }
 #notifyAndMylist{
 	flex: 2;
@@ -265,11 +268,12 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 							<div id="addAndNick">
 								<div id = "nick">
 									<%=memberVO.getMem_nickname() %>
+									<button id="chatBtn" type="button">1:1대화</button>
 								</div>
 								<div id = "add">
 									<%=memberVO.getMem_add() %>
-								</div>
-								
+								</div>		
+			
 							</div>
 							<div id="rest1">
 							</div>
@@ -315,105 +319,16 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 <script>
 $(()=>{
 	path = "<%=request.getContextPath()%>"
+	tboard_id = "<%=boardVO.getTboard_id()%>"
+	mem_id="<%=boardVO.getMem_id()%>"
 	slideImage();
 	recommendlistRecieve(1,null,null);
+	btnCreate(mem_id,tboard_id);
 	
-	$.ajax({
-
-		url : path+"/tboardBtnInfo.do",
-		type : "get",
-		data : {"mem_id" : "<%=boardVO.getMem_id()%>","tboard_id":"<%=boardVO.getTboard_id()%>"},
-		dataType : "json",
-		success : function(res){
-			if(res.res=="ok"){				
-				modifyBtn = $("<button type='button' class='mr' id='mbtn' >글수정</button>");
-				removeBtn = $("<button type='button' class='mr' id='rbtn' >글삭제</button>");
-				$("#notifyAndMylist").append(modifyBtn).append(removeBtn);
-			}else{
-				if(res.notify==0){
-					notifyBtn = $("<button type='button' class='nm' id='nbtn' ></button>");
-				}
-				if(res.notify==1){
-					notifyBtn = $("<button type='button' class='nm' id='ncbtn' ></button>");
-				}
-				if(res.mylist==0){
-					mylistBtn = $("<button type='button' class='nm' id='mlbtn' ></button>");
-				}
-				if(res.mylist==1){
-					mylistBtn = $("<button type='button' class='nm' id='mlcbtn' ></button>");
-				}
-				
-				$("#notifyAndMylist").append(notifyBtn).append(mylistBtn);
-			}
-			
-		},
-		error : function(xhr){
-			alert("상태: "+xhr.status)
-		}
-	})
+	btnChage(tboard_id)
 	
 
 	
-	$(document).on("click",".nm",function(){
-		console.log($(this).attr("id"))
-		
-		$.ajax({
-
-			url : "<%=request.getContextPath()%>/tboardBtnChange.do",
-			type : "post",
-			data : {"btn":$(this).attr("id"),"tboard_id":"<%=boardVO.getTboard_id()%>"},
-			dataType : "json",
-			success : function(res){
-				if(res.res==0){
-					alert("작업에 실패했습니다.")
-					return ;
-				}
-				
-				if(res.btn=="nbtn"){
-					$("#nbtn").attr("id","ncbtn");
-				}
-				if(res.btn=="ncbtn"){
-					$("#ncbtn").attr("id","nbtn");
-				}
-				if(res.btn=="mlbtn"){
-					$("#mlbtn").attr("id","mlcbtn");
-				}
-				if(res.btn=="mlcbtn"){
-					$("#mlcbtn").attr("id","mlbtn");
-				}
-				
-			},
-			error : function(xhr){
-				alert("상태: "+xhr.status)
-			}
-		})
-	})
-	
-	$(document).on("click","#mbtn",function(){
-		console.log(<%=boardVO.getTboard_id()%>)
-		location.href="<%=request.getContextPath()%>/tboardModifyForm.do?tboard_id=<%=boardVO.getTboard_id()%>"
-	})
-	$(document).on("click","#rbtn",function(){
-		$.ajax({
-
-			url : "<%=request.getContextPath()%>/tboardRemove.do",
-			type : "post",
-			data : {"mem_id":"<%=boardVO.getMem_id()%>","tboard_id":"<%=boardVO.getTboard_id()%>"},
-			dataType : "json",
-			success : function(res){
-				if(res.flag==0){
-					alert("게시글 삭제에 실패했습니다.")	
-				}else{
-					alert("게시글이 삭제되었습니다.")
-				}
-				location.href="<%=request.getContextPath()%>/tboardMain.do"
-			},
-			error : function(xhr){
-				alert("상태: "+xhr.status)
-			}
-		})
-	})
-
 })
 </script>
 </body>

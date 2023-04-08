@@ -11,7 +11,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/mycss.css">
 <script src="js/jquery-3.6.4.min.js" type="text/javascript"></script>
-<script src="js/tboard.js" type="text/javascript"></script>
+<script src="js/tboardModify.js" type="text/javascript"></script>
 <style type="text/css">
 #out{
 	margin-top: 100px;
@@ -92,15 +92,10 @@ label {
 	List<TImageVO> ilist = (List<TImageVO>)request.getAttribute("ilist");
 %>
 <script type="text/javascript"> 
-
+path = "<%=request.getContextPath()%>"
+tboard_id="<%=boardVO.getTboard_id()%>"
 $(()=>{
-	uploadFiles = [];
-	path = "<%=request.getContextPath()%>"
-	realUpload = document.querySelector('.real-upload');
-    upload = document.querySelector('.upload');
-    imagePreview = document.querySelector('.image-preview');
-    docFrag = new DocumentFragment();
-    uploadbtn =  document.querySelector('#upload');
+	
     
     
 <%
@@ -118,8 +113,6 @@ $(()=>{
 	
 	
 	
-	
-	path = "<%=request.getContextPath()%>"
 	categoryRecieve("<%=boardVO.getCategory_id()%>");
 	$("#title").val("<%=boardVO.getTboard_title()%>");
 	$(".state[value=<%=boardVO.getTboard_state()%>]").prop("checked",true);
@@ -128,89 +121,10 @@ $(()=>{
 
       
 
-      upload.addEventListener('click', () => realUpload.click());
-
-      realUpload.addEventListener('change', getImageFiles);
-      
-      $("#cancle").on("click",function(){ 	  
-    	  sessionStorage.clear();
-    	  location.href="<%=request.getContextPath()%>/tboardMain.do" 		
-      })
-      
-      $("#modify").on("click",function(){ 	  
-    	  	
-    	  	price=$("#price").val()
-    	  	category=$("#category :selected").attr("id")
-    	  	state=$('input[name="state"]:checked').val()//undefind확인
-    	  	title=$("#title").val()
-    	  	content=$("#content").val()
+     
     	  	
     	  	
-    	  	if(title==""){
-    	  		alert("제목을 입력해 주세요.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	
-    	  	if(typeof state == "undefined"){
-    	  		alert("판매구매 상태를 확인해 주세요.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	
-    	  	
-    	  	pcheck =/^[0-9]+$/;
-    	  	if(price==""){
-    	  		alert("가격을 입력해주세요.");
-    	  		return ;
-    	  	}else if(!pcheck.test(price)){
-    	  		alert("숫자만 입력 가능합니다.")
-    	  		return ;
-    	  	}
-    	  	
-    	  	if(content==""){
-    	  		alert("내용을 입력해 주세요")
-    	  		return;
-    	  	}
-    	  	
-    	  	
-    	  	formData = new FormData();
-    	  	
-    	  	formData.append("category",category)
-    	  	formData.append("price",price)
-    	  	formData.append("state",state)
-    	  	formData.append("title",title)		
-    	  	formData.append("content",content)
-    	  	formData.append("tboard_id",<%=boardVO.getTboard_id()%>)
-    	  			
-    	  	$.each(uploadFiles,function(i,v){
-    	  		formData.append('files',v);
-    	  	})
-    	  	
-    	  	$.ajax({
-				url: `\${path}/tboardUpdate.do`,
-				type: "post",
-				processData: false,  // file전송시 필수
-    	    	contentType: false,  // file전송시 필수
-				data: formData,
-				success : function(res){
-					if("true"==res){
-						alert("수정 되었습니다.")
-					}else{
-						alert("수정에 실패했습니다.")
-					}
-					location.href=path+"/tboardInfo.do?id=<%=boardVO.getTboard_id()%>"
-				},
-				error : function(xhr){
-					alert("상태: "+xhr.status)
-				}
-			})
-
-    	  	
-    	  	
-    	  	
-      })
-       
+  
 })
 
 </script>
