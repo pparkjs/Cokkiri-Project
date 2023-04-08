@@ -15,7 +15,7 @@
 	
 	<!-- typeAlias 설정하기 -->
 	<typeAliases>
-<!-- 	<typeAlias type="memberVO.MemberVO" alias="memberVo"/> -->
+	<typeAlias type="vo.MemberVO" alias="memberVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -35,7 +35,7 @@
 	
 	<!--  DB에 사용되는 SQL문이 저장된 mapper파일 등록하는 부분 -->
 	<mappers>
-<!-- 	<mapper resource="mapper/member-mapper.xml"/> -->
+	<mapper resource="mapper/member-mapper.xml"/>
 	</mappers>
 	
 </configuration>
