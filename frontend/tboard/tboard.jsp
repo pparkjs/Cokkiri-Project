@@ -178,6 +178,8 @@ $((ev)=>{
 		$(".btns").removeClass("btnactive");
 		$(this).addClass("btnactive")
 		page=1;
+		category=null;
+		sword=null;
 		boardstate=$(this).text();
 		$(".box").empty();
 		listRecieve(page,category,sword,boardstate);
