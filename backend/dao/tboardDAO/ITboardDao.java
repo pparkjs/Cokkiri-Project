@@ -58,4 +58,7 @@ public interface ITboardDao {
 	
 	public int deleteTimages(Long tboard_id);
 	
+	public List<TBoardVO>selecttboardsByPagefromOne(Map<String, Object> map);
+	
+	
 }

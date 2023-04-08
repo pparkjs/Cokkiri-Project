@@ -64,7 +64,12 @@ public class TboardMain extends HttpServlet {
 		map.put("region", (String)session.getAttribute("add"));
 		
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
-		List<TBoardAndAttVO>list = service.boardMain(map); 
+		List<TBoardAndAttVO>list=null;
+		if(request.getParameter("one")!=null) {
+			list = service.boardMainFromOne(map);
+		}else {
+			list = service.boardMain(map); 
+		}
 		Gson gson = new Gson(); 
 		String json =gson.toJson(list); 
 		PrintWriter out = response.getWriter(); 

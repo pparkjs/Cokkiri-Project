@@ -231,6 +231,15 @@ public class TboardDaoImpl implements ITboardDao{
 		return res;
 	}
 
+	@Override
+	public List<TBoardVO> selecttboardsByPagefromOne(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		List<TBoardVO> list = session.selectList("selecttboardsByPagefromOne",map);
+		session.close();
+		return list;
+	}
+
 
 
 

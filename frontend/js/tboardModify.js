@@ -143,7 +143,6 @@ function modifyImageLoad(timg_id, save_name, callback) {
 
 
 
-
 window.onload=function(){
 	uploadFiles = [];
 	realUpload = document.querySelector('.real-upload');

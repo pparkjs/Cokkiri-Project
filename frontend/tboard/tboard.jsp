@@ -138,9 +138,7 @@ $((ev)=>{
 
 	categoryRecieve()
 	
-	for(i=1; i<=page; i++){
-		listRecieve(page,category,sword,boardstate);
-	}
+	listRecieveFromOne(page,category,sword,boardstate);
 	
 	
 	$(document).on("click",".ele",function(){

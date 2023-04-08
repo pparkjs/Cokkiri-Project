@@ -76,7 +76,7 @@
 }
 #pagediv{
 	position: absolute;
-	top: 84%;
+	top: 93%;
 	left: 50%;
 	width: 100%;
 	transform:translate(-50%,-50%);
@@ -268,7 +268,9 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 							<div id="addAndNick">
 								<div id = "nick">
 									<%=memberVO.getMem_nickname() %>
+									<%if(!boardVO.getMem_id().equals((String)request.getSession().getAttribute("id"))) {%>
 									<button id="chatBtn" type="button">1:1대화</button>
+									<%} %>
 								</div>
 								<div id = "add">
 									<%=memberVO.getMem_add() %>

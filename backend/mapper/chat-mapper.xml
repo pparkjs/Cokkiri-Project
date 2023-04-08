@@ -6,6 +6,17 @@
 	
 <!-- <mapper>태그의 _namespace 속성은 Java소스에서 실행할 SQL문을 호출할 때 같이 사용되는 이름이다. -->
 <mapper namespace="chat">
-
+	<insert id="insertChatRoom" parameterType="chatroomVo">
+		insert into chatroom values(CHATROOM_SEQ.nextval,#{tboard_id},#{mem_id},sysdate)
+	</insert>
+	<select id="selectChatRoomByRid" parameterType="long" resultType="chatroomVo">
+		select * from chatroom where room_id=#{room_id}
+	</select>
+	<select id="selectChatRoomByTid" parameterType="long" resultType="chatroomVo">
+		select * from chatroom where tboard_id=#{tboard_id}
+	</select>
+	<select id="selectChatRoomListByMid" parameterType="long" resultType="chatroomVo">
+		select * from chatroom where chatroom.mem_id=#{mem_id} or tboard_id in(select tboard_id from tboard where tboard.mem_id=#{mem_id} )
+	</select>
 </mapper>
 

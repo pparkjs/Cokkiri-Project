@@ -13,6 +13,8 @@ public interface ITboardService {
 
 	public List<TBoardAndAttVO> boardMain(Map<String, Object> map);
 
+	public List<TBoardAndAttVO> boardMainFromOne(Map<String, Object> map);
+	
 	public int selectIsMember(String id);
 	
 	public MemberVO selectMemberinfo(String mem_id);
@@ -54,4 +56,5 @@ public interface ITboardService {
 	public int updateTboard(TBoardVO tBoardVO);
 	
 	public int deleteTimages(Long tboard_id);
+	
 }

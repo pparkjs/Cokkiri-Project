@@ -76,7 +76,7 @@ public class TboardUpdate extends HttpServlet {
 	  	
 	  	
 		// 업로드될 파일 경로 설정
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "C:/Users/변정민/Desktop/tboard_image";
 
 		// 저장될 폴더가 없으면 새로만든다.
 		File f = new File(uploadPath);

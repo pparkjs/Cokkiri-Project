@@ -19,6 +19,8 @@
 	<typeAlias type="vo.TBoardVO" alias="tboardVo"/>
 	<typeAlias type="vo.TImageVO" alias="timageVo"/>
 	<typeAlias type="vo.CategoryVO" alias="categoryVo"/>
+	<typeAlias type="vo.ChatRoomVO" alias="chatroomVo"/>
+	<typeAlias type="vo.ChatMessageVO" alias="chatmessageVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -40,6 +42,7 @@
 	<mappers>
 	<mapper resource="mapper/member-mapper.xml"/>
 	<mapper resource="mapper/tboard-mapper.xml"/>
+	<mapper resource="mapper/chat-mapper.xml"/>
 	</mappers>
 	
 </configuration>
