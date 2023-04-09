@@ -288,7 +288,7 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 						<hr>
 						<div id="cont">
 						<h3 id="title"><%=boardVO.getTboard_title() %></h3>
-						<p id="cd"><%=category+" · "+boardVO.getTboard_cdate() %></p>
+						<p id="cd"></p>
 						<h4 id="price"><%=price %>&nbsp;원</h4>
 						<br>
 						<p><%=boardVO.getTboard_content().replace("\r\n", "<br>") %></p>
@@ -329,7 +329,8 @@ $(()=>{
 	
 	btnChage(tboard_id)
 	
-
+	time="<%=category%> · "+elapsedTime("<%=boardVO.getTboard_cdate()%>");
+	$("#cd").append(time);
 	$("#chatBtn").on("click",function(){
 		location.href=`\${path}/chatroom.do?tboard_id=\${tboard_id}`
 	})

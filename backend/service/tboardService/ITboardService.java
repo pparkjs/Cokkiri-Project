@@ -11,17 +11,15 @@ import vo.TImageVO;
 
 public interface ITboardService {
 
-	public List<TBoardAndAttVO> boardMain(Map<String, Object> map);
-
-	public List<TBoardAndAttVO> boardMainFromOne(Map<String, Object> map);
-	
-	public int selectIsMember(String id);
-	
-	public MemberVO selectMemberinfo(String mem_id);
-		
-	public int selectMylistNum(Long board_id);
-	
+	public List<TBoardVO>selecttboardsByPage(Map<String, Object> map);
+    
+	public TBoardVO selecttboardInfo(Long board_id);
+	                    
+	                    
 	public List<TImageVO> selecttImgBytboardId(Long board_id);
+	
+	
+	public int selectMylistNum(Long board_id);
 	
 	public TBoardVO selectTboardInfo(Long board_id);
 	
@@ -31,16 +29,16 @@ public interface ITboardService {
 	
 	public List<CategoryVO> selectCategory();
 	
-	public int selectTnotify(Map<String, Object> map);
-
-	public int selectMylist(Map<String, Object> map);
-
+	public int selectTnotify(Map<String,Object> map);
+	
+	public int selectMylist(Map<String,Object> map);
+	
 	public String selectCategoryName(String category_id);
-
-	public int insertImage(TImageVO tImageVO);
-
+	
+	public int insertImage(TImageVO tImageVO); 
+	
 	public int insertTboard(TBoardVO tBoardVO);
-
+	
 	public TImageVO selectImage(Long imageNo);
 	
 	public int insertMylist(Map<String, Object> map);
@@ -52,9 +50,11 @@ public interface ITboardService {
 	public int deleteTnotify(Map<String,Object> map);
 	
 	public int deleteTboard(Long tboard_id);
-
+	
 	public int updateTboard(TBoardVO tBoardVO);
 	
 	public int deleteTimages(Long tboard_id);
+	
+	public List<TBoardVO>selecttboardsByPagefromOne(Map<String, Object> map);
 	
 }

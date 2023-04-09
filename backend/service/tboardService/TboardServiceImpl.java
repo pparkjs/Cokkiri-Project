@@ -26,113 +26,8 @@ public class TboardServiceImpl implements ITboardService {
 		}
 		return service;
 	}
-	
-	public static void main(String[] args) {
-		TboardServiceImpl t = new TboardServiceImpl();
-		TBoardVO VO = new TBoardVO();
-		VO.setCategory_id("1");
-		VO.setMem_id("1");
-		VO.setTboard_content("내용ㅇㅇ");
-		VO.setTboard_price(900);
-		VO.setTboard_state("tkdxo");
-		VO.setTboard_title("제목");
-		
-		System.out.println(t.insertTboard(VO));
-		System.out.println(VO.getTboard_id());
-	}
-	
-	@Override
-	public List<TBoardAndAttVO> boardMain(Map<String, Object> map) {
-		List<TBoardVO> List = dao.selecttboardsByPage(map);
-		List<TBoardAndAttVO> list = new ArrayList<>();
-		for (TBoardVO boardVO : List) {
-			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
-			if(boardVO.getTboard_title().getBytes().length>18) {
-				String title=boardVO.getTboard_title();
-				if(title.length()>16) {
-					boardVO.setTboard_title(title.substring(0, 16)+"..");
-				}else if(title.length()>10){			
-					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
-				}
-				
-			}
-			tBoardAndAttVO.setBoardVO(boardVO);
 
-			List<TImageVO> imgList = dao.selecttImgBytboardId(boardVO.getTboard_id());
-			MemberVO memberVO = dao.selectMemberinfo(boardVO.getMem_id());
-			
-			tBoardAndAttVO.setAdd(memberVO.getMem_add());
 
-			int mylistNum = dao.selectMylistNum(boardVO.getTboard_id());
-			
-			tBoardAndAttVO.setMylist(mylistNum);
-			
-			if(imgList.size()==0) {
-				list.add(tBoardAndAttVO);
-				continue;
-			}
-			tBoardAndAttVO.setFimgid(imgList.get(0).getTimg_id());
-			list.add(tBoardAndAttVO);
-		}
-		
-		return list;
-	}
-	
-	
-	
-	
-	@Override
-	public List<TBoardAndAttVO> boardMainFromOne(Map<String, Object> map) {
-		List<TBoardVO> List = dao.selecttboardsByPagefromOne(map);
-		List<TBoardAndAttVO> list = new ArrayList<>();
-		for (TBoardVO boardVO : List) {
-			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
-			if(boardVO.getTboard_title().getBytes().length>18) {
-				String title=boardVO.getTboard_title();
-				if(title.length()>16) {
-					boardVO.setTboard_title(title.substring(0, 16)+"..");
-				}else if(title.length()>10){			
-					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
-				}
-				
-			}
-			tBoardAndAttVO.setBoardVO(boardVO);
-
-			List<TImageVO> imgList = dao.selecttImgBytboardId(boardVO.getTboard_id());
-			MemberVO memberVO = dao.selectMemberinfo(boardVO.getMem_id());
-			
-			tBoardAndAttVO.setAdd(memberVO.getMem_add());
-
-			int mylistNum = dao.selectMylistNum(boardVO.getTboard_id());
-			
-			tBoardAndAttVO.setMylist(mylistNum);
-			
-			if(imgList.size()==0) {
-				list.add(tBoardAndAttVO);
-				continue;
-			}
-			tBoardAndAttVO.setFimgid(imgList.get(0).getTimg_id());
-			list.add(tBoardAndAttVO);
-		}
-		
-		return list;
-	}
-	
-	
-	
-	
-	
-	@Override
-	public int selectIsMember(String id) {
-		// TODO Auto-generated method stub
-		return dao.selectIsMember(id);
-	}
-
-	@Override
-	public MemberVO selectMemberinfo(String mem_id) {
-		// TODO Auto-generated method stub
-		return dao.selectMemberinfo(mem_id);
-	}
 
 	@Override
 	public int selectMylistNum(Long board_id) {
@@ -246,6 +141,24 @@ public class TboardServiceImpl implements ITboardService {
 	public int deleteTimages(Long tboard_id) {
 		// TODO Auto-generated method stub
 		return dao.deleteTimages(tboard_id);
+	}
+
+	@Override
+	public List<TBoardVO> selecttboardsByPage(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selecttboardsByPage(map);
+	}
+
+	@Override
+	public TBoardVO selecttboardInfo(Long board_id) {
+		// TODO Auto-generated method stub
+		return dao.selectTboardInfo(board_id);
+	}
+
+	@Override
+	public List<TBoardVO> selecttboardsByPagefromOne(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selecttboardsByPagefromOne(map);
 	}
 
 	

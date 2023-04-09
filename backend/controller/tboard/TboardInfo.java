@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.tboardService.TboardServiceImpl;
 import vo.MemberVO;
 import vo.TBoardVO;
@@ -36,7 +38,8 @@ public class TboardInfo extends HttpServlet {
 		
 		TBoardVO boardVO = service.selectTboardInfo(a);
 		List<TImageVO> ilist = service.selecttImgBytboardId(a);
-		MemberVO memberVO = service.selectMemberinfo(boardVO.getMem_id());
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 		
 		Map<String, Object> map = new HashMap<>();
 		

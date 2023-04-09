@@ -24,4 +24,22 @@ public class MemberServiceImpl implements IMemberService {
 		return dao.memberAllList();
 	}
 
+	@Override
+	public int selectIsMember(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectIsMember(id);
+	}
+
+	@Override
+	public MemberVO selectMemberinfo(String mem_id) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberinfo(mem_id);
+	}
+
+	@Override
+	public MemberVO selectMemberinfoByNick(String nickname) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberinfoByNick(nickname);
+	}
+
 }

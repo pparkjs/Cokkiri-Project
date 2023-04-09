@@ -15,8 +15,20 @@
 	<select id="selectChatRoomByTid" parameterType="long" resultType="chatroomVo">
 		select * from chatroom where tboard_id=#{tboard_id}
 	</select>
-	<select id="selectChatRoomListByMid" parameterType="long" resultType="chatroomVo">
+	<select id="selectChatRoomListByMid" parameterType="String" resultType="chatroomVo">
 		select * from chatroom where chatroom.mem_id=#{mem_id} or tboard_id in(select tboard_id from tboard where tboard.mem_id=#{mem_id} )
+	</select>
+	<select id="selectLastMessageByRid" parameterType="Long" resultType="chatmessageVo">
+		select *
+		from (select * from chatmessage where room_id=#{room_id} order by message_cdate desc)
+		where rownum=1 
+	</select>
+	<select id="selectNoReadMessageCnt" parameterType="map" resultType="int">
+		select count(*) from chatmessage 
+		where room_id=#{room_id} and mem_id !=#{mem_id} and message_isread='n'
+	</select>
+	<select id="selectChatMessageByRoomId" parameterType="Long" resultType="chatmessageVo">
+		select * from chatmessage where room_id=#{room_id}
 	</select>
 </mapper>
 
