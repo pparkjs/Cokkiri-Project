@@ -57,7 +57,6 @@ function getImageFiles(e) {
 			uploadFiles.push(file);
 			const reader = new FileReader();
 			reader.onload = (e) => {
-				console.log(e.target)
 				const preview = createElement(e, file);
 				preview.classList.add("animation-init");
 				imagePreview.insertBefore(preview, uploadbtn)
@@ -119,6 +118,7 @@ function modifyImageLoad(timg_id, save_name, callback) {
 		data: { timg_id: timg_id },
 
 		success: function(res) {
+			alert(res)
 			var file = new File([res], save_name);
 			uploadFiles.push(file);
 			var url = window.URL.createObjectURL(res);

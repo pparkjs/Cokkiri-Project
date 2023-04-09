@@ -127,7 +127,7 @@ where rn between 1 and (#{page_num})*12
 	 
 	 <update id="updateTboard" parameterType="tboardVo">
 	 	update tboard set category_id=#{category_id}, tboard_price=#{tboard_price}
-	 	,tboard_state=#{tboard_state},tboard_content=#{tboard_content},
+	 	,tboard_title=#{tboard_title},tboard_state=#{tboard_state},tboard_content=#{tboard_content},
 	 	tboard_mdate=sysdate  where tboard_id=#{tboard_id}
 	 </update>
 	        

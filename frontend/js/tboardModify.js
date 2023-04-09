@@ -112,34 +112,48 @@ $.deleteFile = function(e) {
 
 }
 
-function modifyImageLoad(timg_id, save_name, callback) {
+
+function modifyImageLoad(tboard_id) {
 	$.ajax({
 		url: `${path}/ModifyImage.do`,
-		type: "GET",
-		data: { timg_id: timg_id },
+		type: "post",
+		data: { tboard_id: tboard_id },
 
-		success: function(res) {
-			var file = new File([res], save_name);
-			uploadFiles.push(file);
-			var url = window.URL.createObjectURL(res);
-			var preview = createElement2(url, file);
-			preview.classList.add("animation-init");
-			imagePreview.insertBefore(preview, uploadbtn);
-			setTimeout(function() {
-				preview.classList.add("animation-fade");
-				if (typeof callback === 'function') {
-					callback();
-				}
-			}, 30);
+		success: function(res) {		
+			res.forEach(function(v){		
+				a=("data:image/jpeg;base64,"+v.file)
+				var file = base64ToFile(v)
+				uploadFiles.push(file);
+				var preview = createElement2(a, file);
+				preview.classList.add("animation-init");
+				imagePreview.insertBefore(preview, uploadbtn);
+				setTimeout(function() {
+					preview.classList.add("animation-fade");
+				}, 30);
+			})
+			
 		},
 		error: function(xhr) {
 			alert("상태: " + xhr.status);
 		},
-		xhrFields: {
-			responseType: "blob"
-		}
+		dataType:"json"
 	});
 }
+
+
+base64ToFile=function(data){
+	filedata="data:image/*;base64,"+data.file;
+	var bstr = atob(filedata.split(",")[1]);
+	var n = bstr.length;
+	var u8arr = new Uint8Array(n);
+	
+	while(n--) {
+		u8arr[n] = bstr.charCodeAt(n);
+	}
+	
+	return new File([u8arr], data.saveName, {type:"text/xml"});
+}
+
 
 
 
