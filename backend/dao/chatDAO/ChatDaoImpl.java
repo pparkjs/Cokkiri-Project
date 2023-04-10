@@ -80,4 +80,22 @@ public class ChatDaoImpl implements IChatDao {
 		return list;
 	}
 
+	@Override
+	public int updateChatRead(Map<String, Object> map) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.update("updateChatRead",map);
+		session.commit();
+		session.close();
+		return res;
+	}
+
+	@Override
+	public int insertChatMessage(ChatMessageVO chatMessageVO) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.insert("insertChatMessage",chatMessageVO);
+		session.commit();
+		session.close();
+		return res;
+	}
+
 }

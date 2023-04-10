@@ -22,4 +22,8 @@ public interface IChatDao {
 	
 	public List<ChatMessageVO> selectChatMessageByRoomId(Long room_id);
 	
+	public int updateChatRead(Map<String, Object> map);
+	
+	public int insertChatMessage(ChatMessageVO chatMessageVO);
+	
 }

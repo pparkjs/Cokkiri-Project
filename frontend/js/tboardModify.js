@@ -121,6 +121,7 @@ function modifyImageLoad(tboard_id) {
 
 		success: function(res) {		
 			res.forEach(function(v){		
+				console.log(v);
 				a=("data:image/jpeg;base64,"+v.file)
 				var file = base64ToFile(v)
 				uploadFiles.push(file);

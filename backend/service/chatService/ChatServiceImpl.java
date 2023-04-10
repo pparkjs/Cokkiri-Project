@@ -65,6 +65,18 @@ public class ChatServiceImpl implements IChatService {
 		return dao.selectChatMessageByRoomId(room_id);
 	}
 
+	@Override
+	public int updateChatRead(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.updateChatRead(map);
+	}
+
+	@Override
+	public int insertChatMessage(ChatMessageVO chatMessageVO) {
+		// TODO Auto-generated method stub
+		return dao.insertChatMessage(chatMessageVO);
+	}
+
 
 
 }

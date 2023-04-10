@@ -61,19 +61,16 @@ public class ChatRoom extends HttpServlet {
 			String tmem_id=tboard.getMem_id();
 			
 			
-			
-			if(smem_id.equals(tmem_id)) {
-				chatRoomDetailVO.setMyMember(myMember);
-				String bmem_id = chatRoomVO.getMem_id();
-				MemberVO yourMember = service2.selectMemberinfo(bmem_id);
-				chatRoomDetailVO.setYourMember(yourMember);
-			}else {
-				chatRoomDetailVO.setYourMember(myMember);
-				String bmem_id = chatRoomVO.getMem_id();
-				MemberVO yourMember = service2.selectMemberinfo(bmem_id);
-				chatRoomDetailVO.setMyMember(yourMember);
-			}
 			chatRoomDetailVO.setMyMember(myMember);
+			String bmem_id = chatRoomVO.getMem_id();
+			MemberVO yourMember=null;
+			if(!bmem_id.equals(smem_id)) {
+				yourMember = service2.selectMemberinfo(bmem_id);
+				chatRoomDetailVO.setYourMember(yourMember);
+			}else if(!tmem_id.equals(smem_id)) {
+				yourMember = service2.selectMemberinfo(tmem_id);
+				chatRoomDetailVO.setYourMember(yourMember);
+			}
 			
 			Map<String,Object> map = new HashMap<>();
 			map.put("room_id", chatRoomVO.getRoom_id());

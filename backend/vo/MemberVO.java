@@ -79,6 +79,12 @@ public class MemberVO {
 	public void setAdmin_auth(String admin_auth) {
 		this.admin_auth = admin_auth;
 	}
+	@Override
+	public String toString() {
+		return "MemberVO [mem_id=" + mem_id + ", mem_pw=" + mem_pw + ", mem_name=" + mem_name + ", mem_tel=" + mem_tel
+				+ ", mem_mail=" + mem_mail + ", mem_add=" + mem_add + ", mem_bir=" + mem_bir + ", mem_gend=" + mem_gend
+				+ ", mem_nickname=" + mem_nickname + ", mem_image=" + mem_image + ", admin_auth=" + admin_auth + "]";
+	}
 	
 	
 }

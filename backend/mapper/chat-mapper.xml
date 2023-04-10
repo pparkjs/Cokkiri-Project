@@ -28,7 +28,19 @@
 		where room_id=#{room_id} and mem_id !=#{mem_id} and message_isread='n'
 	</select>
 	<select id="selectChatMessageByRoomId" parameterType="Long" resultType="chatmessageVo">
-		select * from chatmessage where room_id=#{room_id}
+		select * from chatmessage where room_id=#{room_id} order by message_cdate
 	</select>
+	
+	<update id="updateChatRead" parameterType="map">
+		update chatmessage set message_isread='y' where room_id=#{room_id} and mem_id!=#{mem_id}
+	</update>
+	<insert id="insertChatMessage" parameterType="chatmessageVo">
+		insert into chatmessage values(chatmessage_seq.nextval,#{message_content},#{message_isread},sysdate
+		,#{room_id},#{mem_id})
+		
+		<selectKey resultType="Long" keyProperty="message_id">
+	 		SELECT chatmessage_SEQ.CURRVAL from dual
+	 	</selectKey> 
+	</insert>
 </mapper>
 
