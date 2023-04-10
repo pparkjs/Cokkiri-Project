@@ -14,11 +14,7 @@
 
 	</where>
 </sql>
-	 
-	 <select id="selectIsMember" parameterType="String" resultType="int">
-	 	select count(*) from member where mem_id=#{mem_id}
-	 </select>	
-	 
+
 	 <select id="selecttboardsByPage" parameterType="map" resultType="tboardVo">
 select * from(
         select rownum as rn, b.*
@@ -44,12 +40,7 @@ select * from(
 )
 where rn between 1 and (#{page_num})*12
 	 </select>
-
-
-	<select id="selectMemberinfo" parameterType="String" resultType="memberVo">
-		select * from member where mem_id=#{mem_id}
-	</select>
-	 
+ 
 	 <select id="selecttboardInfo" parameterType="Long" resultType="tboardVo">
 	 	select * from tboard where tboard_id=#{tboard_id}
 	 </select>

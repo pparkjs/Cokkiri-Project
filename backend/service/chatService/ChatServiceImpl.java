@@ -1,9 +1,14 @@
 package service.chatService;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.chatDAO.ChatDaoImpl;
 import dao.chatDAO.IChatDao;
+import vo.ChatMessageVO;
+import vo.ChatRoomDetailVO;
 import vo.ChatRoomVO;
 
 public class ChatServiceImpl implements IChatService {
@@ -33,13 +38,45 @@ public class ChatServiceImpl implements IChatService {
 	@Override
 	public List<ChatRoomVO> selectChatRoomByTid(Long tboard_id) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectChatRoomByTid(tboard_id);
 	}
 
 	@Override
 	public List<ChatRoomVO> selectChatRoomListByMid(String mem_id) {
 		// TODO Auto-generated method stub
-		return null;
+		return dao.selectChatRoomListByMid(mem_id);
 	}
+
+	@Override
+	public ChatMessageVO selectLastMessageByRid(Long Rid) {
+		// TODO Auto-generated method stub
+		return dao.selectLastMessageByRid(Rid);
+	}
+
+	@Override
+	public int selectNoReadMessageCnt(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectNoReadMessageCnt(map);
+	}
+
+	@Override
+	public List<ChatMessageVO> selectChatMessageByRoomId(Long room_id) {
+		// TODO Auto-generated method stub
+		return dao.selectChatMessageByRoomId(room_id);
+	}
+
+	@Override
+	public int updateChatRead(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.updateChatRead(map);
+	}
+
+	@Override
+	public int insertChatMessage(ChatMessageVO chatMessageVO) {
+		// TODO Auto-generated method stub
+		return dao.insertChatMessage(chatMessageVO);
+	}
+
+
 
 }

@@ -26,14 +26,6 @@ public class TboardDaoImpl implements ITboardDao{
 	}
 	
 	
-	public int selectIsMember(String id) {
-		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
-		int res = session.selectOne("selectIsMember",id);
-		session.close();
-		
-		return res;
-		
-	}
 	                      
 	                      
 	public List<TBoardVO> selecttboardsByPage(Map<String, Object> map){
@@ -63,14 +55,6 @@ public class TboardDaoImpl implements ITboardDao{
 		return list;
 	}
 
-	@Override
-	public MemberVO selectMemberinfo(String mem_id) {
-		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
-		MemberVO memberVO = session.selectOne("selectMemberinfo",mem_id);
-		session.close();
-		
-		return memberVO;
-	}
 
 	@Override
 	public int selectMylistNum(Long board_id) {

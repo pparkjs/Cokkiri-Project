@@ -118,12 +118,13 @@ $((ev)=>{
 	sword=null;
 	path="<%=request.getContextPath()%>";
 	if ( ev.persisted || (window.performance && window.performance.navigation.type == 2)) {
-    	page = Number(sessionStorage.getItem("page")); 
-		
+    	pagetmp = Number(sessionStorage.getItem("page")); 
 		categorytmp = sessionStorage.getItem("category");
 		swordtmp = sessionStorage.getItem("sword");
 		boardstatetmp=sessionStorage.getItem("boardstate");
-		
+		if(pagetmp!=0){
+			page = pagetmp
+		}
 		if(categorytmp!="null"){
 			category=categorytmp
 		}
@@ -138,6 +139,7 @@ $((ev)=>{
 
 	categoryRecieve()
 	
+	console.log(page, category, sword, boardstate);
 	listRecieveFromOne(page,category,sword,boardstate);
 	
 	

@@ -54,7 +54,9 @@ function getImageFiles(e) {
 
 		// 파일 갯수 검사
 		if ([...files].length < 7 && uploadFiles.length + 1 < 7) {
+			console.log(file)
 			uploadFiles.push(file);
+			console.log(uploadFiles.length)
 			const reader = new FileReader();
 			reader.onload = (e) => {
 				const preview = createElement(e, file);

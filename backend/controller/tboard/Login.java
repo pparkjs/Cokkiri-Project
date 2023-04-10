@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.tboardService.TboardServiceImpl;
 import vo.MemberVO;
 
@@ -23,7 +25,7 @@ public class Login extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String id = request.getParameter("id");
 		
-		TboardServiceImpl service = TboardServiceImpl.getInstance();
+		IMemberService service = MemberServiceImpl.getInstance();
 		int res = service.selectIsMember(id);
 	
 		if(res==0) {

@@ -8,5 +8,13 @@
 	<select id="memberAllList" resultType="memberVo">
 		select * from member
 	</select>
-	
+	<select id="selectMemberinfoByNick" parameterType="String" resultType="memberVo">
+		select * from member where mem_nickname=#{mem_nickname}
+	</select>
+	<select id="selectMemberinfo" parameterType="String" resultType="memberVo">
+		select * from member where mem_id=#{mem_id}
+	</select>
+	<select id="selectIsMember" parameterType="String" resultType="int">
+	 	select count(*) from member where mem_id=#{mem_id}
+	 </select>	
 </mapper>

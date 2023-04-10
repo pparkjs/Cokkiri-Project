@@ -4,14 +4,12 @@ import java.util.List;
 import java.util.Map;
 
 import vo.CategoryVO;
-import vo.MemberVO;
 import vo.TBoardVO;
 import vo.TImageVO;
 
 public interface ITboardDao {
 	
-	public int selectIsMember(String id);
-	                    
+
 	                    
 	public List<TBoardVO>selecttboardsByPage(Map<String, Object> map);
        
@@ -20,7 +18,6 @@ public interface ITboardDao {
 	                    
 	public List<TImageVO> selecttImgBytboardId(Long board_id);
 	
-	public MemberVO selectMemberinfo(String mem_id);
 	
 	public int selectMylistNum(Long board_id);
 	
