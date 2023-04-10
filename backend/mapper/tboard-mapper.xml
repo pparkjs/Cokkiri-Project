@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 문서는 mybatis에서 처리할 sql문을 작성하는 문서입니다. -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- <mapper>태그의 _namespace 속성은 Java소스에서 실행할 SQL문을 호출할 때 같이 사용되는 이름이다. -->
+<mapper namespace="tboard">
+<sql id="dynamicCondition">
+	<where>
+		<if test="!(stype=='' or sword=='')">
+			${stype} like '%'||#{sword}||'%'
+		</if>
+
+	</where>
+</sql>
+	 
+	 <select id="selectIsMember" parameterType="String" resultType="int">
+	 	select count(*) from member where mem_id=#{mem_id}
+	 </select>	
+	 
+	 <select id="selecttboardsByPage" parameterType="map" resultType="tboardVo">
+select * from(
+        select rownum as rn, b.*
+        from (select * from tboard
+                where tboard.MEM_ID in (select mem_id from member where mem_add like '%'||#{region}||'%')
+                <if test="!(sword==null or sword=='')">and (tboard_title like '%'||#{sword}||'%' or tboard_content like '%'||#{sword}||'%')</if>
+                <if test="!(category==null or category=='')">and category_id = #{category}</if>
+                <if test="!(state==null or state=='')">and tboard_state = #{state}</if>
+        		order by tboard_cdate desc) b
+)
+where rn between (#{page_num}-1)*12+1 and (#{page_num})*12
+	 </select>
+
+	<select id="selecttboardsByPagefromOne" parameterType="map" resultType="tboardVo">
+select * from(
+        select rownum as rn, b.*
+        from (select * from tboard
+                where tboard.MEM_ID in (select mem_id from member where mem_add like '%'||#{region}||'%')
+                <if test="!(sword==null or sword=='')">and (tboard_title like '%'||#{sword}||'%' or tboard_content like '%'||#{sword}||'%')</if>
+                <if test="!(category==null or category=='')">and category_id = #{category}</if>
+                <if test="!(state==null or state=='')">and tboard_state = #{state}</if>
+        		order by tboard_cdate desc) b
+)
+where rn between 1 and (#{page_num})*12
+	 </select>
+
+
+	<select id="selectMemberinfo" parameterType="String" resultType="memberVo">
+		select * from member where mem_id=#{mem_id}
+	</select>
+	 
+	 <select id="selecttboardInfo" parameterType="Long" resultType="tboardVo">
+	 	select * from tboard where tboard_id=#{tboard_id}
+	 </select>
+	
+	 <select id="selecttImgBytboardId" parameterType="Long" resultType="timageVo">
+	 	select * from timage where tboard_ID=#{tboard_id}
+	 </select>
+	 
+	 <select id="selectMylistNum" parameterType="Long" resultType="int">
+	 	select count(*) from mylist where tboard_id=#{board_id}
+	 </select>
+	
+	 <select id="selectTboardInfo" parameterType="Long" resultType="tboardVo">
+	 	select * from tboard where board_id=#{board_id}
+	 </select>
+	 
+	 <select id="incrementHit" parameterType="Long" resultType="int">
+	 	update tboard
+		set tboard_hit = (select tboard_hit from tboard where tboard_id=#{tboard_id})+1
+		where tboard_id=#{tboard_id}
+
+	 </select>
+	 <select id="selectTboardcnt" resultType="Long">
+	 	select count(*) from tboard
+	 </select>
+	 <select id="selectCategory" resultType="categoryVo">
+	 	select * from category
+	 </select>
+	 <select id="selectMylist" parameterType="map" resultType="int">
+	 	select count(*) from mylist where mem_id=#{mem_id} and tboard_id=#{tboard_id}
+	 </select>
+	 <select id="selectTnotify" parameterType="map" resultType="int">
+	 	select count(*) from tnotify where mem_id=#{mem_id} and tboard_id=#{tboard_id}
+	 </select>
+	 
+	 <select id="selectCategoryName" parameterType="String" resultType="String">
+	 	select category_name from category where category_id=#{category_id}
+	 </select>
+	 
+	 <insert id="insertImage" parameterType="timageVo">
+	 	insert into timage values(timg_seq.nextval,#{tboard_id},#{timg_origin_name},#{timg_save_name})
+	 </insert>
+	 	
+	 <insert id="insertTboard" parameterType="tboardVo">
+	 	insert into tboard values(tboard_seq.nextval,#{mem_id},#{category_id},#{tboard_title},#{tboard_content},
+	 							  #{tboard_state},#{tboard_price},0,sysdate,null,null,null)
+	 	<selectKey resultType="Long" keyProperty="tboard_id">
+	 		SELECT TBOARD_SEQ.CURRVAL from dual
+	 	</selectKey> 
+	 </insert>
+	 
+	 <select id="selectImage" parameterType="long" resultType="timageVo">
+	 	select * from timage where timg_id=#{timg_id}
+	 </select>
+	 
+	 <insert id="insertMylist" parameterType="map">
+	 	insert into mylist values(#{mem_id},#{tboard_id})
+	 </insert>
+	 
+	 <insert id="insertTnotify" parameterType="map">
+	 	insert into Tnotify values(#{mem_id},#{tboard_id})
+	 </insert>
+	 
+	  <delete id="deleteMylist" parameterType="map">
+	 	delete from mylist where mem_id=#{mem_id} and tboard_id=#{tboard_id}
+	 </delete>
+	 
+	 <delete id="deleteTnotify" parameterType="map">
+	 	delete from Tnotify where mem_id=#{mem_id} and tboard_id=#{tboard_id}
+	 </delete>
+	 
+	 <delete id="deleteTboard" parameterType="Long">
+	 	delete from tboard where tboard_id=#{tboard_id}
+	 </delete>
+	 
+	 <update id="updateTboard" parameterType="tboardVo">
+	 	update tboard set category_id=#{category_id}, tboard_price=#{tboard_price}
+	 	,tboard_title=#{tboard_title},tboard_state=#{tboard_state},tboard_content=#{tboard_content},
+	 	tboard_mdate=sysdate  where tboard_id=#{tboard_id}
+	 </update>
+	        
+	 <delete id="deleteTimages" parameterType="Long">
+	 	delete from timage where tboard_id=#{tboard_id}
+	 </delete>
+</mapper>
+
