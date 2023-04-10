@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="sboard">
+	<!-- 동적 쿼리 (제목, 내용으로 검색 데이터 안들어오면 실행x) -->
+    <sql id="dynamicCondition">
+    	<where>
+    		<if test="!(sb_type == '' or sb_search == '')">
+    			${sb_type} like '%'||#{sb_search}||'%'
+    		</if>
+    	</where>
+    </sql>
+    
+    <!-- 전체 게시글 개수 구하기 -->
+<!--     <select id="totalConut" resultType="int" parameterType="map"> -->
+<!--     	select count(*) from sboard -->
+<!--     	<include refid="dynamicCondition"/>  -->
+<!--     </select> -->
+    
+    <!-- 더보기로 6개씩 가져오기 -->
+	<select id="selectByMore" parameterType="map" resultType="sboardVo">
+		select A.* from
+   		  (select rownum as rnum, B.* from
+              (select * from sboard
+              <include refid="dynamicCondition"/> 
+                order by sboard_id desc) B
+      <![CDATA[    
+            where rownum <= 6+(6*#{more})) A 
+        where A.rnum >= 1+(6*#{more})
+      ]]>  
+	</select>
+	
+		<!-- sboard에 등록한 게시글 삽입 -->
+	<insert id="sboardInsert" parameterType="sboardVo">
+	<!-- selectKey를 이용해 sboard의 시퀀스 값을 sboard_id에 받아서 바로 해당 vo에 저장하고
+	     밑에 insert에서 해당 컬럼을 사용함 (order=before해줘야함) -->
+		<selectKey resultType="int" keyProperty="sboard_id" order="BEFORE">
+			select sboard_seq.nextval from dual 
+		</selectKey>
+		insert into sboard(sboard_id, sboard_title, mem_id, sboard_content,
+		                   sboard_cdate, sboard_hit)
+		     values(#{sboard_id}, #{sboard_title}, #{mem_id},
+		            #{sboard_content}, sysdate, 0)
+	</insert>
+	
+	<!-- simage 테이블에 이미지 생성 -->
+	<insert id="simageInsert" parameterType="simageVo">
+		insert into simage 
+		     values(simage_seq.nextval, #{sboard_id}, #{simg_origin_name},
+		            #{simg_save_name})
+	</insert>
+	
+	<!-- 해당 게시글 출력 쿼리 -->
+	<select id="sboardSelect" parameterType="String" resultType="sboardVo">
+		select A.*, B.simage_id, B.simg_origin_name, B.simg_save_name 
+		  from sboard A, simage B
+		  where A.sboard_id = B.sboard_id 
+		    and A.sboard_id = #{sboard_id}
+	</select>
+	
+	
+	
+</mapper>
