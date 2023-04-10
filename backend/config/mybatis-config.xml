@@ -21,6 +21,8 @@
 	<typeAlias type="vo.CategoryVO" alias="categoryVo"/>
 	<typeAlias type="vo.ChatRoomVO" alias="chatroomVo"/>
 	<typeAlias type="vo.ChatMessageVO" alias="chatmessageVo"/>
+
+	<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -43,6 +45,7 @@
 	<mapper resource="mapper/member-mapper.xml"/>
 	<mapper resource="mapper/tboard-mapper.xml"/>
 	<mapper resource="mapper/chat-mapper.xml"/>
+	<mapper resource="mapper/tcomment-mapper.xml"/>
 	</mappers>
 	
 </configuration>
