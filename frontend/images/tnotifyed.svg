@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 <?xml version="1.0" encoding="UTF-8"?>
 <svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
   <defs>
@@ -27,4 +28,35 @@
     <path class="cls-2" d="m4.39,17.81h15.22c.49,0,.88.4.88.88v2.24H3.51v-2.24c0-.49.4-.88.88-.88Z"/>
   </g>
   <rect class="cls-3" width="24" height="24"/>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ff3b30;
+        stroke: #ff3b30;
+      }
+
+      .cls-1, .cls-2 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .cls-2 {
+        fill: #1c1c1e;
+        stroke: #1c1c1e;
+      }
+
+      .cls-3 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g>
+    <path class="cls-1" d="m12,3.07h0c3.69,0,6.68,3,6.68,6.68v8.06H5.32v-8.06c0-3.69,3-6.68,6.68-6.68Z"/>
+    <path class="cls-2" d="m4.39,17.81h15.22c.49,0,.88.4.88.88v2.24H3.51v-2.24c0-.49.4-.88.88-.88Z"/>
+  </g>
+  <rect class="cls-3" width="24" height="24"/>
+>>>>>>> Stashed changes
 </svg>
