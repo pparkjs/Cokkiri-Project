@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="tcomment">
+<!-- 댓글 작성 -->
+<insert id="insertTcomment" parameterType="tcommentVo">
+	  insert into tcomment
+	    (tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove)
+	    values
+	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, #{tcomment_secret}, #{tcomment_isremove})
+</insert>
+
+<!-- 댓글 리스트 5개 -->
+<select id="getAllTcomment" resultType="tcommentVo" parameterType="int">
+	select * from (
+  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, to_char(tcomment_cdate, 'yymmdd hh24miss'), tcomment_secret, tcomment_isremove
+  FROM tcomment
+  where tboard_id = #{tboard_id}
+  START WITH tcomment_pid = 0
+  CONNECT BY PRIOR tcomment_id = tcomment_pid
+  ORDER SIBLINGS BY tcomment_cdate DESC, tcomment_id DESC
+)where #{startTcomment} and #{endTcomment}
+</select>
+
+<!-- 댓글 수 -->
+<select id="countTcomment" resultType="int" parameterType="int">
+	select count(*) from tcomment where tboard_id = #{tboard_id} 
+</select>
+</mapper>
+
