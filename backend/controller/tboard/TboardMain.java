@@ -90,7 +90,7 @@ public class TboardMain extends HttpServlet {
 				List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
 				MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 				
-				tBoardAndAttVO.setAdd(memberVO.getMem_add());
+				tBoardAndAttVO.setWriter(memberVO);
 
 				int mylistNum = service.selectMylistNum(boardVO.getTboard_id());
 				
@@ -122,7 +122,7 @@ public class TboardMain extends HttpServlet {
 				List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
 				MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 				
-				tBoardAndAttVO.setAdd(memberVO.getMem_add());
+				tBoardAndAttVO.setWriter(memberVO);
 
 				int mylistNum = service.selectMylistNum(boardVO.getTboard_id());
 				

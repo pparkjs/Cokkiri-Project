@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 23.65 28.25">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #ffd4d4;
+      }
+
+      .cls-2 {
+        fill: #3866df;
+      }
+
+      .cls-3 {
+        fill: #1c1c1e;
+      }
+
+      .cls-4 {
+        fill: #ffc3c3;
+      }
+
+      .cls-5 {
+        stroke: #1c1c1e;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        stroke-width: .5px;
+      }
+
+      .cls-5, .cls-6 {
+        fill: none;
+      }
+
+      .cls-7 {
+        fill: #e5e5ea;
+      }
+
+      .cls-8 {
+        clip-path: url(#clippath);
+      }
+
+      .cls-9 {
+        fill: #fccaca;
+      }
+
+      .cls-10 {
+        fill: #231815;
+      }
+    </style>
+    <clipPath id="clippath">
+      <circle class="cls-6" cx="11.83" cy="11.83" r="11.83"/>
+    </clipPath>
+  </defs>
+  <circle class="cls-7" cx="11.83" cy="11.83" r="11.83"/>
+  <g class="cls-8">
+    <g>
+      <path class="cls-3" d="m18.16,10.3l-6.32-3.4-6.33,3.4s-.54,7.42,6.33,7.41c6.87.01,6.32-7.41,6.32-7.41Z"/>
+      <ellipse class="cls-2" cx="11.84" cy="22.46" rx="8.66" ry="5.79"/>
+      <ellipse class="cls-9" cx="11.84" cy="16.8" rx="2.5" ry="2.13"/>
+      <ellipse class="cls-1" cx="11.83" cy="11.43" rx="5.31" ry="5.71"/>
+      <g>
+        <circle class="cls-10" cx="10.48" cy="11.43" r=".63"/>
+        <circle class="cls-10" cx="13.2" cy="11.43" r=".63"/>
+      </g>
+      <path class="cls-5" d="m10.45,13.7s.22.33,1.39.33,1.39-.33,1.39-.33"/>
+      <g>
+        <circle class="cls-1" cx="6.83" cy="12.16" r="1.86"/>
+        <circle class="cls-1" cx="16.83" cy="12.16" r="1.86"/>
+      </g>
+      <path class="cls-3" d="m12.94,7.45c-2.46,3.35-7.43,2.85-7.43,2.85,0-3.37,3.09-6.11,6.33-6.11s6.33,2.74,6.33,6.11c0,0-1.63,1.51-6.33-3.06l1.11.2Z"/>
+      <circle class="cls-4" cx="15.41" cy="13.14" r="1.08"/>
+      <circle class="cls-4" cx="8.69" cy="13.14" r="1.08"/>
+    </g>
+  </g>
+</svg>

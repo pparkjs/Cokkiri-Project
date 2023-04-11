@@ -1,33 +1,44 @@
 package controller.sboard;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class SboardList
- */
+import service.sboardService.ISboardService;
+import service.sboardService.SboardServiceImpl;
+import vo.SboardVO;
+
 @WebServlet("/SboardList.do")
 public class SboardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("utf-8");
+		
+		int more = Integer.parseInt(request.getParameter("more"));
+		String vtype = request.getParameter("sb_type");
+		String vtext = request.getParameter("sb_search");
+		
+		ISboardService service = SboardServiceImpl.getInstance();
+		
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext);
+		List<SboardVO> list = service.selectByMore(morePage);
+		request.setAttribute("list", list);
+		
+		request.getRequestDispatcher("/view/sboardList.jsp").forward(request, response);
+		
+		
 	}
 
 }

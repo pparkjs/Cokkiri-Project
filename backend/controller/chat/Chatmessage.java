@@ -61,18 +61,16 @@ public class Chatmessage extends HttpServlet {
 		ChatMessageTboardVO chatMessageTboardVO = new ChatMessageTboardVO();
 		chatMessageTboardVO.setMlist(list);
 		chatMessageTboardVO.setYourMember(ymem);
-		
 		ChatRoomVO roomVO = service.selectChatRoomByRid(room_id);
 		Long tboard_id = roomVO.getTboard_id();
 		ITboardService service2 = TboardServiceImpl.getInstance();
 		
 		TBoardVO tBoardVO = service2.selectTboardInfo(tboard_id);
-		MemberVO seller = service3.selectMemberinfo(tBoardVO.getMem_id());
-		chatMessageTboardVO.setSeller(seller);
 		
 		List<TImageVO> ilist = service2.selecttImgBytboardId(tboard_id);
-		chatMessageTboardVO.setfTImageVO(ilist.get(0));
-		
+		if(ilist!=null&&ilist.size()!=0) {
+			chatMessageTboardVO.setfTImageVO(ilist.get(0));
+		}
 		chatMessageTboardVO.settBoardVO(tBoardVO);
 		request.setAttribute("cmtVO", chatMessageTboardVO);
 		request.getRequestDispatcher("/view/chatMessageList.jsp").forward(request, response);

@@ -77,6 +77,18 @@ public class ChatServiceImpl implements IChatService {
 		return dao.insertChatMessage(chatMessageVO);
 	}
 
+	@Override
+	public ChatRoomVO selectChatRoomByMidTid(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectChatRoomByMidTid(map);
+	}
+
+	@Override
+	public ChatMessageVO selectChatMessageByCid(Long message_id) {
+		// TODO Auto-generated method stub
+		return dao.selectChatMessageByCid(message_id);
+	}
+
 
 
 }

@@ -30,8 +30,6 @@ public class Chatting {
     	
     	Gson gson = new Gson();
     	WebMessageVO wmessage = gson.fromJson(message, WebMessageVO.class);
-    	System.out.println(message);
-    	System.out.println(wmessage);
     	IChatService service = ChatServiceImpl.getInstance();
         synchronized(rooms) {
         	if(wmessage.getCroom_id()!=null) {
@@ -39,11 +37,12 @@ public class Chatting {
         		int res=0;
         		if(size==2) {
         			res=1;
+        			String json = "{\"res\":"+res+"}";
+        			rooms.get(wmessage.getCroom_id()).get(wmessage.getReciever()).getBasicRemote().sendText(json);
         		}else if(size==1) {
         			res=0;
         		}
-        		String json = "{\"res\":"+res+"}";
-    			rooms.get(wmessage.getCroom_id()).get(wmessage.getSender()).getBasicRemote().sendText(json);
+        		
         	}
         	else if(rooms.containsKey(wmessage.getRoom_id())) {
         		if(rooms.get(wmessage.getRoom_id()).containsKey(wmessage.getReciever())) {
@@ -56,7 +55,7 @@ public class Chatting {
             		System.out.println(chatMessageVO);
             		int res = service.insertChatMessage(chatMessageVO);
             		if(res==0) {
-            			System.out.println("상대 접속 안했을때 웹소켓 메시지 db저장 실패");
+            			System.out.println("상대 접속 했을때 웹소켓 메시지 db저장 실패");
             		}
         			wmessage.setNoread(0);
         			String json = gson.toJson(wmessage);
@@ -69,10 +68,9 @@ public class Chatting {
 	        		chatMessageVO.setMessage_content(wmessage.getMessage());
 	        		chatMessageVO.setMessage_isread("n");
 	        		chatMessageVO.setRoom_id(wmessage.getRoom_id());
-	        		System.out.println(chatMessageVO);
 	        		int res = service.insertChatMessage(chatMessageVO);
 	        		if(res==0) {
-	        			System.out.println("상대 접속 했을때 웹소켓 메시지 db저장 실패");
+	        			System.out.println("상대 접속 안했을때 웹소켓 메시지 db저장 실패");
 	        		}
 	        		wmessage.setNoread(1);
 	        		String json = gson.toJson(wmessage);

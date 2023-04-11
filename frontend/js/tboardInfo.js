@@ -124,7 +124,7 @@ recommendlistRecieve = function(pagenum, category, sword) {
 
 				$pprice = $("<p class='nomargin price'>" + v["boardVO"]["tboard_price"] + "원</p>")
 
-				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
+				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
 				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " 찜 " + v["mylist"] + "</p>")
 

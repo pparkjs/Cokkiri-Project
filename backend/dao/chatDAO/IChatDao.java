@@ -26,4 +26,8 @@ public interface IChatDao {
 	
 	public int insertChatMessage(ChatMessageVO chatMessageVO);
 	
+	public ChatRoomVO selectChatRoomByMidTid(Map<String, Object> map);
+	
+	public ChatMessageVO selectChatMessageByCid(Long message_id);
+	
 }

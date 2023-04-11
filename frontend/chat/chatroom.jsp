@@ -5,34 +5,138 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="../css/mycss.css">
+<link rel="stylesheet" href="../css/chatroom.css">
+<script src="../js/chatcommon.js" type="text/javascript"></script>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
 <title>Insert title here</title>
 <script type="text/javascript">
+webflag=false;
+
+function onMessage(event) {
+	
+    var message = JSON.parse(event.data)
+    
+    if(message.res!=null){
+    	if(message.res==1){
+    		$("#chat .mread").text("");
+    	}
+    }
+    else if (message.message == "") {
+        
+    } else {
+    	today = new Date();   
+		curdate = today.getFullYear()+"-"+('0' + (today.getMonth() + 1)).slice(-2)+"-"+('0' + today.getDate()).slice(-2);
+		curtime = ('0' + today.getHours()).slice(-2)+":"+('0' + today.getMinutes()).slice(-2)+":"+('0' + today.getSeconds()).slice(-2)
+		curtime = messageTime([curdate,curtime]);
+		lastdate=date
+		if(curdate!=lastdate){
+			p=$("<p class='chatdate'>"+curdate+"</p>");
+			chat.append(p);
+			lastdate=curdate;
+		}
+		if(message.reciever==ymem_id){
+			isread="";
+			if(message.noread==1){
+				isread="<span class='mread'>1</span>"
+			}
+			message = $("<div class='m mmessage' id='"+message.message_id+"'>"+isread+"<span class='mdate'>"+curtime+"</span><span class='mcont'> "+message.message+"</span></div> ")
+			chat.append(message);
+			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+		}else{
+			img="<img class='profile' alt='../images/기본프로필.png' src='../images/기본프로필.png'>"
+
+			message = $("<div class='m ymessage' id='"+message.message_id+"'>"+img+"<span class='mcont'> "+message.message+"</span><span class='mdate'>"+curtime+"</span></div> ")
+			chat.append(message);
+			$("#chat").scrollTop($("#chat")[0].scrollHeight);
+		}
+		/*  sender;  
+		 reciever;
+		 message; 
+		 room_id;   
+		 message_id; 
+		 noread
+		 */
+    	
+    }
+  
+}
+function onOpen(event) {
+    alert("onOpen")
+}
+function onError(event) {
+    alert(event.data);
+}
+
+
+function chatListReload(){
+	$.ajax({
+		url: "<%=request.getContextPath()%>/chatRoom.do",
+		type: "post",
+		dataType: "json",
+		success: function(res) {
+			$.each(res,function(i,v){
+				curclass=$("#"+v.chatRoomVO.room_id+"").find(".pspan").find("div")
+				curparent=$("#"+v.chatRoomVO.room_id+"").attr("id")
+				if(curparent==null||curparent==""||typeof curparent=="undefined"){
+					noReadCnt = v.noReadCnt;
+					if(noReadCnt!=0){
+						noReadCnt = "<div class='nread'>"+noReadCnt+"</div>";
+					}else{
+						noReadCnt ="<div class='date'>"+ elapsedTime(v.LastMessageVO.message_cdate)+"</div>";
+						
+					}
+					mmem_id=v.myMember.mem_id;
+					message_content = v.LastMessageVO.message_content;
+					
+					code=""
+					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
+					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
+					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
+					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<p>"+v.LastMessageVO.message_content+"</p>"
+					code+="</div></div>"
+					$("#chatList").append(code);
+				}
+				else{
+					noReadCnt = v.noReadCnt;
+					if(noReadCnt!=0){
+						if(curclass.attr("class")=="date"){
+							curclass.addClass("nread");
+							curclass.removeClass("date");
+						}
+						noReadCnt = noReadCnt
+					}else{
+						if(curclass.attr("class")=="nread"){
+							curclass.addClass("date");
+							curclass.removeClass("nread");
+						}
+						noReadCnt =elapsedTime(v.LastMessageVO.message_cdate)		
+					}
+					curclass.text("");
+					curclass.text(noReadCnt)
+					
+					
+					mmem_id=v.myMember.mem_id;
+					message_content = v.LastMessageVO.message_content;
+					
+					curmessage=$("#"+v.chatRoomVO.room_id+"").find("p");
+					curmessage.empty();
+					curmessage.text(message_content)
+				}	
+				
+			})
+		},
+		error: function(xhr) {
+			alert("상태: " + xhr.status)
+		}
+	})
+}
+
+
+
 $(()=>{
 	path = "<%=request.getContextPath()%>"
 	
-	function elapsedTime(date) {
-		  const start = new Date(date);
-		  const end = new Date();
-
-		  const diff = (end - start) / 1000;
-		 
-		  const times = [
-		    { "name": '년', "milliSeconds": 60 * 60 * 24 * 365 },
-		    { "name": '개월',"milliSeconds": 60 * 60 * 24 * 30 },
-		    { "name": '일', "milliSeconds": 60 * 60 * 24 },
-		    { "name": '시간',"milliSeconds": 60 * 60 },
-		    { "name": '분', "milliSeconds": 60 },
-		  ];
-		
-		  for (const value of times) {
-		    const betweenTime = Math.floor(diff / value.milliSeconds);
-		    if (betweenTime > 0) {
-		      return `\${betweenTime}\${value.name} 전`;
-		    }
-		  }
-		  return '방금 전';
-		}
 	
 	$.ajax({
 		url: "<%=request.getContextPath()%>/chatRoom.do",
@@ -68,48 +172,7 @@ $(()=>{
 	})
 	
 	
-	function chatListReload(){
-		$.ajax({
-			url: "<%=request.getContextPath()%>/chatRoom.do",
-			type: "post",
-			dataType: "json",
-			success: function(res) {
-				$.each(res,function(i,v){
-					curclass=$("#"+v.chatRoomVO.room_id+"").find(".pspan").find("div")
-					
-					noReadCnt = v.noReadCnt;
-					if(noReadCnt!=0){
-						if(curclass.attr("class")=="date"){
-							curclass.addClass("nread");
-							curclass.removeClass("date");
-						}
-						noReadCnt = noReadCnt
-					}else{
-						if(curclass.attr("class")=="nread"){
-							curclass.addClass("date");
-							curclass.removeClass("nread");
-						}
-						noReadCnt =elapsedTime(v.LastMessageVO.message_cdate)		
-					}
-					curclass.text("");
-					curclass.text(noReadCnt)
-					
-					
-					mmem_id=v.myMember.mem_id;
-					message_content = v.LastMessageVO.message_content;
-					
-					curmessage=$("#"+v.chatRoomVO.room_id+"").find("p");
-					curmessage.empty();
-					curmessage.text(message_content)
-					
-					
-				})
-			},
-			error: function(xhr) {
-				alert("상태: " + xhr.status)
-			}
-		})
-	}
+	
 	
 
     confirmChatrooms=setInterval(function(){
@@ -128,14 +191,16 @@ $(()=>{
 		room_id=$(this).attr("id");
 		chat=$("#chat")
 		chat.empty();
+		
+		ynick=$(this).find(".chatinfo h3").text()
 		$.ajax({
 
 			url: "<%=request.getContextPath()%>/chatmessage.do",
 			type: "post",
-			data:{"room_id":room_id,"yournick":$(this).find(".chatinfo h3").text()},
+			data:{"room_id":room_id,"yournick":ynick},
 			dataType: "json",
 			success: function(res) {
-				tcode='<div class="tboardprofile"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"><h4 class="ynick">'+res.yourMember.mem_nickname+'</h4></div>'
+				tcode='<div class="tboardprofile"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"><h4 class="ynick">'+ynick+'</h4></div>'
 				tcode+=`<hr><div class="tdiv"><img class="timg" src='\${path}/images/TboardImageView.do?imgno=\${res.fTImageVO.timg_id}'>`
 				tcode+="<div class='tcon'><h3 class='tboardcon'>"+res.tBoardVO.tboard_title+"</h3><span class='state'>"+res.tBoardVO.tboard_state+"</span><span class='price'>"+res.tBoardVO.tboard_price+" 원</span></div></div>"
 				$("#tboard").html(tcode);
@@ -155,18 +220,8 @@ $(()=>{
 					img="";
 					isread="";
 					
-					h = new Date(cdate)
-					h=h.getHours()
 					
-					if(h<12){
-						messageDate="오전 "
-					}else{
-						messageDate="오후 "
-					}
-					if(h!=12){
-						h=h%12;
-					}
-					messageDate=messageDate+('0'+h).slice(-2)+cdate[1].substr(2,3)
+					messageDate=messageTime(cdate)
 					
 					message_content=v.message_content.replace(/\n/g,"<br>")
 					if(v.mem_id==ymem_id){
@@ -200,99 +255,8 @@ $(()=>{
 		})
 	})
 	
-	webflag=false;
-	confirmread=null;
-	function websocketConnect(){
-		if(confirmread!=null){
-			clearInterval(confirmread);
-			confirmread=null;
-		}
-		if(webflag){
-			webSocket.close();
-		}
-		
-		text = $('textarea').val();
-		otheruser = ymem_id;
-		user = mmem_id;
 
-		
-		webSocket = new WebSocket('ws://localhost:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
-	    inputMessage = $("textarea");
-	    
-	    webSocket.onerror = function(event) {
-	        onError(event)
-	    };
-	    webSocket.onopen = function(event) {
-			webflag=true;
-	    };
-	    webSocket.onmessage = function(event) {
-	    	
-	        onMessage(event)
-	        
-	    };
-	    
-	    confirmmessage={
-    			"croom_id": room_id,
-    			"sender" : mmem_id
-    		}
-    	
-	    confirmread=setInterval(function(){
-	    	webSocket.send(JSON.stringify(confirmmessage));
-	    }, 1000)
-	}
 	
-	
-	function onMessage(event) {
-    	
-        var message = JSON.parse(event.data)
-        
-        if(message.res!=null){
-        	if(message.res==1){
-        		$("#chat .mread").text("");
-        	}
-        }
-        else if (message.message == "") {
-            
-        } else {
-        	today = new Date();   
-			curdate = today.getFullYear()+"-"+('0' + (today.getMonth() + 1)).slice(-2)+"-"+('0' + today.getDate()).slice(-2);
-			curtime = ('0' + today.getHours()).slice(-2)+":"+('0' + today.getMinutes()).slice(-2)+":"+('0' + today.getSeconds()).slice(-2)
-			
-			lastdate=date
-			if(curdate!=lastdate){
-				p=$("<p class='chatdate'>"+curdate+"</p>");
-				chat.append(p);
-				lastdate=curdate;
-			}
-			if(message.noread==1){		
-				isread="<span class='mread'>1</span>"
-				message = $("<div class='m mmessage' id='"+message.message_id+"'><span class='mcont'> "+isread+message.message+"</span><span class='mdate'>"+curtime+"</span></div> ")
-				chat.append(message);
-				$("#chat").scrollTop($("#chat")[0].scrollHeight);
-			}else{
-				img="<img class='profile' alt=''../images/기본프로필.png' src='../images/기본프로필.png'>"
-	
-				message = $("<div class='m ymessage' id='"+message.message_id+"'>"+img+"<span class='mcont'> "+message.message+"</span><span class='mdate'>"+curtime+"</span></div> ")
-				chat.append(message);
-				$("#chat").scrollTop($("#chat")[0].scrollHeight);
-			}
-			/*  sender;  
-			 reciever;
-			 message; 
-			 room_id;   
-			 message_id; 
-			 noread
-			 */
-        	
-        }
-      
-    }
-    function onOpen(event) {
-        alert("onOpen")
-    }
-    function onError(event) {
-        alert(event.data);
-    }
     
     
     $(document).on("click","#send",function(){
@@ -469,8 +433,13 @@ textarea {
 	padding: 5px;
 	border-radius: 8px;
 }
-#send{
-	gy
+.mdate{
+	font-size: 12px;
+}
+.mread{
+	font-size: 12px;
+	margin: 0 5px;
+	color:  rgb(255, 204,0);
 }
 </style>
 </head>
