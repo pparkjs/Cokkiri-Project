@@ -3,6 +3,7 @@
  */
 
  function messageTime(cdate){
+	 console.log(cdate);
 		h = new Date(cdate)
 		h=h.getHours()
 		

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,13 +8,12 @@
 <link rel="stylesheet" href="css/chatroom.css">
 <link rel="stylesheet" href="css/mycss.css">
 <style type="text/css">
-
-#box{
-    flex: 2;
-    display: flex;
-    flex-direction: column;
-    border: 2px solid gray;
-    border-radius: 12px;
+#box {
+	flex: 2;
+	display: flex;
+	flex-direction: column;
+	border: 2px solid gray;
+	border-radius: 12px;
 }
 </style>
 <script src="js/chatcommon.js" type="text/javascript"></script>
@@ -128,7 +127,8 @@ $(()=>{
 					
 					pdate=res.message.message_cdate.split(" ")[0]
 					date=pdate
-					mdate=messageTime(res.message.message_cdate)
+					console.log(res.message.message_cdate)
+					mdate=messageTime(res.message.message_cdate.split(" "))
 					sdate = $("<p class='chatdate'>"+pdate+"</p>")
 					mmessage = $("<div class='m mmessage' id="+res.message.message_id+"</div>") 
 					$("#chat").append(sdate).append(mmessage);
@@ -154,20 +154,17 @@ $(()=>{
 	
 			if (text == "") {
 	        	alert("비었음")
-	        } else {
-	           
+	        } else {	        
+		        message={
+		        			"sender" : mmem_id ,
+		        			"reciever" : ymem_id,
+		        			"message" : text,
+		        			"room_id" : room_id
+		        		}
+		        webSocket.send(JSON.stringify(message));
+		        $("textarea").val("");
+		        $("#chat").scrollTop($("#chat")[0].scrollHeight);
 	        }
-	        
-	        message={
-	        			"sender" : mmem_id ,
-	        			"reciever" : ymem_id,
-	        			"message" : text,
-	        			"room_id" : room_id
-	        		}
-	        webSocket.send(JSON.stringify(message));
-	        $("textarea").val("");
-	        $("#chat").scrollTop($("#chat")[0].scrollHeight);
-		
 		}
 	})
 })
@@ -250,21 +247,18 @@ $(()=>{
 </head>
 
 <body>
-    <%@ include file="/module/header.jsp" %>
+	<%@ include file="/module/header.jsp"%>
 	<div id="box">
 		<div id="tboard">
-			<div class="tboardprofile">
-			</div>
+			<div class="tboardprofile"></div>
 			<hr>
-			<div class="tdiv">
-			</div>
+			<div class="tdiv"></div>
 		</div>
 		<hr>
 		<div id="chat"></div>
 		<hr>
-		<div id="typing">
-		</div>
+		<div id="typing"></div>
 	</div>
-	<%@ include file="/module/footer.jsp" %>
+	<%@ include file="/module/footer.jsp"%>
 </body>
 </html>
