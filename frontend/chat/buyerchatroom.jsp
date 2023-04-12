@@ -23,20 +23,18 @@ tboard_id="<%=request.getParameter("tboard_id")%>"
 function onMessage(event) {
 	chat = $("#chat")
     var message = JSON.parse(event.data)
-    
-    if(message.res!=null){
-    	if(message.res==1){
-    		$("#chat .mread").text("");
-    	}
-    }
-    else if (message.message == "") {
+    console.log(message)
+    if(message.res!=0){
+		$("#chat .mread").text("");
+
+	}else if (message.message == "") {
         
     } else {
     	today = new Date();   
 		curdate = today.getFullYear()+"-"+('0' + (today.getMonth() + 1)).slice(-2)+"-"+('0' + today.getDate()).slice(-2);
 		curtime = ('0' + today.getHours()).slice(-2)+":"+('0' + today.getMinutes()).slice(-2)+":"+('0' + today.getSeconds()).slice(-2)
 		curtime = messageTime([curdate,curtime]);
-		lastdate=date
+		lastdate=$(".chatdate").last().text();
 		if(curdate!=lastdate){
 			p=$("<p class='chatdate'>"+curdate+"</p>");
 			chat.append(p);
@@ -86,6 +84,7 @@ $(()=>{
 			ymem_id=res.writer.mem_id;
 			mmem_id=res.mymem_id;
 			
+			
 			pimg = $("<img class='profile' alt='images/기본프로필.png' src='images/기본프로필.png'>")
 			writer = $("<h4 class='ynick'>"+res.writer.mem_nickname+"</h4>")
 			$(".tboardprofile").append(pimg).append(writer);
@@ -106,14 +105,14 @@ $(()=>{
 			
 			prechatreceive();
 			
+			
 		},
 		error: function(xhr) {
 			alert("상태: " + xhr.status)
 		}
 	})
 	$(document).on("click","#send",function(){
-		text = $("textarea").val();
-		$("textarea").val("");
+		text = $("#ta").val();
 		if(prechatExist==false){
 			//채팅방 생성후, 소켓 접속 , 메시지 전송후 db저장		
 			$.ajax({
@@ -123,9 +122,35 @@ $(()=>{
 				dataType: "json",
 				data: {"tboard_id":tboard_id,"fmessage":text},
 				success: function(res) {
+					if(res.res!=0){
+						console.log(res)
+						room_id=res.res;
+						user=res.mem_id;
+						webflag =false;
 					
+						buyerWebsocketConnect(room_id);
 					
-					pdate=res.message.message_cdate.split(" ")[0]
+						prechatExist=true;
+						
+						if ($("#ta").val() == "") {
+				        	alert("비었음")
+				        } else {	        
+					        message={
+					        			"sender" : mmem_id ,
+					        			"reciever" : ymem_id,
+					        			"message" : $("#ta").val(),
+					        			"room_id" : room_id
+					        		}
+					        webSocket.onopen=()=>{
+					        	webSocket.send(JSON.stringify(message));
+						        $("#ta").val("");
+						        $("#chat").scrollTop($("#chat")[0].scrollHeight);
+					        }
+					        
+				        }
+					}
+					
+					/* pdate=res.message.message_cdate.split(" ")[0]
 					date=pdate
 					console.log(res.message.message_cdate)
 					mdate=messageTime(res.message.message_cdate.split(" "))
@@ -136,22 +161,15 @@ $(()=>{
 					mread=$("<span class='mread'>1</span>")
 					mspan=$("<span class='mdate'>"+mdate+"</span>")
 					mcspan=$("<span class='mcont'>"+res.message.message_content+"</span>")
-					$(".mmessage").append(mread).append(mspan).append(mcspan);
+					$(".mmessage").append(mread).append(mspan).append(mcspan); */
 					
-					room_id=res.message.room_id;
 					
-					webflag =false;
-					
-					websocketConnect();
-					
-					prechatExist=true;
 				},
 				error: function(xhr) {
 					alert("상태: " + xhr.status)
 				}
 			}) 
 		}else{
-	
 			if (text == "") {
 	        	alert("비었음")
 	        } else {	        
@@ -162,7 +180,7 @@ $(()=>{
 		        			"room_id" : room_id
 		        		}
 		        webSocket.send(JSON.stringify(message));
-		        $("textarea").val("");
+		        $("#ta").val("");
 		        $("#chat").scrollTop($("#chat")[0].scrollHeight);
 	        }
 		}
@@ -178,11 +196,12 @@ $(()=>{
 			dataType: "json",
 			data: {"tboard_id":tboard_id},
 			success: function(res) {
+				date=null;
 				if(typeof res.res == "undefined" || res.res == null || res.res == ""){
 					prechatExist=false;
 				}else{
 					//기존 채팅방 가져오고 그 룸아이디로 소켓접속
-					date=null;
+					
 					$.each(res.res,function(i,v){
 						
 						chat=$("#chat");
@@ -216,7 +235,7 @@ $(()=>{
 						}
 	
 						chat.append(message);
-						
+						$("#chat").scrollTop($("#chat")[0].scrollHeight);
 					
 						
 					})
@@ -225,12 +244,12 @@ $(()=>{
 					
 					webflag =false;
 					
-					websocketConnect();
+					websocketConnect(room_id);
 					
 					prechatExist=true;
 				}
 			
-				$("#typing").append($("<textarea rows='5' cols='80'></textarea>")).append($("<button id='send'>전송</button>"))
+				$("#typing").append($("<textarea id='ta' rows='5' cols='80'></textarea>")).append($("<button id='send'>전송</button>"))
 			},
 			error: function(xhr) {
 				alert("상태: " + xhr.status)

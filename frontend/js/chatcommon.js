@@ -3,7 +3,6 @@
  */
 
  function messageTime(cdate){
-	 console.log(cdate);
 		h = new Date(cdate)
 		h=h.getHours()
 		
@@ -44,7 +43,7 @@
 		
 		
 
-	function websocketConnect(){
+	function websocketConnect(room_id){
 
 		if(webflag){
 			webSocket.close();
@@ -77,4 +76,33 @@
     			"reciever":ymem_id
     		}
 
+	}
+	
+	
+	
+	
+	function buyerWebsocketConnect(room_id){
+
+		if(webflag){
+			webSocket.close();
+		}
+
+		otheruser = ymem_id;
+		user = mmem_id;
+
+		
+		webSocket = new WebSocket('ws://localhost:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
+	    
+	    webSocket.onerror = function(event) {
+	        onError(event)
+	    };
+	    webSocket.onopen = function(event) {
+			webflag=true;
+	    };
+	    webSocket.onmessage = function(event) {
+	    	
+	        onMessage(event)
+	        
+	    };
+	    
 	}

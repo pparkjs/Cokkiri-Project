@@ -36,23 +36,14 @@ public class ChatRoomCreate extends HttpServlet {
 		ChatRoomVO chatRoomVO = new ChatRoomVO();
 		chatRoomVO.setMem_id(smem_id);
 		chatRoomVO.setTboard_id(tboard_id);
-		int res=0;
+		Long res=0l;
 		int createRes = service.insertChatRoom(chatRoomVO);	
 		if(createRes==1) {
-			ChatMessageVO chatMessageVO = new ChatMessageVO();
-			chatMessageVO.setMem_id(smem_id);
-			chatMessageVO.setMessage_content(fmessage);
-			chatMessageVO.setMessage_isread("n");
-			chatMessageVO.setRoom_id(chatRoomVO.getRoom_id());
-			
-			res = service.insertChatMessage(chatMessageVO);
-			if(res==1) {
-				chatMessageVO = service.selectChatMessageByCid(chatMessageVO.getMessage_id());
-				request.setAttribute("message", chatMessageVO);
-			}
-			
+
+			res = chatRoomVO.getRoom_id();
 		}
 		request.setAttribute("res", res);
+		request.setAttribute("mem_id", smem_id);
 		request.getRequestDispatcher("/view/createchatroom.jsp").forward(request, response);
 		
 	

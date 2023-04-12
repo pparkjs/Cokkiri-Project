@@ -3,15 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	ChatMessageVO chatMessageVO = (ChatMessageVO)request.getAttribute("message");
-	int res = (int)request.getAttribute("res");
+	String mem_id = (String)request.getAttribute("mem_id");
+	Long res = (Long)request.getAttribute("res");
 %>
 {
 	"res" : <%=res %>
-	<%if(chatMessageVO!=null){ 
-		Gson gson = new Gson();
-		String json=gson.toJson(chatMessageVO);
-	%>
-	,"message":<%=json %>
-	<%} %>
+	,"mem_id": "<%=mem_id %>"
 }

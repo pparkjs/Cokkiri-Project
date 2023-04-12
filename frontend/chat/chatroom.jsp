@@ -11,20 +11,67 @@
 <title>Insert title here</title>
 <script type="text/javascript">
 webflag=false;
-
+room_id="";
 function onMessage(event) {
 	
     var message = JSON.parse(event.data)
-    
-    if(message.res!=null){
-    	if(message.res==1){
-    		$("#chat .mread").text("");
-    	}
+
+    if(message.res!=0){
+    	$("#chat .mread").text("");
+
     }
-    else if (message.message == "") {
-        
+	else if(message.room_id==null||typeof message.room_id=='undefined'||message.room_id!=room_id){
+    	/*  message_id;       
+    	  message_content;
+    	  message_isread; 
+    	  message_cdate;  
+    	  room_id;          
+    	  mem_id;         
+    	 res;       */         
+		curclass=$("#"+message.room_id+"").find(".pspan").find("div")
+		curparent=$("#"+message.room_id+"").attr("id")
+		if(curparent==null||curparent==""||typeof curparent=="undefined"){
+			
+			noReadCnt = "<div class='nread'>1</div>";
+			message_content = message.message_content;
+			ymem_id=message.ymem.mem_id;
+			code=""
+			code+="<div class='rooms' id='"+message.room_id+"'>"
+			code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
+			code+="<div class='chatinfo'><h3>"+message.ymem.mem_nickname+"</h3>"
+			code+="<span class='pspan'>"+message.ymem.mem_add+" · "+noReadCnt+"</span>"
+			code+="<p>"+message_content+"</p>"
+			code+="</div></div>"
+			$("#chatList").append(code);
+		}else{
+
+			if(curclass.attr("class")=="date"){
+				curclass.addClass("nread");
+				curclass.removeClass("date");
+				
+				noReadCnt = 1
+			}else{
+				cnt=$("#"+message.room_id+"").find(".pspan").find("div").text()
+				cnt = Number(cnt)+1;
+				noReadCnt =cnt;		
+			}
+			curclass.text("");
+			curclass.text(noReadCnt)
+			
+			
+			/* mmem_id=v.myMember.mem_id; */
+			message_content = message.message_content;
+			
+			curmessage=$("#"+message.room_id+"").find("p");
+			curmessage.empty();
+			curmessage.text(message_content)
+		}	
+			
+    	
     } else {
-    	today = new Date();   
+    	today = new Date();  
+    	$("#"+message.room_id+"").find(".date").text("방금 전");
+    	$("#"+message.room_id+"").find("p").text(message.message)
 		curdate = today.getFullYear()+"-"+('0' + (today.getMonth() + 1)).slice(-2)+"-"+('0' + today.getDate()).slice(-2);
 		curtime = ('0' + today.getHours()).slice(-2)+":"+('0' + today.getMinutes()).slice(-2)+":"+('0' + today.getSeconds()).slice(-2)
 		curtime = messageTime([curdate,curtime]);
@@ -49,23 +96,98 @@ function onMessage(event) {
 			chat.append(message);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
 		}
-		/*  sender;  
-		 reciever;
-		 message; 
-		 room_id;   
-		 message_id; 
-		 noread
-		 */
     	
     }
   
 }
 function onOpen(event) {
-    alert("onOpen")
+	
 }
 function onError(event) {
-    alert(event.data);
+	
 }
+
+
+function chatListLoad(){
+	$.ajax({
+		url: "<%=request.getContextPath()%>/chatRoom.do",
+		type: "post",
+		dataType: "json",
+		success: function(res) {
+			$.each(res,function(i,v){
+				curclass=$("#"+v.chatRoomVO.room_id+"").find(".pspan").find("div")
+				curparent=$("#"+v.chatRoomVO.room_id+"").attr("id")
+				if(curparent==null||curparent==""||typeof curparent=="undefined"){
+					noReadCnt = v.noReadCnt;
+					if(noReadCnt!=0){
+						noReadCnt = "<div class='nread'>"+noReadCnt+"</div>";
+					}else{
+						noReadCnt ="<div class='date'>"+ elapsedTime(v.LastMessageVO.message_cdate)+"</div>";
+						
+					}
+					mmem_id=v.myMember.mem_id;
+					message_content = v.LastMessageVO.message_content;
+					
+					code=""
+					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
+					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
+					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
+					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<p>"+v.LastMessageVO.message_content+"</p>"
+					code+="</div></div>"
+					$("#chatList").append(code);
+				}
+				else{
+					noReadCnt = v.noReadCnt;
+					if(noReadCnt!=0){
+						if(curclass.attr("class")=="date"){
+							curclass.addClass("nread");
+							curclass.removeClass("date");
+						}
+						noReadCnt = noReadCnt
+					}else{
+						if(curclass.attr("class")=="nread"){
+							curclass.addClass("date");
+							curclass.removeClass("nread");
+						}
+						noReadCnt =elapsedTime(v.LastMessageVO.message_cdate)		
+					}
+					curclass.text("");
+					curclass.text(noReadCnt)
+					
+					
+					mmem_id=v.myMember.mem_id;
+					message_content = v.LastMessageVO.message_content;
+					
+					curmessage=$("#"+v.chatRoomVO.room_id+"").find("p");
+					curmessage.empty();
+					curmessage.text(message_content)
+				}	
+					
+				
+			})
+			
+			
+			webSocket = new WebSocket('ws://localhost:8090/cokkiri/Chatting?mem_id='+mmem_id);
+			webSocket.onerror = function(event) {
+		        onError(event)
+		    };
+		    webSocket.onopen = function(event) {
+				webflag=true;
+		    };
+		    webSocket.onmessage = function(event) {
+		    	
+		        onMessage(event)
+		        
+		    };
+		},
+		error: function(xhr) {
+			alert("상태: " + xhr.status)
+		}
+	})
+}
+
+
 
 
 function chatListReload(){
@@ -123,8 +245,10 @@ function chatListReload(){
 					curmessage.empty();
 					curmessage.text(message_content)
 				}	
+					
 				
 			})
+
 		},
 		error: function(xhr) {
 			alert("상태: " + xhr.status)
@@ -134,51 +258,22 @@ function chatListReload(){
 
 
 
+
+
+
+
 $(()=>{
 	path = "<%=request.getContextPath()%>"
 	
-	
-	$.ajax({
-		url: "<%=request.getContextPath()%>/chatRoom.do",
-		type: "post",
-		dataType: "json",
-		success: function(res) {
-			
-			
-			$.each(res,function(i,v){
-				noReadCnt = v.noReadCnt;
-				if(noReadCnt!=0){
-					noReadCnt = "<div class='nread'>"+noReadCnt+"</div>";
-				}else{
-					noReadCnt ="<div class='date'>"+ elapsedTime(v.LastMessageVO.message_cdate)+"</div>";
-					
-				}
-				mmem_id=v.myMember.mem_id;
-				message_content = v.LastMessageVO.message_content;
-				
-				code=""
-				code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
-				code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
-				code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
-				code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
-				code+="<p>"+v.LastMessageVO.message_content+"</p>"
-				code+="</div></div>"
-				$("#chatList").append(code);
-			})
-		},
-		error: function(xhr) {
-			alert("상태: " + xhr.status)
-		}
-	})
-	
-	
-	
-	
 
-    confirmChatrooms=setInterval(function(){
-    	chatListReload()
-    }, 1000)
 	
+	
+	
+	chatListLoad()
+	setInterval(function() {
+		chatListReload();
+	}, 60000);
+
 	
 	$(document).on("click",".rooms",function(){
 		
@@ -247,7 +342,7 @@ $(()=>{
 				})
 				
 				$("#chat").scrollTop($("#chat")[0].scrollHeight);
-				websocketConnect();
+				websocketConnect(room_id);
 			},
 			error: function(xhr) {
 				alert("상태: " + xhr.status)
@@ -264,19 +359,21 @@ $(()=>{
         if ($("textarea").val() == "") {
         	alert("비었음")
         } else {
-           
-        }
-        
-        message={
-        			"sender" : user ,
-        			"reciever" : otheruser,
-        			"message" : $("textarea").val(),
-        			"room_id" : room_id
-        		}
-        webSocket.send(JSON.stringify(message));
-        $("textarea").val("");
-        $("#chat").scrollTop($("#chat")[0].scrollHeight);
-    	
+
+	        message={
+	        			"sender" : user ,
+	        			"reciever" : otheruser,
+	        			"message" : $("textarea").val(),
+	        			"room_id" : room_id
+	        		}
+	        webSocket.send(JSON.stringify(message));
+	        $("#"+room_id).find("p").text($("textarea").val())
+	        $("#"+room_id).find(".date").text("방금전");
+	        $("textarea").val("");
+	        $("#chat").scrollTop($("#chat")[0].scrollHeight);
+	        
+	        
+    	}
     })
 	
 	
