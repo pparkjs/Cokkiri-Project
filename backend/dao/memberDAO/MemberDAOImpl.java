@@ -49,12 +49,12 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public int memberTelCount(String mem_tel) {
+	public int memberTelCount(String memTel) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.selectOne("member.memberTelCount", mem_tel);
+			cnt = session.selectOne("member.memberTelCount", memTel);
 		} finally {
 			session.close();
 		}
@@ -62,12 +62,12 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public int incheck(String mem_id) {
+	public int incheck(String memId) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.selectOne("member.incheck", mem_id);
+			cnt = session.selectOne("member.incheck", memId);
 			
 		} finally {
 			session.close();
@@ -76,12 +76,12 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public int nicknamecheck(String mem_nickname) {
+	public int nicknamecheck(String memNickname) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.selectOne("member.nicknamecheck", mem_nickname);
+			cnt = session.selectOne("member.nicknamecheck", memNickname);
 		} finally {
 			session.close();
 		}
@@ -98,9 +98,9 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public MemberVO selectMemberinfo(String mem_id) {
+	public MemberVO selectMemberinfo(String memId) {
 		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
-		MemberVO memberVO = session.selectOne("member.selectMemberinfo",mem_id);
+		MemberVO memberVO = session.selectOne("member.selectMemberinfo",memId);
 		session.close();
 		
 		return memberVO;
@@ -113,6 +113,32 @@ public class MemberDAOImpl implements IMemberDAO {
 		session.close();
 		
 		return memberVO;
+	}
+
+	@Override
+	public int selectIdPassCheck(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.selectIdPassCheck", memVo);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public String selectAuth(String memId) {
+		SqlSession session = null;
+		String auth = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			auth = session.selectOne("member.selectAuth", memId);
+		} finally {
+			session.close();
+		}
+		return auth;
 	}
 
 }
