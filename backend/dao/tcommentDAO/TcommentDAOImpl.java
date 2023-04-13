@@ -62,12 +62,12 @@ public class TcommentDAOImpl implements ITcommentDAO{
 	}
 
 	@Override
-	public int deleteTcomment(int tcomment_id) {
+	public int updateIsremove(int tcomment_id) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.delete("tcomment.deleteTcomment", tcomment_id);
+			cnt = session.delete("tcomment.updateIsremove", tcomment_id);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -77,6 +77,5 @@ public class TcommentDAOImpl implements ITcommentDAO{
 		return cnt ;
 	}
 
-	
 	
 }

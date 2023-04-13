@@ -30,7 +30,8 @@ public class TcommentDelete extends HttpServlet {
 		
 		ITcommentService service = TcommentServiceImpl.getInstance();
 		
-		int result = service.deleteTcomment(tcommentId);
+		int result = service.updateIsremove(tcommentId);
+		
 		
 		Gson gson = new Gson();
 		

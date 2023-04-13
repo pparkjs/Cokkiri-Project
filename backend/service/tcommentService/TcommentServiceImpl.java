@@ -38,10 +38,12 @@ public class TcommentServiceImpl implements ITcommentService {
 	}
 
 	@Override
-	public int deleteTcomment(int tcomment_id) {
+	public int updateIsremove(int tcomment_id) {
 		
-		return dao.deleteTcomment(tcomment_id);
+		return dao.updateIsremove(tcomment_id);
 	}
+
+	
 
 	
 	

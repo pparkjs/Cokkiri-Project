@@ -10,6 +10,7 @@ public class TcommentVO {
 	String tcomment_mdate;
 	String tcomment_rdate;
 	String tcomment_secret;
+	String tcomment_isremove;
 	String mem_nickname;
 	int level;
 	int startTcomment = 1;
@@ -94,5 +95,10 @@ public class TcommentVO {
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
 	}
-	
+	public String getTcomment_isremove() {
+		return tcomment_isremove;
+	}
+	public void setTcomment_isremove(String tcomment_isremove) {
+		this.tcomment_isremove = tcomment_isremove;
+	}
 }

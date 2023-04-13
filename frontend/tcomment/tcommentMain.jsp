@@ -66,10 +66,8 @@ mypath = '<%=request.getContextPath()%>';
 
 			}else if (vacation == "t_delete"){
 				 $.tcommentDeleteServer();
-			}else if (vacation == "t_modify"){
-				
 			}
-
+			
 		})
 		
 		

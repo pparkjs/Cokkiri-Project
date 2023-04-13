@@ -104,8 +104,8 @@ $.tcommentDeleteServer=function(target){
 		dataType : 'json',
 		success : function(res){
 			alert("성공");
-			$(target).parents('#tctLayer').find('.a{level}').remove();
-			$.tcommentListServer();
+			/*$(target).parents('#tctLayer').find('.a{level}').remove();
+			$.tcommentListServer();*/
 		},
 		error : function(xhr){
 			alert(xhr.status);
@@ -113,7 +113,7 @@ $.tcommentDeleteServer=function(target){
 	})
 }
 
-$.tcommentPagetServer=function(){
+$.tcommentPageServer=function(){
 	$.ajax({
 		url : `${mypath}/tcommentPage.do`,
 		type : 'post',

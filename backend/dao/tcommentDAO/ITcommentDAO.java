@@ -11,5 +11,5 @@ public interface ITcommentDAO {
 	
 	public TcommentVO getTcomment(int tcomment_id);
 	
-	public int deleteTcomment(int tcomment_id);
+	public int updateIsremove(int tcomment_id);
 }
