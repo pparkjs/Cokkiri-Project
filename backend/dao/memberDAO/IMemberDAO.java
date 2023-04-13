@@ -6,6 +6,7 @@ import vo.MemberVO;
 
 public interface IMemberDAO {
 	//회원의 정보를 가져오는 메소드
+
 	public List<MemberVO> memberAllList();
 		
 	public int memberInsert(MemberVO memVo);
@@ -18,4 +19,11 @@ public interface IMemberDAO {
 	
 	// 회원 닉네임 중복체크
 	public int nicknamecheck(String mem_nickname);
+		
+	public int selectIsMember(String id);
+		
+	public MemberVO selectMemberinfo(String mem_id);
+		
+	public MemberVO selectMemberinfoByNick(String nickname);
+
 }

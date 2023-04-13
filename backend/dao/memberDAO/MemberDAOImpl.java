@@ -34,6 +34,7 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
+
 	public int memberInsert(MemberVO memVo) {
 		SqlSession session = null;
 		int cnt = 0;
@@ -85,6 +86,33 @@ public class MemberDAOImpl implements IMemberDAO {
 			session.close();
 		}
 		return cnt;
+  }
+  
+	public int selectIsMember(String id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.selectOne("member.selectIsMember",id);
+		session.close();
+		
+		return res;
+		
+	}
+
+	@Override
+	public MemberVO selectMemberinfo(String mem_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		MemberVO memberVO = session.selectOne("member.selectMemberinfo",mem_id);
+		session.close();
+		
+		return memberVO;
+	}
+
+	@Override
+	public MemberVO selectMemberinfoByNick(String nickname) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		MemberVO memberVO = session.selectOne("member.selectMemberinfoByNick",nickname);
+		session.close();
+		
+		return memberVO;
 	}
 
 }

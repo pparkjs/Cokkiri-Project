@@ -230,7 +230,7 @@ animation: slideLeft 1.5s ease-out;}
     }
 }
 
-.footer{display: flex; align-items: flex-start; border-top: 2px solid rgb(192, 189, 189);background: e8e8e8; height : 150px;}
+.footer{background:rgb(242,242,247); display: flex; align-items: flex-start;background: e8e8e8; height : 150px;}
 .footer .footer__explain{ font-size: 0.7em; margin-top:2%; margin-left: 20%;}
 .footer .footer__explain p{color : #868b94; font-weight: 700; margin-bottom:5px;}
 .footer .footer__explain span{color : #868b94; font-weight: lighter;}
