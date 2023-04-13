@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +110,7 @@ button:active {
 <div class="root">
 <nav>
 	<img src="../images/코끼리로고심볼가로.png" id="cokkirilogo">
-	<input type="button" value="회원가입">
+	<input type="button" value="회원가입" id="memUpdate" onclick="location.href='<%=request.getContextPath() %>/login/memUpdate.jsp'">
 </nav>
 <div class="main">
 	<div class="loginbox">
