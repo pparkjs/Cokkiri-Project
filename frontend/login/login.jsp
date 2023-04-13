@@ -5,6 +5,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<%
+	String loginResult = (String)request.getAttribute("result");
+	
+%>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	if(loginResult == "no"){
+		alert("비밀번호 또는 아이디가 일치하지 않습니다.");
+	}
+})
+</script>
 <link rel="stylesheet" type="text/css" href="../css/loginform.css">
 <style type="text/css">
 @font-face {
@@ -104,10 +116,14 @@ button:active {
 	display : inline-block;
 	width : 38px;
 }
+
+input:focus {outline:none;}
 </style>
 </head>
 <body>
+
 <div class="root">
+
 <nav>
 	<img src="../images/코끼리로고심볼가로.png" id="cokkirilogo">
 	<input type="button" value="회원가입" id="memUpdate" onclick="location.href='<%=request.getContextPath() %>/login/memUpdate.jsp'">
@@ -118,12 +134,12 @@ button:active {
 			<span class="logontext">로그인</span>
 			<a class="findpassword">비밀번호를 잊어버리셨나요?</a>
 		</div>
-		<form action="">
+		<form action="<%=request.getContextPath()%>/memberLogin.do" method="post"">
 			<div class="iddiv">
 				<input type="text" name="id" placeholder="아이디">
 			</div>
 			<div class="passdiv">
-				<input type="password" name="pass" placeholder="비밀번호">
+				<input type="password" name="pw" placeholder="비밀번호">
 			</div>
 			<div class="loginbuttondiv">
 				<button type="submit" class="loginbutton">로그인</button>
