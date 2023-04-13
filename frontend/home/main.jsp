@@ -9,7 +9,7 @@
 </head>
 <body>
 <!-- header -->
-<%@ include file="/module/header.jsp" %>
+<%@ include file="/module/header.jsp" %> 
                
         <!-- container 시작 -->
         <div class="container">

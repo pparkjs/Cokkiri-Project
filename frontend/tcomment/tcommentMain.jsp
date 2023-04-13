@@ -9,27 +9,77 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
+<script type="text/javascript" src="../js/tcomment.js"></script>
+
 <script type="text/javascript">
-$(function(){
-	$.ajax({
-		url : "<%=request.getContextPath()%>/tcommentList.do",
-		type : 'post',
-		success: function(res){
-			var code= "";
-			$.each()
+mypath = '<%=request.getContextPath()%>';
+<%-- <% String id = (String)session.getAttribute("memid"); %>	 --%>
+
+	$(function() {
+		// 댓글 목록 불러오기
+		$.tcommentListServer();
+
+		// 댓글 작성
+		$('#btn').on('click', function() {
+			 tcontent = $('#tInsert textarea').val();
+
+			 // tcontent가 null이 아닐 때만 서버에 댓글 작성 요청을 보냄
+			 if (tcontent !== null) {
+			    $.tcommentWriteServer();
+			 } else {
+			    console.error("댓글 내용이 없습니다.");
+			 }
+		})
 		
-		},
-		error: function(xhr){
-			alert(xhr.status);
-		},
-		dataType: 'json'
+		// 댓글 등록 수정 삭제
+		$(document).on('click', '.action', function(res) {
+			var vacation = $(this).attr('name');
+			 tidx = $(this).attr('idx');
+
+			if (vacation == "t_insert") {
+				
+				 $('.re-tInsert').hide();
+				// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
+				
+<%--         		<%= id %>  --%>
+       			 tcommentForm = $('<div>').append($('<form>').attr('id','retInsert').addClass('re-tInsert').append(
+       				    $('<div>').append(
+       				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '40px').attr('height', '40px').after('&nbsp;'),
+        				    $('<span>').attr('id', 'writer').after('&nbsp;&nbsp;'),
+       				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea'),
+       				        $('<input>').attr('type', 'button').attr('id', 'rt_insert').attr('name', 'rt_insert').attr('idx', tidx).addClass('action').val('답글달기')
+        				   
+       				    )
+       				)// form 끝
+       			);
+       		        	// 댓글 입력 폼을 현재 클릭된 버튼 다음에 추가
+       		        	$(this).after(tcommentForm);
+       		        
+			}else if (vacation == "rt_insert"){
+				//tid = $(this).attr('idx');
+				 $('.re-tInsert').hide();
+				 
+				 reContent = $('#retInsert div textarea').val();
+				 tcommentPid = $(this).attr('idx'); // 댓글 장본인의 댓글 아이디
+ 				 // 답글이 달리면 이 번호는 부모 댓글 아이디로 가야하고 자식 댓글 아이디는 시퀀스로 생성된 새로운 아이디
+				 $.retcommentWriteServer();
+
+			}else if (vacation == "t_delete"){
+				 $.tcommentDeleteServer();
+			}else if (vacation == "t_modify"){
+				
+			}
+
+		})
+		
+		
 	})
-})
 </script>
 <style type="text/css">
 div{
 	border: 1px solid black;
 }
+
 span{
 	margin: 5px;
 	padding: 5px;
@@ -40,60 +90,39 @@ span{
 #re-tcomment2{
 	margin-left: 100px;
 }
+/* .a1{
+	margin-left: 10px;
+} */
+.a2{
+	margin-left: 40px;
+}
+.a3{
+	margin-left: 70px;
+}
+.a4{
+	margin-left: 100px;
+}
+
+#tarea{
+	width: 500px;
+}
+#reArea{
+	width: 500px;
+	height:  40px;
+}
 </style>
 </head>
 <body>
+<!-- 댓글 작성 폼 -->
+<form id="tInsert">
+ 	<textarea rows="5" cols="10" id="tarea"></textarea>
+ 	<input type="button" value="댓글작성" id="btn" name = "tcmt">
+</form><br><br> 
 
-<%--  <form action="<%=request.getContextPath()%>/tcommentInsert.do" method="get" id="tcommentInsert">
- 	<div>
-		<input type="submit" id="tcommentWrite" value="댓글쓰기">
-	</div><br><br>
-	<input type="hidden" name="tboard" value="<%=request.getParameter("tboard")%>">
-	<div id="tcommentWriteForm">
-		<img alt="기본프로필.png" src="../images/기본프로필.png">
-		작성자<span id="writer"></span>
-		<input type="hidden" name="nickname" value="<%=request.getParameter("member")%>"> 
-		<textarea rows="7" cols="10" placeholder="댓글을 입력해주세요" name="tco"></textarea>
-	</div>
-</form> --%>
-<!-- 댓글 목록 -->
-<div class="list">
-	<div id="tcomment">
-		<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-		<span id="writer">작성자</span>
-		<span id="content">댓글입니다.</span>
-		<span id="cdate">2023-04-09</span>
-		<input type="submit" value="댓글 달기" id="tcommentWrite">
-	</div>
-	<div id="re-tcomment">
-		<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-		<span id="writer">작성자</span>
-		<span id="content">댓글입니다.</span>
-		<span id="cdate">2023-04-09</span>
-		삭제
-	</div>
-	<div>
-		<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-		<span id="writer">작성자</span>
-		<span id="content">댓글입니다.</span>
-		<span id="cdate">2023-04-09</span>
-		<input type="submit" value="댓글 달기" id="tcommentWrite">
-	</div>
-	<div id="re-tcomment">
-		<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-		<span id="writer">작성자</span>
-		<span id="content">댓글입니다.</span>
-		<span id="cdate">2023-04-09</span>
-		삭제
-	</div>
-	<div id="re-tcomment2">
-		<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-		<span id="writer">작성자</span>
-		<span id="content">댓글입니다.</span>
-		<span id="cdate">2023-04-09</span>
-		삭제
-	</div>
-</div>
-<div id="commtLayer"></div>
+<!-- 처음 댓글 입력 폼이 들어가는 곳 -->
+<div id="tctLayer"></div>
+
+<!-- 더보기 버튼 -->
+<button type="button" class="moreList" id="moreList">더보기</button>
 </body>
 </html>

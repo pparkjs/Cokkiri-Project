@@ -45,5 +45,38 @@ public class TcommentDAOImpl implements ITcommentDAO{
 		}
 		return list;
 	}
+
+	@Override
+	public TcommentVO getTcomment(int tcomment_id) {
+		SqlSession session = null;
+		TcommentVO vo = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			vo = session.selectOne("tcomment.getTcomment", tcomment_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return vo;
+	}
+
+	@Override
+	public int deleteTcomment(int tcomment_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.delete("tcomment.deleteTcomment", tcomment_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return cnt ;
+	}
+
+	
 	
 }

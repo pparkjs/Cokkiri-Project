@@ -30,5 +30,19 @@ public class TcommentServiceImpl implements ITcommentService {
 		
 		return dao.getAllTcomment(tboardId);
 	}
+
+	@Override
+	public TcommentVO getTcomment(int tcomment_id) {
+		
+		return dao.getTcomment(tcomment_id);
+	}
+
+	@Override
+	public int deleteTcomment(int tcomment_id) {
+		
+		return dao.deleteTcomment(tcomment_id);
+	}
+
+	
 	
 }

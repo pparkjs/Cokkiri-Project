@@ -11,23 +11,53 @@
 	    (tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove)
 	    values
 	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, #{tcomment_secret}, #{tcomment_isremove})
+	    <!-- <selectKey resultType="int" keyProperty="tcomment_id">
+	    	select tcomment_seq.currval from dual
+	    </selectKey> -->
 </insert>
+<!--  -->
+<select id="getTcomment" resultType="tcommentVo" parameterType="int">
+	select * from tcomment where tcomment_id=#{tcomment_id}
+</select>
 
-<!-- 댓글 리스트 5개 -->
+<!-- 댓글 리스트  -->
 <select id="getAllTcomment" resultType="tcommentVo" parameterType="int">
 	select * from (
-  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, to_char(tcomment_cdate, 'yymmdd hh24miss'), tcomment_secret, tcomment_isremove
+  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove
   FROM tcomment
   where tboard_id = #{tboard_id}
   START WITH tcomment_pid = 0
   CONNECT BY PRIOR tcomment_id = tcomment_pid
-  ORDER SIBLINGS BY tcomment_cdate DESC, tcomment_id DESC
-)where #{startTcomment} and #{endTcomment}
+  ORDER SIBLINGS BY tcomment_cdate , tcomment_id DESC
+)
 </select>
 
 <!-- 댓글 수 -->
 <select id="countTcomment" resultType="int" parameterType="int">
 	select count(*) from tcomment where tboard_id = #{tboard_id} 
 </select>
+
+<!-- 댓글 수정 -->
+<update id="updateTcomment" parameterType="tcommentVo">
+	update tcomment 
+		set tcomment_content = #{tcomment_content}, tcomment_cdate = sysdate 
+		where tcomment_id = #{tcomment_id} and mem_id = #{mem_id}
+</update>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteTcomment" parameterType="int">
+	delete from tcomment where tcomment_id=#{tcomment_id}
+</delete>
+
+<!-- level이 2인 댓글 리스트 -->
+<select id="levelSelectTcomment" parameterType="tcommentVo">
+	select * from (
+  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove
+  FROM tcomment
+  where tboard_id = #{tboard_id} and level > 1
+  START WITH tcomment_pid = 0
+  CONNECT BY PRIOR tcomment_id = tcomment_pid 
+  ORDER SIBLINGS BY tcomment_cdate , tcomment_id DESC);
+</select> 
 </mapper>
 
