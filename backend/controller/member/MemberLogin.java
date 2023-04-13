@@ -40,17 +40,16 @@ public class MemberLogin extends HttpServlet {
 		String auth = service.selectAuth(id);
 		
 		Gson gson = new Gson();
+		String result = "";
 		if(idPassCheck == 1) {
 			request.getSession().setAttribute("id", id);
-			request.getRequestDispatcher("/home/main.jsp").forward(request, response);
-		} else {
-			JsonObject jsonObject = new JsonObject();
-			jsonObject.addProperty("result", "no");
-			String jsonData = gson.toJson(jsonObject);
-			response.getWriter().write(jsonData);
-			request.getRequestDispatcher("/login/login.jsp").forward(request, response);
+			result = "true";
 			
+		}else {
+			result = "false";
 		}
+		request.setAttribute("result", result);
+		request.getRequestDispatcher("/view/member/result.jsp").forward(request, response);
 		
 		
 		

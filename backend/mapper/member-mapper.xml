@@ -34,6 +34,12 @@
 	</select>
 	<select id="selectIsMember" parameterType="String" resultType="int">
 	 	select count(*) from member where mem_id=#{mem_id}
-	 </select>	
-
+	</select>	
+	
+	<select id="selectIdPassCheck" parameterType="memberVo" resultType="int">
+		select count(*) from member where mem_id=#{mem_id} and mem_pw=SHA256.ENCRYPT(#{mem_pw})
+	</select>
+	<select id="selectAuth" parameterType="String" resultType="String">
+		select admin_auth from member where mem_id=#{mem_id} 
+	</select>
 </mapper>

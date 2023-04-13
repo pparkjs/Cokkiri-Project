@@ -26,4 +26,10 @@ public interface IMemberDAO {
 		
 	public MemberVO selectMemberinfoByNick(String nickname);
 
+	
+	// 회원 아이디, 비밀번호 일치체크
+	public int selectIdPassCheck(MemberVO memVo);
+	
+	// 관리자 여부 체크
+	public String selectAuth(String memId);
 }
