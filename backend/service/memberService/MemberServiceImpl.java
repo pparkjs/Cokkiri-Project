@@ -69,6 +69,23 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public int nicknamecheck(String mem_nickname) {
 		return dao.nicknamecheck(mem_nickname);
+  }
+  
+	public int selectIsMember(String id) {
+		// TODO Auto-generated method stub
+		return dao.selectIsMember(id);
+	}
+
+	@Override
+	public MemberVO selectMemberinfo(String mem_id) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberinfo(mem_id);
+	}
+
+	@Override
+	public MemberVO selectMemberinfoByNick(String nickname) {
+		// TODO Auto-generated method stub
+		return dao.selectMemberinfoByNick(nickname);
 	}
 
 }
