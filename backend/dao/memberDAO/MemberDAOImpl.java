@@ -33,4 +33,58 @@ public class MemberDAOImpl implements IMemberDAO {
 		return list;
 	}
 
+	@Override
+	public int memberInsert(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.insert("member.memberInsert", memVo);
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int memberTelCount(String mem_tel) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.memberTelCount", mem_tel);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int incheck(String mem_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.incheck", mem_id);
+			
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int nicknamecheck(String mem_nickname) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.nicknamecheck", mem_nickname);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
 }
