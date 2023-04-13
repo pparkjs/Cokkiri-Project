@@ -10,10 +10,10 @@
 	  insert into tcomment
 	    (tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove)
 	    values
-	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, #{tcomment_secret}, #{tcomment_isremove})
-	    <!-- <selectKey resultType="int" keyProperty="tcomment_id">
+	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, #{tcomment_secret}, 'n')
+	    <selectKey resultType="int" keyProperty="tcomment_id">
 	    	select tcomment_seq.currval from dual
-	    </selectKey> -->
+	    </selectKey>
 </insert>
 <!--  -->
 <select id="getTcomment" resultType="tcommentVo" parameterType="int">
@@ -59,5 +59,15 @@
   CONNECT BY PRIOR tcomment_id = tcomment_pid 
   ORDER SIBLINGS BY tcomment_cdate , tcomment_id DESC);
 </select> 
+
+<select id="selectChildIsExist" parameterType="int" resultType="int">
+	select count(*) from tcomment where tcomment_pid=#{tcomment_id}
+</select>
+
+<update id="updateTcommentIsremove" parameterType="int">
+	update tcomment
+	set tcomment_isremove='y'
+	where tcomment_id=#{tcomment_id}
+</update>
 </mapper>
 

@@ -11,11 +11,25 @@ public class TcommentVO {
 	String tcomment_rdate;
 	String tcomment_secret;
 	String mem_nickname;
+	String tcomment_isremove;
+	String hasparent;
 	int level;
 	int startTcomment = 1;
 	int endTcomment = 5;
 	
 	
+	public String getHasparent() {
+		return hasparent;
+	}
+	public void setHasparent(String hasparent) {
+		this.hasparent = hasparent;
+	}
+	public String getTcomment_isremove() {
+		return tcomment_isremove;
+	}
+	public void setTcomment_isremove(String tcomment_isremove) {
+		this.tcomment_isremove = tcomment_isremove;
+	}
 	public int getLevel() {
 		return level;
 	}

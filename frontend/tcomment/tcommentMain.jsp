@@ -38,7 +38,7 @@ mypath = '<%=request.getContextPath()%>';
 
 			if (vacation == "t_insert") {
 				
-				 $('.re-tInsert').hide();
+				 $('.re-tInsert').parent("div").remove();
 				// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
 				
 <%--         		<%= id %>  --%>

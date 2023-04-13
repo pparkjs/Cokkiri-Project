@@ -12,4 +12,8 @@ public interface ITcommentService {
 	public TcommentVO getTcomment(int tcomment_id);
 	
 	public int deleteTcomment(int tcomment_id);
+	
+	public int selectChildIsExist(int tcomment_id);
+	
+	public int updateTcommentIsremove(int tcomment_id);
 }

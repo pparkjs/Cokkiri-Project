@@ -38,17 +38,15 @@ public class TcommentList extends HttpServlet {
 		List<TcommentVO> result = service.getAllTcomment(tboardId);
 		
 		
-		/*List<TcommentVO> result2 = new ArrayList<>();
-		for (TcommentVO tcommentVO : result) {
-			String mem_id = tcommentVO.getMem_id();
-			IMemberService memservice = MemberServiceImpl.getInstance();
+		for(int i=0; i<result.size(); i++) {
+			int cnt = service.selectChildIsExist(result.get(i).getTcomment_id());
+			if(cnt>0) {
+				TcommentVO tcommentVO = result.get(i);
+				tcommentVO.setHasparent("y");
+				result.set(i, tcommentVO);
+			}
 			
-			tcommentVO.setMem_nickname();// setmemservice.s;
-			result2.add(tcommentVO);*/
-		/*
-		 * Gson gson = new Gson(); String data = gson.toJson(result);
-		 * response.getWriter().write(data); response.flushBuffer();
-		 */
+		}
 		request.setAttribute("tcommentList", result);
 		request.getRequestDispatcher("/view/tcommentList.jsp").forward(request, response);
 	}

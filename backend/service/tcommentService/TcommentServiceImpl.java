@@ -43,6 +43,18 @@ public class TcommentServiceImpl implements ITcommentService {
 		return dao.deleteTcomment(tcomment_id);
 	}
 
+	@Override
+	public int selectChildIsExist(int tcomment_id) {
+		// TODO Auto-generated method stub
+		return dao.selectChildIsExist(tcomment_id);
+	}
+
+	@Override
+	public int updateTcommentIsremove(int tcomment_id) {
+		// TODO Auto-generated method stub
+		return dao.updateTcommentIsremove(tcomment_id);
+	}
+
 	
 	
 }

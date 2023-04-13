@@ -77,6 +77,23 @@ public class TcommentDAOImpl implements ITcommentDAO{
 		return cnt ;
 	}
 
+	@Override
+	public int selectChildIsExist(int tcomment_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.selectOne("selectChildIsExist",tcomment_id);
+		session.close();
+		return res;
+	}
+
+	@Override
+	public int updateTcommentIsremove(int tcomment_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.update("updateTcommentIsremove",tcomment_id);
+		session.commit();
+		session.close();
+		return res;
+	}
+
 	
 	
 }
