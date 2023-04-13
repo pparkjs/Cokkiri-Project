@@ -25,6 +25,7 @@
 		<typeAlias type="vo.SimageVO" alias="simageVo"/>
 		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
 		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
+		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -50,5 +51,6 @@
 		<mapper resource="mapper/tcomment-mapper.xml"/>
 		<mapper resource="mapper/sboard-mapper.xml"/>
 		<mapper resource="mapper/alarm-mapper.xml"/>
-	</mappers>	
+	</mappers>
+	
 </configuration>

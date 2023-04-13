@@ -62,15 +62,18 @@ public class TboardMain extends HttpServlet {
 		if(state!=null) {
 			map.put("state", state);
 		}
-		
+
 		/*
 		 session 유저 정보에 있는 지역 이름을 맵에 포함시켜야함
 		 */
 		HttpSession session = request.getSession();
-		map.put("region", (String)session.getAttribute("add"));
+		String smem_id = (String)session.getAttribute("id");
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		MemberVO smemberVO = service2.selectMemberinfo(smem_id);
+		map.put("region", smemberVO.getMem_add().split(" ")[0]);
 		
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
-		IMemberService service2 = MemberServiceImpl.getInstance();
+		
 		List<TBoardAndAttVO>list=new ArrayList<>();
 		if(request.getParameter("one")!=null) {
 			List<TBoardVO> List = service.selecttboardsByPagefromOne(map);

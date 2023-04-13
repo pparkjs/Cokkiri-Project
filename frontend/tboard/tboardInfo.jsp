@@ -329,7 +329,8 @@ $(()=>{
 	
 	btnChage(tboard_id)
 	
-	time="<%=category%> · "+elapsedTime("<%=boardVO.getTboard_cdate()%>");
+	time="<%=category%> · "
+	time+=elapsedTime("<%=boardVO.getTboard_cdate()%>");
 	$("#cd").append(time);
 	$("#chatBtn").on("click",function(){
 		location.href=`\${path}/chatRoomCreate.do?tboard_id=\${tboard_id}`

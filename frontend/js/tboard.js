@@ -3,6 +3,9 @@
  */
 
 listRecieve = function(pagenum, category, sword,boardstate) {
+	if(boardstate!=null){
+		boardstate = boardstate.trim();
+	}
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",
@@ -43,6 +46,9 @@ listRecieve = function(pagenum, category, sword,boardstate) {
 
 
 listRecieveFromOne = function(pagenum, category, sword,boardstate) {
+	if(boardstate!=null){
+		boardstate = boardstate.trim();
+	}
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",

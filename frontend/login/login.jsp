@@ -1,8 +1,45 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
+<script type="text/javascript">
+$(function() {	
+	$('.loginbutton').on('click', function() {
+		var id = $('.id').val().trim();
+		var pw = $('.pw').val().trim();
+		
+		// Ajax 요청
+		$.ajax({
+			url : '<%=request.getContextPath()%>/memberLogin.do',
+			type : 'post',
+			data : {"id" : id, 
+					"pw" : pw},
+			success : function(res){
+				if(res.result == "true"){
+					if(id=="admin"){
+						alert("관리자 페이지로 이동 슝");
+						//window.location.href="";
+					} else {
+						window.location.href="<%=request.getContextPath()%>/home/main.jsp";
+					}
+				} else {
+					alert("아이디 또는 비밀번호가 다릅니다.");
+				}
+			},
+			error : function(xhr){
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+	})
+	
+	
+})
+</script>
 <link rel="stylesheet" type="text/css" href="../css/loginform.css">
 <style type="text/css">
 @font-face {
@@ -102,13 +139,17 @@ button:active {
 	display : inline-block;
 	width : 38px;
 }
+
+input:focus {outline:none;}
 </style>
 </head>
 <body>
+
 <div class="root">
+
 <nav>
 	<img src="../images/코끼리로고심볼가로.png" id="cokkirilogo">
-	<input type="button" value="회원가입">
+	<input type="button" value="회원가입" id="memUpdate" onclick="location.href='<%=request.getContextPath() %>/login/memUpdate.jsp'">
 </nav>
 <div class="main">
 	<div class="loginbox">
@@ -116,17 +157,15 @@ button:active {
 			<span class="logontext">로그인</span>
 			<a class="findpassword">비밀번호를 잊어버리셨나요?</a>
 		</div>
-		<form action="">
 			<div class="iddiv">
-				<input type="text" name="id" placeholder="아이디">
+				<input type="text" name="id" placeholder="아이디" class="id">
 			</div>
 			<div class="passdiv">
-				<input type="password" name="pass" placeholder="비밀번호">
+				<input type="password" name="pw" placeholder="비밀번호" class="pw">
 			</div>
 			<div class="loginbuttondiv">
 				<button type="submit" class="loginbutton">로그인</button>
 			</div>
-		</form>
 		<div class="loginother">
 			<p>다른 방법으로 로그인하기</p>
 			<ul>

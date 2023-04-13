@@ -11,14 +11,20 @@
 			add=res.member.mem_add;
 			console.log(res.alarm)
 			$(".area").text(add.split(" ")[0]);
-			$(".alarmcnt").text(res.alarm.length);
-			$.each(res.alarm, function(i,v){
-				li=$("<li><a href='#'></a></li>");
-				li.find('a').text(v.ynick+" 님으로 부터 메세지가 도착했습니다.")
-				li.find("a").attr("href","<%=request.getContextPath()%>/alarmToChat.do?room_id="+v.room_id);
-				$("#alarmList").append(li)
-			})
-			
+			if(typeof res.alarm=='undefined' || res.alarm==null | res.alarm==""){
+				acnt=0;
+			}else{
+				acnt=res.alarm.length;
+				
+				$(".navbar__alamLogo").prepend($("<span class='alarmcnt'></span>"))
+				$(".alarmcnt").text(acnt);
+				$.each(res.alarm, function(i,v){
+					li=$("<li><a href='#'></a></li>");
+					li.find('a').text(v.ynick+" 님으로 부터 메세지가 도착했습니다.")
+					li.find("a").attr("href","<%=request.getContextPath()%>/alarmToChat.do?room_id="+v.room_id);
+					$("#alarmList").append(li)
+				})
+			}
 		},
 		error: function(xhr) {
 			alert("상태: " + xhr.status)
@@ -106,13 +112,12 @@ $(()=>{
                     <p class="area">지역</p>	
                 </div>
                 <div class ="navbar__alamLogo">	
-                	<span class="alarmcnt">1</span>
                     <img id='test' src="<%=request.getContextPath()%>/images/알람.png" alt="알람.png">
 					 <div class="alarmsidebar" >
                        		<ul class="sidebar__list" id="alarmList">
                          	  
                      	    </ul>
-                    	</div>
+                    </div>
 
 
                 </div>
