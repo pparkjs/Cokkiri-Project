@@ -45,30 +45,30 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public String sendRandomMessage(String mem_tel) {
+	public String sendRandomMessage(String memTel) {
 		NaverTelMessage message = new NaverTelMessage();
 		Random random = new Random();
 		String rannum= "";
 		for(int i=0; i<6; i++) {
 			rannum += Integer.toString(random.nextInt(9) + 1);
 		}
-		message.sendMessage(mem_tel, rannum);
+		message.sendMessage(memTel, rannum);
 		return rannum;
 	}
 
 	@Override
-	public int memberTelCount(String mem_tel) {
-		return dao.memberTelCount(mem_tel);
+	public int memberTelCount(String memTel) {
+		return dao.memberTelCount(memTel);
 	}
 
 	@Override
-	public int incheck(String mem_id) {
-		return dao.incheck(mem_id);
+	public int incheck(String memId) {
+		return dao.incheck(memId);
 	}
 
 	@Override
-	public int nicknamecheck(String mem_nickname) {
-		return dao.nicknamecheck(mem_nickname);
+	public int nicknamecheck(String memNickname) {
+		return dao.nicknamecheck(memNickname);
   }
   
 	public int selectIsMember(String id) {
@@ -77,15 +77,25 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public MemberVO selectMemberinfo(String mem_id) {
+	public MemberVO selectMemberinfo(String memId) {
 		// TODO Auto-generated method stub
-		return dao.selectMemberinfo(mem_id);
+		return dao.selectMemberinfo(memId);
 	}
 
 	@Override
 	public MemberVO selectMemberinfoByNick(String nickname) {
 		// TODO Auto-generated method stub
 		return dao.selectMemberinfoByNick(nickname);
+	}
+
+	@Override
+	public int selectIdPassCheck(MemberVO memVo) {
+		return dao.selectIdPassCheck(memVo);
+	}
+
+	@Override
+	public String selectAuth(String memId) {
+		return dao.selectAuth(memId);
 	}
 
 }
