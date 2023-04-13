@@ -46,7 +46,7 @@ where rn between 1 and (#{page_num})*12
 	 </select>
 	
 	 <select id="selecttImgBytboardId" parameterType="Long" resultType="timageVo">
-	 	select * from timage where tboard_ID=#{tboard_id}
+	 	select * from timage where tboard_ID=#{tboard_id} order by timg_id
 	 </select>
 	 
 	 <select id="selectMylistNum" parameterType="Long" resultType="int">

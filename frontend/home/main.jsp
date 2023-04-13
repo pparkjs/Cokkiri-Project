@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainStyle.css">
+<script src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js" type="text/javascript"></script>
 </head>
 <body>
 <!-- header -->

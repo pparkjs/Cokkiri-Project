@@ -23,8 +23,8 @@
 		<typeAlias type="vo.ChatMessageVO" alias="chatmessageVo"/>
 		<typeAlias type="vo.SboardVO" alias="sboardVo"/>
 		<typeAlias type="vo.SimageVO" alias="simageVo"/>
-
-	<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
+		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
+		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -49,6 +49,6 @@
 		<mapper resource="mapper/chat-mapper.xml"/>
 		<mapper resource="mapper/tcomment-mapper.xml"/>
 		<mapper resource="mapper/sboard-mapper.xml"/>
-	</mappers>
-	
+		<mapper resource="mapper/alarm-mapper.xml"/>
+	</mappers>	
 </configuration>

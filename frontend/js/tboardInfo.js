@@ -181,6 +181,7 @@ slideImage = function() {
 		}
 		if (curIndex + 1 == slideLen - 1) {
 			$(".slide_btn_next").attr("disabled", true);
+			$(".slide_btn_prev").attr("disabled", false);
 		}
 		curSlide.classList.remove('slide_active');
 		pageDots[(curIndex === -1) ? slideLen - 1 : curIndex].classList.remove('dot_active');
@@ -199,6 +200,7 @@ slideImage = function() {
 		}
 		if (curIndex - 1 == 0) {
 			$(".slide_btn_prev").attr("disabled", true);
+			$(".slide_btn_next").attr("disabled", false);
 		}
 
 		curSlide.classList.remove('slide_active');

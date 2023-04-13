@@ -1,3 +1,4 @@
+<%@page import="org.apache.ibatis.reflection.SystemMetaObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -180,6 +181,12 @@ function chatListLoad(){
 		        onMessage(event)
 		        
 		    };
+		    
+		    <%String selroom_id = request.getParameter("selroom_id");
+			if(selroom_id!=null){
+				out.print("$('#chatList').find('#"+selroom_id+"').trigger('click');");	
+			}
+			%>
 		},
 		error: function(xhr) {
 			alert("상태: " + xhr.status)
@@ -264,9 +271,6 @@ function chatListReload(){
 
 $(()=>{
 	path = "<%=request.getContextPath()%>"
-	
-
-	
 	
 	
 	chatListLoad()

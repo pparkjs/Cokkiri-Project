@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 이 문서는 mybatis에서 처리할 sql문을 작성하는 문서입니다. -->
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- <mapper>태그의 _namespace 속성은 Java소스에서 실행할 SQL문을 호출할 때 같이 사용되는 이름이다. -->
+<mapper namespace="alarm">
+	<select id="selectChatAlarm" parameterType="String" resultType="alarmVo">
+		select mem_id, room_id from chatmessage where room_id in
+		(select room_id from chatroom where tboard_id in(select tboard_id from tboard where mem_id=#{mem_id}) or mem_id=#{mem_id})
+		and chatmessage.mem_id!=#{mem_id} and message_isread='n'
+		group by mem_id, room_id
+	</select>
+</mapper>
+
