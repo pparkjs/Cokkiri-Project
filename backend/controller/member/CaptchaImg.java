@@ -16,7 +16,6 @@ import com.google.gson.JsonObject;
 
 import nl.captcha.Captcha;
 import nl.captcha.text.producer.NumbersAnswerProducer;
-import vo.captchaVO;
 
 
 /**
