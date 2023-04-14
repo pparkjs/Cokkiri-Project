@@ -32,23 +32,24 @@ public class TcommentList extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		int tboardId = Integer.parseInt(request.getParameter("tboardId"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		String memId = request.getParameter("memId");
 		
+		TcommentVO vo = new TcommentVO();
+		vo.setMem_id(memId);
+		vo.setTboard_id(tboardId);
+		vo.setStartTcomment((page-1)*5+1);
+		vo.setEndTcomment((page)*5);
 		ITcommentService service = TcommentServiceImpl.getInstance();
-		
-		List<TcommentVO> result = service.getAllTcomment(tboardId);
-		
-		
-		/*List<TcommentVO> result2 = new ArrayList<>();
-		for (TcommentVO tcommentVO : result) {
-			String mem_id = tcommentVO.getMem_id();
-			IMemberService memservice = MemberServiceImpl.getInstance();
-			
-			tcommentVO.setMem_nickname();// setmemservice.s;
-			result2.add(tcommentVO);*/
+		List<TcommentVO> result = service.getAllTcomment(vo);
+
 		/*
-		 * Gson gson = new Gson(); String data = gson.toJson(result);
-		 * response.getWriter().write(data); response.flushBuffer();
+		 * for(int i=0; i<result.size(); i++) { int cnt =
+		 * service.selectChildIsExist(result.get(i).getTcomment_id()); if(cnt>0) {
+		 * TcommentVO tcommentVO = result.get(i); tcommentVO.setHasparent("y");
+		 * result.set(i, tcommentVO); } System.out.println(result.get(i)); }
 		 */
+
 		request.setAttribute("tcommentList", result);
 		request.getRequestDispatcher("/view/tcommentList.jsp").forward(request, response);
 	}

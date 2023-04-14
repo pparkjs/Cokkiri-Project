@@ -11,10 +11,11 @@ import com.google.gson.Gson;
 
 import service.tcommentService.ITcommentService;
 import service.tcommentService.TcommentServiceImpl;
+import vo.TcommentVO;
 
 
-@WebServlet("/tcommentDelete.do")
-public class TcommentDelete extends HttpServlet {
+@WebServlet("/tcommentUpdate.do")
+public class TcommentUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -28,17 +29,29 @@ public class TcommentDelete extends HttpServlet {
 		
 		int tcommentId = Integer.parseInt(request.getParameter("tcommentId"));
 		
+		String tcontent = request.getParameter("tcontent");
+		
+		String issecret = request.getParameter("issecret");
+		
+		TcommentVO vo = new TcommentVO();
+		
+		if(issecret.equals("true")) {
+			vo.setTcomment_secret("true");
+		} else {
+			vo.setTcomment_secret("false");
+		}
+		
+		vo.setTcomment_id(tcommentId);
+		vo.setTcomment_content(tcontent);
+		
 		ITcommentService service = TcommentServiceImpl.getInstance();
 		
-
-		int result = service.updateTcommentIsremove(tcommentId);
-
+		int result = service.updateTcomment(vo);
 		
 		Gson gson = new Gson();
 		
-		String data = gson.toJson(result);
-		response.getWriter().write(data);
-		response.flushBuffer();
+		String json = gson.toJson(result);
+		
+		response.getWriter().print(json);
 	}
-
 }

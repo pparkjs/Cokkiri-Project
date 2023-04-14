@@ -1,4 +1,4 @@
-package controller.tcommentController;
+package controller.pcommentController;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -9,12 +9,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import service.tcommentService.ITcommentService;
-import service.tcommentService.TcommentServiceImpl;
+import service.pcommenService.IPcommentService;
+import service.pcommenService.PcommentServiceImpl;
+import vo.PcommentVO;
 
 
-@WebServlet("/tcommentDelete.do")
-public class TcommentDelete extends HttpServlet {
+@WebServlet("/pcommentUpdate.do")
+public class PcommentUpdate extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -26,19 +27,24 @@ public class TcommentDelete extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		
-		int tcommentId = Integer.parseInt(request.getParameter("tcommentId"));
+		int pcommentId = Integer.parseInt(request.getParameter("pcommentId"));
 		
-		ITcommentService service = TcommentServiceImpl.getInstance();
+		String  pcontent = request.getParameter("pcontent");
 		
-
-		int result = service.updateTcommentIsremove(tcommentId);
-
+		PcommentVO vo = new PcommentVO();
+		
+		vo.setPcomment_id(pcommentId);
+		vo.setPcomment_content(pcontent);
+		
+		IPcommentService service = PcommentServiceImpl.getInstance();
+		
+		int result = service.updatePcomment(vo);
 		
 		Gson gson = new Gson();
 		
-		String data = gson.toJson(result);
-		response.getWriter().write(data);
-		response.flushBuffer();
+		String json = gson.toJson(result);
+		
+		response.getWriter().print(json);
 	}
 
 }

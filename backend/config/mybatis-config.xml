@@ -17,6 +17,7 @@
 	<typeAliases>
 	<typeAlias type="vo.MemberVO" alias="memberVo"/>
 	<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
+	<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -38,6 +39,7 @@
 	<mappers>
 	<mapper resource="mapper/member-mapper.xml"/>
 	<mapper resource="mapper/tcomment-mapper.xml"/>
+	<mapper resource="mapper/pcomment-mapper.xml"/>
 	</mappers>
 	
 </configuration>

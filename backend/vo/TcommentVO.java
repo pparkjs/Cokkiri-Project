@@ -13,9 +13,8 @@ public class TcommentVO {
 	String tcomment_isremove;
 	String mem_nickname;
 	int level;
-	int startTcomment = 1;
-	int endTcomment = 5;
-	
+	int startTcomment;
+	int endTcomment;
 	
 	public int getLevel() {
 		return level;
@@ -101,4 +100,8 @@ public class TcommentVO {
 	public void setTcomment_isremove(String tcomment_isremove) {
 		this.tcomment_isremove = tcomment_isremove;
 	}
+	
+	
+	
+	
 }

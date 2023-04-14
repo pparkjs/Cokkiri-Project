@@ -11,7 +11,29 @@ public class PcommentVO {
 	String pcomment_rdate  ;
 	String pcomment_isremove;
 	String pcomment_secret;
+	int level;
+	int startPcomment;
+	int endPcomment;
 	
+	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getStartPcomment() {
+		return startPcomment;
+	}
+	public void setStartPcomment(int startPcomment) {
+		this.startPcomment = startPcomment;
+	}
+	public int getEndPcomment() {
+		return endPcomment;
+	}
+	public void setEndPcomment(int endPcomment) {
+		this.endPcomment = endPcomment;
+	}
 	public int getPcomment_id() {
 		return pcomment_id;
 	}
