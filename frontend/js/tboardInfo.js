@@ -102,11 +102,11 @@ btnChage = function(tboard_id) {
 }
 
 
-recommendlistRecieve = function(pagenum, category, sword) {
+recommendlistRecieve = function(category,curtboard_id) {
 	$.ajax({
-		url: `${path}/tboardMain.do`,
+		url: `${path}/tboardRecommend.do`,
 		type: "post",
-		data: { "page": pagenum, "category": category, "sword": sword },
+		data: {"category": category, "tboard_id":curtboard_id},
 		dataType: "json",
 		success: function(res) {
 			$.each(res, function(i, v) {

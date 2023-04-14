@@ -75,70 +75,44 @@ public class TboardMain extends HttpServlet {
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		
 		List<TBoardAndAttVO>list=new ArrayList<>();
+		List<TBoardVO> List = null;
 		if(request.getParameter("one")!=null) {
-			List<TBoardVO> List = service.selecttboardsByPagefromOne(map);
-			for (TBoardVO boardVO : List) {
-				TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
-				if(boardVO.getTboard_title().getBytes().length>18) {
-					String title=boardVO.getTboard_title();
-					if(title.length()>16) {
-						boardVO.setTboard_title(title.substring(0, 16)+"..");
-					}else if(title.length()>10){			
-						boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
-					}
-					
-				}
-				tBoardAndAttVO.setBoardVO(boardVO);
-
-				List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
-				MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
-				
-				tBoardAndAttVO.setWriter(memberVO);
-
-				int mylistNum = service.selectMylistNum(boardVO.getTboard_id());
-				
-				tBoardAndAttVO.setMylist(mylistNum);
-				
-				if(imgList.size()==0) {
-					list.add(tBoardAndAttVO);
-					continue;
-				}
-				tBoardAndAttVO.setFimgid(imgList.get(0).getTimg_id());
-				list.add(tBoardAndAttVO);
-			}
+			List = service.selecttboardsByPagefromOne(map);
 		}else {
-
-			List<TBoardVO> List = service.selecttboardsByPage(map);
-			for (TBoardVO boardVO : List) {
-				TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
-				if(boardVO.getTboard_title().getBytes().length>18) {
-					String title=boardVO.getTboard_title();
-					if(title.length()>16) {
-						boardVO.setTboard_title(title.substring(0, 16)+"..");
-					}else if(title.length()>10){			
-						boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
-					}
-					
-				}
-				tBoardAndAttVO.setBoardVO(boardVO);
-
-				List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
-				MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
-				
-				tBoardAndAttVO.setWriter(memberVO);
-
-				int mylistNum = service.selectMylistNum(boardVO.getTboard_id());
-				
-				tBoardAndAttVO.setMylist(mylistNum);
-				
-				if(imgList.size()==0) {
-					list.add(tBoardAndAttVO);
-					continue;
-				}
-				tBoardAndAttVO.setFimgid(imgList.get(0).getTimg_id());
-				list.add(tBoardAndAttVO);
-			}
+			List = service.selecttboardsByPage(map);	
 		}
+		
+		for (TBoardVO boardVO : List) {
+			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
+			if(boardVO.getTboard_title().getBytes().length>18) {
+				String title=boardVO.getTboard_title();
+				if(title.length()>16) {
+					boardVO.setTboard_title(title.substring(0, 16)+"..");
+				}else if(title.length()>10){			
+					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
+				}
+				
+			}
+			tBoardAndAttVO.setBoardVO(boardVO);
+
+			List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
+			MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
+			
+			tBoardAndAttVO.setWriter(memberVO);
+
+			int mylistNum = service.selectMylistNum(boardVO.getTboard_id());
+			
+			tBoardAndAttVO.setMylist(mylistNum);
+			
+			if(imgList.size()==0) {
+				list.add(tBoardAndAttVO);
+				continue;
+			}
+			tBoardAndAttVO.setFimgid(imgList.get(0).getTimg_id());
+			list.add(tBoardAndAttVO);
+		}
+		
+		
 		Gson gson = new Gson(); 
 		String json =gson.toJson(list); 
 		PrintWriter out = response.getWriter(); 

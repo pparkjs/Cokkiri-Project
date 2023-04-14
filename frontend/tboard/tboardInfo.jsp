@@ -324,7 +324,9 @@ $(()=>{
 	tboard_id = "<%=boardVO.getTboard_id()%>"
 	mem_id="<%=boardVO.getMem_id()%>"
 	slideImage();
-	recommendlistRecieve(1,null,null);
+	
+	recommendlistRecieve(<%=boardVO.getCategory_id()%>,tboard_id);
+	
 	btnCreate(mem_id,tboard_id);
 	
 	btnChage(tboard_id)

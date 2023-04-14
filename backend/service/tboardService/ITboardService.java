@@ -57,4 +57,5 @@ public interface ITboardService {
 	
 	public List<TBoardVO>selecttboardsByPagefromOne(Map<String, Object> map);
 	
+	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map);
 }

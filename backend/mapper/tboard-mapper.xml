@@ -125,5 +125,11 @@ where rn between 1 and (#{page_num})*12
 	 <delete id="deleteTimages" parameterType="Long">
 	 	delete from timage where tboard_id=#{tboard_id}
 	 </delete>
+	 <select id="selectTboardRecommend" resultType="tboardVo" parameterType="map">
+	 	SELECT * FROM
+		( SELECT * FROM tboard where category_id=#{category} and mem_id in(select mem_id from member where mem_add=#{mem_add})
+		and tboard_id!=#{tboard_id} ORDER BY dbms_random.value )
+		<![CDATA[WHERE rownum <=#{cnt}]]>
+	 </select>
 </mapper>
 

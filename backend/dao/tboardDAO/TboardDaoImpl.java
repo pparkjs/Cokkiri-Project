@@ -223,6 +223,14 @@ public class TboardDaoImpl implements ITboardDao{
 		return list;
 	}
 
+	@Override
+	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map) {
+		SqlSession session =MybatisSqlSessionFactory.getSqlSession();
+		List<TBoardVO> res = session.selectList("selectTboardRecommend",map);
+		session.close();
+		return res;
+	}
+
 
 
 
