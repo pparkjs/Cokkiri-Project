@@ -94,8 +94,8 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
-	public String selectAuth(String memId) {
-		return dao.selectAuth(memId);
+	public MemberVO selectMemberById(String memId) {
+		return dao.selectMemberById(memId);
 	}
 
 }
