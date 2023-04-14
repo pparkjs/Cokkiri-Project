@@ -37,12 +37,12 @@ public class MemberLogin extends HttpServlet {
 		memVo.setMem_pw(pw);
 		
 		int idPassCheck = service.selectIdPassCheck(memVo);
-		String auth = service.selectAuth(id);
+		MemberVO memberVo = service.selectMemberById(id);
 		
 		Gson gson = new Gson();
 		String result = "";
 		if(idPassCheck == 1) {
-			request.getSession().setAttribute("id", id);
+			request.getSession().setAttribute("memberVo", memberVo);
 			result = "true";
 			
 		}else {
