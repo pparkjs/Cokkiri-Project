@@ -16,16 +16,6 @@
                 <ul class="navbar__board">
                     <li class="item">
                    		<a class="a1" href="#">중고거래</a>
-                    	<div class="sub_menu_test">
-                    		<div class="contents_menu">
-                    			<ul>
-                    				<li>테스트2</li>
-                    				<li>테스트2</li>
-                    				<li>테스트2</li>
-                    				<li>테스트2</li>
-                    			</ul>
-                    		</div>
-                    	</div> 
                     </li>
                     <li><a href="#">비밀게시판</a></li>
                     <li><a href="#">마이플레이스</a></li>
@@ -64,7 +54,6 @@
                    		 <div class="sidebar" >
                        		<ul class="sidebar__list">
                          	  <li><a href="#">My 프로필</a></li>
-                          	  <li><a href="#">판매내역</a></li>
                           	  <li><a href="#">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
                           	  <li><a href="#">내 글 보기</a></li>

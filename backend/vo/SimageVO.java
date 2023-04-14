@@ -5,6 +5,7 @@ public class SimageVO {
 	private int sboard_id;
 	private String simg_origin_name;
 	private String simg_save_name;
+	private String simg_save_old;
 	
 	public int getSimage_id() {
 		return simage_id;
@@ -30,6 +31,13 @@ public class SimageVO {
 	public void setSimg_save_name(String simg_save_name) {
 		this.simg_save_name = simg_save_name;
 	}
+	public String getSimg_save_old() {
+		return simg_save_old;
+	}
+	public void setSimg_save_old(String simg_save_old) {
+		this.simg_save_old = simg_save_old;
+	}
+	
 	
 	
 }

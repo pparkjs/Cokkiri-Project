@@ -6,11 +6,9 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sboardStyle.css">
 <!DOCTYPE html>
 <html>
+<!-- session 예비용 해놓은거 수정해야함 -->
 <%
-List<MemberVO> list = (List<MemberVO>)request.getAttribute("list");
-
-for(MemberVO mem : list){
-	if(mem.getMem_nickname().equals("꼬빡이")){
+String memId = (String)session.getAttribute("mem_id");	
 %>
 <head>
 <meta charset="UTF-8">
@@ -22,6 +20,9 @@ for(MemberVO mem : list){
 <script>
  more = 0; // 더보기 버튼 누르기 용
  mypath = `<%=request.getContextPath() %>`;
+ hit = 0; //조회수
+ memId = `<%=memId%>`;
+
 $(function(){
 	//외부스크립트 이용
 	sboardListServer(0); // 맨처음에는 첫번째 페이지 
@@ -39,13 +40,19 @@ $(function(){
 		sboardListServer(more);
 	})
 	
+	// 조회수 증가 함수 호출
+	hitUpdateServer();
+	
+	likeOrUnlikeClick();
+	
 })
+ 
+
 </script>
 </head>
 <body>
 
  <%@ include file="/module/header.jsp" %>
-	
 <div class="con_sboard">
 <!-- 게시판에 헤더 -->
 	<div class="con_sboard_header">
@@ -56,7 +63,7 @@ $(function(){
 		</select>
 		<input type="text" class="sb_search">
 		<img id="search" src="<%=request.getContextPath()%>/images/돋보기.png">
-		<a href="<%=request.getContextPath()%>/secretboard/sboardRegi.jsp?memId=<%=mem.getMem_id()%>">
+		<a href="<%=request.getContextPath()%>/secretboard/sboardRegi.jsp">
 			<img id="regi" src="<%=request.getContextPath()%>/images/글쓰기.png">
 		</a>
 	</div>
@@ -76,9 +83,5 @@ $(function(){
 	
  <%@ include file="/module/footer.jsp" %>		
 
-<%
-	}
-}
-%>
 </body>
 </html>

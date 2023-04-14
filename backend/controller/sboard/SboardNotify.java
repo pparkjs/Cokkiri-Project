@@ -1,37 +1,47 @@
 package controller.sboard;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import service.sboardService.ISboardService;
 import service.sboardService.SboardServiceImpl;
 import vo.SboardVO;
 
-@WebServlet("/SboardView.do")
-public class SboardView extends HttpServlet {
+@WebServlet("/SboardNotify.do")
+public class SboardNotify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bId = request.getParameter("sboardId");
+		String memId = request.getParameter("memId");
+		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		
 		ISboardService service = SboardServiceImpl.getInstance();
 		
-		List<SboardVO> list = service.sboardSelect(bId);
+		SboardVO vo = new SboardVO();
 		
-//		request.setAttribute("list", list);
+		vo.setMem_id(memId);
+		vo.setSboard_id(boardId);
 		
-		HttpSession session = request.getSession();
+		// 해당 게시물에 대해서 첫 신고인지 check
+		int check = service.notifyCheck(vo);
 		
-		session.setAttribute("sbList", list);
+		// 이미 누른 신고이면 아무일도 일어나지 않음
 		
-//		request.getRequestDispatcher("/secretboard/sboardView.jsp").forward(request, response);
-		response.sendRedirect(request.getContextPath() + "/secretboard/sboardView.jsp");
+		// 최초 누른 신고 일때 새로 insert
+		if(check > 0) {
+			return;
+		}else {
+			int res = service.sboardNotify(vo);
+			request.setAttribute("result", res);
+			request.getRequestDispatcher("/view/sbResult.jsp").forward(request, response);
+		}
+		
+		
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

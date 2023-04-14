@@ -23,7 +23,7 @@ public class SimageDAOImpl implements ISimageDAO {
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
 			
-			res = session.update("sboard.simageInsert", vo);
+			res = session.insert("sboard.simageInsert", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -32,5 +32,57 @@ public class SimageDAOImpl implements ISimageDAO {
 		}
 		return res;
 	}
+
+	@Override
+	public int simageDeleteBySboardId(int sbId) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			
+			res = session.delete("sboard.simageDeleteBySboardId", sbId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int simageUpadateByOldName(SimageVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			
+			res = session.update("sboard.simageUpadateBySboardId", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int simageCount(int sbId) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			
+			res = session.selectOne("sboard.simageCount", sbId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
 
 }

@@ -1,37 +1,34 @@
 package controller.sboard;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import dao.simageDAO.ISimageDAO;
 import service.sboardService.ISboardService;
 import service.sboardService.SboardServiceImpl;
-import vo.SboardVO;
+import service.simageService.ISimageService;
+import service.simageService.SimageServiceImpl;
 
-@WebServlet("/SboardView.do")
-public class SboardView extends HttpServlet {
+@WebServlet("/SboardDelete.do")
+public class SboardDelete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String bId = request.getParameter("sboardId");
+		int sboardId = Integer.parseInt(request.getParameter("sbId"));
+		ISimageService mService = SimageServiceImpl.getInstance();
 		
-		ISboardService service = SboardServiceImpl.getInstance();
+		int result = mService.simageDeleteBySboardId(sboardId);
 		
-		List<SboardVO> list = service.sboardSelect(bId);
+		ISboardService bService = SboardServiceImpl.getInstance();
 		
-//		request.setAttribute("list", list);
+		bService.sboardDelete(sboardId);
 		
-		HttpSession session = request.getSession();
+		// 경로 나중에 바꿔야함
+		response.sendRedirect(request.getContextPath() + "/secretboard/sboard.jsp");
 		
-		session.setAttribute("sbList", list);
-		
-//		request.getRequestDispatcher("/secretboard/sboardView.jsp").forward(request, response);
-		response.sendRedirect(request.getContextPath() + "/secretboard/sboardView.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
