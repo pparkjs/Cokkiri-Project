@@ -3,15 +3,19 @@
 <%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
-<% String id = request.getParameter("memId"); %>
+<!-- session 테스트용 -->
+<% String memId = (String)session.getAttribute("mem_id"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainStyle.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sboardStyle.css">
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
+<script src="<%=request.getContextPath() %>/js/sboardWrite.js"></script>
+
 <script>
 fcnt = 1;
+mypath = "<%=request.getContextPath() %>";
 $(function(){
 	//제목 글자수 제한
 	$('#ta1').on('keyup', function(){
@@ -36,8 +40,11 @@ $(function(){
 	$('.rg_btn').on('click',function(){
 		
 		title = $('#ta1').val();
+		
 		content = $('#ta2').val();
-		console.log(title, content)
+		econtent = content.replace(/\n/g, "<br>");
+		
+		$('#ta2').val(econtent);
 		
 		if(title != '' && content != ''){
 			$('form').submit();
@@ -49,55 +56,29 @@ $(function(){
 		
 		//파일 미리보기
 		$(document).on('change','.file', function(){
-			if($('.file').length == 6){
-				alert('이미지는 최대 5개까지만 등록 가능합니다.')
-				return;
-			}
-			alert(fcnt);
 	 		readURL(this);
+	 		
 		})
-		
-		function readURL(input){
-			if(input.files && input.files[0]){
-				var reader = new FileReader(); //파일 읽기위한 객체 생성
-				reader.onload = function(e){ //파일 읽어 들이기 성공했을 때 호출되는 이벤트핸들러
-					vimg = `<div class="img_div" id="img_div${fcnt}">
-					          <img class="img" id="img${fcnt}" src="#" alt="image">
-					          <img class="img_del" src="<%=request.getContextPath()%>/images/x마크.png">
-					        </div>`
-					$('.img_wrap'+fcnt).before(vimg); //버튼 앞에 이미지 틀 생성
-					//이미지 Tag의 src속성에 읽어들인 File내용을 지정
-					$('#img'+fcnt).attr('src', e.target.result)
-					
-					//기존에 있던 img_wrap을 숨기고 새로운 img_wrap을 만들자
-					$('.img_wrap'+fcnt).css("display", "none");
-					
-					//새로운 img_wrap 생성
-					vwrap = `<div class="img_wrap${fcnt+1}">
-								<input type="file" class="file" id="f${fcnt+1}" name="img_file${fcnt+1}">
-								<div class="file_background">
-									<label for="f${fcnt+1}">
-										<img class="img_up" src="<%=request.getContextPath()%>/images/카메라.png">
-										</label>
-									</div>
-								</div>`;
-						//첨부한img 뒤에 추가
-// 						$('#img_div'+fcnt).after(vwrap);
-						$('.rg_images').append(vwrap);
-						fcnt = fcnt + 1;
-
-			
-				}
-				reader.readAsDataURL(input.files[0]);//File내용을 읽어 dataURL형식의 문자열롷 저장
-			}
-		}
-	
 		
 		$(document).on('click','.img_del', function(){
 			$(this).parent().next().remove();
 			$(this).parent().remove();
+			
+			if($('.file').length == 6){
+				$('.rg_images div:nth-child(12)').css("display", "block");
+				return;
+			}
 		})
-
+		
+		//keydown 키보드의 키가 눌렸을때 발생
+		$('#ta1').on('keydown', function(event){ 			
+			if(event.keyCode === 13){ // 13은 엔터키의 keyCode 값
+				event.preventDefault(); // 기본 동작인 줄바꿈을 막는다.
+			}
+			
+			const input = document.getElementById("f1");
+			console.log(input.files)
+		})
 })
 
 </script>
@@ -105,14 +86,14 @@ $(function(){
 <body>
  <%@ include file="/module/header.jsp" %>
 <div class="con_regist">
-	<form action="<%=request.getContextPath()%>/InsertSboard.do?memId=<%=id%>" method="post"
+	<form action="<%=request.getContextPath()%>/InsertSboard.do" method="post"
 		enctype="multipart/form-data">
 		<div class="rg_header">
 			<h1>비밀게시판 글쓰기</h1>
 		</div>
 		<!-- 이미지 업로드 -->
 		<div class="rg_images">
-			<div class="txt">이미지<br><span>(최대 6개까지 첨부가능)</span></div>
+			<div class="txt">이미지<br><span>(최대 5개까지 첨부가능)</span></div>
 			
 			<div class="img_wrap1">
 				<input type="file" class="file" id="f1" name="img_file1">
@@ -134,7 +115,7 @@ $(function(){
 		<div class="rg_content">
 			<div class="txt">내용</div>
 			<div class="rgc">
-				<textarea  id="ta2" name="content" rows="10" cols="140" placeholder="내용을 입력해주세요."></textarea>
+				<textarea  id="ta2" name="content" rows="10" cols="168" placeholder="내용을 입력해주세요."></textarea>
 				<div id="maxContent">(0 / 500)</div>
 			</div>
 			<br>
