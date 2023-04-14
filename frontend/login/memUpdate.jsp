@@ -110,7 +110,7 @@ $(function() {
 		})
 	})
 	
-	
+	messageCheck = 0;
 	$('#messageCheckBtn').on('click', function() {
 		messageCheck = $('#messageCheck').val();
 		
@@ -121,8 +121,8 @@ $(function() {
 					
 			success : function(res) {
 				if(res.result=="true"){
-					$('#ranMessageCheck').text('인증성공').css('color','green');
-					inputcheck = inputcheck+1;
+					$('#ranMessageCheck').text('인증완료').css('color','green');
+					messageCheck = 1;
 				} else {
 					
 					$('#ranMessageCheck').text('인증실패').css('color','red');
@@ -177,6 +177,7 @@ $(function() {
 	})
 	
 	
+	imgCheck = 0;
 	$('#imgNumCheckBtn').on('click', function() {
 		var imgNumInput = $('#imgNumInput').val();
 		$.ajax({
@@ -185,8 +186,8 @@ $(function() {
 			data : {"imgNumInput" : imgNumInput},
 			success : function(res) {
 				if(res.result == "true"){
-					$('#imgnumCheck').text('입력값이 일치합니다.').css('color','green');
-					inputcheck = inputcheck+1;
+					$('#imgnumCheck').text('인증 완료').css('color','green');
+					imgCheck = 1;
 				} else {
 					$('#imgnumCheck').text('입력값이 일치하지 않습니다.').css('color','red');
 					
@@ -204,7 +205,7 @@ $(function() {
 	// 데이터 유효성 체크
 	$('#id').on('keyup', function() {
 		idvalue = $(this).val().trim();
-		idreg = /^[a-z0-9!@#$^*_+-=]{5,10}$/;
+		idreg = /^[a-z0-9!@#$^*+=]{5,10}$/;
 		if(!(idreg.test(idvalue))){
 			$('#idcheck').text('5~10자의 영문 소문자, 숫자와 특수기호 (!@#$^*_+-=)만 사용 가능합니다.').css('color', 'red');
 		} else {
@@ -214,8 +215,7 @@ $(function() {
 				data : {"id" : idvalue},
 				success : function(res) {
 					if(res.result == "true"){
-						$('#idcheck').text('사용 가능한 id입니다.').css('color', 'green');
-						inputcheck = inputcheck+1;
+						$('#idcheck').text('');
 					} else {
 						$('#idcheck').text('id가 중복됩니다.').css('color', 'red');
 					}
@@ -240,15 +240,13 @@ $(function() {
 			$('#passcheck').text('8~15자의 영문 소문자, 대문자, 숫자와 특수기호 (!@#$^*()~`_-+=<,>.?/)만 사용 가능합니다.').css('color', 'red');
 		} else {
 			$('#passcheck').text('');
-			inputcheck = inputcheck+1;
 		}
 		
 	})
 	$('#repass').on('keyup', function() {
 		repassvalue = $(this).val().trim();
 		if(passvalue == repassvalue){
-			$('#repasscheck').text('비밀번호가 일치합니다.').css('color', 'green');
-			inputcheck = inputcheck+1;
+			$('#repasscheck').text('');
 		} else {
 			$('#repasscheck').text('비밀번호가 일치하지 않습니다.').css('color', 'red');
 		}
@@ -262,7 +260,6 @@ $(function() {
 			$('#namecheck').text('한글만 입력 가능합니다.').css('color', 'red');
 		} else {
 			$('#namecheck').text('');
-			inputcheck = inputcheck+1;
 		}
 		
 	})
@@ -279,8 +276,7 @@ $(function() {
 				data : {"nicknamevalue" : nicknamevalue},
 				success : function(res) {
 					if(res.result == "true"){
-						$('#nicknamecheck').text('사용 가능한 닉네임입니다.').css('color', 'green');
-						inputcheck = inputcheck+1;
+						$('#nicknamecheck').text('');
 					} else {
 						$('#nicknamecheck').text('닉네임이 중복됩니다.').css('color', 'red');
 					}
@@ -301,35 +297,88 @@ $(function() {
 		if(!(emailreg.test(emailvalue))){
 			$('#emailcheck').text('올바른 형식으로 입력해 주세요').css('color', 'red');
 		} else {
+			// 이메일 (7)
 			$('#emailcheck').text('');
+			inputcheck = inputcheck+1;
+			console.log("이메일" +inputcheck);
 		}
 		
 	})
 	
- 	if(inputcheck<7){
-		$('#memJoinBtn').prop('disabled', false);
-	} else {
-		$('#memJoinBtn').prop('disabled', true);
-	} 
+	
+	$('#memJoinBtn').on('click', function() {
+		var id = $('#id').val().trim();
+		var pass = $('#pass').val().trim();
+		var repass = $('#repass').val().trim();
+		var name = $('#name').val().trim();
+		var nickname = $('#nickname').val().trim();
+		var email = $('#email').val().trim();
+		var sample6_address = $('#sample6_address').val().trim();
+		
+		var inputtag = id + pass + repass + name + nickname + email + sample6_address;
+		
+		var idcheck = $('#idcheck').text().trim();
+		var passcheck = $('#passcheck').text().trim();
+		var repasscheck = $('#repasscheck').text().trim();
+		var namecheck = $('#namecheck').text().trim();
+		var nicknamecheck = $('#nicknamecheck').text().trim();
+		var emailcheck = $('#emailcheck').text().trim();
+		
+		var checkText = idcheck + passcheck + repasscheck + namecheck + nicknamecheck;
+		
+		if(inputtag != "" && checkText == "" && messageCheck==1 && imgCheck==1){
+			$('#joinForm').submit();
+		} else {
+			alert("입력 잘해!!!")
+		}
+	})	
+	
 	
 })
 
 </script>
 <style type="text/css">
+
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);* { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
 * {
 	box-sizing: border-box;
-	border : 1px solid blue;
+	/* border : 1px solid blue; */
 }
-.container .logo{
-	display : inline-block;
-	width : 150px;
+
+input:focus {
+	outline: none;
+	box-shadow: none;
+}
+.container {
+	margin: 0 auto;
+	width : 400px;
+	position: relative;
+}
+
+.container .logoContainer{
+	padding-top : 70px;
 	text-align: center;
 	
 }
+.container .logo{
+	display : inline-block;
+	width : 200px;
+}
+
+.joinRow:not(:first-of-type){
+	margin-top: 25px;
+}
 
 .form-input{
-	padding : 14px;
-	position : relative;	
+	padding : 12px;
 	font-size : 14px;
 	border: none;
 	height: 100%;
@@ -337,89 +386,171 @@ $(function() {
 	box-sizing: border-box;
 }
 
-
-.container {
-	margin: 0 auto;
-	width : 450px;
+.joinRow input{
+	border: 1px solid rgb(209, 209, 214);
+	border-radius: 5px;
 }
 
-.inputbox {
-	display : flex;
-	width : 100%
+.joinRow .joinRepsRow{
+	margin-top: 15px;
+}
+.joinRow .label{
+	margin-bottom: 6px;
 }
 
-.boxrow {
-	width: 100%;
+.joinRow label {
+	font-weight: 500;
+	font-size: 14px;
+	color : rgb(58,58,60);
+}
+
+/* 생년월일 */
+.joinRow .birbox{
 	display: flex;
-	flex-direction: row;
 	justify-content: space-between;
 }
 
-.inputbox select{
-	width: 135px;
+.birbox select{
+	width: 130px;
 	vertical-align: middle;
+	padding: 12px;
+	border: 1px solid rgb(209, 209, 214);
+	border-radius: 5px;
 }
 
-.inputbox #tel{
-	width: 275.5px;
-	vertical-align: middle;
+
+/* 성별 */
+.gender select {
+	width: 130px;
+	padding: 12px;
+	border: 1px solid rgb(209, 209, 214);
+	border-radius: 5px;
+
+}
+.inputTextAndButton {
+	display: flex;
 	justify-content: space-between;
 }
-.inputbox #telMessage{
-	width: 80px;
-	vertical-align: middle;
-	justify-content: space-between;
+.inputTextAndButton input:nth-child(1){
+	padding : 12px;
+	font-size : 14px;
+	border: none;
+	height: 100%;
+	width: 264px;
+	box-sizing: border-box;
+	border: 1px solid rgb(209, 209, 214);
+}
+.inputTextAndButton input:nth-child(2){
+	padding : 12px;
+	font-size : 14px;
+	border: none;
+	height: 100%;
+	width: 130px;
+	box-sizing: border-box;
 }
 
-.inputbox img{
-	width : 100%;
+/* 자동가입방지 이미지 */
+.inputImgAndButton {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
 }
-.join_row:not(:first-of-type){
-	margin-top: 20px;
+.inputImgAndButton img{
+	padding : 12px;
+	font-size : 14px;
+	border: none;
+	height: 100%;
+	width: 300px;
+	box-sizing: border-box;
+	border: 1px solid rgb(209, 209, 214);
+	border-radius: 5px;
+}
+.inputImgAndButton input{
+	padding : 12px;
+	font-size : 14px;
+	border: none;
+	height: 100%;
+	width: 93px;
+	box-sizing: border-box;
+	justify-content: center;
+}
+
+.membJoinContainer input {
+	height: 100%;
+	width: 100%;
+	padding: 12px;
+	border: none;
+	border-radius: 1233px;
+	background: rgb(56,102,233);
+	color: white;
+	font-size: 14px;
+}
+
+.check{
+	margin-top: 5px;
+	font-size: 14px;
+}
+.check{
+	margin-top: 5px;
+	font-size: 14px;
 }
 
 </style>
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/memberUpdate.do" method="post" >
+<form action="<%=request.getContextPath()%>/memberInsert.do" method="post" id="joinForm">
 <div class="container">
-	<img src="<%=request.getContextPath()%>/images/코끼리로고심볼가로.png" alt="CokkiriLogo.jsp" class="logo">
-	
-	<div class="join_row">
-		<label for="id">아이디</label><br>
-		<input type="text" name="id" id="id" class="form-input">
-		<div id="idcheck"></div>
+	<div class="logoContainer">
+		<img src="<%=request.getContextPath()%>/images/코끼리로고심볼가로.png" alt="CokkiriLogo.jsp" class="logo">
 	</div>
 	
-	<div class="join_row">
-		<div class="join_ps_row">
-			<label for="pass">비밀번호</label><br>
-			<input type="text" name="pass" id="pass" class="form-input">
-			<div id="passcheck"></div>
+	<div class="joinRow">
+		<div class="label">
+			<label for="id">아이디</label>
+		</div>
+		<input type="text" name="id" id="id" class="form-input">
+		<div id="idcheck" class="check"></div>
+	</div>
+	
+	<div class="joinRow">
+		<div class="joinPsRow">
+			<div class="label">
+				<label for="pass">비밀번호</label>
+			</div>
+			<input type="password" name="pass" id="pass" class="form-input">
+			<div id="passcheck" class="check"></div>
 		</div>
 		
-		<div class="join_reps_row">
-			<label for="repass">비밀번호 확인</label>
-			<input type="text" name="repass" id="repass" class="form-input">
-			<div id="repasscheck"></div>
+		<div class="joinRepsRow">
+			<div class="label">
+				<label for="repass">비밀번호 확인</label>
+			</div>
+			<input type="password" name="repass" id="repass" class="form-input">
+			<div id="repasscheck" class="check"></div>
 		</div>
 	</div>
 	
-	<div class="join_row" >
-		<label for="name">이름</label><br>
+	<div class="joinRow" >
+		<div class="label">
+			<label for="name">이름</label>
+		</div>
 		<input type="text" name="name" id="name" class="form-input">
-		<div id="namecheck"></div>
+		<div id="namecheck" class="check"></div>
 	</div>
 	
-	<div class="join_row" id="nicknamebox">
-		<label for="nickname">닉네임</label><br>
+	<div class="joinRow" id="nicknamebox">
+		<div class="label">
+			<label for="nickname">닉네임</label>
+		</div>
 		<input type="text" name="nickname" id="nickname" class="form-input">
-		<div id="nicknamecheck"></div>
+		<div id="nicknamecheck" class="check"></div>
 	</div>
 	
-	<div class="join_row" id="">
-		<label>생년월일</label><br>
-		<div class="form-input inputbox">
+	<div class="joinRow">
+		<div class="label">
+			<label>생년월일</label>
+		</div>
+		<div class="birbox">
 			<select id="year" class="bir" name="year">
 			</select>
 			<select id="month" class="bir" name="month">
@@ -429,66 +560,72 @@ $(function() {
 		</div>
 	</div>
 	
-	<div class="join_row" id="">
-		<label>성별</label><br>
-		<div class="form-input inputbox">
-			<select id="gender" class="gender" name="gender">
-				<option value="M" selected>남</option>
-				<option value="F" selected>여</option>
-			</select>
+	<div class="joinRow gender">
+		<div class="label">
+			<label>성별</label>
 		</div>
+		<select id="gender" class="gender" name="gender">
+			<option value="M" selected>남</option>
+			<option value="F" selected>여</option>
+		</select>
 	</div>
 	
-	<div class="join_row" id="">
-		<label for="email">이메일</label><br>
+	<div class="joinRow">
+		<div class="label">
+			<label for="email">이메일</label>
+		</div>
 		<input type="text" placeholder="이메일" name="email" id="email" class="form-input">
-		<div id="emailcheck"></div>
+		<div id="emailcheck" class="check"></div>
 	</div>
 	
-	<div class="join_row" id="">
-		<label for="tel">휴대전화</label><br>
-		<div class="form-input inputbox">
+	<div class="joinRow" id="">
+		<div class="label">
+			<label for="tel">휴대전화</label>
+		</div>
+		<div class="inputTextAndButton">
 			<input type="text" placeholder="전화번호" name="tel" id="tel">
 			<input type="button" value="인증번호 받기" name="sendMessage" id="sendMessage">
 		</div>
-		<div class="form-input inputbox">
-			<p>숫자만 입력해주세요.</p>
-		</div>
-		<div class="form-input inputbox">
+		<p>숫자만 입력해주세요.</p>
+		<div class="inputTextAndButton"">
 			<input type="text" placeholder="인증번호 입력" name="messageCheck" id="messageCheck">
 			<input type="button" value="확인" name="messageCheckBtn" id="messageCheckBtn">
 		</div>
-		<div id="ranMessageCheck"></div>
+		<div id="ranMessageCheck" class="check"></div>
 	</div>
 	
-	<div class="join_row" id="">
-		<label for="captchaImg">자동로그인 방지</label><br>
-		<div class="form-input inputbox">
+	<div class="joinRow" id="">
+		<div class="label">
+			<label for="captchaImg">자동로그인 방지</label>
+		</div>
+		<div class="inputImgAndButton">
 			<img id="captchaImg" src="" alt="자동가입방지문자"> 
 			<div id="ccaudio" style="display:none"></div>
-		</div>
-		<div class="form-input inputbox">
 			<input id="reload" type="button" onclick="" value="새로고침"/>
 		</div>
 		<div class="audioCptcha"></div>
-		<div class="form-input inputbox"">
+		<div class="inputTextAndButton"">
 			<input id="imgNumInput" type="text" value="">
 			<input id="imgNumCheckBtn" type="button" value="확인"/>
 		</div>
-		<div id="imgnumCheck"></div>
+		<div id="imgnumCheck" class="check"></div>
 	</div>
 	
 	
 	
-	<div class="join_row" id="addrbox">
-		<label for="sample6_postcode">우편번호</label><br>
-		<input type="text" id="sample6_address" placeholder="주소" class="form-input" name="addr">
-		<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+	<div class="joinRow" id="addrbox">
+		<div class="label">
+			<label for="sample6_postcode">우편번호</label>
+		</div>
+		<div class="inputTextAndButton"">
+			<input type="text" id="sample6_address" placeholder="주소" class="form-input" name="addr">
+			<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기">
+		</div>
 		
 	</div>
 	
-	<div class="join_row" id="addrbox">
-		<input type="submit" value="가입하기" id="memJoinBtn" disabled=""> 
+	<div class="joinRow membJoinContainer">
+		<input type="button" value="가입하기" id="memJoinBtn" > 
 	</div>
 </div>
 </form>
