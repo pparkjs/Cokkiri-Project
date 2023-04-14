@@ -14,7 +14,7 @@ public interface ISboardDAO {
 	public int sboardUpdate(SboardVO vo);
 	
 	// 게시글 삭제하기
-	public int sboardDelete(SboardVO vo);
+	public int sboardDelete(int sbId);
 	
 	// 해당 게시글 출력하기 
 	public List<SboardVO> sboardSelect(String sbId);
@@ -27,6 +27,36 @@ public interface ISboardDAO {
 	
 	//조회수 증가
 	public int updateHit(int num);
+	
+	//좋아요 눌렀을 때 좋아요 처리하는 메서드
+	public int likeInsert(SboardVO vo);
+	
+	// 좋아요 중복 체크 메서드
+	public int likeCheck(SboardVO vo);
+	
+	// 좋아요 눌러져있는지 체크
+	public int likeByButton(SboardVO vo);
+	
+	// 좋아요 업데이이트 메소드
+	public int likeUpdate(SboardVO vo);
+	
+	// 좋아요 행 삭제
+	public int likeDelete(SboardVO vo);
+	
+	// 싫어요 눌렀을때 싫어요 생성
+	public int disLikeInsert(SboardVO vo);
+	
+	// 싫어요 업데이트 메소드
+	public int disLikeUpdate(SboardVO vo);
+	
+	// 좋아요,싫어요,신고,조회수 상태 조회
+	public SboardVO viewState(SboardVO vo);
+	
+	// 신고 중복 체크
+	public int notifyCheck(SboardVO vo);
+	
+	// 신고하기 메소드
+	public int sboardNotify(SboardVO vo);
 	
 	
 }
