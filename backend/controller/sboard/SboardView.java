@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.sboardService.ISboardService;
 import service.sboardService.SboardServiceImpl;
@@ -18,15 +19,19 @@ public class SboardView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String bId = request.getParameter("sboardId");
-		System.out.println("아이디 : " + bId);
+		
 		ISboardService service = SboardServiceImpl.getInstance();
 		
 		List<SboardVO> list = service.sboardSelect(bId);
 		
-		request.setAttribute("list", list);
+//		request.setAttribute("list", list);
 		
-		request.getRequestDispatcher("/secretboard/sboardView.jsp").forward(request, response);
+		HttpSession session = request.getSession();
 		
+		session.setAttribute("sbList", list);
+		
+//		request.getRequestDispatcher("/secretboard/sboardView.jsp").forward(request, response);
+		response.sendRedirect(request.getContextPath() + "/secretboard/sboardView.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
