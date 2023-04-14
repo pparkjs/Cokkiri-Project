@@ -6,7 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
+<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
+  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
 <script type="text/javascript">
+Kakao.init('9356f76605d93d198112a946e2890199'); // 사용하려는 앱의 JavaScript 키 입력
 $(function() {	
 	$('.loginbutton').on('click', function() {
 		var id = $('.id').val().trim();
@@ -35,10 +38,12 @@ $(function() {
 			},
 			dataType : 'json'
 		})
+		
 	})
 	
 	
 })
+
 </script>
 <link rel="stylesheet" type="text/css" href="../css/loginform.css">
 <style type="text/css">
@@ -50,7 +55,9 @@ $(function() {
 }
 
 .logintoptest {
-	margin : 0px 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-bottom: 5px;
 }
 
 .logontext{
@@ -80,7 +87,7 @@ button:active {
 	width: 100%;
 	padding : 10px 14px;
 	font-size: 16px;
-	font-weight: 700;
+	font-weight: 400;
 	box-sizing: border-box;
 }
 
@@ -155,7 +162,7 @@ input:focus {outline:none;}
 	<div class="loginbox">
 		<div class="logintoptest">
 			<span class="logontext">로그인</span>
-			<a class="findpassword">비밀번호를 잊어버리셨나요?</a>
+			<a class="findpassword">아이디</a>
 		</div>
 			<div class="iddiv">
 				<input type="text" name="id" placeholder="아이디" class="id">
@@ -169,7 +176,7 @@ input:focus {outline:none;}
 		<div class="loginother">
 			<p>다른 방법으로 로그인하기</p>
 			<ul>
-				<li><a type="button" class="kakaoimg" href=""><img src="../images/카카오톡동그란로고.png"></a></li>
+				<li><a type="button" class="kakaoimg" id="kakaoLoginBtn"><img src="../images/카카오톡동그란로고.png"></a></li>
 			</ul>
 		</div>
 	</div>

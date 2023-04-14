@@ -129,16 +129,16 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
-	public String selectAuth(String memId) {
+	public MemberVO selectMemberById(String memId) {
 		SqlSession session = null;
-		String auth = null;
+		MemberVO memVo = null;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			auth = session.selectOne("member.selectAuth", memId);
+			memVo = session.selectOne("member.selectMemberById", memId);
 		} finally {
 			session.close();
 		}
-		return auth;
+		return memVo;
 	}
 
 }

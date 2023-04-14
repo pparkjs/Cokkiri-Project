@@ -13,8 +13,8 @@ import service.memberService.IMemberService;
 import service.memberService.MemberServiceImpl;
 import vo.MemberVO;
 
-@WebServlet("/memberUpdate.do")
-public class MemberUpdate extends HttpServlet {
+@WebServlet("/memberInsert.do")
+public class MemberInsert extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -63,13 +63,11 @@ public class MemberUpdate extends HttpServlet {
 		String result = null;
 		if(joinResult==1) {
 			result = "true";
+			
 		} else {
 			result = "false";
 		}
-		
-		request.setAttribute("result", result);
-		System.out.println("가입 여부"+ result);
-		request.getRequestDispatcher("/view/member/result.jsp").forward(request, response);	
+		response.sendRedirect(request.getContextPath() + "/login/login.jsp");
 	}
 	
 

@@ -1,9 +1,8 @@
 @charset "UTF-8";
-@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+* { 
+ font-family: 'Noto Sans KR', sans-serif;
 }
 
 * {
@@ -51,7 +50,7 @@ nav input {
 	border-radius: 20px;
 	background-color: rgb(242,242,247);
 	font-size: 14px;
-	font-weight: 700;
+	font-weight: 600;
 }
 
 .main{

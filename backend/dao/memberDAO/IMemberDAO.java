@@ -30,6 +30,6 @@ public interface IMemberDAO {
 	// 회원 아이디, 비밀번호 일치체크
 	public int selectIdPassCheck(MemberVO memVo);
 	
-	// 관리자 여부 체크
-	public String selectAuth(String memId);
+	// 회원 아이디로 회원정보 조회
+	public MemberVO selectMemberById(String memId);
 }
