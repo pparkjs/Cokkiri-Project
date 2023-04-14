@@ -45,7 +45,7 @@
 .header .navbar .navbar__board{ display: flex;  list-style: none; }
 .header .navbar .navbar__board li{ display: flex; justify-content: center; align-items: center; width: 150px; height: 50px; margin-right: 20px; }
 .header .navbar .navbar__board li:hover{ background : #3866df;}
-.header .navbar .navbar__board li a{text-decoration: none; color : black; font-weight: bold; text-align: center; font-weight: 900; font-size: 16px;}
+.header .navbar .navbar__board li a{text-decoration: none; color : black; text-align: center; font-weight: 700; font-size: 16px;}
 .header .navbar .navbar__board:nth-child(2){ margin-right: 200px;}
 .header .navbar .navbar__board li:nth-child(2){ margin-right: 30px;}
 .header .navbar .navbar__board li a:hover{ color : white;}
