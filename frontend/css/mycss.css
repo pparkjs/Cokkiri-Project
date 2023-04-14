@@ -1,0 +1,253 @@
+*{
+    padding : 0;
+    margin: 0;
+    outline: none;
+}
+
+@font-face {
+    font-family: 'LOTTERIACHAB';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+} 
+
+@font-face {
+    font-family: 'RixInooAriDuriR';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2207-01@1.0/RixInooAriDuriR.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'S-CoreDream-3Light';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    font-family: 'S-CoreDream-3Light';
+}
+.wrap{min-width: 1690px;}
+
+/* header에 대한 CSS들 */
+.header{ background-color: white; position : relative; height : 60px; width : 100%; min-width: 1000px;}
+.header .navbar{ padding : 10px 20px; display : flex; align-items: center; justify-content: center;box-sizing: border-box; width : 80%; height : 60px; margin: 0 auto;}
+.header .navbar__mainLogo{display: flex; justify-content: center; align-items: center; margin-right :100px;}
+.header .navbar .mainLogo__img{ width : 100%; height : 40px;}
+.header .navbar .mainLogo__a{ display: flex; justify-content: center; align-items: center; margin-left: 6px;}
+.header .navbar .mainLogo__a img{width : 110px; height : 30px;}
+.header .navbar .navbar__alamLogo{display: flex; justify-content: center; align-items: center; margin-right: 40px;}
+.header .navbar .navbar__alamLogo img{ width : 20px; height : 20px;}
+.header .navbar .navbar__mapLogo{display: flex; justify-content: center; align-items: center; margin-right: 50px;}
+.header .navbar .navbar__mapLogo img{ width : 30px; height : 30px; margin-right: 10px;}
+.header .navbar .navbar__mapLogo p{ width : 100px; font-size: 1.3em; font-weight: 900;}
+.header .navbar .navbar__board{ display: flex;  list-style: none; }
+.header .navbar .navbar__board li{ display: flex; justify-content: center; align-items: center; width: 150px; height: 50px; margin-right: 20px; }
+.header .navbar .navbar__board li:hover{ background : #3866df;}
+.header .navbar .navbar__board li a{text-decoration: none; color : black; font-weight: bold; text-align: center; font-weight: 900; font-size: 16px;}
+.header .navbar .navbar__board:nth-child(2){ margin-right: 200px;}
+.header .navbar .navbar__board li:nth-child(2){ margin-right: 30px;}
+.header .navbar .navbar__board li a:hover{ color : white;}
+
+/* 프로필사진 클릭시 하단에 메뉴나오게 하기 */
+.header .navbar .navbar__mymenu{display : flex; }
+.header .navbar .navbar__mymenu .myimage{
+    border: 1px solid rgb(217, 213, 213);
+    /* 둥근 레이아웃 가지고 싶으면 가로세로 길이 똑같이 하고 radius100% */
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+}
+.header .navbar .navbar__mymenu #mymenu{
+    /* checkbox요소를 안보이게 숨겨줌 */
+    display: none;
+}
+.navbar__label{
+    display: flex;
+    /* 정적위치 기준으로 공간에서 다른요소에 영향을 끼치지 않음 */
+    position:relative;
+    /* 마우스 올리면 마우스 커서가 선택포인터로 바뀜 */
+    /* cursor:pointer; */
+}
+.sidebar{
+  padding-top : 15px;
+  position: absolute;
+  width: 130px;
+  height : 180px;
+  left : -40px;
+  z-index : 100;
+  top : 53px;
+  border-radius: 10px;
+/*   box-shadow: 1px 1px 2px 1px; */
+  background: white;
+  display: none;  
+}
+.navbar__label:hover .sidebar {
+  display: block;
+}
+
+/* input 요소에 체크박스가 체크되어있지 않을때 sidebar에 상태 */
+
+/* .sidebar { */
+    
+/*     background: white; */
+/*     absolute할려면 부모position있어야함 안그러면 body기준으로 적용됨  */
+/*     position:absolute;  */
+/*     right:167px; */
+/*     top : 60px; */
+/*     right: 0px; */
+/*     width:100%; */
+/*     height :0px; */
+/*     box-shadow: 1px 1px 2px 1px; */
+/*     z-index:-1; */
+/*     변화에 딜레이를 줘서 움직이는 모션줌 */
+/*     transition:all .5s; */
+/*     border-radius: 10px; */
+/*     /* */
+/*     이렇게 두면 가장 상단에서 왼쪽에 브라우저 밖에 -300px만큼 위치해 있다. */
+/*     top:0; */
+/*     left:-300px; */
+/*     */  */
+/* }  */
+
+/* input의 체크박스가 체크가 되면 인접요소선택자 + 를 이용해 해당 input과의 인접 요소인 label과 그 label의 인접요소인 div로 간다*/
+/* #mymenu:checked + label + .sidebar{
+    right : 0px;
+    width:100%;
+    height :70px;
+    display: block;
+    z-index: 2;
+    transition:all .5s;
+}  */
+
+
+
+.sidebar__list{display: flex; flex-direction :column; justify-content: center;  height: 100%;}
+.sidebar__list li {display: flex; justify-content: center; align-items: center; list-style: none; margin-bottom: 6px;  width: 100%; text-align: center;}
+.sidebar__list li a{text-decoration : none;color: black; font-weight: bold; font-size: 16px;}
+.sidebar__list li:hover{background: #3866df;}
+.sidebar__list li a:hover{color: white;}
+
+/* container에 대한 CSS들 */
+.container .container__home1{height: 720px; background-color: #e1eff3; position: relative;}
+/* .container .container__home1 .home1{ width: 1100px; height: 500px; margin: 0 auto; position: relative; padding-top: 240px;} */
+.home1__images img{position: absolute; bottom:-10px; right: 160px; width: 800px; height:650px; z-index:1;}
+.home1__text h1{ font-size: 3.5em; position: absolute; top:220px; left:300px;
+/* 1초동안 ease-out 주면 스무스하게도착함 */
+animation: slideLeft 1s ease-out;}
+.home1__text p{ font-size: 1.3em; position: absolute; top:410px; left:300px;
+    animation: slideLeft 1.5s ease-out;}
+.home1__text a{text-decoration: none; background-color: #F1F3F5; color: black; padding: 20px;  font-size: 1.2em; font-weight: 900; position: absolute; top:500px; left:300px;}
+.home1__text a:hover{background-color: #dee2e6;}
+
+.container .container__home2{height: 720px; background-color: white; position: relative;}
+.home2__images img{position: absolute; bottom:0px; right: 1000px; width: 650px; height:550px;}
+.home2__images2 img{width : 200px; position: absolute; bottom:0px; right :400px;}
+.home2__images3 img{width : 200px; position: absolute; bottom:0px; right :700px;}
+.home2__text h1{ font-size: 3.5em; position: absolute; top:220px; right:340px;
+animation: slideRightH 1s ease-out;}
+.home2__text p{ font-size: 1.3em; position: absolute; top:410px; right:445px; animation: slideRightP 1.5s ease-out;}
+.home2__text a{text-decoration: none; background-color: #F1F3F5; color: black; padding: 20px;  font-size: 1.2em; font-weight: 900; position: absolute; top:500px; right:605px;}
+.home2__text a:hover{background-color: #dee2e6;}
+
+.container .container__home3{height: 720px; background-color: #e1eff3; position: relative;}
+.container .container__home3 .home3__title{font-weight: 900; font-size: 2.0em;}
+.home3__images img{position: absolute; bottom:-20px; right: 110px; width: 800px; height:650px;}
+.home3__text h1{ font-size: 3.5em; position: absolute; top:220px; left:300px;
+animation: slideLeft 1s ease-out;}
+.home3__text p{ font-size: 1.3em; position: absolute; top:410px; left:300px;
+animation: slideLeft 1.5s ease-out;}
+.home3__text a{text-decoration: none; background-color: #F1F3F5; color: black; padding: 20px;  font-size: 1.2em; font-weight: 900; position: absolute; top:500px; left:300px;}
+.home3__text a:hover{background-color: #dee2e6;}
+
+/* slideLeft라는 이름의 애니메이션 주기*/
+@keyframes slideLeft{
+    /* 시작 위치 */
+    from{
+        left: -100px;
+        /* 투명도 0에서 1로 */
+        opacity : 0;
+    }to{ /*끝 위치*/
+        left: 300px;
+        opacity : 1;
+    }
+}
+
+@keyframes disappear{
+    /* 시작 위치 */
+    from{
+        left: 300px;
+        opacity : 1;
+    }to{ /*끝 위치*/
+        left: 0px;
+        opacity : 0;
+    }
+}
+
+@keyframes slideRightH{
+    /* 시작 위치 */
+    from{
+        right: 0px;
+        /* 투명도 0에서 1로 */
+        opacity : 0;
+    }to{ /*끝 위치*/
+        right: 340px;
+        opacity : 1;
+    }
+}
+@keyframes slideRightP{
+    /* 시작 위치 */
+    from{
+        right: 0px;
+        /* 투명도 0에서 1로 */
+        opacity : 0;
+    }to{ /*끝 위치*/
+        right: 445px;
+        opacity : 1;
+    }
+}
+
+@keyframes disappearH{
+    /* 시작 위치 */
+    from{
+        right: 340px;
+        opacity : 1;
+    }to{ /*끝 위치*/
+        right: 0px;
+        opacity : 0;
+    }
+}
+
+@keyframes disappearP{
+    /* 시작 위치 */
+    from{
+        right: 445px;
+        opacity : 1;
+    }to{ /*끝 위치*/
+        right: 0px;
+        opacity : 0;
+    }
+}
+
+.footer{display: flex; align-items: flex-start; border-top: 2px solid rgb(192, 189, 189);background: e8e8e8; height : 150px;}
+.footer .footer__explain{ font-size: 0.7em; margin-top:2%; margin-left: 20%;}
+.footer .footer__explain p{color : #868b94; font-weight: 700; margin-bottom:5px;}
+.footer .footer__explain span{color : #868b94; font-weight: lighter;}
+
+ /* sub 메뉴바 테스트 */
+.sub_menu_test{
+  width: 100%;
+  position: fixed;
+  left: 0;
+  z-index : 100;
+  top : 60px;
+  display: none;
+}
+.navbar__board .item:hover .sub_menu_test {
+  display: block;
+}
+
+.contents_menu{
+	background-color: #2C2A29;
+}

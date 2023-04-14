@@ -8,5 +8,39 @@
 	<select id="memberAllList" resultType="memberVo">
 		select * from member
 	</select>
+
+	<insert id="memberInsert" parameterType="memberVo">
+		insert into member (mem_id, mem_pw, mem_name, mem_tel, mem_mail,
+							mem_add, mem_bir, mem_gend, mem_nickname, admin_auth)
+		values (#{mem_id}, SHA256.ENCRYPT(#{mem_pw}), #{mem_name}, #{mem_tel}, #{mem_mail},
+				#{mem_add}, #{mem_bir}, #{mem_gend}, #{mem_nickname}, #{admin_auth})
+	</insert>
 	
+	<select id="memberTelCount" parameterType="String" resultType="int">
+		select count(*) from member where mem_tel=#{mem_tel}
+	</select>
+	<select id="incheck" parameterType="String" resultType="int">
+		select count(*) from member where mem_id=#{mem_id}
+	</select>
+	<select id="nicknamecheck" parameterType="String" resultType="int">
+		select count(*) from member where mem_nickname=#{mem_nickname}
+	</select>
+
+	<select id="selectMemberinfoByNick" parameterType="String" resultType="memberVo">
+		select * from member where mem_nickname=#{mem_nickname}
+	</select>
+	<select id="selectMemberinfo" parameterType="String" resultType="memberVo">
+		select * from member where mem_id=#{mem_id}
+	</select>
+	<select id="selectIsMember" parameterType="String" resultType="int">
+	 	select count(*) from member where mem_id=#{mem_id}
+	</select>	
+	
+	<select id="selectIdPassCheck" parameterType="memberVo" resultType="int">
+		select count(*) from member where mem_id=#{mem_id} and mem_pw=SHA256.ENCRYPT(#{mem_pw})
+	</select>
+	
+	<select id="selectMemberById" parameterType="String" resultType="memberVo">
+		select * from member where mem_id=#{mem_id}
+	</select>
 </mapper>

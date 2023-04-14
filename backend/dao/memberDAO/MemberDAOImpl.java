@@ -33,4 +33,112 @@ public class MemberDAOImpl implements IMemberDAO {
 		return list;
 	}
 
+	@Override
+
+	public int memberInsert(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.insert("member.memberInsert", memVo);
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int memberTelCount(String memTel) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.memberTelCount", memTel);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int incheck(String memId) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.incheck", memId);
+			
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int nicknamecheck(String memNickname) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.nicknamecheck", memNickname);
+		} finally {
+			session.close();
+		}
+		return cnt;
+  }
+  
+	public int selectIsMember(String id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.selectOne("member.selectIsMember",id);
+		session.close();
+		
+		return res;
+		
+	}
+
+	@Override
+	public MemberVO selectMemberinfo(String memId) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		MemberVO memberVO = session.selectOne("member.selectMemberinfo",memId);
+		session.close();
+		
+		return memberVO;
+	}
+
+	@Override
+	public MemberVO selectMemberinfoByNick(String nickname) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		MemberVO memberVO = session.selectOne("member.selectMemberinfoByNick",nickname);
+		session.close();
+		
+		return memberVO;
+	}
+
+	@Override
+	public int selectIdPassCheck(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.selectOne("member.selectIdPassCheck", memVo);
+		} finally {
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public MemberVO selectMemberById(String memId) {
+		SqlSession session = null;
+		MemberVO memVo = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			memVo = session.selectOne("member.selectMemberById", memId);
+		} finally {
+			session.close();
+		}
+		return memVo;
+	}
+
 }
