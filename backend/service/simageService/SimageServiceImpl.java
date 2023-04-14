@@ -22,4 +22,19 @@ public class SimageServiceImpl implements ISimageService {
 		return dao.simageInsert(vo);
 	}
 
+	@Override
+	public int simageDeleteBySboardId(int sbId) {
+		return dao.simageDeleteBySboardId(sbId);
+	}
+
+	@Override
+	public int simageUpadateByOldName(SimageVO vo) {
+		return dao.simageUpadateByOldName(vo);
+	}
+
+	@Override
+	public int simageCount(int sbId) {
+		return dao.simageCount(sbId);
+	}
+
 }
