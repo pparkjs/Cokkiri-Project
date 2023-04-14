@@ -4,7 +4,7 @@ public class TcommentVO {
 	int tcomment_id;
 	int tcomment_pid = 0;
 	int tboard_id;
-	String mem_id;
+	String mem_id; 
 	String tcomment_content;
 	String tcomment_cdate;
 	String tcomment_mdate;
@@ -12,7 +12,28 @@ public class TcommentVO {
 	String tcomment_secret;
 	String tcomment_isremove;
 	String mem_nickname;
+	int level;
+	int startTcomment;
+	int endTcomment;
 	
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getStartTcomment() {
+		return startTcomment;
+	}
+	public void setStartTcomment(int startTcomment) {
+		this.startTcomment = startTcomment;
+	}
+	public int getEndTcomment() {
+		return endTcomment;
+	}
+	public void setEndTcomment(int endTcomment) {
+		this.endTcomment = endTcomment;
+	}
 	public int getTcomment_id() {
 		return tcomment_id;
 	}
@@ -67,18 +88,20 @@ public class TcommentVO {
 	public void setTcomment_secret(String tcomment_secret) {
 		this.tcomment_secret = tcomment_secret;
 	}
-	public String getTcomment_isremove() {
-		return tcomment_isremove;
-	}
-	public void setTcomment_isremove(String tcomment_isremove) {
-		this.tcomment_isremove = tcomment_isremove;
-	}
 	public String getMem_nickname() {
 		return mem_nickname;
 	}
 	public void setMem_nickname(String mem_nickname) {
 		this.mem_nickname = mem_nickname;
 	}
+	public String getTcomment_isremove() {
+		return tcomment_isremove;
+	}
+	public void setTcomment_isremove(String tcomment_isremove) {
+		this.tcomment_isremove = tcomment_isremove;
+	}
+	
+	
 	
 	
 }
