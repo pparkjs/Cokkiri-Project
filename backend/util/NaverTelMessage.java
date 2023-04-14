@@ -2,7 +2,6 @@ package util;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -11,15 +10,13 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.crypto.Mac;
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.ws.spi.http.HttpExchange;
-import javax.xml.ws.spi.http.HttpHandler;
+
+import org.apache.tomcat.util.codec.binary.Base64;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import org.apache.tomcat.util.codec.binary.Base64;
 
 
 public class NaverTelMessage {
