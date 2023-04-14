@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import service.sboardService.ISboardService;
@@ -37,18 +38,20 @@ public class InsertSboard extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
+		
+		HttpSession session = request.getSession();
+		
+		String memId = (String)session.getAttribute("mem_id");
+		
+		SboardVO sb = new SboardVO(); //실제로 selectKey에서 boardid저장해줌
 
-		SboardVO sb = new SboardVO();
-
-		sb.setMem_id(request.getParameter("memId"));
-		System.out.println("id : " + request.getParameter("memId"));
+		sb.setMem_id(memId); 
 		sb.setSboard_content(request.getParameter("content"));
 		sb.setSboard_title(request.getParameter("title"));
 
 		ISboardService bService = SboardServiceImpl.getInstance(); 
 
-		int res = bService.sboardInsert(sb);
-		System.out.println(sb.getSboard_id()); //실제로 selectKey에서 boardid저장해줌
+		int res = bService.sboardInsert(sb); 
 
 		if(res > 0) { // board에 게시글 등록이 성공하면
 			String uploadPath = "e:/cokkiri/imgServer";
@@ -65,14 +68,12 @@ public class InsertSboard extends HttpServlet {
 
 			for(Part part : request.getParts()) {
 				fileName = extractFileName(part); // 파일명 추출해옴
-				System.out.println(fileName);
 				if(!"".equals(fileName)){ // 파일인지 검사 
 					
 					SimageVO si = new SimageVO(); //1개의 파일 저장할 vo객체 생성
 					
 					si.setSboard_id(sb.getSboard_id());
 					si.setSimg_origin_name(fileName);
-					
 					//중복 방지용 저장될 파일 네임 생성
 					String saveFileName = UUID.randomUUID().toString() + "_" + fileName;
 					si.setSimg_save_name(saveFileName);
@@ -94,7 +95,7 @@ public class InsertSboard extends HttpServlet {
 				mService.simageInsert(mvo);
 			}
 			
-			response.sendRedirect(request.getContextPath() + "/sessionLogin.do");
+			response.sendRedirect(request.getContextPath() + "/secretboard/sboard.jsp");
 		}
 
 	}
