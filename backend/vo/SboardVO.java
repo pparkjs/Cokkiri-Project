@@ -15,6 +15,20 @@ public class SboardVO {
 	private String simg_origin_name;
 	private String simg_save_name;
 	
+	// 상태 테이블의 컬럼 추가
+	private int sbstate_likenum;
+	private int sbstate_like;
+	private int sbstate_unlike;
+	
+	// 내가 누른 좋아요 와 싫어요 
+	private int me_like;
+	private int me_unlike;
+	
+	// 내가 누른 신고 체크
+	private int me_notify;
+	// 신고 일자
+	private String snotify_date;
+	
 	public int getSboard_id() {
 		return sboard_id;
 	}
@@ -80,6 +94,48 @@ public class SboardVO {
 	}
 	public void setSimg_save_name(String simg_save_name) {
 		this.simg_save_name = simg_save_name;
+	}
+	public int getSbstate_likenum() {
+		return sbstate_likenum;
+	}
+	public void setSbstate_likenum(int sbstate_likenum) {
+		this.sbstate_likenum = sbstate_likenum;
+	}
+	public int getSbstate_like() {
+		return sbstate_like;
+	}
+	public void setSbstate_like(int sbstate_like) {
+		this.sbstate_like = sbstate_like;
+	}
+	public int getSbstate_unlike() {
+		return sbstate_unlike;
+	}
+	public void setSbstate_unlike(int sbstate_unlike) {
+		this.sbstate_unlike = sbstate_unlike;
+	}
+	public int getMe_like() {
+		return me_like;
+	}
+	public void setMe_like(int me_like) {
+		this.me_like = me_like;
+	}
+	public int getMe_unlike() {
+		return me_unlike;
+	}
+	public void setMe_unlike(int me_unlike) {
+		this.me_unlike = me_unlike;
+	}
+	public int getMe_notify() {
+		return me_notify;
+	}
+	public void setMe_notify(int me_notify) {
+		this.me_notify = me_notify;
+	}
+	public String getSnotify_date() {
+		return snotify_date;
+	}
+	public void setSnotify_date(String snotify_date) {
+		this.snotify_date = snotify_date;
 	}
 
 	
