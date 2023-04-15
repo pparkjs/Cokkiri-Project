@@ -6,29 +6,47 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
-<script src="https://t1.kakaocdn.net/kakao_js_sdk/2.1.0/kakao.min.js"
-  integrity="sha384-dpu02ieKC6NUeKFoGMOKz6102CLEWi9+5RQjWSV0ikYSFFd8M3Wp2reIcquJOemx" crossorigin="anonymous"></script>
+<%
+	// 쿠키에 저장된 아이디 값 읽어오기
+	String cookieUserId = ""; // 로그인할 ID가 저장될 변수
+	String chk = ""; // checkbox의 check 여부를 지정할 변수
+	
+	Cookie[] cookieArr = request.getCookies();
+	if(cookieArr!=null){
+		for(Cookie cookie : cookieArr){
+			if("id".equals(cookie.getName()) || "userId".equals(cookie.getName())){
+				cookieUserId = cookie.getValue();
+				// 쿠키에 id값이 저장되어 있을 경우 체크박스 체크
+				chk = "checked";
+			}
+		}
+	}
+%>
 <script type="text/javascript">
-Kakao.init('9356f76605d93d198112a946e2890199'); // 사용하려는 앱의 JavaScript 키 입력
+
 $(function() {	
+
 	$('.loginbutton').on('click', function() {
 		var id = $('.id').val().trim();
 		var pw = $('.pw').val().trim();
+		
+		
+		// 체크박스의 체크여부값 받아오기
+		var idmemory = $('.idmemory').is(':checked');
 		
 		// Ajax 요청
 		$.ajax({
 			url : '<%=request.getContextPath()%>/memberLogin.do',
 			type : 'post',
 			data : {"id" : id, 
-					"pw" : pw},
+					"pw" : pw,
+					"idmemory" : idmemory},
 			success : function(res){
-				if(res.result == "true"){
-					if(id=="admin"){
-						alert("관리자 페이지로 이동 슝");
-						//window.location.href="";
-					} else {
-						window.location.href="<%=request.getContextPath()%>/home/main.jsp";
-					}
+				if(res.result=="Y"){
+					alert("관리자 페이지로 이동 슝");
+					//window.location.href="";
+				} else if (res.result=="N"){
+					window.location.href="<%=request.getContextPath()%>/home/main.jsp";
 				} else {
 					alert("아이디 또는 비밀번호가 다릅니다.");
 				}
@@ -41,7 +59,83 @@ $(function() {
 		
 	})
 	
+	// 아이디 버튼 클릭시
+	$('.findId').on('click', function() {
+		// 모달창 띄우기
+		$('#findIdModal').css('display','block');
+	})
+	// 닫기 버튼 클릭시
+	$('.findIdModalClose').on('click', function() {
+		$('#findIdModal').css('display', 'none');
+	})
 	
+	// 전화번호 전송
+	$('sendMessageBtn').on('click', function() {
+		var tel = $('#tel').val();
+		
+		// Ajax 요청
+		$.ajax({
+			url : '<%=request.getContextPath()%>/sendMessage.do',
+			type : 'post',
+			data : {"tel" : tel},
+			success : function(res){
+				if(res.result == "true"){
+					alert("인증 번호를 전송했습니다");
+				} else {
+					alert("가입되지 않은 전화번호입니다.");
+				}
+			},
+			error : function(xhr){
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+	})
+	
+	// 인증번호 확인
+	$('messageCheck').on('click', function() {
+		var messageCheck = $('#messageCheck').val();
+		
+		$.ajax({
+			url : '<%=request.getContextPath()%>/messageCheck.do',
+			type : 'post',
+			data : {"messageCheck" : messageCheck},
+					
+			success : function(res) {
+				if(res.result=="true"){
+					alert("인증완료");
+				} else {
+					alert("인증실패");
+					
+				}
+			},
+			error : function(xhr) {
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+	})
+	
+	$('#findIdModalNextBen').on('click', function() {
+		var name = $('#name').val();
+		var tel = $('#tel').val();
+		$.ajax({
+			url : '<%=request.getContextPath()%>/findId.do',
+			type : 'post',
+			data : {"name" : name,
+					"tel": tel},
+					
+			success : function(res) {
+				$('#ModalContentId').empty(); //모달창 내용 초기화
+				$('#ModalContentId').append('<p id="findIdResult">'+ res.resultId + '<p>')
+			},
+			error : function(xhr) {
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+		
+	})
 })
 
 </script>
@@ -65,7 +159,7 @@ $(function() {
 	font-weight: 700;
 }
 
-.findpassword{
+.findmemIDPW{
 	font-size: 12px;
 	font-weight: 700;
 	float : right;
@@ -117,7 +211,7 @@ button:active {
 }
 
 .loginother {
-	margin-top: 30px;
+	margin-top: 12px;
 }
 
 .loginother p,.loginother ul{
@@ -135,19 +229,40 @@ button:active {
 
 .loginother{
 	width : 100%;
+	position: relative;
 }
 
-.loginother ul {
-	list-style: none;
-	float: right;
+.loginother .idmemory {
+	margin: 0 5px 0 0;
+	width : 18px;
+	height: 18px;
 }
 
-.loginother ul li img{
-	display : inline-block;
-	width : 38px;
+.loginother  span {
+	position: absolute;
+	top : -2px;
+	font-size: 14px;
+	
 }
-
 input:focus {outline:none;}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+}
+
+.modal-content {
+	width: 300px;
+	background-color: #fff;
+	margin: 100px auto;
+	padding: 20px;
+}
 </style>
 </head>
 <body>
@@ -156,16 +271,20 @@ input:focus {outline:none;}
 
 <nav>
 	<img src="../images/코끼리로고심볼가로.png" id="cokkirilogo">
-	<input type="button" value="회원가입" id="memUpdate" onclick="location.href='<%=request.getContextPath() %>/login/memUpdate.jsp'">
+	<input type="button" value="회원가입" id="memUpdate" onclick="location.href='<%=request.getContextPath() %>/login/memberInsert.jsp'">
 </nav>
 <div class="main">
 	<div class="loginbox">
 		<div class="logintoptest">
 			<span class="logontext">로그인</span>
-			<a class="findpassword">아이디</a>
+			<div class="findmemIDPW">
+				<span class="findId">아이디찾기</span>
+				<span> | </span>
+				<span class="findPw">비밀번호찾기</span>
+			</div>
 		</div>
 			<div class="iddiv">
-				<input type="text" name="id" placeholder="아이디" class="id">
+				<input type="text" name="id" placeholder="아이디" class="id" value="<%=cookieUserId%>">
 			</div>
 			<div class="passdiv">
 				<input type="password" name="pw" placeholder="비밀번호" class="pw">
@@ -174,12 +293,46 @@ input:focus {outline:none;}
 				<button type="submit" class="loginbutton">로그인</button>
 			</div>
 		<div class="loginother">
-			<p>다른 방법으로 로그인하기</p>
-			<ul>
-				<li><a type="button" class="kakaoimg" id="kakaoLoginBtn"><img src="../images/카카오톡동그란로고.png"></a></li>
-			</ul>
+			<input type="checkbox" class="idmemory" name="idmemory" <%=chk %>><span>아이디 기억하기 </span>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div id="findIdModal" class="modal">
+		<div class="modalContent">
+			<div class="ModalContentId">
+				<h3>아이디 찾기</h3>
+				<label for="name">이름</label>
+				<div class="findIdModalInputId">
+					<input type="text" id="name" class="name">
+				</div>
+				<label for="tel">휴대전화</label>
+				<div class="findIdModalInputTel">
+					<input type="text" id="tel" class="tel">
+					<input type="button" id="sendMessageBtn" class="sendMessageBtn" value="인증번호 받기">
+					
+					<input type="text" id="messageCheck" class="messageCheck">
+					<input type="button" id="messageCheckBtn" class="messageCheckBtn" value="확인">
+				</div>
+			</div>
+			<input type="button" value="찾기" class="findIdModalClose">
+			<input type="button" value="닫기" class="findIdModalNextBen">
+		</div>
+	</div>
+	
+	<div id="findPwModal" class="modal">
+		<div class="modalContent" id="modalContentPw">
+			<div class="ModalContentPw">
+				<h3>비밀번호 찾기</h3>
+				<label for="modalId">아이디</label>
+				<input type="text" class="modalId" id="modalId">
+			</div>
+			<input type="button" value="찾기" class="findIdModalClose">
+			<input type="button" value="닫기" class="findIdModalNextBen">
+		</div>
+	</div>
+	
+	
 </div>
 <footer>
 	<p>Copyright© Cokkiri(주) All rights reserved.</p>
