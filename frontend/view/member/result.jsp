@@ -3,13 +3,13 @@
 <%
 	String result = (String)request.getAttribute("result");
 	
-	if(result == "true"){
+	if(result.equals("true")){
 %>
 		{
 			"result" : "true"
 		}
 <%
-	} else if(result=="false") {
+	} else if(result.equals("false")) {
 %>
 		{
 			"result" : "false"
