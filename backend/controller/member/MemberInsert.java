@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,12 +63,19 @@ public class MemberInsert extends HttpServlet {
 		int joinResult = service.memberInsert(memVo);
 		String result = null;
 		if(joinResult==1) {
-			result = "true";
+			// 회원가입을 성공했다면
+			// 쿠키에 아이디 저장
+			Cookie cookie = new Cookie("joinId", id);
+			if(memVo.getAdmin_auth().equals("N")) {
+				// 일반 회원일 경우
+				response.sendRedirect(request.getContextPath() + "/login/login.jsp");
+			} else {
+				// 관리자일 경우
+			}
 			
 		} else {
 			result = "false";
 		}
-		response.sendRedirect(request.getContextPath() + "/login/login.jsp");
 	}
 	
 

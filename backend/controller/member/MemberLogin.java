@@ -3,6 +3,7 @@ package controller.member;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,27 +30,45 @@ public class MemberLogin extends HttpServlet {
 		
 		String id = request.getParameter("id");
 		String pw = request.getParameter("pw");
+		String idmemory = request.getParameter("idmemory");
+		
+		// checkbox가 체크되어 있을 경우 쿠키저장, 해제된 생태이면 쿠키 삭제
+		// 회원가입시 저장된 쿠키 : joinId
+		Cookie[] cookieArr = request.getCookies();
+		if(idmemory == null) {
+			for(Cookie cookie : cookieArr) {
+				String name = cookie.getName();
+				if("id".equals(name)) {
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				}
+			}
+		} else {
+			// 체크박스가 체크되어있을 경우 아이디 쿠키에 저장
+			Cookie cookie = new Cookie("id", id);
+			response.addCookie(cookie);
+		}
 		
 		IMemberService service = MemberServiceImpl.getInstance();
 		
 		MemberVO memVo = new MemberVO();
 		memVo.setMem_id(id);
 		memVo.setMem_pw(pw);
-		
+		System.out.println("id 넘어갔나" + id);
+		System.out.println("pw 넘어갔나" + pw);
 		int idPassCheck = service.selectIdPassCheck(memVo);
 		MemberVO memberVo = service.selectMemberById(id);
-		
-		Gson gson = new Gson();
 		String result = "";
 		if(idPassCheck == 1) {
 			request.getSession().setAttribute("memberVo", memberVo);
-			result = "true";
+			result = memberVo.getAdmin_auth();
+			request.setAttribute("result", result);
 			
 		}else {
 			result = "false";
 		}
-		request.setAttribute("result", result);
-		request.getRequestDispatcher("/view/member/result.jsp").forward(request, response);
+		System.out.println("auto" + memberVo.getAdmin_auth());
+		request.getRequestDispatcher("/view/member/loginResult.jsp").forward(request, response);
 		
 		
 		
