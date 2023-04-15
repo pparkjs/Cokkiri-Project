@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<%
+
+%>
 <script>
 function sample6_execDaumPostcode() {
     new daum.Postcode({
@@ -93,7 +96,7 @@ $(function() {
 		
 		// Ajax 요청
 		$.ajax({
-			url : '<%=request.getContextPath()%>/sendTelMessage.do',
+			url : '<%=request.getContextPath()%>/sendMessage.do',
 			type : 'post',
 			data : {"tel" : tel},
 			success : function(res){
@@ -205,9 +208,9 @@ $(function() {
 	// 데이터 유효성 체크
 	$('#id').on('keyup', function() {
 		idvalue = $(this).val().trim();
-		idreg = /^[a-z0-9!@#$^*+=]{5,10}$/;
+		idreg = /^[a-z0-9!@#$*+=]{5,10}$/;
 		if(!(idreg.test(idvalue))){
-			$('#idcheck').text('5~10자의 영문 소문자, 숫자와 특수기호 (!@#$^*_+-=)만 사용 가능합니다.').css('color', 'red');
+			$('#idcheck').text('5~10자의 영문 소문자, 숫자와 특수기호 (!@#$*_+-=)만 사용 가능합니다.').css('color', 'red');
 		} else {
 			$.ajax({
 				url : "<%=request.getContextPath()%>/idcheck.do",

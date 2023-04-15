@@ -3,10 +3,16 @@
 <%
 	String result = (String)request.getAttribute("result");
 	
-	if(result.equals("true")){
+	if(result.equals("N")){
 %>
 		{
-			"result" : "true"
+			"result" : "N"
+		}
+<%
+	} else if(result.equals("Y")) {
+%>
+		{
+			"result" : "Y"
 		}
 <%
 	} else if(result.equals("false")) {
@@ -14,7 +20,6 @@
 		{
 			"result" : "false"
 		}
-
 <%
 	}
 %>
