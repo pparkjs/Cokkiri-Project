@@ -43,4 +43,8 @@
 	<select id="selectMemberById" parameterType="String" resultType="memberVo">
 		select * from member where mem_id=#{mem_id}
 	</select>
+	<select id="selectMemberIdByTelAndName" parameterType="memberVo" resultType="String">
+		select mem_id from member where mem_name=#{mem_name} AND mem_tel=#{mem_tel}
+	</select>
+	
 </mapper>
