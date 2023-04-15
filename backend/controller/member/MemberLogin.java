@@ -54,20 +54,17 @@ public class MemberLogin extends HttpServlet {
 		MemberVO memVo = new MemberVO();
 		memVo.setMem_id(id);
 		memVo.setMem_pw(pw);
-		System.out.println("id 넘어갔나" + id);
-		System.out.println("pw 넘어갔나" + pw);
 		int idPassCheck = service.selectIdPassCheck(memVo);
 		MemberVO memberVo = service.selectMemberById(id);
 		String result = "";
 		if(idPassCheck == 1) {
 			request.getSession().setAttribute("memberVo", memberVo);
 			result = memberVo.getAdmin_auth();
-			request.setAttribute("result", result);
 			
 		}else {
 			result = "false";
 		}
-		System.out.println("auto" + memberVo.getAdmin_auth());
+		request.setAttribute("result", result);
 		request.getRequestDispatcher("/view/member/loginResult.jsp").forward(request, response);
 		
 		
