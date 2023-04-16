@@ -98,4 +98,22 @@ public class ChatDaoImpl implements IChatDao {
 		return res;
 	}
 
+	@Override
+	public ChatRoomVO selectChatRoomByMidTid(Map<String, Object> map) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		ChatRoomVO res = session.selectOne("selectChatRoomByMidTid",map);
+		session.close();
+		return res;
+	}
+
+	@Override
+	public ChatMessageVO selectChatMessageByCid(Long message_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		ChatMessageVO chatMessageVO = session.selectOne("selectChatMessageByCid", message_id);
+		session.close();
+		return chatMessageVO;
+	}
+	
+	
+
 }

@@ -170,22 +170,22 @@
 	background-position: center;
 }       
 #nbtn{
-	background-image: url(images/tnotify.svg);
+	background-image: url(images/tnotify.png);
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
 }
 #ncbtn{
-	background-image: url(images/tnotifyed.svg);
+	background-image: url(images/tnotifyed.png);
 	background-repeat: no-repeat;
-	background-size: 30px 30px;
+	background-size: 28px 28px;
 }
 #mlbtn{
-	background-image: url(images/mylist2.svg);
+	background-image: url(images/mylist.png);
 	background-repeat: no-repeat;
 	background-size: 25px 25px;
 } 
 #mlcbtn{
-	background-image: url(images/mylistChecked.svg);
+	background-image: url(images/mylistChecked.png);
 	background-repeat: no-repeat;
 	background-size: 25px 25px;
 }
@@ -324,15 +324,18 @@ $(()=>{
 	tboard_id = "<%=boardVO.getTboard_id()%>"
 	mem_id="<%=boardVO.getMem_id()%>"
 	slideImage();
-	recommendlistRecieve(1,null,null);
+	
+	recommendlistRecieve(<%=boardVO.getCategory_id()%>,tboard_id);
+	
 	btnCreate(mem_id,tboard_id);
 	
 	btnChage(tboard_id)
 	
-	time="<%=category%> · "+elapsedTime("<%=boardVO.getTboard_cdate()%>");
+	time="<%=category%> · "
+	time+=elapsedTime("<%=boardVO.getTboard_cdate()%>");
 	$("#cd").append(time);
 	$("#chatBtn").on("click",function(){
-		location.href=`\${path}/chatroom.do?tboard_id=\${tboard_id}`
+		location.href=`\${path}/chatRoomCreate.do?tboard_id=\${tboard_id}`
 	})
 	
 })

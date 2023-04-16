@@ -41,7 +41,7 @@ public class ModifyImage extends HttpServlet {
 		List<TImageVO> ilist = service.selecttImgBytboardId(timg_id);
 
 		// 업로드된 파일들이 저장된 폴더 설정
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "C:/Users/변정민/Desktop/tboard_image";
 
 		File f = new File(uploadPath);
 		if (!f.exists()) {
