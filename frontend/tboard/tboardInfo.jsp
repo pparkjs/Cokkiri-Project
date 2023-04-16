@@ -200,7 +200,9 @@
 #price{
 	font-weight: bolder;
 }
-        
+.navbar__mapLogo{
+	text-align: left;
+}
 
 </style>
 </head>
