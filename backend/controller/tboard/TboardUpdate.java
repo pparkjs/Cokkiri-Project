@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 
 import service.tboardService.ITboardService;
 import service.tboardService.TboardServiceImpl;
+import vo.MemberVO;
 import vo.TBoardVO;
 import vo.TImageVO;
 
@@ -45,8 +46,7 @@ public class TboardUpdate extends HttpServlet {
 	  	String content = request.getParameter("content");	
 	  	String tboard_id = request.getParameter("tboard_id");
 	  	//session에서 memid를 꺼냈다고 가정
-	  	HttpSession session = request.getSession();
-	  	String mem_id = (String)session.getAttribute("id");
+	  	MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 	  	
 	  	//tboardVO 생성
 	  	TBoardVO tBoardVO = new TBoardVO();
@@ -56,7 +56,7 @@ public class TboardUpdate extends HttpServlet {
 	  	tBoardVO.setTboard_state(state);
 	  	tBoardVO.setTboard_title(title);
 	  	tBoardVO.setTboard_content(content);
-	  	tBoardVO.setMem_id(mem_id);
+	  	tBoardVO.setMem_id(smem.getMem_id());
 	  	
 	  	ITboardService service = TboardServiceImpl.getInstance();
 	  	int upTboard = service.updateTboard(tBoardVO);
@@ -76,7 +76,7 @@ public class TboardUpdate extends HttpServlet {
 	  	
 	  	
 		// 업로드될 파일 경로 설정
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "C:/Users/변정민/Desktop/tboard_image";
 
 		// 저장될 폴더가 없으면 새로만든다.
 		File f = new File(uploadPath);

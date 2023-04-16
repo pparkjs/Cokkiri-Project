@@ -23,7 +23,7 @@
 		<typeAlias type="vo.ChatMessageVO" alias="chatmessageVo"/>
 		<typeAlias type="vo.SboardVO" alias="sboardVo"/>
 		<typeAlias type="vo.SimageVO" alias="simageVo"/>
-
+		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
 	<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 	<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
 	</typeAliases>
@@ -52,6 +52,7 @@
     <mapper resource="mapper/chat-mapper.xml"/>
     <mapper resource="mapper/tcomment-mapper.xml"/>
     <mapper resource="mapper/sboard-mapper.xml"/>
+    <mapper resource="mapper/alarm-mapper.xml"/>
 
 	</mappers>
 	

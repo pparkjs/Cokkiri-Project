@@ -3,6 +3,9 @@
  */
 
 listRecieve = function(pagenum, category, sword,boardstate) {
+	if(boardstate!=null){
+		boardstate = boardstate.trim();
+	}
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",
@@ -24,7 +27,7 @@ listRecieve = function(pagenum, category, sword,boardstate) {
 
 				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
-				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
+				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
 				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " · 찜 " + v["mylist"] + "</p>")
 
@@ -43,6 +46,9 @@ listRecieve = function(pagenum, category, sword,boardstate) {
 
 
 listRecieveFromOne = function(pagenum, category, sword,boardstate) {
+	if(boardstate!=null){
+		boardstate = boardstate.trim();
+	}
 	$.ajax({
 		url: `${path}/tboardMain.do`,
 		type: "post",
@@ -64,7 +70,7 @@ listRecieveFromOne = function(pagenum, category, sword,boardstate) {
 
 				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
-				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
+				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
 				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " · 찜 " + v["mylist"] + "</p>")
 
