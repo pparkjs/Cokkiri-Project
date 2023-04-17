@@ -104,6 +104,7 @@ mypath = '<%=request.getContextPath()%>';
 				 $(document).on('click', '#rt_modify', function(res){
 					 tcontent = $('#mInsert textarea').val();
 					 $.tcommentUpdateServer();
+					 $("#pdiv").remove();
 					 //$(".div").remove();
 					 
 				})  
