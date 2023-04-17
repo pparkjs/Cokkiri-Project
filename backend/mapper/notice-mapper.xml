@@ -44,7 +44,7 @@
 		insert into noticeboard
 			values(
 				   noticeboard_seq.nextval,
-				   #{nboard_title}, #{nboard_content}, sysdate
+				   #{nboard_title}, #{nboard_content}, sysdate, #{mem_id}
 				   )
 	</insert>
 	
