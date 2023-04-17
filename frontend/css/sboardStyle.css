@@ -55,7 +55,7 @@
 .img_del{position: absolute; top: 20px; right:20px; z-index:1; width:18px; height:18px; cursor: pointer;}
 
 .rg_title{padding-bottom: 25px;}
-#maxTitle{margin-top: 5px; margin-left: 40px;}
+#maxTitle{margin-top: 5px; margin-left: 22px;}
 .rg_title textarea{padding-top:7px; padding-left:8px;}
 .rg_content{padding-bottom: 69px; border-bottom: 2px solid black;}
 #maxContent{margin-top: 10px; position: absolute; bottom: -29px; right: 0px;}
