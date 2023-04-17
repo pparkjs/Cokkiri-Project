@@ -60,4 +60,7 @@ public interface ISboardService {
 	// 신고하기 메소드
 	public int sboardNotify(SboardVO vo);
 	
+	// 신고게시물의 리스트 - 더보기 페이징
+	public List<SboardVO> notifyByMore(Map<String, Object> map);
+	
 }

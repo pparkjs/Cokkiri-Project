@@ -118,6 +118,11 @@ public class SboardServiceImpl implements ISboardService {
 	public int sboardNotify(SboardVO vo) {
 		return dao.sboardNotify(vo);
 	}
+
+	@Override
+	public List<SboardVO> notifyByMore(Map<String, Object> map) {
+		return dao.notifyByMore(map);
+	}
 	
 
 }
