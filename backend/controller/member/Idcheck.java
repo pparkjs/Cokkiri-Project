@@ -20,6 +20,9 @@ public class Idcheck extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
@@ -28,7 +31,7 @@ public class Idcheck extends HttpServlet {
 		IMemberService service = MemberServiceImpl.getInstance();
 		int idcheckCnt = service.incheck(id);
 		String result = null;
-		if(idcheckCnt==0 && id!=null && id!="") {
+		if(idcheckCnt==0) {
 			result = "true";
 		} else {
 			result = "false";
@@ -36,9 +39,6 @@ public class Idcheck extends HttpServlet {
 		
 		request.setAttribute("result", result);
 		request.getRequestDispatcher("/view/member/result.jsp").forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 	}
 
