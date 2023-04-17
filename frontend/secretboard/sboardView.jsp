@@ -1,3 +1,4 @@
+<%@page import="vo.MemberVO"%>
 <%@page import="java.util.List"%>
 <%@page import="vo.SboardVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,7 +8,7 @@
 <html>
 <!-- board의 session -->
 <% List<SboardVO> sbList = (List<SboardVO>)session.getAttribute("sbList"); %>
-<% String memId = (String)session.getAttribute("mem_id"); %>
+<% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -18,7 +19,7 @@
 
 <script>
 boardId = `<%=sbList.get(0).getSboard_id() %>`;
-memId = `<%=memId%>`;
+memId = `<%=memVo.getMem_id()%>`;
 mypath = `<%=request.getContextPath() %>`;
 $(function(){
 	// 이미지 보여지는 부분
@@ -72,11 +73,12 @@ function imageView(){
 </head>
 <body>
 <%@ include file="/module/header.jsp" %>
-<h1><%=memId%></h1>
 <div class="mem_sboard">
 	<div class="mem_header">
+	<%if(sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
 		<input type="button" id="modify" value="수정">
 		<input type="button" id="delete" value="삭제">
+	<%} %>
 	</div>
 	
 	<div class="mem_top">
@@ -118,9 +120,11 @@ function imageView(){
 			<img id="mUnlike" src="<%=request.getContextPath()%>/images/싫어요-체크안함.png">
 			<p id="untext"></p>
 		</div>
+		<%if(!sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
 		<div class="m_notify">
 			<img id="mNotify" src="<%=request.getContextPath()%>/images/신고-체크안함.png">
 		</div>
+		<%} %>
 	</div>
 
 </div>

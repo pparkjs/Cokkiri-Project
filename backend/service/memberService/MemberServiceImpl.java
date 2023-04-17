@@ -98,4 +98,14 @@ public class MemberServiceImpl implements IMemberService {
 		return dao.selectMemberById(memId);
 	}
 
+	@Override
+	public String selectMemberIdByTelAndName(MemberVO memVo) {
+		return dao.selectMemberIdByTelAndName(memVo);
+	}
+
+	@Override
+	public int updateMemberPw(MemberVO memVo) {
+		return dao.updateMemberPw(memVo);
+	}
+
 }

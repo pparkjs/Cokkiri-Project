@@ -32,7 +32,6 @@ public class TboardDaoImpl implements ITboardDao{
 		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
 		List<TBoardVO> list = session.selectList("selecttboardsByPage",map);
 		session.close();
-		
 		return list;
 	}
 	  
@@ -42,7 +41,7 @@ public class TboardDaoImpl implements ITboardDao{
 	public TBoardVO selecttboardInfo(Long board_id) {
 		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
 		TBoardVO boardVO = session.selectOne("selecttboardInfo",board_id);
-		session.close();
+		session.close(); 
 		
 		return boardVO;
 	}
@@ -222,6 +221,14 @@ public class TboardDaoImpl implements ITboardDao{
 		List<TBoardVO> list = session.selectList("selecttboardsByPagefromOne",map);
 		session.close();
 		return list;
+	}
+
+	@Override
+	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map) {
+		SqlSession session =MybatisSqlSessionFactory.getSqlSession();
+		List<TBoardVO> res = session.selectList("selectTboardRecommend",map);
+		session.close();
+		return res;
 	}
 
 

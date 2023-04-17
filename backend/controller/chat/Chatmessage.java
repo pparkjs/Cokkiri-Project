@@ -36,7 +36,7 @@ public class Chatmessage extends HttpServlet {
 		
 		long room_id = Long.parseLong(request.getParameter("room_id"));
 		String nick = request.getParameter("yournick");
-		String smem_id = (String)request.getSession().getAttribute("id");
+		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 
 		
 		IMemberService service3 = MemberServiceImpl.getInstance();
@@ -45,10 +45,10 @@ public class Chatmessage extends HttpServlet {
 		IChatService service = ChatServiceImpl.getInstance();
 		
 		ChatMessageVO lastMessage = service.selectLastMessageByRid(room_id);
-		if(!(lastMessage.getMem_id().equals(smem_id))&&!(lastMessage.getMessage_isread().equals('n'))) {
+		if(!(lastMessage.getMem_id().equals(smem.getMem_id()))&&!(lastMessage.getMessage_isread().equals('n'))) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("room_id", room_id);
-			map.put("mem_id", smem_id);
+			map.put("mem_id", smem.getMem_id());
 			int readRes = service.updateChatRead(map);
 			if(readRes==0) {
 				System.out.println("읽음실패");
@@ -61,18 +61,16 @@ public class Chatmessage extends HttpServlet {
 		ChatMessageTboardVO chatMessageTboardVO = new ChatMessageTboardVO();
 		chatMessageTboardVO.setMlist(list);
 		chatMessageTboardVO.setYourMember(ymem);
-		
 		ChatRoomVO roomVO = service.selectChatRoomByRid(room_id);
 		Long tboard_id = roomVO.getTboard_id();
 		ITboardService service2 = TboardServiceImpl.getInstance();
 		
 		TBoardVO tBoardVO = service2.selectTboardInfo(tboard_id);
-		MemberVO seller = service3.selectMemberinfo(tBoardVO.getMem_id());
-		chatMessageTboardVO.setSeller(seller);
 		
 		List<TImageVO> ilist = service2.selecttImgBytboardId(tboard_id);
-		chatMessageTboardVO.setfTImageVO(ilist.get(0));
-		
+		if(ilist!=null&&ilist.size()!=0) {
+			chatMessageTboardVO.setfTImageVO(ilist.get(0));
+		}
 		chatMessageTboardVO.settBoardVO(tBoardVO);
 		request.setAttribute("cmtVO", chatMessageTboardVO);
 		request.getRequestDispatcher("/view/chatMessageList.jsp").forward(request, response);

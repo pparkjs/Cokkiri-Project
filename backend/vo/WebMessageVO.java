@@ -12,7 +12,16 @@ public class WebMessageVO {
 	private Long message_id;
 	private int noread;
 	private Long croom_id;
+	private int res;
 	
+	
+	
+	public int getRes() {
+		return res;
+	}
+	public void setRes(int res) {
+		this.res = res;
+	}
 	public Long getCroom_id() {
 		return croom_id;
 	}

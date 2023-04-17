@@ -9,9 +9,7 @@
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
 <script src="../js/tboardWrite.js" type="text/javascript"></script>
 <style type="text/css">
-#out{
-	margin-top: 100px;
-}
+
 .real-upload{
 	display: none;
 }
@@ -23,14 +21,20 @@
 		margin-left: 25px;
 	}
     .upload {
-      width: 80px;
-      height: 80px;
-      background-color: antiquewhite;
+      width: 100px;
+      height: 100px;
+      background-color: rgb(229,229,234);
       margin: 0 5px;
+      border: 1px solid gray;
+    }
+    .img_up{
+    	width: 25px;
+    	height: 25px;
+    	margin: 38px 38px;
     }
    	.previewimg{
-   		width: 80px;
-   		height: 80px;
+   		width: 100px;
+   		height: 100px;
    	}
    	.image-preview li{
    		float: left;
@@ -38,14 +42,14 @@
    		list-style: none;
    	}
    	#formdiv{
-   		width: 1000px;
-   		margin: 0 auto;
+   		width: 1369px;
+   		margin: 50px auto;
    	}
    	#uldiv{
+   		display:inline-block;
    		height: 100px;
-   		padding-top: 15px;
    		padding-bottom: 15px;
-   		border: 1px solid;
+
    	}
 .animation-init {
   opacity: 0;
@@ -57,21 +61,18 @@
   padding-left: 0;
   transition: all 1s;
 }
-#form{
-	width: 800px;
+#wform{
+	width: 1200px;
 	margin: 0 auto;
 }
-fieldset{
-	width: 800px;
-	margin: 0 auto;
-	padding: 30px;
-}
+
 textarea{
 	resize: none;
+	font-size: 18px;
 }
 
 .inputgroup{
-	margin: 30px 0;
+	margin: 30px 50px;
 	display: flex;
     align-items: flex-start;
 }
@@ -81,7 +82,47 @@ label {
 	width: 100px;
 	
 }
-
+#title{
+	padding: 10px;
+}
+#price{
+	padding: 5px;
+}
+.ssbtn{
+	padding: 6px 15px;
+	margin-right: 20px;
+	border-radius: 20px; 
+	border: 1px solid gray;
+	background: white;
+	color: black;
+	cursor: pointer;
+}
+.act{
+	padding: 6px 15px;
+	margin-right: 20px;
+	border-radius: 20px; 
+	border: none;
+	background: rgb(100,210,255);
+	color: white;
+	cursor: pointer;
+}
+#actgroup{
+	margin: 30px 0;
+	display: flex;
+    justify-content:flex-end;
+}
+.activeBtn{
+	background: rgb(50,173,230);
+	color: white;
+	border: none;
+}
+h2{
+	margin-left: 30px;
+	margin-bottom: 30px;
+}
+option{
+	padding: 3px 0;
+}
 </style>
 <script type="text/javascript"> 
 path = "<%=request.getContextPath()%>"
@@ -93,54 +134,57 @@ path = "<%=request.getContextPath()%>"
    <%@ include file="/module/header.jsp" %>
 </div>
       
-      
-<div id="out">
+
 	<div id="formdiv">
 		<form id="wform">
-			<fieldset>
-				<legend>글 작성</legend>
 				<input type="file" class="real-upload" accept="image/*" required multiple >
-				<h3>이미지 업로드</h3><br>
-				<div id="uldiv">
-					<ul class="image-preview">
-						<li id="upload">
-							<div class="upload"></div>
-						</li>
-					</ul>
+				<h2>상품등록</h2><hr>
+				<div class="inputgroup">
+					<label for="uldiv">상품이미지</label>
+					<div id="uldiv">
+						<ul class="image-preview">
+							<li id="upload">
+								<div class="upload"><img class="img_up" src="<%=request.getContextPath()%>/images/카메라.png"></div>
+							</li>
+						</ul>
+					</div>
 				</div>
+				<hr>
 				<div class="inputgroup">
 					<label for="title">제목</label>
-					<input type="text" name="title" id="title" size="60"><br>
+					<input type="text" name="title" id="title" size="117" placeholder="상품 제목을 입력해주세요."><br>
 				</div>
-				
+				<hr>
 				<div class="inputgroup">
 					<label>판매구매</label>
-				    <label><input type="radio" name="state" class="state" value="삽니다"> 삽니다</label>
-				    <label><input type="radio" name="state" class="state" value="팝니다"> 팝니다</label>
-				    <label><input type="radio" name="state" class="state" value="나눔"> 나눔</label>
+				    <button class="ssbtn" type="button">삽니다</button>
+				    <button class="ssbtn" type="button">팝니다</button>
+				    <button class="ssbtn" type="button">나눔</button>
 				</div>
+				<hr>
 				<div class="inputgroup">
 					<label for="category">카테고리</label>
-					<select name="category" id="category">			
+					<select name="category" id="category" multiple size="5">			
 					</select>
 				</div>
+				<hr>
 				<div class="inputgroup">
 					<label for="text">가격</label>
-					<input type="text" name="price" id="price" size="10">&nbsp;원<br>
+					<input type="text" name="price" id="price" size="20" placeholder="숫자만 입력하세요.">&nbsp;&nbsp;&nbsp;<h3>원</h3><br>
 				</div>
+				<hr>
 				<div class="inputgroup">
 					<label id="contentlabel" for="content">내용</label>
-					<textarea rows="10" cols="60" id="content"></textarea>
+					<textarea rows="10" cols="80" id="content" placeholder="내용을 입력하세요."></textarea>
 				</div>
-				<div class="inputgroup">
-					<input type="button" id="save" value="등록">
-					<input type="button" id="cancle" value="취소">
+				<hr>
+				<div class="inputgroup" id="actgroup">
+					<input type="button" class="act" id="save" value="등록하기">
+					<input type="button" class="act" id="cancle" value="취소하기">
 				</div>
-			</fieldset>
 			
 		</form>
 	</div>
-</div>
 <%@ include file="/module/footer.jsp" %>
 </body>
 </html>

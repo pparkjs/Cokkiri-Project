@@ -1,10 +1,10 @@
+<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
-<!-- session 테스트용 -->
-<% String memId = (String)session.getAttribute("mem_id"); %>
+<% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
