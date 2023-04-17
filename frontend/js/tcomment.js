@@ -3,9 +3,9 @@ $.tcommentListServer = function(page){
 	 $.ajax({
 		 url: `${mypath}/tcommentList.do`,
 		 type : 'post',
-		 data : {"tboardId" : 202, // tboard_id
+		 data : {"tboardId" : 288, // tboard_id
 		 		 "page":page,
-		 		 "memId" : 1}, 
+		 		 "memId" : 'wjdtn123'}, 
 		 dataType : 'json',
 		 success : function(res){
 			 /* alert("성공"); */
@@ -20,58 +20,27 @@ $.tcommentListServer = function(page){
 				var code= "";
 				//console.log(v.level)
 				if(v.tcomment_isremove=='n'){
-					
-					code += `<div class="a${level}" id="${v.tcomment_id}">
-								<input type="hidden" id="tcomment_id" name="tcomment_id">
-								<input type="hidden" id="tboard_id" name="tboard_id">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">${tcontent}</span>
-								<span id="cdate">${v.tcomment_cdate}</span>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">
-								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
-							</div>`;
+					code += `<div class="dw a${level}" id="${v.tcomment_id}">
+								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
+								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${v.tcomment_cdate}</span><br>
+								<span id="content">${tcontent}</span><br><br>
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 					
 				}else if(v.tcomment_isremove=='y'){
-					code += `<div class="a${level}" id="${v.tcomment_id}">
-								<input type="hidden" id="tcomment_id" name="tcomment_id">
-								<input type="hidden" id="tboard_id" name="tboard_id">
+					code += `<div class="dw a${level}" id="${v.tcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">삭제된 댓글 입니다.</span>
-								<span id="cdate">${v.tcomment_cdate}</span>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">
-								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
-							</div>`;
-				}else if(v.tcomment_secret == 'true'){
-					code += `<div class="a${level}" id="${v.tcomment_id}">
-								<input type="hidden" id="tcomment_id" name="tcomment_id">
-								<input type="hidden" id="tboard_id" name="tboard_id">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">비밀 댓글 입니다.</span>
-								<span id="cdate">${v.tcomment_cdate}</span>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">
-								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
-							</div>`;
-				}else if(v.tcomment_secret == 'false'){
-					code += `<div class="a${level}" id="${v.tcomment_id}">
-								<input type="hidden" id="tcomment_id" name="tcomment_id">
-								<input type="hidden" id="tboard_id" name="tboard_id">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">${tcontent}</span>
-								<span id="cdate">${v.tcomment_cdate}</span>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">
-								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
-							</div>`;
+								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${v.tcomment_cdate}</span><br> 
+								<span id="content">삭제된 댓글입니다.</span><br><br>
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 				}
-				
-				
 				
 				$('#tctLayer').append(code);
 			})
@@ -88,24 +57,22 @@ $.tcommentWriteServer = function() {
 	$.ajax({
 		url: `${mypath}/tcommentInsert.do`,
 		type: 'post',
-		data: { "tboardId": 202, // tboard_id
-				"memId" : 1, 	// mem_id
+		data: { "tboardId": 288, // tboard_id
+				"memId" : 'wjdtn123', 	// mem_id
 				"tcontent" : tcontent},
 
 		success: function(res) {
 			if(res!=null&&res!=""&& typeof res!="undefined"){
 				code = "";
-				code += `<div class="a1" id="${res.tcomment_id}">
-								<input type="hidden" id="tcomment_id" name="tcomment_id">
-								<input type="hidden" id="tboard_id" name="tboard_id">
+				code += `<div class="dw a${res.level}" id="${res.tcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${res.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">${res.tcomment_content}</span>
-								<span id="cdate">${res.tcomment_cdate}</span>
-								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">
-								<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">
-						</div>`;
+								<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${res.tcomment_cdate}</span><br>
+								<span id="content">${tcontent}</span><br><br>
+								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 							
 				$('#tctLayer').append(code);
 				
@@ -124,8 +91,8 @@ $.retcommentWriteServer = function(){
 	$.ajax({
 		url : `${mypath}/tcommentInsert.do`,
 		type : 'post',
-		data : {"tboardId": 202,
-				"memId" : 1,
+		data : {"tboardId": 288,
+				"memId" : 'wjdtn123',
 				"tcontent" : reContent,
 				"tcommentPid" : tcommentPid},
 		dataType : 'json',
@@ -139,17 +106,15 @@ $.retcommentWriteServer = function(){
 			}else{
 				level=3
 			}
-			code += `<div class="a${level}" id="${res.tcomment_id}">
-					<input type="hidden" id="tcomment_id" name="tcomment_id">
-					<input type="hidden" id="tboard_id" name="tboard_id">
-					<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-					<span  id="writer">${res.mem_id}</span>&nbsp;&nbsp;
-					<span id="content">${res.tcomment_content}</span>
-					<span id="cdate">${res.tcomment_cdate}</span>
-					<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">
-					<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">
-					<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">
-					</div>`;
+			code += `<div class="dw a${level}" id="${v.tcomment_id}">
+								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
+								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${v.tcomment_cdate}</span><br>
+								<span id="content">${tcontent}</span><br><br>
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 			
 			
 			parentcomment.after(code)
@@ -186,15 +151,15 @@ $.tcommentDeleteServer=function(){
 
 // 댓글 수정
 $.tcommentUpdateServer = function(target){
-	secret = $('#is_private').prop('checked');
-	console.log(secret);
+//	secret = $('#is_private').prop('checked');
+//	console.log(secret);
 	$.ajax({
 		url : `${mypath}/tcommentUpdate.do`,
 		type : 'post',
 		data : {
 				"tcommentId" : tidx,
 				"tcontent" : tcontent,
-				"issecret" : secret
+//				"issecret" : secret
 		},
 		dataType : 'json',
 		success : function(res){
