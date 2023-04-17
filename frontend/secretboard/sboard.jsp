@@ -8,7 +8,7 @@
 <html>
 <!-- session 예비용 해놓은거 수정해야함 -->
 <%
-String memId = (String)session.getAttribute("mem_id");	
+MemberVO memVo = (MemberVO)session.getAttribute("memberVo");	
 %>
 <head>
 <meta charset="UTF-8">
@@ -21,7 +21,7 @@ String memId = (String)session.getAttribute("mem_id");
  more = 0; // 더보기 버튼 누르기 용
  mypath = `<%=request.getContextPath() %>`;
  hit = 0; //조회수
- memId = `<%=memId%>`;
+ memId = `<%=memVo.getMem_id()%>`;
 
 $(function(){
 	//외부스크립트 이용
