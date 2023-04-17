@@ -118,6 +118,38 @@ public class SboardServiceImpl implements ISboardService {
 	public int sboardNotify(SboardVO vo) {
 		return dao.sboardNotify(vo);
 	}
+
+	@Override
+	public List<SboardVO> selectByMoreMypageLike(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectByMoreMypageLike(map);
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageUnlike(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectByMoerMypageUnlike(map);
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMypost(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectByMoerMypageMypost(map);
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMycomment(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectByMoerMypageMycomment(map);
+	}
 	
 
 }

@@ -38,4 +38,10 @@ public interface IMemberService {
 	
 	// 회원 아이디로 회원정보 조회
 	public MemberVO selectMemberById(String memId);
+	
+	// 휴대전화, 이름으로 아이디 조회
+	public String selectMemberIdByTelAndName(MemberVO memVo);
+	
+	// 비밀번호 변경
+	public int updateMemberPw(MemberVO memVo);
 }

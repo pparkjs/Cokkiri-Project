@@ -6,24 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
-<%
-	// 쿠키에 저장된 아이디 값 읽어오기
-	String cookieUserId = ""; // 로그인할 ID가 저장될 변수
-	String chk = ""; // checkbox의 check 여부를 지정할 변수
-	
-	Cookie[] cookieArr = request.getCookies();
-	if(cookieArr!=null){
-		for(Cookie cookie : cookieArr){
-			if("id".equals(cookie.getName()) || "userId".equals(cookie.getName())){
-				cookieUserId = cookie.getValue();
-				// 쿠키에 id값이 저장되어 있을 경우 체크박스 체크
-				chk = "checked";
-			}
-		}
-	}
-%>
 <script type="text/javascript">
-
 $(function() {	
 
 	$('.loginbutton').on('click', function() {
@@ -58,20 +41,36 @@ $(function() {
 		
 	})
 	
+	// 모달창
 	// 아이디 버튼 클릭시
 	$('.findId').on('click', function() {
 		// 모달창 띄우기
 		$('#findIdModal').css('display','block');
 	})
 	// 닫기 버튼 클릭시
-	$('.findIdModalClose').on('click', function() {
+	$('#idModalClose').on('click', function() {
 		$('#findIdModal').css('display', 'none');
 	})
 	
-	// 전화번호 전송
-	$('sendMessageBtn').on('click', function() {
-		var tel = $('#tel').val();
+	nameCheck = 0;
+	// 이름 유효성 검사
+	$('#name').on('keyup', function() {
+		namevalue = $(this).val().trim();
+		namereg = /^[가-힣]{2,5}$/;
+		if(!(namereg.test(namevalue))){
+			$('#name').css('border', '2px solid rgb(255,59,48)');
+			nameCheck = 0;
+		} else {
+			$('#name').css('border', '2px solid rgb(229,229,234)');
+			nameCheck = 1;
+		}
 		
+	})
+	
+	// 전화번호 전송
+	$('#sendMessageBtn').on('click', function() {
+		var tel = $('#tel').val();
+		console.log(tel);
 		// Ajax 요청
 		$.ajax({
 			url : '<%=request.getContextPath()%>/sendMessage.do',
@@ -91,10 +90,10 @@ $(function() {
 		})
 	})
 	
+	messageCheckCnt = 0;
 	// 인증번호 확인
-	$('messageCheck').on('click', function() {
+	$('#messageCheckBtn').on('click', function() {
 		var messageCheck = $('#messageCheck').val();
-		
 		$.ajax({
 			url : '<%=request.getContextPath()%>/messageCheck.do',
 			type : 'post',
@@ -103,6 +102,7 @@ $(function() {
 			success : function(res) {
 				if(res.result=="true"){
 					alert("인증완료");
+					messageCheckCnt = 1;
 				} else {
 					alert("인증실패");
 					
@@ -115,18 +115,118 @@ $(function() {
 		})
 	})
 	
-	$('#findIdModalNextBen').on('click', function() {
-		var name = $('#name').val();
-		var tel = $('#tel').val();
+	$('#idModalSearch').on('click', function() {
+		if(messageCheckCnt==0 && nameCheck == 0){
+			alert("이름 또는 전화번호 인증이 완료되지 않았습니다.");	
+		} else {
+			var name = $('#name').val();
+			var tel = $('#tel').val();
+			$.ajax({
+				url : '<%=request.getContextPath()%>/findId.do',
+				type : 'post',
+				data : {"name" : name,
+						"tel": tel},
+						
+				success : function(res) {
+					if(res.result == "true"){
+						$('#idModalSearch').hide();
+						$('#modalContentId').empty(); //모달창 내용 초기화
+						$('#modalContentId').append('<p id="findIdResult" class="findresultOne">'+ res.memId + '<p>')
+						
+					} else if(res.result == "false"){
+						$('#modalContentId').empty(); //모달창 내용 초기화
+						$('#modalContentId').append('<p id="findIdResult" class="findresultOne">가입하지 않은 회원입니다.<p>')
+						
+					}
+				},
+				error : function(xhr) {
+					alert("상태 : " + xhr.status);
+				},
+				dataType : 'json'
+			})
+			
+		}
+		
+	})
+	
+	
+	// 비밀번호 찾기
+	// 모달창
+	// 아이디 버튼 클릭시
+	$('.findPw').on('click', function() {
+		// 모달창 띄우기
+		$('#findPwModal').css('display','block');
+	})
+	// 닫기 버튼 클릭시
+	$('#pwModalClose').on('click', function() {
+		$('#findPwModal').css('display', 'none');
+	})
+	userId = "";
+	// 아이디 확인
+	$('#pwModalSearch').on('click', function() {
+		userId = $('#modalId').val().trim();
 		$.ajax({
-			url : '<%=request.getContextPath()%>/findId.do',
+			url : '<%=request.getContextPath()%>/idcheck.do',
 			type : 'post',
-			data : {"name" : name,
-					"tel": tel},
-					
+			data : {"id" : userId},
 			success : function(res) {
-				$('#ModalContentId').empty(); //모달창 내용 초기화
-				$('#ModalContentId').append('<p id="findIdResult">'+ res.resultId + '<p>')
+				if(res.result=="false"){ // 아이디가 존재할때
+					//$('#modalContentPw').html("");
+					console.log("dho제발!!!!!!!!");
+					$('#modalContentPw').empty(); //모달창 내용 초기화
+					var code = "";
+					code += '<div class = modalPwRepw>';
+					code += '		<div class="mPwBox">';
+					code += '			<label for="modalPw">새비밀번호</label>';
+					code += '			<input type="password" name="modalPw" id="modalPw" class="modalPw">';
+					code += '		</div>';
+					code += '		<div class="mRePwBox">';
+					code += '			<label for="modalRepw">비밀번호 확인</label>';
+					code += '			<input type="password" name="modalRepw" id="modalRepw" class="modalRepw">';
+					code += '		</div>';
+					code += '		<div id="modalRepwCheck" class="modalRepwCheck"></div>';
+					code += '	</div>';
+					code += '	<input type="button" value="비밀번호 변경" name="updatePwBtn" id="updatePwBtn" class="nextBen">';
+					console.log(code);
+					$('#modalContentPw').append(code); // 모달 내용 추가 
+					// $('#modalContentPw').html(code);	
+				} else {
+					alert("없는 아이디 입니다.");
+				}
+			},
+			error : function(xhr) {
+				alert("상태 : " + xhr.status);
+			},
+			dataType : 'json'
+		})
+	})
+	
+	$(document).on('keyup', '#modalRepw', function() {
+		var modalPw = $('#modalPw').val();
+		if(modalPw != $(this).val()){
+			$('#modalRepwCheck').text('비밀번호가 일치하지 않습니다.');
+			$('#pwModalSearch').attr('disabled', true);
+		} else{
+			$('#modalRepwCheck').text('');
+			$('#pwModalSearch').attr('disabled', false);
+		}
+		
+	})
+	
+	$(document).on('click', '#updatePwBtn', function() {
+		var pw = $('#modalRepw').val();
+		console.log("pw" + pw);
+		console.log("userId" + userId);
+		$.ajax({
+			url : '<%=request.getContextPath()%>/memPwUpdate.do',
+			type : 'post',
+			data : {"pw" : pw,
+					"id" : userId},
+			success : function(res) {
+				if(res.result=="true"){ // 비밀번호가 변경되면 
+					$('#modalContentPw').empty(); //모달창 내용 초기화
+					$('#modalContentPw').append('<p class = modalPwRepw>비밀번호가 변경되었습니다.</p>');
+				} 
 			},
 			error : function(xhr) {
 				alert("상태 : " + xhr.status);
@@ -138,6 +238,23 @@ $(function() {
 })
 
 </script>
+<%
+	// 쿠키에 저장된 아이디 값 읽어오기
+	String cookieUserId = ""; // 로그인할 ID가 저장될 변수
+	String chk = ""; // checkbox의 check 여부를 지정할 변수
+	
+	Cookie[] cookieArr = request.getCookies();
+	if(cookieArr!=null){
+		for(Cookie cookie : cookieArr){
+			if("id".equals(cookie.getName()) || "userId".equals(cookie.getName())){
+				cookieUserId = cookie.getValue();
+				// 쿠키에 id값이 저장되어 있을 경우 체크박스 체크
+				chk = "checked";
+			}
+		}
+	}
+%>
+
 <link rel="stylesheet" type="text/css" href="../css/loginform.css">
 <style type="text/css">
 @font-face {
@@ -245,23 +362,7 @@ button:active {
 }
 input:focus {outline:none;}
 
-.modal {
-	display: none;
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 9999;
-}
 
-.modal-content {
-	width: 300px;
-	background-color: #fff;
-	margin: 100px auto;
-	padding: 20px;
-}
 </style>
 </head>
 <body>
@@ -298,38 +399,54 @@ input:focus {outline:none;}
 	
 	<!-- Modal -->
 	<div id="findIdModal" class="modal">
-		<div class="modalContent">
-			<div class="ModalContentId">
-				<h3>아이디 찾기</h3>
-				<label for="name">이름</label>
-				<div class="findIdModalInputId">
-					<input type="text" id="name" class="name">
+		<div class="modalContent" id="modalConId">
+			<div class="box">
+				<div class="modalBtnBox">
+					<img alt="close.png" src="<%=request.getContextPath() %>/images/close.png" class="close" id="idModalClose">
 				</div>
-				<label for="tel">휴대전화</label>
-				<div class="findIdModalInputTel">
-					<input type="text" id="tel" class="tel">
-					<input type="button" id="sendMessageBtn" class="sendMessageBtn" value="인증번호 받기">
-					
-					<input type="text" id="messageCheck" class="messageCheck">
-					<input type="button" id="messageCheckBtn" class="messageCheckBtn" value="확인">
+				<div id="modalContentId">
+					<h3>아이디 찾기</h3>
+					<label for="name">이름</label>
+					<div class="findIdModalInputId input">
+						<input type="text" id="name" class="name">
+					</div>
+					<label for="tel">휴대전화</label>
+					<div class="findIdModalInputTel input">
+						<div class="seandMessageBox modalInputBox">
+							<input type="text" id="tel" class="tel" name="tel">
+							<input type="button" id="sendMessageBtn" class="sendMessageBtn" value="인증번호 받기">
+						</div>
+						<div class="messageCheckBox modalInputBox">
+							<input type="text" id="messageCheck" class="messageCheck" name="messageCheck">
+							<input type="button" id="messageCheckBtn" class="messageCheckBtn" value="확인">
+						</div>
+					</div>
+					<input type="button" value="찾기" class="nextBen" id="idModalSearch">
 				</div>
 			</div>
-			<input type="button" value="찾기" class="findIdModalClose">
-			<input type="button" value="닫기" class="findIdModalNextBen">
 		</div>
 	</div>
 	
 	<div id="findPwModal" class="modal">
-		<div class="modalContent" id="modalContentPw">
-			<div class="ModalContentPw">
-				<h3>비밀번호 찾기</h3>
-				<label for="modalId">아이디</label>
-				<input type="text" class="modalId" id="modalId">
+		<div class="modalContent" id="modalConPw">
+			<div class="box">
+				<div class="modalBtnBox">
+					<img alt="close.png" src="<%=request.getContextPath() %>/images/close.png" class="close" id="pwModalClose">
+				</div>
+				<div id="modalContentPw">
+					
+					<div class="modalContentPwPW">
+						<h3>비밀번호 찾기</h3>
+						<label for="modalId">아이디</label>
+						<div class="findpwIDInput">
+							<input type="text" class="modalId" id="modalId">
+						</div>
+					</div>
+					<input type="button" value="다음" class="nextBen" id="pwModalSearch">
+				</div>
 			</div>
-			<input type="button" value="찾기" class="findIdModalClose">
-			<input type="button" value="닫기" class="findIdModalNextBen">
 		</div>
-	</div>
+	</div> 
 	
 	
 </div>

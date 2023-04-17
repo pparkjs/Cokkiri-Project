@@ -290,4 +290,68 @@ public class SboardDAOImpl implements ISboardDAO {
 		return res;
 	}
 
+	@Override
+	public List<SboardVO> selectByMoreMypageLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoreMypageLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageUnlike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageUnlike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMypost(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageMypost", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMycomment(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageMycomment", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
 }

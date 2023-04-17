@@ -141,4 +141,32 @@ public class MemberDAOImpl implements IMemberDAO {
 		return memVo;
 	}
 
+	@Override
+	public String selectMemberIdByTelAndName(MemberVO memVo) {
+		// TODO Auto-generated method stub
+		SqlSession session = null;
+		String memId = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			memId = session.selectOne("member.selectMemberIdByTelAndName", memVo);
+		} finally {
+			session.close();
+		}
+		return memId;
+	}
+
+	@Override
+	public int updateMemberPw(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("member.updateMemberPw", memVo);
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
 }

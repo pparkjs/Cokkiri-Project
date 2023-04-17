@@ -142,7 +142,7 @@ $(()=>{
                          	  <li><a href="#">My 프로필</a></li>
                           	  <li><a href="#">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
-                          	  <li><a href="#">내 글 보기</a></li>
+                          	  <li><a href="<%=request.getContextPath()%>/mypage/secretBoard.jsp">내 글 보기</a></li>
                           	  <li><a href="#">로그아웃</a></li>
                      	    </ul>
                     	</div>
