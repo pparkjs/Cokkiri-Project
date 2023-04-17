@@ -49,4 +49,11 @@ public interface IMemberService {
 	
 	// 전체 글 개수
 	public int totalCount(Map<String, Object> map);
+
+	// 휴대전화, 이름으로 아이디 조회
+	public String selectMemberIdByTelAndName(MemberVO memVo);
+	
+	// 비밀번호 변경
+	public int updateMemberPw(MemberVO memVo);
+
 }

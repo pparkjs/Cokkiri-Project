@@ -56,6 +56,7 @@
 	<select id="selectMemberIdByTelAndName" parameterType="memberVo" resultType="String">
 		select mem_id from member where mem_name=#{mem_name} AND mem_tel=#{mem_tel}
 	</select>
+
 	
 	  <!-- 전체 회원수 -->
     <select id="totalCount" resultType="int" parameterType="map">
@@ -77,4 +78,8 @@
 	        ]]>
 	</select>
 	
+	<update id="updateMemberPw" parameterType="memberVo">
+		update member set mem_pw = SHA256.ENCRYPT(#{mem_pw}) where mem_id=#{mem_id}
+	</update>
+
 </mapper>

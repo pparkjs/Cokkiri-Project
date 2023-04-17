@@ -156,6 +156,7 @@
 		insert into snotify values(#{mem_id}, #{sboard_id}, sysdate)
 	</insert>
 	
+
 	    <!-- 신고 테이블 더보기로 6개씩 가져오기 -->
 	<select id="notifyByMore" parameterType="map" resultType="sboardVo">
 		select A.* from
@@ -171,4 +172,81 @@
       ]]>  
 	</select>
 	
+
+	<!-- 마이페이지에서 사용자가 좋아요한 게시글만 출력 -->
+	<select id="selectByMoreMypageLike" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+             from
+              (select C.*, 
+					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+				from sboard C
+              
+                order by sboard_id desc
+               ) B
+        <![CDATA[     
+			where b.me_like = 1 and rownum <= 6*#{more}
+		]]>
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 싫어요한 게시글만 출력 -->
+	<select id="selectByMoerMypageUnlike" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+             from
+              (select C.*, 
+					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+				from sboard C
+              
+                order by sboard_id desc
+               ) B
+        <![CDATA[     
+			where b.me_unlike = 1 and rownum <= 6*#{more}
+		]]>
+	
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 작성한 게시글만 출력 -->
+	<select id="selectByMoerMypageMypost" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+		             from
+		              (select C.*, 
+							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+						from sboard C
+		                where C.MEM_ID = 'qkrwjdtn1'
+		                order by sboard_id desc
+		               ) B
+        <![CDATA[     
+		where rownum <= 6*#{more};
+		select SBOARD_ID from sboard where MEM_ID = #{mem_id};
+		]]>
+	
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 댓글을 쓴 게시글만 출력 -->
+	<select id="selectByMoerMypageMycomment" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+		             from
+		              (select C.*, 
+							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+						from sboard C
+		                order by sboard_id desc
+		               ) B, SCOMMENT S
+        <![CDATA[     
+		where B.SBOARD_ID = S.SBOARD_ID AND S.MEM_ID = #{mem_id}
+		AND rownum <= 3*#{more};
+		]]>
+	
+	</select>
+
 </mapper>

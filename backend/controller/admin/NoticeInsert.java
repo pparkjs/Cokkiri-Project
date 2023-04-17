@@ -6,9 +6,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.noticeService.INoticeService;
 import service.noticeService.NoticeServiceImpl;
+import vo.MemberVO;
 import vo.NoticeVO;
 
 @WebServlet("/NoticeInsert.do")
@@ -24,6 +26,12 @@ public class NoticeInsert extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
+		HttpSession session = request.getSession();
+		
+		MemberVO mvo = (MemberVO)session.getAttribute("memberVo");
+		
+		// 관리자 로그인한 아이디
+		String adminId = mvo.getMem_id();
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
@@ -31,6 +39,7 @@ public class NoticeInsert extends HttpServlet {
 		
 		NoticeVO vo = new NoticeVO();
 		
+		vo.setMem_id(adminId);
 		vo.setNboard_title(title);
 		vo.setNboard_content(content);
 		

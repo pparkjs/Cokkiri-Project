@@ -145,6 +145,15 @@ public class MemberServiceImpl implements IMemberService {
 	@Override
 	public int totalCount(Map<String, Object> map) {
 		return dao.totalCount(map);
+  }
+  
+	public String selectMemberIdByTelAndName(MemberVO memVo) {
+		return dao.selectMemberIdByTelAndName(memVo);
+	}
+
+	@Override
+	public int updateMemberPw(MemberVO memVo) {
+		return dao.updateMemberPw(memVo);
 	}
 
 }

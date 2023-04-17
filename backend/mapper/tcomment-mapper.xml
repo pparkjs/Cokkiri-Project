@@ -8,9 +8,9 @@
 <!-- 댓글 작성 -->
 <insert id="insertTcomment" parameterType="tcommentVo">
 	  insert into tcomment
-	    (tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_secret, tcomment_isremove)
+	    (tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content, tcomment_cdate, tcomment_isremove)
 	    values
-	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, #{tcomment_secret}, 'n')
+	    (TCOMMENT_SEQ.nextval, #{tcomment_pid}, #{tboard_id}, #{mem_id}, #{tcomment_content}, SYSDATE, 'n')
 
 	    <selectKey resultType="int" keyProperty="tcomment_id">
 	    	select tcomment_seq.currval from dual
@@ -26,19 +26,22 @@
 <select id="getAllTcomment" resultType="tcommentVo" parameterType="tcommentVo">
   
   <![CDATA[
-  SELECT *
+ SELECT *
 FROM (
-  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id, tcomment_content,
+  SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id,
+    CASE
+      WHEN level = 1 THEN tcomment_content 
+      ELSE ' ↳     ' || tcomment_content 
+    END AS tcomment_content, 
     CASE
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - tcomment_cdate) * 24 * 60 * 60 / 60), '분전')
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 24 * 60 * 60 THEN CONCAT(FLOOR((SYSDATE - tcomment_cdate) * 24 * 60 * 60 / (60 * 60)), '시간전')
       ELSE TO_CHAR(tcomment_cdate, 'YYYY-MM-DD HH24:MI:SS')
     END
-  AS tcomment_cdate,
-  tcomment_secret, tcomment_isremove
+  AS tcomment_cdate, tcomment_isremove
   FROM tcomment
-  WHERE tboard_id = #{tboard_id} and mem_id = #{mem_id}
+  WHERE tboard_id = #{tboard_id} AND mem_id = #{mem_id}
   START WITH tcomment_pid = 0
   CONNECT BY PRIOR tcomment_id = tcomment_pid
   ORDER SIBLINGS BY tcomment_cdate, tcomment_id DESC
@@ -49,7 +52,7 @@ FROM (
 <!-- 댓글 수정 -->
 <update id="updateTcomment" parameterType="tcommentVo">
 	update tcomment 
-		set tcomment_content = #{tcomment_content}, tcomment_mdate = sysdate, tcomment_secret = #{tcomment_secret}
+		set tcomment_content = #{tcomment_content}, tcomment_mdate = sysdate
 		where tcomment_id = #{tcomment_id}
 </update> 
 

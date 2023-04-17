@@ -1,9 +1,12 @@
+<%@page import="vo.ChatMessageTboardVO"%>
+<%@page import="vo.MemberVO"%>
 <%@page import="vo.NoticeVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <% NoticeVO vo = (NoticeVO)session.getAttribute("noticeData"); %>
+<% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -31,14 +34,20 @@ $(function(){
 </script>
 </head>
 <body>
+<%if(vo.getMem_id().equals(memVo.getMem_id())){ %>
 <%@ include file="/module/adminHeader.jsp" %>
+<%}else{ %>
+<%@ include file="/module/header.jsp" %>
+<%} %>
 <div class="admin_notice">
 	<div class="admin_header">
 		<div class="admin_t">
 			<%=vo.getNboard_title() %>
-		</div>	
+		</div>
+		<%if(vo.getMem_id().equals(memVo.getMem_id())){ %> <!-- 관리자 로그인한경우만 가능 -->
 		<div id="modify">수정</div>
 		<div id="delete">삭제</div>
+		<%} %>
 	</div>
 	
 	<div class="admin_top">

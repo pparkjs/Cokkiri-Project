@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainStyle.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/mypageSboardStyle.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/mypageSecretBoard.js">
 
@@ -81,6 +83,53 @@
 	color: rgb(28,28,30);
 }
 </style>
+<script type="text/javascript">
+mypath = `<%=request.getContextPath() %>`;
+$(function() {
+	// 외부스크립트
+	mypageSboardListServer(1); 
+	
+	// 더보기 버튼 클릭시 6개씩 추가
+	$('#moreBtn').on('click', function() {
+		more = more + 1;
+		mypageSboardListServer(more);
+	})
+
+	// 버튼을 누르면 해당 게시물이 나옴
+	// 내글
+	$('#boardBtn').on('click', function() {
+		btnValue = "내글";
+		$('#mypageSboard').empty(); 
+		more = 1;
+		mypageSboardListServer(more, btnValue); 
+	})
+	// 댓글
+	$('#commentBtn').on('click', function() {
+		btnValue = "댓글";
+		$('#mypageSboard').empty(); 
+		more = 1;
+		mypageSboardListServer(more, btnValue); 
+	})
+	// 좋아요
+	$('#likeBtn').on('click', function() {
+		btnValue = "좋아요";
+		$('#mypageSboard').empty(); 
+		more = 1;
+		mypageSboardListServer(more, btnValue); 
+	})
+	// 싫어요
+	$('#nulikeBtn').on('click', function() {
+		btnValue = "싫어요";
+		$('#mypageSboard').empty(); 
+		more = 1;
+		mypageSboardListServer(more, btnValue); 
+	})
+	
+	
+	// 조회수 증가 함수
+	
+})
+</script>
 </head>
 <body>
 <!-- header -->
@@ -100,62 +149,26 @@
 	</div>
 	<section>
 		<div id="selectBtn">
-			<input type="button" value="내글" name="board" class="boardBtn">
-			<input type="button" value="댓글" name="comment" class="commentBtn">
-			<input type="button" value="좋아요" name="like" class="likeBtn">
-			<input type="button" value="싫어요" name="nulike" class="nulikeBtn">
+			<input type="button" value="내글" name="board" class="SearchBtn" id="boardBtn">
+			<input type="button" value="댓글" name="comment" class="SearchBtn" id="commentBtn">
+			<input type="button" value="좋아요" name="like" class="SearchBtn" id="likeBtn">
+			<input type="button" value="싫어요" name="nulike" class="SearchBtn" id="nulikeBtn">
 			
 		</div>
+		
+		<!-- 게시판 리스트 -->
 		<div class="boardList">
+			<div class="mypageSboard">
+				<!-- DB에서 게시판 가져오기 -->
+			</div>
 		</div>
 		<div class="moreContainer">
-			<button class="moreBtn"><img alt="더보기버튼.png" src="<%=request.getContextPath() %>/images/더보기버튼.png"></button>
+			<button class="moreBtn"><img alt="더보기버튼.png" src="<%=request.getContextPath() %>/images/더보기버튼.png" style="display : none"></button>
 		</div>
 	</section>
 </div>
  	
 <!-- footer -->
 <%@ include file="/module/footer.jsp" %>	
- 
-<script>
-    let home1TextH = document.querySelector('.home1__h1')
-    let home1TextP = document.querySelector('.home1__p')
-    let home2TextH = document.querySelector('.home2__h1')
-    let home2TextP = document.querySelector('.home2__p')
-    let home3TextH = document.querySelector('.home3__h1')
-    let home3TextP = document.querySelector('.home3__p')
-    //스크롤 할때 줄 이벤트
-    window.addEventListener('scroll', function(){
-        //스크롤의 높이를 가져오는 것
-        let value = window.scrollY 
-        console.log(value);
-        if(value > 250){
-            // 애니메이션에 forwards주면 방금 일어난 에니메이션상태 유지됨
-            home1TextH.style.animation = "disappear 1s ease-out forwards";
-            home1TextP.style.animation = "disappear 1s ease-out forwards";
-        }else{
-            home1TextH.style.animation = "slideLeft 1s ease-out";
-            home1TextP.style.animation = "slideLeft 1.5s ease-out";
-        }
-        if(value < 350 || value > 950){
-            home2TextH.style.animation = "disappearH 1s ease-out forwards";
-            home2TextP.style.animation = "disappearP 1s ease-out forwards";
-        }else{
-            home2TextH.style.animation = "slideRightH 1s ease-out";
-            home2TextP.style.animation = "slideRightP 1.5s ease-out";
-        }
-
-        if(value < 950){
-            // 애니메이션에 forwards주면 방금 일어난 에니메이션상태 유지됨
-            home3TextH.style.animation = "disappear 1s ease-out forwards";
-            home3TextP.style.animation = "disappear 1s ease-out forwards";
-        }else{
-            home3TextH.style.animation = "slideLeft 1s ease-out";
-            home3TextP.style.animation = "slideLeft 1.5s ease-out";
-        }
-    
-    })
-
-</script>
 </body>
 </html>

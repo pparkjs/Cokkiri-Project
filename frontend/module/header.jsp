@@ -97,6 +97,7 @@ $(()=>{
                     </li>
                     <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
                     <li><a href="#">마이플레이스</a></li>
+                    <li><a href="<%=request.getContextPath()%>/admin/memNotice.jsp">공지사항</a></li>
                 </ul>
                 <div class ="navbar__mapLogo">
                     <img src="<%=request.getContextPath()%>/images/지도아이콘.png" alt="지도아이콘.png">
@@ -141,7 +142,7 @@ $(()=>{
                          	  <li><a href="#">My 프로필</a></li>
                           	  <li><a href="#">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
-                          	  <li><a href="#">내 글 보기</a></li>
+                          	  <li><a href="<%=request.getContextPath()%>/mypage/secretBoard.jsp">내 글 보기</a></li>
                           	  <li><a href="#">로그아웃</a></li>
                      	    </ul>
                     	</div>
