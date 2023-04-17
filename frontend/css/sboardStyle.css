@@ -90,7 +90,7 @@
 width: 800px; margin: 35px auto;}
 .mem_header{display : flex; justify-content: end;}
 #modify{margin-right : 25px;}
-#modify , #delete{padding : 1px 15px; margin-right: 25px;}
+#modify , #delete{padding : 1px 15px; margin-right: 25px; cursor: pointer;}
 .mem_top{ display : flex; align-items: center; margin-top: 20px;}
 .mem_top .m_date{margin-left : 494px;}
 .mem_top img {width : 60px; height : 60px;}
@@ -114,8 +114,6 @@ width: 800px; margin: 35px auto;}
 .mem_img{margin-top : 20px;}
 /* .mem_img img:nth-child(1){ grid-column : 1 / 4;} */
 .mem_img img{width : 100%; height: 600px; }
-
-
 
 
 
