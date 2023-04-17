@@ -6,8 +6,14 @@ public class TBoardAndAttVO {
 	private Long fimgid;
 	private int mylist;
 	private String mymem_id;
+	private int notifynum;
 	
-	
+	public int getNotifynum() {
+		return notifynum;
+	}
+	public void setNotifynum(int notifynum) {
+		this.notifynum = notifynum;
+	}
 	public int getMylist() {
 		return mylist;
 	}
