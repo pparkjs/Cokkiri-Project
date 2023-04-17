@@ -85,6 +85,39 @@ width: 1076px; margin: 35px auto;}
 .a_back{ cursor: pointer; padding: 0px 29px; background: white; border: 1px solid black;}
 .a_back:hover{background:rgb(209, 209, 214);}
 
+/*  회원관리 list */
+
+.con_memManage{
+    width: 1375px;
+    margin: 20px auto;
+}
+
+.con_memManage_header{ position: relative; padding-top: 25px; padding-bottom: 25px;}
+.memManage_search{ width: 700px; height: 23px; padding-left: 20px}
+.con_memManage_header #search{position: absolute; width : 25px; height: 25px; left: 690px; top: 27px; cursor: pointer;}
+.con_memManage_header #regi{position: absolute;  right: 131px; width : 33px; height: 33px;}
+.memManage_table{width:100%; border-top : 3px solid black;}
+.memManage_id{ width: 100px;}
+.memManage_name{width: 100px;}
+.memManage_nick{width: 100px;}
+.memManage_birth{width: 100px;}
+.memManage_gend{width: 100px;}
+.memManage_email{width: 100px;}
+.memManage_phone{width: 100px;}
+.memManage_addr{width: 100px;}
+th, td{border-bottom: 1px solid rgb(174, 174, 178); padding-top: 20px; padding-bottom: 20px; text-align: center;}
+.memManage_title{text-decoration: none; color: black;}
+
+.memManage_page{ width: 21vw;  margin: 10px auto; display: flex; justify-content: center;}
+.pagination{list-style: none;}
+.pagination li{display : inline-block;  width: 36px; text-align: center;}
+.pagination li a{text-decoration: none; color : black; text-align: center; font-weight: 700;}
+.pagination li:hover{background: black;}
+.pagination li a:hover{color : white;}
+#prev_li{width: 50px;}
+#next_li{width: 50px;}
+.active{background: black;}
+#page_click{color : white;}
 
 
 

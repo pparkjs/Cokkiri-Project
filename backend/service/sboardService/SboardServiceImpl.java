@@ -120,6 +120,11 @@ public class SboardServiceImpl implements ISboardService {
 	}
 
 	@Override
+
+	public List<SboardVO> notifyByMore(Map<String, Object> map) {
+		return dao.notifyByMore(map);
+  }
+  
 	public List<SboardVO> selectByMoreMypageLike(String memId, int more) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("more", more);

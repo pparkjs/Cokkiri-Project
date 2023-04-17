@@ -29,6 +29,9 @@ public class SboardVO {
 	// 신고 일자
 	private String snotify_date;
 	
+	// 신고 합계
+	private String sum_notify ;
+	
 	public int getSboard_id() {
 		return sboard_id;
 	}
@@ -137,6 +140,14 @@ public class SboardVO {
 	public void setSnotify_date(String snotify_date) {
 		this.snotify_date = snotify_date;
 	}
+	public String getSum_notify() {
+		return sum_notify;
+	}
+	public void setSum_notify(String sum_notify) {
+		this.sum_notify = sum_notify;
+	}
+
+	
 
 	
 

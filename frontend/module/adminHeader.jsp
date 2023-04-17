@@ -5,6 +5,8 @@
 .admin_pf{display : flex; align-items: center;}
 .admin_pf p {margin-left: 10px;}
 .admin_logout{text-decoration: none; color: black; margin-left: 100px; }
+.header .navbar {width:100%}
+.header .navbar .navbar__board li:nth-child(2) {margin-right: 20px;}
 </style>
 <!--  wrap의 시작 -->
  <div class="wrap">
@@ -20,9 +22,11 @@
                 </div>
                 <ul class="navbar__board">
                     <li class="item">
-                   		<a class="a1" href="#">회원관리</a>
+                   		<a class="a1" href="<%=request.getContextPath()%>/admin/memManagement.jsp">회원관리</a>
                     </li>
-                    <li><a href="#">게시판관리</a></li>
+                    <li><a href="#">중고거래</a></li>
+                    <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
+                    <li><a href="#">마이플레이스</a></li>
                     <li><a href="<%=request.getContextPath()%>/admin/noticeboard.jsp">공지사항</a></li>
                 </ul>
                 

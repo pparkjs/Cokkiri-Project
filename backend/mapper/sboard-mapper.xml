@@ -14,11 +14,13 @@
     	</where>
     </sql>
     
-    <!-- 전체 게시글 개수 구하기 -->
-<!--     <select id="totalConut" resultType="int" parameterType="map"> -->
-<!--     	select count(*) from sboard -->
-<!--     	<include refid="dynamicCondition"/>  -->
-<!--     </select> -->
+    <sql id="dynamicCheck">
+    	<where>
+    		<if test="check == 'true'">
+    			mem_nickname like '%'||#{stext}||'%'
+    		</if>
+    	</where>
+    </sql>
     
     <!-- 더보기로 6개씩 가져오기 -->
 	<select id="selectByMore" parameterType="map" resultType="sboardVo">
@@ -154,6 +156,23 @@
 		insert into snotify values(#{mem_id}, #{sboard_id}, sysdate)
 	</insert>
 	
+
+	    <!-- 신고 테이블 더보기로 6개씩 가져오기 -->
+	<select id="notifyByMore" parameterType="map" resultType="sboardVo">
+		select A.* from
+	   		  (select rownum as rnum, B.* from
+	              (select C.*, 
+	                    (select count(*) from snotify D where C.sboard_id=D.sboard_id ) sum_notify
+					from sboard C
+					<include refid="dynamicCondition"/>
+	                order by sboard_id desc) B 
+      <![CDATA[    
+          where rownum <= 12+(12*#{more})) A 
+        where A.rnum >= 1+(12*#{more}) and sum_notify >= 1
+      ]]>  
+	</select>
+	
+
 	<!-- 마이페이지에서 사용자가 좋아요한 게시글만 출력 -->
 	<select id="selectByMoreMypageLike" resultType="sboardVo" parameterType="Map">
 		select rownum as rnum, B.*
@@ -229,4 +248,5 @@
 		]]>
 	
 	</select>
+
 </mapper>
