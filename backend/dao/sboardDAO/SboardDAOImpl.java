@@ -290,4 +290,20 @@ public class SboardDAOImpl implements ISboardDAO {
 		return res;
 	}
 
+	@Override
+	public List<SboardVO> notifyByMore(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.notifyByMore", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
 }
