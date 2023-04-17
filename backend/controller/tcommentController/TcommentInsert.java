@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.tcommentService.ITcommentService;
 import service.tcommentService.TcommentServiceImpl;
+import vo.MemberVO;
 import vo.TcommentVO;
 
 
@@ -51,7 +54,9 @@ public class TcommentInsert extends HttpServlet {
 		int result = service.insertTcomment(vo);
 		
 		TcommentVO tcomment = service.getTcomment(vo.getTcomment_id());
-		
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		MemberVO mem = service2.selectMemberinfo(tcomment.getMem_id());
+		tcomment.setMem_nickname(mem.getMem_nickname());
 		Gson gson = new Gson();
 		String json = gson.toJson(tcomment);
 		
