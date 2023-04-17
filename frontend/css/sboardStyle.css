@@ -116,10 +116,14 @@ width: 800px; margin: 35px auto;}
 .mem_img img{width : 100%; height: 600px; }
 
 
+/* 관리자 신고체크  부분 */
+.notify_con{display:flex; align-items:center; position:absolute; position: absolute; top: 32px;  right: 303px;}
+.no_check{width: 18px; height: 18px;}
+.notify_con p{margin-left: 10px;  font-size: 14px; font-weight: bold;}
 
-
-
-
+.bottom_notify{display:flex; justify-content: center; align-items: center; margin-left:428px; }
+.bottom_notify p{font-size:16px; margin-left : 6px;}
+.no{display: none;}
 
 
 
