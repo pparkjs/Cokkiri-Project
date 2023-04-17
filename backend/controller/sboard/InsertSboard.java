@@ -19,6 +19,7 @@ import service.sboardService.ISboardService;
 import service.sboardService.SboardServiceImpl;
 import service.simageService.ISimageService;
 import service.simageService.SimageServiceImpl;
+import vo.MemberVO;
 import vo.SboardVO;
 import vo.SimageVO;
 
@@ -41,7 +42,8 @@ public class InsertSboard extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		
-		String memId = (String)session.getAttribute("mem_id");
+		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
 		
 		SboardVO sb = new SboardVO(); //실제로 selectKey에서 boardid저장해줌
 

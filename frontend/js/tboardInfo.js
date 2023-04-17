@@ -102,11 +102,11 @@ btnChage = function(tboard_id) {
 }
 
 
-recommendlistRecieve = function(pagenum, category, sword) {
+recommendlistRecieve = function(category,curtboard_id) {
 	$.ajax({
-		url: `${path}/tboardMain.do`,
+		url: `${path}/tboardRecommend.do`,
 		type: "post",
-		data: { "page": pagenum, "category": category, "sword": sword },
+		data: {"category": category, "tboard_id":curtboard_id},
 		dataType: "json",
 		success: function(res) {
 			$.each(res, function(i, v) {
@@ -124,7 +124,7 @@ recommendlistRecieve = function(pagenum, category, sword) {
 
 				$pprice = $("<p class='nomargin price'>" + v["boardVO"]["tboard_price"] + "원</p>")
 
-				$padd = $("<p class='nomargin add'>" + v["add"] + "</p>")
+				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
 				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " 찜 " + v["mylist"] + "</p>")
 
@@ -181,6 +181,7 @@ slideImage = function() {
 		}
 		if (curIndex + 1 == slideLen - 1) {
 			$(".slide_btn_next").attr("disabled", true);
+			$(".slide_btn_prev").attr("disabled", false);
 		}
 		curSlide.classList.remove('slide_active');
 		pageDots[(curIndex === -1) ? slideLen - 1 : curIndex].classList.remove('dot_active');
@@ -199,6 +200,7 @@ slideImage = function() {
 		}
 		if (curIndex - 1 == 0) {
 			$(".slide_btn_prev").attr("disabled", true);
+			$(".slide_btn_next").attr("disabled", false);
 		}
 
 		curSlide.classList.remove('slide_active');

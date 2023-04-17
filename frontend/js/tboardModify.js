@@ -177,11 +177,20 @@ window.onload=function(){
     	  location.href=`${path}/tboardInfo.do?id=${tboard_id}` 		
       })
       
+      
+      
+      
+      $(".ssbtn").on("click",function(){
+		  state=$(this).text();
+		  $(".ssbtn").removeClass("activeBtn")
+		  $(this).addClass("activeBtn");
+	  })
+      
+      
       $("#modify").on("click",function(){ 	  
     	  	
     	  	price=$("#price").val()
     	  	category=$("#category :selected").attr("id")
-    	  	state=$('input[name="state"]:checked').val()//undefind확인
     	  	title=$("#title").val()
     	  	content=$("#content").val()
     	  	
@@ -192,10 +201,11 @@ window.onload=function(){
     	  	}
     	  	
     	  	
-    	  	if(typeof state == "undefined"){
+      	  	if(typeof state == "undefined"||state==""||state==null){
     	  		alert("판매구매 상태를 확인해 주세요.")
     	  		return ;
     	  	}
+    	  	
     	  	
     	  	
     	  	

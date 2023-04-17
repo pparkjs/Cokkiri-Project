@@ -183,7 +183,7 @@ $((ev)=>{
 		boardstate=$(this).text();
 		$(".box").empty();
 		listRecieve(page,category,sword,boardstate);
-		
+		$("#default").prop("selected", true);
 	})
 	
 })

@@ -8,6 +8,9 @@
 <mapper namespace="chat">
 	<insert id="insertChatRoom" parameterType="chatroomVo">
 		insert into chatroom values(CHATROOM_SEQ.nextval,#{tboard_id},#{mem_id},sysdate)
+		<selectKey resultType="Long" keyProperty="room_id">
+	 		SELECT CHATROOM_SEQ.CURRVAL from dual
+	 	</selectKey> 
 	</insert>
 	<select id="selectChatRoomByRid" parameterType="long" resultType="chatroomVo">
 		select * from chatroom where room_id=#{room_id}
@@ -42,5 +45,11 @@
 	 		SELECT chatmessage_SEQ.CURRVAL from dual
 	 	</selectKey> 
 	</insert>
+	<select id="selectChatRoomByMidTid" parameterType="map" resultType="chatroomVo">
+		select * from chatroom where mem_id=#{mem_id} and tboard_id=#{tboard_id}
+	</select>
+	<select id="selectChatMessageByCid" parameterType="Long" resultType="chatmessageVo">
+		select * from chatmessage where message_id=#{message_id}
+	</select>
 </mapper>
 

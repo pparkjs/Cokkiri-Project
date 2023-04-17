@@ -161,6 +161,12 @@ public class TboardServiceImpl implements ITboardService {
 		return dao.selecttboardsByPagefromOne(map);
 	}
 
+	@Override
+	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return dao.selectTboardRecommend(map);
+	}
+
 	
 
 }

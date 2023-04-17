@@ -51,7 +51,6 @@ public class SboardUpdate extends HttpServlet {
 		int res = bService.sboardUpdate(sb); //얘는 타이틀이랑 내용 수정 한것
 
 		int fileCnt = mService.simageCount(sbId);
-		System.out.println(fileCnt);
 
 		if(fileCnt > 0) {
 			mService.simageDeleteBySboardId(sbId); // 삭제
@@ -70,7 +69,6 @@ public class SboardUpdate extends HttpServlet {
 
 		for(Part part : request.getParts()) {
 			fileName = extractFileName(part); // 저장되어있던 uuid파일명 추출해옴
-			System.out.println(fileName);
 			if(!"".equals(fileName)){ // 파일인지 검사 
 
 				//원본파일 이름 추출
@@ -115,7 +113,6 @@ public class SboardUpdate extends HttpServlet {
 			// filename으로 시작하는 것만
 			if(item.trim().startsWith("filename")) {
 				fileName = item.substring(item.indexOf("=")+2, item.length()-1);
-				System.out.println(fileName);
 			}
 
 		}
