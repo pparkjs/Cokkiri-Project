@@ -106,14 +106,14 @@ $.retcommentWriteServer = function(){
 			}else{
 				level=3
 			}
-			code += `<div class="dw a${level}" id="${v.tcomment_id}">
+			code += `<div class="dw a${level}" id="${res.tcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
-								<span id="cdate">${v.tcomment_cdate}</span><br>
-								<span id="content">${tcontent}</span><br><br>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;
-								<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+								<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${res.tcomment_cdate}</span><br>
+								<span id="content">${reContent}</span><br><br>
+								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">&nbsp;
 							</div><br>`;
 			
 			
