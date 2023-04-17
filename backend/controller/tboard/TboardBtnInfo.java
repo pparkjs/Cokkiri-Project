@@ -29,6 +29,10 @@ public class TboardBtnInfo extends HttpServlet {
 		String mem_id = request.getParameter("mem_id");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		PrintWriter out = response.getWriter();
+		if(smem.getAdmin_auth().equals("Y")) {
+			out.print("{ \"res\":\"ok\"}");
+			return;
+		}
 		if(mem_id.equals(smem.getMem_id())) {
 			out.print("{ \"res\":\"ok\"}");
 		}else {

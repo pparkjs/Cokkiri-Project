@@ -25,7 +25,7 @@ public class TboardRemove extends HttpServlet {
 		Long tboard_id = Long.parseLong(request.getParameter("tboard_id"));
 		String mem_id = request.getParameter("mem_id");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
-		if(mem_id.equals(smem.getMem_id())) {
+		if(mem_id.equals(smem.getMem_id())||smem.getAdmin_auth().equals("Y")) {
 			ITboardService service = TboardServiceImpl.getInstance();
 			res = service.deleteTboard(tboard_id);
 		}

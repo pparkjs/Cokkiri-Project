@@ -52,6 +52,7 @@ public class TboardInfo extends HttpServlet {
 		String category_id = boardVO.getCategory_id();
 		String category_name = service.selectCategoryName(category_id);
 		
+		request.setAttribute("smem", smem);
 		request.setAttribute("memberVO", memberVO);
 		request.setAttribute("board", boardVO);
 		request.setAttribute("img", ilist);

@@ -75,7 +75,9 @@ where rn between 1 and (#{page_num})*12
 	 <select id="selectTnotify" parameterType="map" resultType="int">
 	 	select count(*) from tnotify where mem_id=#{mem_id} and tboard_id=#{tboard_id}
 	 </select>
-	 
+	 <select id="selectTnotifys" parameterType="Long" resultType="int">
+	 	select count(*) from tnotify where tboard_id=#{tboard_id}
+	 </select>
 	 <select id="selectCategoryName" parameterType="String" resultType="String">
 	 	select category_name from category where category_id=#{category_id}
 	 </select>

@@ -1,20 +1,16 @@
 package controller.tboard;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequestAttributeEvent;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.Region;
 
 import com.google.gson.Gson;
 
@@ -26,19 +22,20 @@ import vo.TBoardAndAttVO;
 import vo.TBoardVO;
 import vo.TImageVO;
 
-@WebServlet("/tboardMain.do")
-public class TboardMain extends HttpServlet {
+
+@WebServlet("/tboardNotify.do")
+public class TboardNotify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		response.sendRedirect(request.getContextPath()+"/tboard/tboard.jsp");
-
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 	
 		
 		request.setCharacterEncoding("utf-8");
@@ -98,7 +95,8 @@ public class TboardMain extends HttpServlet {
 				
 			}
 			tBoardAndAttVO.setBoardVO(boardVO);
-
+			int notifynum = service.selectTnotifys(boardVO.getTboard_id());
+			tBoardAndAttVO.setNotifynum(notifynum);
 			List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
 			MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 			
@@ -116,14 +114,11 @@ public class TboardMain extends HttpServlet {
 			list.add(tBoardAndAttVO);
 		}
 		
+
+		Gson gson = new Gson();
+		String json = gson.toJson(list);
+		response.getWriter().print(json);
 		
-		request.setAttribute("list", list);
-		if(smem.getAdmin_auth().equals("Y")) {
-			request.setAttribute("admin", 1);
-		}else {
-			request.setAttribute("admin", 0);
-		}
-		request.getRequestDispatcher("/view/tboardmainview.jsp").forward(request, response);
 	}
 
 }
