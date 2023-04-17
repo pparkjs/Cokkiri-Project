@@ -5,6 +5,7 @@ public class NoticeVO {
 	private String nboard_title;
 	private String nboard_content;
 	private String nboard_cdate;
+	private String mem_id;
 	
 	public int getNboard_id() {
 		return nboard_id;
@@ -30,6 +31,13 @@ public class NoticeVO {
 	public void setNboard_cdate(String nboard_cdate) {
 		this.nboard_cdate = nboard_cdate;
 	}
+	public String getMem_id() {
+		return mem_id;
+	}
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+	
 	
 	
 }
