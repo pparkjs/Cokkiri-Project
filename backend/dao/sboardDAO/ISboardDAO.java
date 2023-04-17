@@ -58,5 +58,13 @@ public interface ISboardDAO {
 	// 신고하기 메소드
 	public int sboardNotify(SboardVO vo);
 	
+	// 마이페이지에서 사용자가 좋아요한 게시글만 출력
+	public List<SboardVO> selectByMoreMypageLike(Map<String, Object> map);
+	// 마이페이지에서 사용자가 싫어요한 게시글만 출력
+	public List<SboardVO> selectByMoerMypageUnlike(Map<String, Object> map);
+	// 마이페이지에서 사용자가 작성한 게시글만 출력
+	public List<SboardVO> selectByMoerMypageMypost(Map<String, Object> map);
+	// 마이페이지에서 사용자가 댓글을 쓴 게시글만 출력
+	public List<SboardVO> selectByMoerMypageMycomment(Map<String, Object> map);
 	
 }
