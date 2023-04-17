@@ -43,8 +43,7 @@ $(function() {
 					"idmemory" : idmemory},
 			success : function(res){
 				if(res.result=="Y"){
-					alert("관리자 페이지로 이동 슝");
-					//window.location.href="";
+					window.location.href="<%=request.getContextPath()%>/admin/adminhome.jsp";
 				} else if (res.result=="N"){
 					window.location.href="<%=request.getContextPath()%>/home/main.jsp";
 				} else {

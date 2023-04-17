@@ -72,7 +72,6 @@ function imageView(){
 </head>
 <body>
 <%@ include file="/module/header.jsp" %>
-<h1><%=memId%></h1>
 <div class="mem_sboard">
 	<div class="mem_header">
 		<input type="button" id="modify" value="수정">
