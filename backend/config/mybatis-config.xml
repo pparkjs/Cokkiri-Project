@@ -26,6 +26,7 @@
 		<typeAlias type="vo.NoticeVO" alias="noticeVo"/>
 		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 		<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
+		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -53,6 +54,7 @@
     <mapper resource="mapper/tcomment-mapper.xml"/>
     <mapper resource="mapper/sboard-mapper.xml"/>
     <mapper resource="mapper/notice-mapper.xml"/>
+    <mapper resource="mapper/alarm-mapper.xml"/>
 
 	</mappers>
 	

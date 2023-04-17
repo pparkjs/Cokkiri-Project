@@ -6,7 +6,6 @@ public class ChatMessageTboardVO {
 	private List<ChatMessageVO> mlist;
 	private TBoardVO tBoardVO;
 	private MemberVO yourMember;
-	private MemberVO seller;
 	private TImageVO fTImageVO;
 	
 	
@@ -34,12 +33,6 @@ public class ChatMessageTboardVO {
 	}
 	public void setYourMember(MemberVO yourMember) {
 		this.yourMember = yourMember;
-	}
-	public MemberVO getSeller() {
-		return seller;
-	}
-	public void setSeller(MemberVO seller) {
-		this.seller = seller;
 	}
 	
 	

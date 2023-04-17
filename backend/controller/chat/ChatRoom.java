@@ -41,11 +41,11 @@ public class ChatRoom extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		
 		IChatService service = ChatServiceImpl.getInstance();
-		String smem_id = (String)request.getSession().getAttribute("id");
-		List<ChatRoomVO> list = service.selectChatRoomListByMid(smem_id);
+		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
+		List<ChatRoomVO> list = service.selectChatRoomListByMid(smem.getMem_id());
 		List<ChatRoomDetailVO> resList = new ArrayList<>();
 		IMemberService service2 = MemberServiceImpl.getInstance();
-		MemberVO myMember = service2.selectMemberinfo(smem_id);
+		MemberVO myMember = service2.selectMemberinfo(smem.getMem_id());
 		ITboardService service3 = TboardServiceImpl.getInstance();
 		
 		for (ChatRoomVO chatRoomVO : list) {
@@ -64,17 +64,17 @@ public class ChatRoom extends HttpServlet {
 			chatRoomDetailVO.setMyMember(myMember);
 			String bmem_id = chatRoomVO.getMem_id();
 			MemberVO yourMember=null;
-			if(!bmem_id.equals(smem_id)) {
+			if(!bmem_id.equals(smem.getMem_id())) {
 				yourMember = service2.selectMemberinfo(bmem_id);
 				chatRoomDetailVO.setYourMember(yourMember);
-			}else if(!tmem_id.equals(smem_id)) {
+			}else if(!tmem_id.equals(smem.getMem_id())) {
 				yourMember = service2.selectMemberinfo(tmem_id);
 				chatRoomDetailVO.setYourMember(yourMember);
 			}
 			
 			Map<String,Object> map = new HashMap<>();
 			map.put("room_id", chatRoomVO.getRoom_id());
-			map.put("mem_id", smem_id);
+			map.put("mem_id", smem.getMem_id());
 			int noReadCnt = service.selectNoReadMessageCnt(map);
 			chatRoomDetailVO.setNoReadCnt(noReadCnt);
 			resList.add(chatRoomDetailVO);

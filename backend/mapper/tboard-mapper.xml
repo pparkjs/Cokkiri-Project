@@ -46,7 +46,7 @@ where rn between 1 and (#{page_num})*12
 	 </select>
 	
 	 <select id="selecttImgBytboardId" parameterType="Long" resultType="timageVo">
-	 	select * from timage where tboard_ID=#{tboard_id}
+	 	select * from timage where tboard_ID=#{tboard_id} order by timg_id
 	 </select>
 	 
 	 <select id="selectMylistNum" parameterType="Long" resultType="int">
@@ -125,5 +125,11 @@ where rn between 1 and (#{page_num})*12
 	 <delete id="deleteTimages" parameterType="Long">
 	 	delete from timage where tboard_id=#{tboard_id}
 	 </delete>
+	 <select id="selectTboardRecommend" resultType="tboardVo" parameterType="map">
+	 	SELECT * FROM
+		( SELECT * FROM tboard where category_id=#{category} and mem_id in(select mem_id from member where mem_add=#{mem_add})
+		and tboard_id!=#{tboard_id} ORDER BY dbms_random.value )
+		<![CDATA[WHERE rownum <=#{cnt}]]>
+	 </select>
 </mapper>
 
