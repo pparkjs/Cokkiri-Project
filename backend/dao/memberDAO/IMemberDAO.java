@@ -1,8 +1,10 @@
 package dao.memberDAO;
 
 import java.util.List;
+import java.util.Map;
 
 import vo.MemberVO;
+import vo.PageVO;
 
 public interface IMemberDAO {
 	//회원의 정보를 가져오는 메소드
@@ -32,4 +34,10 @@ public interface IMemberDAO {
 	
 	// 회원 아이디로 회원정보 조회
 	public MemberVO selectMemberById(String memId);
+	
+	// 회원 리스트 - 검색 포함
+	public List<MemberVO> listByPage(Map<String, Object> map);
+	
+	// 전체 글 개수
+	public int totalCount(Map<String, Object> map);
 }
