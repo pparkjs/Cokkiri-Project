@@ -214,7 +214,7 @@ $(function() {
 		} else {
 			$.ajax({
 				url : "<%=request.getContextPath()%>/idcheck.do",
-				type : 'get',
+				type : 'post',
 				data : {"id" : idvalue},
 				success : function(res) {
 					if(res.result == "true"){
@@ -538,8 +538,8 @@ input:focus {
 			<label for="name">이름</label>
 		</div>
 		<input type="text" name="name" id="name" class="form-input">
-		<div id="namecheck" class="check"></div>
 	</div>
+		<div id="namecheck" class="check"></div>
 	
 	<div class="joinRow" id="nicknamebox">
 		<div class="label">
