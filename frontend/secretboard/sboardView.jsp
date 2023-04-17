@@ -78,6 +78,8 @@ function imageView(){
 	<%if(sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
 		<input type="button" id="modify" value="수정">
 		<input type="button" id="delete" value="삭제">
+	<%}else if(memVo.getAdmin_auth().equals("Y")){ %>
+		<input type="button" id="delete" value="삭제">
 	<%} %>
 	</div>
 	
