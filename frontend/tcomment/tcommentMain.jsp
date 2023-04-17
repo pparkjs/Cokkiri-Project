@@ -22,7 +22,7 @@ mypath = '<%=request.getContextPath()%>';
 
 		// 댓글 작성
 		$('#btn').on('click', function() {
- 			secret = $('#is_private').prop('checked');
+//  			secret = $('#is_private').prop('checked');
 			
 			 tcontent = $('#tInsert textarea').val();
 			 
@@ -46,9 +46,9 @@ mypath = '<%=request.getContextPath()%>';
 <%--         		<%= id %>  --%>
        			 tcommentForm = $('<div>').attr("class","formdiv").append($('<form>').attr('id','retInsert').addClass('re-tInsert').append(
        				    $('<div>').append(
-       				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '40px').attr('height', '40px').after('&nbsp;'),
-        				    $('<span>').attr('id', 'writer').after('&nbsp;&nbsp;'),
-       				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea'),
+       				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
+        				    $('<span>').attr('id', 'writer').text('writer').after('&nbsp;&nbsp;'),
+       				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').attr('class', 'tf'),
        				        $('<input>').attr('type', 'button').attr('id', 'rt_insert').attr('name', 'rt_insert').attr('idx', tidx).addClass('action').val('답글달기')
         				   
        				    )
@@ -78,14 +78,14 @@ mypath = '<%=request.getContextPath()%>';
 				  $.tcommentDeleteServer(); 
 				 
 			}else if(vacation == "t_modify"){
+				$(".action[name='t_modify']").next().remove();
  				tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
-// 				var tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
-
+			   /*  nickname = $(this).parent('div').closest('#${res.tcomment_id}').attr('nick'); */
 			    // 댓글 입력 폼 생성
-			     modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-tInsert').append(
+			    var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-tInsert').append(
 			        $('<div>').append(
-			            $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').after('&nbsp;'),
-			            $('<span>').attr('id', 'writer').after('&nbsp;&nbsp;'),
+			            $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
+			            $('<span>').attr('id', 'writer').text('nickname').after('&nbsp;&nbsp;'),
 			            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').val(tcon), // 수정할 댓글 내용을 textarea에 세팅
 			            $('<input>').attr('type', 'button').attr('id', 'rt_modify').attr('name', 'rt_modify').attr('idx', tidx).addClass('action').val('수정하기') // 수정하기 버튼 생성
 			        )
@@ -104,7 +104,8 @@ mypath = '<%=request.getContextPath()%>';
 				 $(document).on('click', '#rt_modify', function(res){
 					 tcontent = $('#mInsert textarea').val();
 					 $.tcommentUpdateServer();
-					 modifyForm.hide();
+					 //$(".div").remove();
+					 
 				})  
 				// 더보기 버튼 클릭시
 			}else if(vacation == "moreList"){
@@ -118,18 +119,45 @@ mypath = '<%=request.getContextPath()%>';
 		 
 	})
 	
-	
-	
 </script>
 <style type="text/css">
-div{
-	border: 1px solid black;
+#tcLayer{
+	display: flex;
+  	flex-wrap: nowrap; 
+  	overflow-x: auto; 
 }
-span{
-	margin: 5px;
-	padding: 5px;
-}
+/* 댓글 작성 폼  */
+#tInsert {
+ 	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; /* 1px 두께의 검은색 선 추가 */
+	align-items: center;
 
+}
+#tInsert span { 
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; /* 텍스트와 정렬을 맞추기 위해 상단 정렬 */
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+/* 댓글 등록 폼 */
+#tInsert #tarea {
+	margin-right: 10px;
+	display: inline-block;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+ #btn {
+	display: inline-block;
+	vertical-align: top;
+	color: black;
+	border: none;
+	background: darkgray;
+	font-style: oblique;
+} 
 .a1{
 	margin: 10px;
 }
@@ -140,121 +168,74 @@ span{
     padding: 10px; 
 }
 .a3{
-	margin-left: 70px;
-}
-.a4{
-	margin-left: 100px;
-}
-.action {
-  color: #333; 
-  margin-right: 10px; 
-  padding: 5px 10px;
-  background-color: lightgray; 
-  color: navy;
-}
-form #tarea {
-  width: 100%; 
-  height: 100px; 
-  resize: none; 
-  padding: 10px; 
-  border: 1px solid #ccc; 
-}
-form #btn {
-  display: block; 
-  margin-top: 10px; 
-  margin-bottom : 10px;
-  padding: 5px 10px; 
-  background-color: lightgray; 
-  color: navy; 
-  border: none; 
-  cursor: pointer; /* 커서를 포인터로 변경하여 버튼을 클릭 가능하도록 설정 */
-}
-#reArea{
-	width: 500px;
-	height:  40px;
-}
-img {
-  width: 40px; 
-  height: 40px; 
-  margin-right: 5px; 
-}
-  #reArea {
-    margin-top: 5px;
-    width: 100%;
-    resize: none;
-    border: 1px solid #ccc;
-    padding: 5px;
-  }
-
-  #rt_insert {
-    margin-top: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-tctLayer {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #f5f5f5;
-}
-
-/* Style for the comment div */
-.a${level} {
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-}
-
-/* Style for the profile image */
-.a${level} img {
-  width: 40px;
-  height: 40px;
-  margin-right: 5px;
-}
-
-/* Style for the writer span */
-#writer {
-  font-weight: bold;
-}
-
-/* Style for the content span */
-#content {
-  flex-grow: 1;
-}
-
-/* Style for the cdate span */
-#cdate {
-  margin-left: 10px;
-  font-size: 12px;
-  color: #999;
-}
-
-/* Style for the action buttons */
-.action {
-  margin-left: 10px;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+	margin-left: 90px;
 } 
-
-#moreList {
-  display: block; /* 블록 요소로 변경 */
-  margin: 0 auto; /* 가로 중앙 정렬 */
-  text-align: center; /* 텍스트 가운데 정렬 */
+.re-tInsert{ /*댓글 등록, 수정 폼 class 값 */
+	margin-top: 20px;
+	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; 
+}
+.re-tInsert span{
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; 
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+#retInsert #reArea{
+	margin-right: 10px;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+.action{
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
+}
+#mInsert #reArea {
+	margin-right: 10px;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+#rt_modify{ /* 수정버튼 */
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
+} 
+.dw .writer, .dw #cdate {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	margin-top :-10px;
+	
+}
+#moreList{
+	display: block;
+	text-align: center;
 }
 </style>
-</head>
+</head>	
 <body>
 <!-- 댓글 작성 폼 -->
 <form id="tInsert">
- 	<textarea rows="5" cols="10" id="tarea"></textarea>
- 	<input type="checkbox" id="is_private" name="is_private">
-        <label for="is_private">비밀 댓글</label>
+	<span>댓글</span>&nbsp;&nbsp;
+ 	<textarea rows="5" cols="10" id="tarea" placeholder="댓글을 입력해주세요." class="tf"></textarea>&nbsp;&nbsp;&nbsp;
  	<input type="button" value="댓글작성" id="btn" name = "tcmt">
 </form><br><br> 
 
