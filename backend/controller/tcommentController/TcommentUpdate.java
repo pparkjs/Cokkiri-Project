@@ -35,11 +35,10 @@ public class TcommentUpdate extends HttpServlet {
 		
 		TcommentVO vo = new TcommentVO();
 		
-		if(issecret.equals("true")) {
-			vo.setTcomment_secret("true");
-		} else {
-			vo.setTcomment_secret("false");
-		}
+		/*
+		 * if(issecret.equals("true")) { vo.setTcomment_secret("true"); } else {
+		 * vo.setTcomment_secret("false"); }
+		 */
 		
 		vo.setTcomment_id(tcommentId);
 		vo.setTcomment_content(tcontent);
