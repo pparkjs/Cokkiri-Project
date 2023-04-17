@@ -35,8 +35,8 @@ public class SboardList extends HttpServlet {
 		ISboardService service = SboardServiceImpl.getInstance();
 		HttpSession session = request.getSession();
 
-		// 아직 로그인 페이지랑 연결 안해서 임의로 받은 테스트용 세션 (로그인한 내 자신의 아이디가 와야함)
-		String memId  = (String)session.getAttribute("mem_id");
+		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
 		
 		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId);
 		List<SboardVO> list = service.selectByMore(morePage);
