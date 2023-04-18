@@ -25,7 +25,7 @@ public interface ISboardService {
 	public List<SboardVO> selectByMore(Map<String, Object> map);
 	
 	// 더보기, 타입, 검색text 처리할 메소드
-	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id);
+	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id, String region);
 	
 	//조회수 증가
 	public int updateHit(int num);

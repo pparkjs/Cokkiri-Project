@@ -149,7 +149,8 @@ function notifyCheckView(mr){
 		type : 'get',
 		data :	{"more" : mr,
 			     "sb_type" : vtype,
-			     "sb_search" : vtext,},
+			     "sb_search" : vtext,
+			     "region" : frontRegion},
 		success : function(res){
 			
 			noList = "";
@@ -192,7 +193,6 @@ function notifyCheckView(mr){
  
  // 게시글 리스트 가져오기
  function sboardListServer(mr){
-	 
 	vtype = $('.sb_type option:selected').val().trim();
 	vtext = $('.sb_search').val().trim();
 
@@ -201,7 +201,8 @@ function notifyCheckView(mr){
 		type : 'post',
 		data :	{"more" : mr,
 			     "sb_type" : vtype,
-			     "sb_search" : vtext},
+			     "sb_search" : vtext,
+			     "region" : frontRegion},
 			     
 		success : function(res){
 			
