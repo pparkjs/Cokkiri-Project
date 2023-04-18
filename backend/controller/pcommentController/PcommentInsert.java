@@ -52,9 +52,8 @@ public class PcommentInsert extends HttpServlet {
 		
 		PcommentVO pcomment = service.getPcomment(vo.getPcomment_id());
 		IMemberService service2 = MemberServiceImpl.getInstance();
-		System.out.println(pcomment.getMem_id());
 		MemberVO mem = service2.selectMemberinfo(pcomment.getMem_id());
-		pcomment.setMem_nickname(mem.getMem_nickname());
+		pcomment.setMemberVO(mem);
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(pcomment);
