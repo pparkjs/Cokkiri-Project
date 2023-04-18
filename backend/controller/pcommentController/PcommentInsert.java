@@ -31,11 +31,12 @@ public class PcommentInsert extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		int pboardId = Integer.parseInt(request.getParameter("pboardId"));
-		String memId = request.getParameter("memId");
+		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("memberVo");
+		String memId = memberVO.getMem_id();
 		String pcontent = request.getParameter("pcontent");
 		String pid = request.getParameter("pcommentPid");
-		
 		PcommentVO vo = new PcommentVO();
+		
 		if(pid!=null) {	// 대댓글
 			int pcommentPid = Integer.parseInt(request.getParameter("pcommentPid"));
 			vo.setPcomment_content(pcontent);
