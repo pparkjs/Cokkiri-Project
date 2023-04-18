@@ -17,6 +17,7 @@ $(function() {
 		// 체크박스의 체크여부값 받아오기
 		var idmemory = $('.idmemory').is(':checked');
 		
+		
 		// Ajax 요청
 		$.ajax({
 			url : '<%=request.getContextPath()%>/memberLogin.do',
@@ -362,7 +363,10 @@ button:active {
 }
 input:focus {outline:none;}
 
-
+/* 커서포인트 */
+.loginbuttondiv button{
+	cursor: pointer;
+}
 </style>
 </head>
 <body>

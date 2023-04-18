@@ -29,6 +29,7 @@
 		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 		<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
 		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
+		<typeAlias type="vo.MypageTboardVO" alias="myTboardVo"/>
 
 	</typeAliases>
 	
