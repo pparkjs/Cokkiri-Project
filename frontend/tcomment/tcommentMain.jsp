@@ -66,7 +66,8 @@ mypath = '<%=request.getContextPath()%>';
  				 // 답글이 달리면 이 번호는 부모 댓글 아이디로 가야하고 자식 댓글 아이디는 시퀀스로 생성된 새로운 아이디
 				 pcomment=$("#tctLayer").find("#"+tcommentPid).attr("id")
  				 pcommentLevel=$("#tctLayer").find("#"+tcommentPid).attr("class");
- 				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
+ 				 console.log(pcommentLevel);
+				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
 				 console.log(pcomment, pcommentLevel, tcommentPid)
 				 
 				 $.retcommentWriteServer();
