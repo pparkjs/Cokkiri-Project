@@ -32,6 +32,9 @@ public class SboardVO {
 	// 신고 합계
 	private String sum_notify ;
 	
+	// 지역 저장
+	private String region;
+	
 	public int getSboard_id() {
 		return sboard_id;
 	}
@@ -145,6 +148,12 @@ public class SboardVO {
 	}
 	public void setSum_notify(String sum_notify) {
 		this.sum_notify = sum_notify;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
 	}
 
 	
