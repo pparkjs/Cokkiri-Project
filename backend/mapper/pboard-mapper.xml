@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="pboard">
+
+
+<!-- 동적쿼리 -->
+<sql id="dynamicCondition">
+    	<where>
+    		<if test="!(pb_type == '' or pb_search == '')">
+    			${pb_type} like '%'||#{pb_search}||'%'
+    		</if>
+    	</where>
+    </sql>
+
+
+<select id="selectByPage" parameterType="map" resultType="pboardVo">
+select A.* from
+   		  (select rownum as rnum, B.* from
+              (select * from pboard
+              <include refid="dynamicCondition"/> 
+                order by pboard_id desc) B
+      <![CDATA[    
+            where rownum <= 6+(4*#{more})) A 
+        where A.rnum >= 1+(4*#{more})
+      ]]>  
+		           
+</select>
+
+<!-- board -->
+<select id="selectById" resultType="pboardVo">
+	select from pboard where mem_id = #{mem_id}
+</select>
+
+
+<insert id="insertBoard" parameterType="pboardVo">
+ 	<selectKey resultType="int" keyProperty="pboard_id" order="BEFORE">
+ 		select pboard_seq.nextval from dual
+ 	</selectKey>						
+ 	insert into pboard 
+		values(#{pboard_id},
+				#{mem_id},
+				#{pboard_title},
+				#{pboard_content},
+				0, 
+				sysdate, null, null, null, 0, 0)
+</insert>
+
+
+<update id="updateBoard" parameterType="pboardVo">
+	update pboard set pboard_title = #{pboard_title}, 
+					  pboard_content = #{pboard_content},
+		              pboard_mdate = sysdate 
+		  where pboard_id = #{pboard_id}
+	
+	
+	 pboard_id = #{pboard_id}
+</update>
+ 
+<delete id="deleteBoard" parameterType="int">
+	delete from pboard where pboard_id= #{pboard_id}
+</delete>
+
+
+<!-- image  -->
+<insert id="insertPimage" parameterType="pimgVo">
+	insert into pimg
+		     values(pimage_seq.nextval, #{pboard_id}, #{pimg_origin_name},
+		            #{primg_save_name})
+</insert> 
+ 
+	
+<delete id="deletePimgByPboardId" parameterType="int">
+	delete from pimg where pboard_id = #{pboard_id}
+</delete>  	
+	
+	
+<!-- <insert id="saveLocation" parameterType="map"> -->
+<!-- 	insert into pboard (lat, lng) values (#{lat}, #{lng}) -->
+<!-- </insert>	 -->
+</mapper>

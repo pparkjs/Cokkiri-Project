@@ -24,19 +24,18 @@ public class SboardList extends HttpServlet {
 		int more = Integer.parseInt(request.getParameter("more"));
 		String vtype = request.getParameter("sb_type");
 		String vtext = request.getParameter("sb_search");
+		String region = request.getParameter("region");
 		
 		ISboardService service = SboardServiceImpl.getInstance();
 		HttpSession session = request.getSession();
 
 		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
 		String memId = memVo.getMem_id();
-		System.out.println("확인:" + more);
-		System.out.println("확인:" + vtype);
-		System.out.println("확인:" + vtext);
-		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId);
-		System.out.println("맵 : "+ morePage);
+
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
+
 		List<SboardVO> list = service.notifyByMore(morePage);
-		System.out.println("리스트 : " + list);
+
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/view/sboardList.jsp").forward(request, response);
@@ -48,6 +47,7 @@ public class SboardList extends HttpServlet {
 		int more = Integer.parseInt(request.getParameter("more"));
 		String vtype = request.getParameter("sb_type");
 		String vtext = request.getParameter("sb_search");
+		String region = request.getParameter("region");
 		
 		ISboardService service = SboardServiceImpl.getInstance();
 		HttpSession session = request.getSession();
@@ -55,7 +55,7 @@ public class SboardList extends HttpServlet {
 		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
 		String memId = memVo.getMem_id();
 		
-		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId);
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
 		List<SboardVO> list = service.selectByMore(morePage);
 		
 		request.setAttribute("list", list);

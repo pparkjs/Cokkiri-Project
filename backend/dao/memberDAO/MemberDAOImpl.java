@@ -114,6 +114,7 @@ public class MemberDAOImpl implements IMemberDAO {
 		MemberVO memberVO = session.selectOne("member.selectMemberinfoByNick",nickname);
 		session.close();
 		
+		
 		return memberVO;
 	}
 

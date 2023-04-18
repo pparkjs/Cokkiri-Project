@@ -43,7 +43,6 @@ public class MemberList extends HttpServlet {
 
 		//현재 페이지 기준 8개 게시글 목록 가져옴
 		List<MemberVO> list = service.listByPage(map);
-		System.out.println(list);
 		request.setAttribute("list", list);
 		request.setAttribute("page", pvo);
 

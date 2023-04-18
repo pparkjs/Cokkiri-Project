@@ -219,7 +219,8 @@ $((ev)=>{
 		}
 		$("#default").prop("selected", true);
 	})
-
+	
+	
 	$(document).on("change","#notifycheck",function(){
 		$(".btns").removeClass("btnactive");
 		$(".box").empty();

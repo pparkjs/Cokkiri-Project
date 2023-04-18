@@ -1,0 +1,165 @@
+@charset "UTF-8";
+
+
+/* 마이플레이스 메인화면 */
+.header{position: relative; padding-top: 60px; padding-bottom: 10px;}
+.pb_type{width : 100px; height:32px; margin-left: 350px; border-radius: 10px; border: 1px solid lightgray;}
+.pb_search{width:280px; height:32px; margin-left: 5px; border: 1px solid lightgray; border-radius: 10px;}
+#write{position: absolute; height: 8px; right: 360px; width : 28px; height: 33px;}
+#search{position: absolute; width : 30px; height: 20px; left: 700px; top: 65px; cursor: pointer;}
+ 
+.pboard{display: grid;
+    width: 1018px;
+    grid-template-columns: 1fr 1fr;
+    margin: 29px auto;}
+.feed_img {width : 178px; height:178px;}
+.profile{width: 38px; height: 38px; display: inline-block;}
+.writer{display: inline-block; font-size: 13px; margin-left: 7px;}
+.innerbox{ display: flex;  flex-direction: column;} 
+.feedbox{ display : flex; border : 1px solid lightgray;  width:482px;height: 178px;margin:13px; background:white;} 
+.feed_main{display : flex; flex-direction: column; margin-top: 18px; margin-left: 14px;}
+.f_img{width: 178px; height : 100%;}
+.top{display : flex;  align-items: center;}
+.date{font-size : 10px; margin-left: 73px;}
+
+.pb_middle{margin-top : 10px;}
+.pb_middle a{text-decoration: none; color: black;}
+
+.pb_bottom{display: flex; margin-top: 56px;}
+.pb_bottom img{width : 20px; height: 20px;}
+.like_ck{display: none;}
+.hit{ display:flex; justify-content: center; align-items: center; margin-left : 10px;}
+.hit p{font-size:13px; margin-left : 10px;}
+.like{display:flex; justify-content: center; align-items: center; margin-left:19px;}
+.like p{font-size:13px; margin-left : 6px;}
+.unlike{display:flex; justify-content: center; align-items: center; margin-left:19px;}
+.unlike p{font-size:13px; margin-left : 6px;}
+
+.viewMore{display: flex; justify-content: center;}
+.morebtn{width : 35px; height : 28px; margin-bottom: 30px; cursor: pointer;}
+
+
+/* 게시글 등록 */
+.writebody{ margin: 50px auto;   width: 1369px;}
+.wr_header{border-bottom: 2px solid black;}
+.writebody h1 {margin-bottom: 20px;}
+
+
+.wr_images, .title, .content{display : flex; margin-top: 25px;}
+.text{font-size: 25px; width:150px; margin-left:20px;}
+.text span{font-size:13px;}
+
+.wr_images, .wr_title{border-bottom: 2px solid rgb(217, 213, 213);}
+.wr_images{height: 200px; padding-bottom: 25px; }
+.file{display:none;}
+
+.file_background{ display: flex; justify-content: center; align-items: center; width: 200px; height: 200px; background:rgb(241 241 241); border:2px solid rgb(198 195 189) }
+.img_up{ width:50px; height: 50px; cursor: pointer;}
+.img{ width:200px; height: 200px;}
+.img_div{position: relative;}
+.img_del{position: absolute; top: 20px; right:20px; z-index:1; width:18px; height:18px; cursor: pointer;}
+
+#maptex{margin-top: -40px;}
+.title{padding-bottom: 25px;}
+#maxTitle{margin-top: 5px; margin-left: 40px;}
+.title textarea{padding-top:7px; padding-left:8px; border-bottom: 2px solid rgb(217, 213, 213);}
+.place{padding-bottom: 69px; border-bottom: 2px solid black;}
+#maxContent{margin-top: 10px; position: absolute; bottom: -29px; right: 0px;}
+.content textarea{padding-top:7px; padding-left:8px;}
+.wrc{position: relative;}
+.button{ height : 100px;}
+.upload_btn {
+	border-radius:25px;
+	text-align:center;
+	font-size:20px;
+	color:white;
+	padding: 1px 40px;
+	background: black;
+	border-width:0px;
+	margin-left:1212px;
+	margin-top: 20px;
+}
+
+.upload_btn:active {position:relative; top:3px}
+.upload_btn:hover {background: #d6d6d6;}
+
+
+/* 상세보기 */
+.main_body {display: flex; justify-content: center; padding-top: 20px; background-color: #FAFAFA;}
+
+.feed_box {
+    background-color: white;
+    border-radius : 20px;
+    width: 500px;
+    margin: 20px;
+    min-height: auto;
+    padding-bottom: 20px;
+}
+
+.feedImg{ width: 500px; object-fit: contain; height : 300px;}
+.feed_content{padding: 0px 10px;}
+.feed_like{padding: 0px 10px;}
+.feed_reply{padding: 0px 10px; display: flex; flex-direction: column; margin-top: 20px;}
+.feed_txt{font-size: 14px;}
+.feed_name{padding: 10px; display: flex; align-items: center;}
+.feed_name_txt{font-size: 14px; padding: 0px 10px; font-weight: bold;}
+.profile_box {width: 40px; height: 40px; border-radius: 70%; overflow: hidden;}
+.profile_img {width: 100%; height: 100%; object-fit: cover;}
+.name_content{display: flex; flex-direction: column;}
+.name_content_txt{
+    font-size: 12px;
+    padding: 0px 10px;
+    font-weight: bold;
+    color: lightgray;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 190px;
+}
+
+.big_profile_box {
+    width: 60px;
+    height: 60px;
+    border-radius: 70%;
+    overflow: hidden;
+}
+
+
+
+/* map */
+.map_wrap, .map_wrap * {margin:0;padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
+.map_wrap a, .map_wrap a:hover, .map_wrap a:active{color:#000;text-decoration: none;}
+.map_wrap {position:relative;width:100%;height:500px;}
+#menu_wrap {position:absolute;top:0;left:0;bottom:0; width:250px;margin:10px 0 30px 10px;padding:5px;overflow-y:auto;background:rgba(255, 255, 255, 0.7);z-index: 1;font-size:12px;border-radius: 10px;}
+.bg_white {background:#fff;}
+#menu_wrap hr {display: block; height: 1px;border: 0; border-top: 2px solid #5F5F5F;margin:3px 0;}
+#menu_wrap .option{text-align: center;}
+#menu_wrap .option p {margin:10px 0;}  
+#menu_wrap .option button {margin-left:5px;}
+#placesList li {list-style: none;}
+#placesList .item {position:relative;border-bottom:1px solid #888;overflow: hidden;cursor: pointer;min-height: 65px;}
+#placesList .item span {display: block;margin-top:4px;}
+#placesList .item h5, #placesList .item .info {text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+#placesList .item .info{padding:10px 0 10px 55px;}
+#placesList .info .gray {color:#8a8a8a;}
+#placesList .info .jibun {padding-left:26px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png) no-repeat;}
+#placesList .info .tel {color:#009900;}
+#placesList .item .markerbg {float:left;position:absolute;width:36px; height:37px;margin:10px 0 0 10px;background:url(https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png) no-repeat;}
+#placesList .item .marker_1 {background-position: 0 -10px;}
+#placesList .item .marker_2 {background-position: 0 -56px;}
+#placesList .item .marker_3 {background-position: 0 -102px}
+#placesList .item .marker_4 {background-position: 0 -148px;}
+#placesList .item .marker_5 {background-position: 0 -194px;}
+#placesList .item .marker_6 {background-position: 0 -240px;}
+#placesList .item .marker_7 {background-position: 0 -286px;}
+#placesList .item .marker_8 {background-position: 0 -332px;}
+#placesList .item .marker_9 {background-position: 0 -378px;}
+#placesList .item .marker_10 {background-position: 0 -423px;}
+#placesList .item .marker_11 {background-position: 0 -470px;}
+#placesList .item .marker_12 {background-position: 0 -516px;}
+#placesList .item .marker_13 {background-position: 0 -562px;}
+#placesList .item .marker_14 {background-position: 0 -608px;}
+#placesList .item .marker_15 {background-position: 0 -654px;}
+#pagination {margin:10px auto;text-align: center;}
+#pagination a {display:inline-block;margin-right:10px;}
+#pagination .on {font-weight: bold; cursor: default;color:#777;}

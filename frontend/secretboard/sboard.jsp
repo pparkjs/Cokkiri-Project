@@ -22,7 +22,15 @@ MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
  mypath = `<%=request.getContextPath() %>`;
  hit = 0; //조회수
  memId = `<%=memVo.getMem_id()%>`;
-
+ 
+ // 회원인 경우에만 지역 나눔
+ <%if(memVo.getAdmin_auth().equals("N")){%>
+	 region = `<%=memVo.getMem_add()%>`; 
+	 frontRegion = region.split(' ')[0]; //지역별로 하기 위해 앞에 지역 쪼갠거
+ <%}else{%>
+ 	 frontRegion = '';
+ <%}%>
+ 
 $(function(){
 	//외부스크립트 이용
 	sboardListServer(0); // 맨처음에는 첫번째 페이지 
@@ -106,6 +114,7 @@ $(function(){
 	</div>
 <!-- 게시판의 메인 -->
 	<div class="con_sboard_main">
+	
 		<div class="sboard">
 			<!-- 이곳에 DB에서 가져온 게시판 넣을 거 -->	
 		</div>
