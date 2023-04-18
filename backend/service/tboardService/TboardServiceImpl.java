@@ -1,12 +1,14 @@
 package service.tboardService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import dao.tboardDAO.TboardDaoImpl;
 import vo.CategoryVO;
 import vo.MemberVO;
+import vo.MypageTboardVO;
 import vo.TBoardAndAttVO;
 import vo.TBoardVO;
 import vo.TImageVO;
@@ -165,6 +167,37 @@ public class TboardServiceImpl implements ITboardService {
 	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map) {
 		// TODO Auto-generated method stub
 		return dao.selectTboardRecommend(map);
+	}
+
+	@Override
+	public List<MypageTboardVO> selectMyWishList(String mem_id, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", mem_id);
+		return dao.selectMyWishList(map);
+	}
+
+	@Override
+	public List<MypageTboardVO> selectMyTboardList(String mem_id, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", mem_id);
+		return dao.selectMyTboardList(map);
+	}
+
+	@Override
+	public int updateTboardCompleteDate(int tboard_id) {
+		return dao.updateTboardCompleteDate(tboard_id);
+	}
+
+	@Override
+	public int updateTboardCompleteDateNull(int tboard_id) {
+		return dao.updateTboardCompleteDateNull(tboard_id);
+	}
+
+	@Override
+	public String selectTboardState(int tboard_id) {
+		return dao.selectTboardState(tboard_id);
 	}
 
 	
