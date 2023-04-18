@@ -13,6 +13,7 @@ import service.memberService.IMemberService;
 import service.memberService.MemberServiceImpl;
 import service.pcommenService.IPcommentService;
 import service.pcommenService.PcommentServiceImpl;
+import vo.MemberVO;
 import vo.PcommentVO;
 
 
@@ -39,11 +40,12 @@ public class PcommentList extends HttpServlet {
 		
 		IPcommentService service = PcommentServiceImpl.getInstance();
 		IMemberService service2 = MemberServiceImpl.getInstance();
+		MemberVO memVo = new MemberVO();
 		
 		List<PcommentVO> result = service.getAllPcomment(vo);
 		for(int i=0; i<result.size(); i++) {
 			PcommentVO pcommentVO = result.get(i);
-			pcommentVO.setMem_nickname(service2.selectMemberinfo(pcommentVO.getMem_id()).getMem_nickname());
+			pcommentVO.setMemberVO(service2.selectMemberinfo(pcommentVO.getMem_id()));
 			result.set(i, pcommentVO);
 		}
 		for (PcommentVO pcommentVO : result) {
