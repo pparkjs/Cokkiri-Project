@@ -19,9 +19,11 @@ $(function(){
 	// 댓글 작성
 	$('#btn').on('click', function() {
 		 pcontent = $('#pInsert textarea').val();
+		 
+		 console.log(pcontent)
 
 		 // tcontent가 null이 아닐 때만 서버에 댓글 작성 요청을 보냄
-		 if (pcontent !== null) {
+		 if (pcontent != null) {
 		    $.pcommentWriteServer();
 		 } else {
 		    console.error("댓글 내용이 없습니다.");
@@ -31,19 +33,20 @@ $(function(){
 	// 댓글 등록 수정 삭제
 	$(document).on('click', '.action', function(res) {
 		var vacation = $(this).attr('name');
-		 tidx = $(this).attr('idx');
+		 pidx = $(this).attr('idx');
+		 //console.log(pidx);
 		if (vacation == "p_insert") {
 			
 			 $('.re-pInsert').parent("div").remove();
 			// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
 			
 <%--         		<%= id %>  --%>
-   			 tcommentForm = $('<div>').attr("class","formdiv").append($('<form>').attr('id','repInsert').addClass('re-pInsert').append(
+   			 pcommentForm = $('<div>').attr("class","pformdiv").append($('<form>').attr('id','repInsert').addClass('re-pInsert').append(
    				    $('<div>').append(
-   				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '40px').attr('height', '40px').after('&nbsp;'),
-    				    $('<span>').attr('id', 'writer').after('&nbsp;&nbsp;'),
-   				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea'),
-   				        $('<input>').attr('type', 'button').attr('id', 'rp_insert').attr('name', 'rp_insert').attr('idx', tidx).addClass('action').val('답글달기')
+   				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;'),
+    				    $('<span>').attr('id', 'writer').text('writer').after('&nbsp;&nbsp;'),
+   				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'preArea'),
+   				        $('<input>').attr('type', 'button').attr('id', 'rp_insert').attr('name', 'rp_insert').attr('idx', pidx).addClass('action').val('답글달기')
     				   
    				    )
    				)// form 끝
@@ -53,35 +56,41 @@ $(function(){
    	
    		        
 		}else if (vacation == "rp_insert"){
+			
 			//tid = $(this).attr('idx');
 			 
 			 reContent = $('#repInsert div textarea').val();
 			 pcommentPid = $(this).attr('idx'); // 댓글 장본인의 댓글 아이디
+			 console.log(pcommentPid);
 				 // 답글이 달리면 이 번호는 부모 댓글 아이디로 가야하고 자식 댓글 아이디는 시퀀스로 생성된 새로운 아이디
-			 pcomment=$("#pctLayer").find("#"+pcommentPid).attr("id")
-				 pcommentLevel=$("#pctLayer").find("#"+pcommentPid).attr("class");
-				 parentcomment=$("#pctLayer").find("#"+pcommentPid);
-			 console.log(pcomment, pcommentLevel, tcommentPid)
+			 ppcomment=$("#pctLayer").find("#"+pcommentPid).attr("id");
+			 //console.log(ppcomment);
+			 //ppcommentLevel=$("#pctLayer").find("#"+pcommentPid).attr("class");
+			 ppcommentLevel=$("#pctLayer").find("#"+pcommentPid).attr("idx");
+			 //console.log(ppcommentLevel);
+			 pparentcomment=$("#pctLayer").find("#"+pcommentPid);
 			 
 			 $.repcommentWriteServer();
-			 $(".formdiv").remove();
+			 $(".pformdiv").remove();
 
 		}else if (vacation == "p_delete"){
 			 target = $(this).attr('idx');
 			 target = $("#pctLayer").find("#"+target);
+			 //console.log(target);
 			  $.pcommentDeleteServer(); 
 			 
 		}else if(vacation == "p_modify"){
-				tcon = $(this).parent('div').closest('.re-pInsert').find('textarea').val();
+				$(".action[name='p_modify']").next().remove();
+				pcon = $(this).parent('div').closest('.re-pInsert').find('textarea').val();
 //				var tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
 
 		    // 댓글 입력 폼 생성
-		     modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-pInsert').append(
+		     var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'pmInsert').addClass('re-pInsert').append(
 		        $('<div>').append(
-		            $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').after('&nbsp;'),
-		            $('<span>').attr('id', 'writer').after('&nbsp;&nbsp;'),
-		            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').val(tcon), // 수정할 댓글 내용을 textarea에 세팅
-		            $('<input>').attr('type', 'button').attr('id', 'rp_modify').attr('name', 'rp_modify').attr('idx', tidx).addClass('action').val('수정하기') // 수정하기 버튼 생성
+		            $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;'),
+		            $('<span>').attr('id', 'writer').text('nickname').after('&nbsp;&nbsp;'),
+		            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'preArea').val(pcon), // 수정할 댓글 내용을 textarea에 세팅
+		            $('<input>').attr('type', 'button').attr('id', 'rp_modify').attr('name', 'rp_modify').attr('idx', pidx).addClass('action').val('수정하기') // 수정하기 버튼 생성
 		        )
 		    ));
 		    
@@ -90,15 +99,15 @@ $(function(){
 		    
 		    pparent = $(this).parent().find('#content');
 
-		    tmodicont = $('#mInsert textarea').val(pparent.text());
+		    pmodicont = $('#pmInsert textarea').val(pparent.text());
 		    
-				tmo = $(modifyForm).parent();
+				ptmo = $(modifyForm).parent();
 				
 				// 수정하기 버튼을 클릭해서 수정완료 후 수정하기 버튼을 클릭했을때
 			 $(document).on('click', '#rp_modify', function(res){
-				 pcontent = $('#mInsert textarea').val();
+				 pcontent = $('#pmInsert textarea').val();
 				 $.pcommentUpdateServer();
-				 modifyForm.hide();
+				 $('#pdiv').remove();
 			})  
 			// 더보기 버튼 클릭시
 		}else if(vacation == "moreList"){
@@ -114,135 +123,122 @@ $(function(){
 })
 </script>
 <style type="text/css">
-div{
-	border: 1px solid black;
-}
-span{
-	margin: 5px;
-	padding: 5px;
-}
+/* #pctLayer{
+	display: flex;
+  	flex-wrap: nowrap; 
+  	overflow-x: auto; 
+} */
+/* 댓글 작성 폼  */
+#pInsert {
+ 	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; /* 1px 두께의 검은색 선 추가 */
+	align-items: center;
 
-.b1{
+}
+#pInsert span { 
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; /* 텍스트와 정렬을 맞추기 위해 상단 정렬 */
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+/* 댓글 등록 폼 */
+#pInsert #parea {
+	margin-right: 10px;
+	display: inline-block;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+ #btn {
+	display: inline-block;
+	vertical-align: top;
+	color: black;
+	border: none;
+	background: darkgray;
+	font-style: oblique;
+} 
+.a1{
 	margin: 10px;
 }
-.b2{
+.a2{
+	display: block;
 	margin-left: 40px;
 	margin-right : 10px;
 	margin-bottom: 10px; 
     padding: 10px; 
 }
-.b3{
-	margin-left: 70px;
+.a3{
+	margin-left: 90px;
+}  
+.re-pInsert{ /*댓글 등록, 수정 폼 class 값 */
+	margin-top: 20px;
+	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; 
 }
-.b4{
-	margin-left: 100px;
+.re-pInsert span{
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; 
+	margin-bottom: 10px;
+	font-weight: bold;
 }
-.action {
-  color: #333; 
-  margin-right: 10px; 
-  padding: 5px 10px;
-  background-color: lightgray; 
-  color: navy;
-}
-form #tarea {
-  width: 100%; 
-  height: 100px; 
-  resize: none; 
-  padding: 10px; 
-  border: 1px solid #ccc; 
-}
-form #btn {
-  display: block; 
-  margin-top: 10px; 
-  margin-bottom : 10px;
-  padding: 5px 10px; 
-  background-color: lightgray; 
-  color: navy; 
-  border: none; 
-  cursor: pointer; /* 커서를 포인터로 변경하여 버튼을 클릭 가능하도록 설정 */
-}
-#reArea{
+#repInsert #preArea{
+	margin-right: 10px;
 	width: 500px;
-	height:  40px;
+	height: 20px;
+	resize: none;
 }
-img {
-  width: 40px; 
-  height: 40px; 
-  margin-right: 5px; 
+.action{
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
 }
-  #reArea {
-    margin-top: 5px;
-    width: 100%;
-    resize: none;
-    border: 1px solid #ccc;
-    padding: 5px;
-  }
-
-  #rt_insert {
-    margin-top: 5px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-tctLayer {
-  margin-top: 10px;
-  padding: 10px;
-  background-color: #f5f5f5;
+#pmInsert #preArea {
+	margin-right: 10px;
+	width: 500px;
+	height: 20px;
+	resize: none;
 }
-.b${level} {
-  margin-bottom: 10px;
-  padding: 5px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-}
-
-/* Style for the profile image */
-.b${level} img {
-  width: 40px;
-  height: 40px;
-  margin-right: 5px;
-}
-
-/* Style for the writer span */
-#writer {
-  font-weight: bold;
-}
-
-/* Style for the content span */
-#content {
-  flex-grow: 1;
-}
-
-/* Style for the cdate span */
-#cdate {
-  margin-left: 10px;
-  font-size: 12px;
-  color: #999;
-}
-
-/* Style for the action buttons */
-.action {
-  margin-left: 10px;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
+#rp_modify{ /* 수정버튼 */
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
 } 
-
-#moreList {
-  display: block; /* 블록 요소로 변경 */
-  margin: 0 auto; /* 가로 중앙 정렬 */
-  text-align: center; /* 텍스트 가운데 정렬 */
+.dw .writer, .dw #cdate {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	margin-top :-10px;
+	
+}
+#moreList{
+	display: block;
+	text-align: center;
 }
 </style>
 </head>
 <body>
 <!-- 댓글 작성 폼 -->
 <form id="pInsert">
- 	<textarea rows="5" cols="10" id="parea"></textarea>
+	<span>댓글</span>&nbsp;&nbsp;
+ 	<textarea rows="5" cols="10" id="parea" placeholder="댓글을 입력해주세요."></textarea>
  	<input type="button" value="댓글작성" id="btn" name = "pcmt">
 </form><br><br> 
 
@@ -251,6 +247,5 @@ tctLayer {
 
 <!-- 더보기 버튼 -->
  <button type="button" class="action" id="moreList" name="moreList">더보기</button>
-
 </body>
 </html>
