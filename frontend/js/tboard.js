@@ -21,11 +21,17 @@ listRecieve = function(pagenum, category, sword,boardstate) {
 				} else {
 					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
+				
+				vstate=v["boardVO"]["tboard_state"]
+				if(v.boardVO.tboard_completedate!=null&&typeof v.boardVO.tboard_completedate!="undefined"&&v.boardVO.tboard_completedate!=""){
+					vstate = "거래완료"
+				}
+				
 				$img = $("<img class='img' src='" + img + "'>")
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+vstate+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
@@ -72,11 +78,16 @@ listRecieveFromOne = function(pagenum, category, sword,boardstate) {
 				} else {
 					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
+				
+				vstate=v["boardVO"]["tboard_state"]
+				if(v.boardVO.tboard_completedate!=null&&typeof v.boardVO.tboard_completedate!="undefined"&&v.boardVO.tboard_completedate!=""){
+					vstate = "거래완료"
+				}
 				$img = $("<img class='img' src='" + img + "'>")
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+vstate+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
@@ -117,11 +128,15 @@ notifyListFromOne  = function (page,category,sword,boardstate){
 				} else {
 					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
+				vstate=v["boardVO"]["tboard_state"]
+				if(v.boardVO.tboard_completedate!=null&&typeof v.boardVO.tboard_completedate!="undefined"&&v.boardVO.tboard_completedate!=""){
+					vstate = "거래완료"
+				}
 				$img = $("<img class='img' src='" + img + "'>")
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+vstate+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
@@ -161,11 +176,16 @@ notifyListRecieve = function(pagenum, category, sword,boardstate) {
 				} else {
 					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
+				vstate=v["boardVO"]["tboard_state"]
+				if(v.boardVO.tboard_completedate!=null&&typeof v.boardVO.tboard_completedate!="undefined"&&v.boardVO.tboard_completedate!=""){
+					vstate = "거래완료"
+				}
+				
 				$img = $("<img class='img' src='" + img + "'>")
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'><span class='state'>"+v["boardVO"]["tboard_state"]+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+vstate+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 

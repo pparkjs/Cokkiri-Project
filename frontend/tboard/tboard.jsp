@@ -54,7 +54,7 @@
     text-align:center;
     color:white;
     border-radius:12px;
-    background: rgb(56,102,223);
+    background: rgb(174,174,178);
     padding: 2px;
     margin-right: 8px;
 }
