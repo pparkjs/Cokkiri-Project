@@ -29,10 +29,7 @@
  SELECT *
 FROM (
   SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id,
-    CASE
-      WHEN level = 1 THEN tcomment_content 
-      ELSE ' ↳     ' || tcomment_content 
-    END AS tcomment_content, 
+    LPAD(' ↳ ', 5 * (level - 1), ' ') || tcomment_content AS tcomment_content, 
     CASE
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - tcomment_cdate) * 24 * 60 * 60 / 60), '분전')
@@ -44,7 +41,7 @@ FROM (
   WHERE tboard_id = #{tboard_id} AND mem_id = #{mem_id}
   START WITH tcomment_pid = 0
   CONNECT BY PRIOR tcomment_id = tcomment_pid
-  ORDER SIBLINGS BY tcomment_cdate, tcomment_id DESC
+  ORDER SIBLINGS BY tcomment_id DESC
 ) WHERE rn BETWEEN #{startTcomment} AND #{endTcomment}
     ]]>
 </select>
