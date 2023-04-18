@@ -15,7 +15,7 @@ function soldout(){
 				success : function(res){
 					console.log(res);
 					if(res.result == "ok"){
-						thisBtn.val("거래취소");
+						thisBtn.val(res.tboardState);
 					}
 				},
 				error : function(xhr){
@@ -49,7 +49,7 @@ function soldout(){
 				success : function(res){
 					console.log(res);
 					if(res.result == "ok"){
-						thisBtn.val("거래완료");
+						thisBtn.val("거래취소");
 					}
 				},
 				error : function(xhr){
