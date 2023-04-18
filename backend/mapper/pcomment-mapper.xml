@@ -24,7 +24,11 @@
  SELECT *
  FROM (
   SELECT rownum rn, level, pcomment_id, pcomment_pid, pboard_id, mem_id,
-    LPAD(' ↳ ', 5 * (level - 1), ' ') || pcomment_content AS pcomment_content, 
+    LPAD(' ↳ ', 5 * (level - 1), ' ') || pcomment_content AS pcomment_content,
+    CASE
+      WHEN level = 1 THEN pcomment_content 
+      ELSE pcomment_content 
+    END AS pcomment_content,  
     CASE
       WHEN (SYSDATE - pcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
       WHEN (SYSDATE - pcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - pcomment_cdate) * 24 * 60 * 60 / 60), '분전')
@@ -57,7 +61,17 @@
 
 <!--댓글 수 -->
 <select id="getPcomment" resultType="pcommentVo" parameterType="int">
-	select * from pcomment where pcomment_id=#{pcomment_id}
+	<![CDATA[
+	select PCOMMENT_ID,PCOMMENT_PID,PBOARD_ID,MEM_ID,PCOMMENT_CONTENT,
+	CASE
+      WHEN (SYSDATE - Pcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
+      WHEN (SYSDATE - Pcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - pcomment_cdate) * 24 * 60 * 60 / 60), '분전')
+      WHEN (SYSDATE - Pcomment_cdate) * 24 * 60 * 60 < 24 * 60 * 60 THEN CONCAT(FLOOR((SYSDATE - pcomment_cdate) * 24 * 60 * 60 / (60 * 60)), '시간전')
+      ELSE TO_CHAR(pcomment_cdate, 'YYYY-MM-DD HH24:MI:SS')
+    END
+  AS pcomment_cdate
+,PCOMMENT_MDATE,PCOMMENT_RDATE,PCOMMENT_ISREMOVE from pcomment where pcomment_id=#{pcomment_id}
+  ]]>
 </select>
 </mapper>
 
