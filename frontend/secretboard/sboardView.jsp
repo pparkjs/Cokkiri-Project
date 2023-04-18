@@ -122,7 +122,7 @@ function imageView(){
 			<img id="mUnlike" src="<%=request.getContextPath()%>/images/싫어요-체크안함.png">
 			<p id="untext"></p>
 		</div>
-		<%if(!sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
+		<%if(!sbList.get(0).getMem_id().equals(memVo.getMem_id()) && memVo.getAdmin_auth().equals("N")){ %>
 		<div class="m_notify">
 			<img id="mNotify" src="<%=request.getContextPath()%>/images/신고-체크안함.png">
 		</div>
