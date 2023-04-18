@@ -8,8 +8,10 @@ import org.apache.ibatis.session.SqlSession;
 import util.MybatisSqlSessionFactory;
 import vo.CategoryVO;
 import vo.MemberVO;
+import vo.SboardVO;
 import vo.TBoardVO;
 import vo.TImageVO;
+import vo.MypageTboardVO;
 
 public class TboardDaoImpl implements ITboardDao{
 	private static TboardDaoImpl dao;
@@ -229,6 +231,84 @@ public class TboardDaoImpl implements ITboardDao{
 		List<TBoardVO> res = session.selectList("selectTboardRecommend",map);
 		session.close();
 		return res;
+	}
+
+	// 내가 찜한 목록 불러오기
+	@Override
+	public List<MypageTboardVO> selectMyWishList(Map<String, Object> map) {
+		SqlSession session = null;
+		List<MypageTboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("tboard.selectMyWishList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<MypageTboardVO> selectMyTboardList(Map<String, Object> map) {
+		SqlSession session = null;
+		List<MypageTboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("tboard.selectMyTboardList", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public int updateTboardCompleteDate(int tboard_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("tboard.updateTboardCompleteDate", tboard_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int updateTboardCompleteDateNull(int tboard_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("tboard.updateTboardCompleteDateNull", tboard_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public String selectTboardState(int tboard_id) {
+		SqlSession session = null;
+		String tboardState = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			tboardState = session.selectOne("tboard.selectTboardState", tboard_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+		return tboardState;
 	}
 
 
