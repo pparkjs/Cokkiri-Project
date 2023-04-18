@@ -29,7 +29,7 @@ public class PboardList extends HttpServlet {
 		String text = request.getParameter("pb_search");
 		
 		IPboardService service = PboardServiceImpl.getInstance();
-		
+		 
 		Map<String, Object> morePage = service.morePage(more, type, text);
 		List<PboardVO> list = service.selectByPage(morePage);
 		System.out.println("list : " + list);
