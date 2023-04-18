@@ -131,5 +131,43 @@ where rn between 1 and (#{page_num})*12
 		and tboard_id!=#{tboard_id} ORDER BY dbms_random.value )
 		<![CDATA[WHERE rownum <=#{cnt}]]>
 	 </select>
+	 <select id="selectMyWishList" resultType="myTboardVo" parameterType="Map">
+		select z.*, rownum
+		from 
+		(select a.tboard_title, a.tboard_completedate, a.tboard_price, a.tboard_id, a.mem_id, a.tboard_state, m.mem_add,
+		       (select timg_id from timage e where e.timg_id = (select min(timg_id) from timage t where a.tboard_id = t.tboard_id)) as tboard_imgno, 
+		(select count(*) from mylist y where y.tboard_id = a.tboard_id) as wishcnt
+		from tboard a
+		inner join mylist b on (a.tboard_id = b.tboard_id) 
+		inner join member m on(m.mem_id = a.mem_id) 
+		where b.mem_id=#{mem_id}
+		order by a.tboard_id desc) z
+		where rownum between 1 and 6*to_number(#{more})
+	 </select>
+	 
+	 <select id="selectMyTboardList" resultType="myTboardVo" parameterType="Map">
+		select e.*, rownum
+		from 
+		        (select a.tboard_id, a.mem_id, a.tboard_title, a.tboard_completedate, a.tboard_state, 
+		               a.tboard_price, a.tboard_hit, 
+		               (select min(b.timg_id) from timage b where a.tboard_id = b.tboard_id) tboard_imgno,
+		               (select count(*) from mylist c where c.tboard_id = a.tboard_id) as wishcnt,
+		               mem_add
+		        from tboard a 
+		        inner join member d on (a.mem_id = d.mem_id)
+		        where a.mem_id = #{mem_id}
+		        order by a.tboard_id desc) e
+		where rownum between 1 and 6*to_number(#{more})
+	 </select>
+	 
+	 <update id="updateTboardCompleteDate" parameterType="int">
+	 	update tboard set tboard_completedate = sysdate where tboard_id = to_number(#{tboard_id})
+	 </update>
+	 <update id="updateTboardCompleteDateNull" parameterType="int">
+	 	update tboard set tboard_completedate = null where tboard_id = to_number(#{tboard_id})
+	 </update>
+	 <select id="selectTboardState" parameterType="int" resultType="String">
+	 	select tboard_state from tboard where tboard_id = to_number(#{tboard_id})
+	 </select>
 </mapper>
 
