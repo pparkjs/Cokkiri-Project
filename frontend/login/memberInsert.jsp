@@ -498,6 +498,11 @@ input:focus {
 	font-size: 14px;
 }
 
+/* 커서포인터 */
+.inputTextAndButton input:nth-child(2), .inputImgAndButton input,.membJoinContainer input {
+	cursor: pointer;
+
+}
 </style>
 </head>
 <body>
