@@ -75,6 +75,8 @@ function likeOrUnlikeClick(){
 	$(document).on('click','.uk', function(){
 		const disLike = $(this);
 		boardId = $(this).attr('id') // 클릭한 boardId 가져옴
+		console.log(boardId);
+		
 		$.ajax({
 			url:`${mypath}/SboardLike.do`,
 			type : 'post',
@@ -115,7 +117,6 @@ function likeOrUnlikeClick(){
 	
 }
 
-
 /*선택한 게시물 보기*/
 function mypageSboardListServer(pageNum, btnValue){
 	// 선택한 버튼
@@ -144,6 +145,7 @@ function mypageSboardListServer(pageNum, btnValue){
 							'color' : 'rgb(28,28,30)',
 							'font-weight' : '400'
 							})
+		$('.mypageSboard').empty();
 		$.ajax({
 			url : `${mypath}/mypageSboardMyPostList.do`,
 			type : 'post',
@@ -151,11 +153,16 @@ function mypageSboardListServer(pageNum, btnValue){
 				"more" : pageNum
 			},
 			success : function(res){
+				count = 1;
 				addList = "";
 			console.log(res);
 				$.each(res.datas, function(i, v){
 					title = v.sboard_title.slice(0, 45);
 					date = elapsedTime(v.sboard_cdate);
+					if(count != 1){
+							addList+= `<hr class="hrborder">`
+						}
+						count = count + 1;
 					// 게시판 생성되는 부분				
 					addList += `<div class="sb">
 									<div class="sb_top">
@@ -196,6 +203,7 @@ function mypageSboardListServer(pageNum, btnValue){
 											</div>
 										</div>
 									</div>`
+						
 				})
 				console.log(addList);
 				$('.mypageSboard').append(addList);
@@ -234,6 +242,7 @@ function mypageSboardListServer(pageNum, btnValue){
 							'color' : 'rgb(28,28,30)',
 							'font-weight' : '400'
 							})
+		$('.mypageSboard').empty();
 		$.ajax({
 			url : `${mypath}/mypageSboardMycommentList.do`,
 			type : 'post',
@@ -242,10 +251,15 @@ function mypageSboardListServer(pageNum, btnValue){
 			},
 			success : function(res){
 				addList = "";
+				count = 0;
 			console.log(res);
 				$.each(res.datas, function(i, v){
 					title = v.sboard_title.slice(0, 45);
 					date = elapsedTime(v.sboard_cdate);
+					if(count != 1){
+							addList+= `<hr class="hrborder">`
+						}
+						count = count + 1;
 					// 게시판 생성되는 부분				
 					addList += `<div class="sb">
 									<div class="sb_top">
@@ -286,6 +300,7 @@ function mypageSboardListServer(pageNum, btnValue){
 											</div>
 										</div>
 									</div>`
+						
 				})
 				console.log(addList);
 				$('.mypageSboard').append(addList);
@@ -325,7 +340,7 @@ function mypageSboardListServer(pageNum, btnValue){
 							'font-weight' : '400'
 							})
 		
-		
+		$('.mypageSboard').empty();
 		$.ajax({
 			url : `${mypath}/mypageSboardLikeList.do`,
 			type : 'post',
@@ -334,10 +349,16 @@ function mypageSboardListServer(pageNum, btnValue){
 			},
 			success : function(res){
 				addList = "";
-			console.log(res);
+				count = 1;
+				
 				$.each(res.datas, function(i, v){
+					
 					title = v.sboard_title.slice(0, 45);
 					date = elapsedTime(v.sboard_cdate);
+					if(count != 1){
+							addList+= `<hr class="hrborder">`
+						}
+						count ++;
 					// 게시판 생성되는 부분				
 					addList += `<div class="sb">
 									<div class="sb_top">
@@ -378,6 +399,7 @@ function mypageSboardListServer(pageNum, btnValue){
 											</div>
 										</div>
 									</div>`
+						
 				})
 				console.log(addList);
 				$('.mypageSboard').append(addList);
@@ -415,6 +437,7 @@ function mypageSboardListServer(pageNum, btnValue){
 								'color' : 'rgb(28,28,30)',
 								'font-weight' : '400'
 								})
+		$('.mypageSboard').empty();
 		$.ajax({
 			url : `${mypath}/mypageSboardUnlikeList.do`,
 			type : 'post',
@@ -422,11 +445,16 @@ function mypageSboardListServer(pageNum, btnValue){
 				"more" : pageNum
 			},
 			success : function(res){
+				count = 1;
 				addList = "";
 			console.log(res);
 				$.each(res.datas, function(i, v){
 					title = v.sboard_title.slice(0, 45);
 					date = elapsedTime(v.sboard_cdate);
+					if(count != 1){
+							addList+= `<hr class="hrborder">`
+						}
+						count = count + 1;
 					// 게시판 생성되는 부분				
 					addList += `<div class="sb">
 									<div class="sb_top">
@@ -467,6 +495,7 @@ function mypageSboardListServer(pageNum, btnValue){
 											</div>
 										</div>
 									</div>`
+						
 				})
 				console.log(addList);
 				$('.mypageSboard').append(addList);
