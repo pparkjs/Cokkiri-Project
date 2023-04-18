@@ -3,10 +3,13 @@ $.pcommentListServer = function(page){
 	$.ajax({
 		 url: `${mypath}/pcommentList.do`,
 		 type : 'post',
-		 data : {"pboardId" : 64,
-		 		 "page":page}, // tboard_id
+		 data : {"pboardId" : 1, // pboard_id
+		 		 "page": page
+		 		 }, 
 		 dataType : 'json',
 		 success : function(res){
+//			 console.log(res);
+			
 			$.each(res, function(i,v){
 				pcontent = v.pcomment_content;
 //				cont = cont.replaceAll(/\n/g, "<br>");
@@ -15,28 +18,28 @@ $.pcommentListServer = function(page){
 					level=3;
 				}
 				var code= "";
-				if(v.pcomment_isremove=='n'){
+				if(v.pcomment_isremove=='N'){
 					
-					code += `<div class="b${level}" id="${v.pcomment_id}">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">${pcontent}</span>
-								<span id="cdate">${v.pcomment_cdate}</span>
-								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">
-								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">
-							</div>`;
+					code += `<div class="dw a${level}" id="${v.pcomment_id}">
+								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
+								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${v.pcomment_cdate}</span><br>
+								<span id="content">${pcontent}</span><br><br>
+								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 					
-				}else if(v.pcomment_isremove=='y'){
-					code += `<div class="b${level}" id="${v.pcomment_id}">
+				}else if(v.pcomment_isremove=='Y'){
+					code += `<div class="dw a${level}" id="${v.pcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${v.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">삭제된 댓글 입니다.</span>
-								<span id="cdate">${v.pcomment_cdate}</span>
-								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">
-								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">
-							</div>`;
+								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${v.pcomment_cdate}</span><br>
+								<span id="content">삭제된 댓글 입니다.</span><br><br>
+								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">&nbsp;
+							</div><br>`;
 				}
 				
 				$('#pctLayer').append(code);
@@ -51,24 +54,25 @@ $.pcommentListServer = function(page){
 
 // 댓글 등록
 $.pcommentWriteServer = function(){
+	console.log(pcontent)
 	$.ajax({
 		url: `${mypath}/pcommentInsert.do`,
 		type: 'post',
-		data: { "pboardId": 64, // pboard_id
-				"memId" : qkrwjdtn2, 	// mem_id
+		data: { "pboardId": 1, // pboard_id
+				"memId" : 'wjdtn18', 	// mem_id
 				"pcontent" : pcontent},
 		success : function(res){
 			if(res!=null&&res!=""&& typeof res!="undefined"){
 				code = "";
-				code += `<div class="b1" id="${res.pcomment_id}">
+				code += `<div class="dw a${res.level}" id="${res.pcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer">${res.mem_id}</span>&nbsp;&nbsp;
-								<span id="content">${res.pcomment_content}</span>
-								<span id="cdate">${res.pcomment_cdate}</span>
-								<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">
-								<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">
-						</div>`;
+								<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
+								<span id="cdate">${res.pcomment_cdate}</span><br>
+								<span id="content">${pcontent}</span><br><br>
+								<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">&nbsp;
+								<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">&nbsp;
+						</div><br>`;
 				
 				$('#pctLayer').append(code);
 				
@@ -87,33 +91,33 @@ $.repcommentWriteServer = function(){
 	$.ajax({
 		url : `${mypath}/pcommentInsert.do`,
 		type : 'post',
-		data : {"pboardId": 64,
-				"memId" :qkrwjdtn2,
+		data : {"pboardId": 1,
+				"memId" :'wjdtn18',
 				"pcontent" : reContent,
 				"pcommentPid" : pcommentPid},
 		dataType : 'json',
 		success : function(res){
 			level="";
 			code="";
-			if(pcommentLevel=='b1'){
+			if(ppcommentLevel=='a1'){
 				level=2;
-			}else if(pcommentLevel=='b2'){
+			}else if(ppcommentLevel=='a2'){
 				level=3;
 			}else{
 				level=3
 			}
-			code += `<div class="b${level}" id="${res.pcomment_id}">
+			code += `<div class="dw a${level}" id="${res.pcomment_id}">
 					<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-					<span  id="writer">${res.mem_id}</span>&nbsp;&nbsp;
-					<span id="content">${res.pcomment_content}</span>
-					<span id="cdate">${res.pcomment_cdate}</span>
-					<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">
-					<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">
-					<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">
-					</div>`;
+					<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
+					<span id="cdate">${res.pcomment_cdate}</span><br>
+					<span id="content">${reContent}</span><br><br>
+					<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">&nbsp;
+					<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">&nbsp;
+					<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">&nbsp;
+					</div><br>`;
 			
 			
-			parentcomment.after(code)
+			pparentcomment.after(code)
 			
 		},
 		error : function(xhr){
@@ -128,7 +132,7 @@ $.pcommentDeleteServer=function(){
 		url : `${mypath}/pcommentDelete.do`,
 		type : 'post',
 		data : {
-				"pcommentId" : tidx
+				"pcommentId" : pidx
 				},
 		dataType : 'json',
 		success : function(res){
@@ -151,7 +155,7 @@ $.pcommentUpdateServer = function(target){
 		url : `${mypath}/pcommentUpdate.do`,
 		type : 'post',
 		data : {
-				"pcommentId" : tidx,
+				"pcommentId" : pidx,
 				"pcontent" : pcontent,
 		},
 		dataType : 'json',
