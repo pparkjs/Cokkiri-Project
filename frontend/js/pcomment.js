@@ -3,7 +3,7 @@ $.pcommentListServer = function(page){
 	$.ajax({
 		 url: `${mypath}/pcommentList.do`,
 		 type : 'post',
-		 data : {"pboardId" : 1, // pboard_id
+		 data : {"pboardId" : pboard_id, // pboard_id
 		 		 "page": page
 		 		 }, 
 		 dataType : 'json',
@@ -18,13 +18,22 @@ $.pcommentListServer = function(page){
 					level=3;
 				}
 				var code= "";
+				dimg=""
+				if(level!=1){
+					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
+				}
+				dsrc='images/기본프로필.png'
+				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
+					dsrc=path+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+				}
+				
 				if(v.pcomment_isremove=='N'){
 					
 					code += `<div class="dw a${level}" id="${v.pcomment_id}">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
-								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
-								<span id="cdate">${v.pcomment_cdate}</span><br>
-								<span id="content">${pcontent}</span><br><br>
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span class="writer">${v.memberVO.mem_nickname}</span>&nbsp;&nbsp;
+								<span class="cdate">${v.pcomment_cdate}</span><br>
+								${dimg}<span class="content">${pcontent}</span><br><br>
 								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">&nbsp;
 								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">&nbsp;
 								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">&nbsp;
@@ -33,12 +42,10 @@ $.pcommentListServer = function(page){
 				}else if(v.pcomment_isremove=='Y'){
 					code += `<div class="dw a${level}" id="${v.pcomment_id}">
 								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
-								<span id="cdate">${v.pcomment_cdate}</span><br>
-								<span id="content">삭제된 댓글 입니다.</span><br><br>
-								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">&nbsp;
-								<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">&nbsp;
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>&nbsp;&nbsp;
+								<span class="cdate">${v.pcomment_cdate}</span><br>
+								${dimg}<span class="content">삭제된 댓글 입니다.</span><br><br>
+								
 							</div><br>`;
 				}
 				
@@ -58,25 +65,15 @@ $.pcommentWriteServer = function(){
 	$.ajax({
 		url: `${mypath}/pcommentInsert.do`,
 		type: 'post',
-		data: { "pboardId": 1, // pboard_id
-				"memId" : 'wjdtn18', 	// mem_id
+		data: { "pboardId": pboard_id, // pboard_id
 				"pcontent" : pcontent},
+				
 		success : function(res){
 			if(res!=null&&res!=""&& typeof res!="undefined"){
-				code = "";
-				code += `<div class="dw a${res.level}" id="${res.pcomment_id}">
-								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
-								<span id="cdate">${res.pcomment_cdate}</span><br>
-								<span id="content">${pcontent}</span><br><br>
-								<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">&nbsp;
-								<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">&nbsp;
-						</div><br>`;
-				
-				$('#pctLayer').append(code);
-				
-				$('#pInsert textarea').val("");
+				$.pcommentListServer(1);
+				page=1;
+				$("#tctLayer").empty();
+				$('#tInsert textarea').val("");
 			}
 		},
 		error: function(xhr) {
@@ -91,8 +88,7 @@ $.repcommentWriteServer = function(){
 	$.ajax({
 		url : `${mypath}/pcommentInsert.do`,
 		type : 'post',
-		data : {"pboardId": 1,
-				"memId" :'wjdtn18',
+		data : {"pboardId": pboard_id,
 				"pcontent" : reContent,
 				"pcommentPid" : pcommentPid},
 		dataType : 'json',
@@ -106,11 +102,19 @@ $.repcommentWriteServer = function(){
 			}else{
 				level=3
 			}
+			dimg="";
+			if(level!=1){
+					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
+				}
+			dsrc='images/기본프로필.png'
+			if(res.memberVO.mem_image!=null&&res.memberVO.mem_image!=""&&typeof res.memberVO.mem_image!="undefined"){
+				dsrc=path+"/profileImageView.do?mem_id="+res.memberVO.mem_id
+			}
 			code += `<div class="dw a${level}" id="${res.pcomment_id}">
-					<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">&nbsp;
-					<span  id="writer" class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
-					<span id="cdate">${res.pcomment_cdate}</span><br>
-					<span id="content">${reContent}</span><br><br>
+					<img alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">&nbsp;
+					<span  class="writer" class="writer">${res.memberVO.mem_nickname}</span>
+					<span class="cdate">${res.pcomment_cdate}</span><br>
+					${dimg}<span class="content">${reContent}</span><br><br>
 					<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">&nbsp;
 					<input type="button" name="p_delete" idx="${res.pcomment_id}" class="action" value="댓글삭제">&nbsp;
 					<input type="button" name="p_modify" idx="${res.pcomment_id}" class="action" value="댓글수정">&nbsp;
@@ -138,6 +142,7 @@ $.pcommentDeleteServer=function(){
 		success : function(res){
 			if(res==1){
 				target.find("#content").text("삭제된 댓글 입니다.")
+				target.find('input').remove();
 			}else{
 				alert("실패")
 			}
