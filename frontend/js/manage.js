@@ -30,7 +30,7 @@
 					 		  <td>${v.mem_nickname}</td>
 					 		  <td>${v.mem_bir}</td>
 					 		  <td>${v.mem_gend}</td>
-					 		  <td>${v.mem_email}</td>
+					 		  <td>${v.mem_mail}</td>
 					 		  <td>${v.mem_tel}</td>
 					 		  <td>${v.mem_add}</td>
 					 	  </tr>`
