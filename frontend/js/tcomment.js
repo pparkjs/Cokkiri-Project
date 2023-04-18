@@ -24,30 +24,35 @@ $.tcommentListServer = function(page) {
 				if(level!=1){
 					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
 				}
+				dsrc='images/기본프로필.png'
+				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
+					dsrc=path+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+				}
+				
 				if (v.tcomment_isremove == 'n') {
 					code += `<div class="dw a${level}" id="${v.tcomment_id}">
-								<img alt="기본프로필.png" src="images/기본프로필.png" width="40px" height="40px">
-								<span  class="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
 								<span class="cdate">${v.tcomment_cdate}</span><br>
 								${dimg}<span class="content">${tcontent}</span><br><br>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;`
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">`
 				if(v.mem_id==smem_id){	
 						
-					code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+					code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
 							`
 					}
 					code+=`</div>`
 				} else if (v.tcomment_isremove == 'y') {
 					code += `<div class="dw a${level}" id="${v.tcomment_id}">
-								<img alt="기본프로필.png" src="images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span  class="writer" class="writer">${v.mem_nickname}</span>&nbsp;&nbsp;
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
 								<span class="cdate">${v.tcomment_cdate}</span><br> 
 								${dimg}<span class="content">삭제된 댓글입니다.</span><br><br>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">&nbsp;`
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">`
 				if(v.mem_id==smem_id){	
-							code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">&nbsp;
+							code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
 							`
 					}
 					code+=`</div>`
@@ -114,17 +119,22 @@ $.retcommentWriteServer = function() {
 			if(level!=1){
 					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
 				}
+			dsrc='images/기본프로필.png'
+			if(res.memberVO.mem_image!=null&&res.memberVO.mem_image!=""&&typeof res.memberVO.mem_image!="undefined"){
+				dsrc=path+"/profileImageView.do?mem_id="+res.memberVO.mem_id
+			}	
+				
 			code += `<div class="dw a${level}" id="${res.tcomment_id}">
-								<img alt="기본프로필.png" src="images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span class="writer">${res.mem_nickname}</span>&nbsp;&nbsp;
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span class="writer">${res.memberVO.mem_nickname}</span>
 								<span class="cdate">${res.tcomment_cdate}</span><br>
 								${dimg}<span class="content">${reContent}</span><br><br>
-								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">&nbsp;`
+								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">`
 					
 					if(res.mem_id==smem_id){	
 						
-					code+=			`<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">&nbsp;
+					code+=			`<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">
+								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">
 							`
 					}
 				code+=`</div>`

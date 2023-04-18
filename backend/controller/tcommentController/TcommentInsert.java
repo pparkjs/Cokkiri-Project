@@ -57,7 +57,7 @@ public class TcommentInsert extends HttpServlet {
 		TcommentVO tcomment = service.getTcomment(vo.getTcomment_id());
 		IMemberService service2 = MemberServiceImpl.getInstance();
 		MemberVO mem = service2.selectMemberinfo(tcomment.getMem_id());
-		tcomment.setMem_nickname(mem.getMem_nickname());
+		tcomment.setMemberVO(mem);
 		Gson gson = new Gson();
 		String json = gson.toJson(tcomment);
 		
