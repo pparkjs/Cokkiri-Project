@@ -47,7 +47,7 @@ public class SboardServiceImpl implements ISboardService {
 	}
 	
 	// 더보기, 타입, 검색text 처리할 메소드
-	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id){
+	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id, String region){
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -55,6 +55,7 @@ public class SboardServiceImpl implements ISboardService {
 		map.put("sb_type", vtype);
 		map.put("sb_search", vtext);
 		map.put("mem_id", mem_id);
+		map.put("region", region);
 		
 		return map;
 	}
