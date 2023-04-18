@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 
 import service.tcommentService.ITcommentService;
 import service.tcommentService.TcommentServiceImpl;
+import vo.MemberVO;
+import vo.TcommentVO;
 
 
 @WebServlet("/tcommentDelete.do")
@@ -29,9 +31,13 @@ public class TcommentDelete extends HttpServlet {
 		int tcommentId = Integer.parseInt(request.getParameter("tcommentId"));
 		
 		ITcommentService service = TcommentServiceImpl.getInstance();
+		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("memberVo");
+		TcommentVO tcomment = service.getTcomment(tcommentId);
+		int result=0;
+		if(memberVO.getMem_id().equals(tcomment.getMem_id())) {
+			result = service.updateTcommentIsremove(tcommentId);
+		}
 		
-
-		int result = service.updateTcommentIsremove(tcommentId);
 
 		
 		Gson gson = new Gson();

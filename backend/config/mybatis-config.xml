@@ -23,10 +23,13 @@
 		<typeAlias type="vo.ChatMessageVO" alias="chatmessageVo"/>
 		<typeAlias type="vo.SboardVO" alias="sboardVo"/>
 		<typeAlias type="vo.SimageVO" alias="simageVo"/>
+		<typeAlias type="vo.PboardVO" alias="pboardVo"/>
+		<typeAlias type="vo.PimageVO" alias="pimgVo"/>
 		<typeAlias type="vo.NoticeVO" alias="noticeVo"/>
 		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 		<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
 		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
+
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -40,7 +43,7 @@
 				<property name="password" value="${pass}"/>
 			</dataSource>
 			
-		</environment>
+		</environment> 
 		
 	</environments>	
 	

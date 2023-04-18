@@ -167,6 +167,12 @@ public class TboardServiceImpl implements ITboardService {
 		return dao.selectTboardRecommend(map);
 	}
 
+	@Override
+	public int selectTnotifys(Long tboard_id) {
+		// TODO Auto-generated method stub
+		return dao.selectTnotifys(tboard_id);
+	}
+
 	
 
 }

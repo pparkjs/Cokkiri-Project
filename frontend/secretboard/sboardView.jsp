@@ -78,6 +78,8 @@ function imageView(){
 	<%if(sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
 		<input type="button" id="modify" value="수정">
 		<input type="button" id="delete" value="삭제">
+	<%}else if(memVo.getAdmin_auth().equals("Y")){ %>
+		<input type="button" id="delete" value="삭제">
 	<%} %>
 	</div>
 	
@@ -120,7 +122,7 @@ function imageView(){
 			<img id="mUnlike" src="<%=request.getContextPath()%>/images/싫어요-체크안함.png">
 			<p id="untext"></p>
 		</div>
-		<%if(!sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
+		<%if(!sbList.get(0).getMem_id().equals(memVo.getMem_id()) && memVo.getAdmin_auth().equals("N")){ %>
 		<div class="m_notify">
 			<img id="mNotify" src="<%=request.getContextPath()%>/images/신고-체크안함.png">
 		</div>

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.Region;
 
 import com.google.gson.Gson;
 
@@ -70,8 +71,11 @@ public class TboardMain extends HttpServlet {
 		String smem_id=smem.getMem_id();
 		IMemberService service2 = MemberServiceImpl.getInstance();
 		MemberVO smemberVO = service2.selectMemberinfo(smem_id);
-		map.put("region", smemberVO.getMem_add().split(" ")[0]);
 		
+		map.put("region", smemberVO.getMem_add().split(" ")[0]);
+		if(smem.getAdmin_auth().equals("Y")) {
+			map.put("region","");
+		}
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		
 		List<TBoardAndAttVO>list=new ArrayList<>();
@@ -113,12 +117,13 @@ public class TboardMain extends HttpServlet {
 		}
 		
 		
-		Gson gson = new Gson(); 
-		String json =gson.toJson(list); 
-		PrintWriter out = response.getWriter(); 
-		out.print(json);
-		out.flush();
-		
+		request.setAttribute("list", list);
+		if(smem.getAdmin_auth().equals("Y")) {
+			request.setAttribute("admin", 1);
+		}else {
+			request.setAttribute("admin", 0);
+		}
+		request.getRequestDispatcher("/view/tboardmainview.jsp").forward(request, response);
 	}
 
 }

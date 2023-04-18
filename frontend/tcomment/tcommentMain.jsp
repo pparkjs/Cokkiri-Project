@@ -1,3 +1,5 @@
+<%@page import="vo.MemberVO"%>
+<%@page import="java.lang.reflect.Member"%>
 <%@page import="vo.TcommentVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -7,14 +9,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="../js/jquery-3.6.4.min.js"></script>
-<script type="text/javascript" src="../js/jquery.serializejson.min.js"></script>
-<script type="text/javascript" src="../js/tcomment.js"></script>
 
 <script type="text/javascript">
-mypath = '<%=request.getContextPath()%>';
-
-<%-- <% String id = (String)session.getAttribute("memid"); %>	 --%>
+path = '<%=request.getContextPath()%>';
+$(document).on('click', '#rt_modify', function(e){
+	 tcontent = $('#mInsert textarea').val();
+	 $.tcommentUpdateServer();
+	 $("#pdiv").remove();
+	 
+}) 
 	page=1;
 	$(function() {
 		// 댓글 목록 불러오기
@@ -22,7 +25,7 @@ mypath = '<%=request.getContextPath()%>';
 
 		// 댓글 작성
 		$('#btn').on('click', function() {
-//  			secret = $('#is_private').prop('checked');
+
 			
 			 tcontent = $('#tInsert textarea').val();
 			 
@@ -40,14 +43,20 @@ mypath = '<%=request.getContextPath()%>';
 			 tidx = $(this).attr('idx');
 			if (vacation == "t_insert") {
 				
-				 $('.re-tInsert').parent("div").remove();
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
 				// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
-				
-<%--         		<%= id %>  --%>
+				 <%
+					MemberVO smemVO=(MemberVO)request.getSession().getAttribute("memberVo");
+					String dsrc="기본프로필.png";
+					if(smemVO.getMem_image()!=null){
+						dsrc=request.getContextPath()+"/profileImageView.do";
+					}
+				%>
        			 tcommentForm = $('<div>').attr("class","formdiv").append($('<form>').attr('id','retInsert').addClass('re-tInsert').append(
        				    $('<div>').append(
-       				        $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
-        				    $('<span>').attr('id', 'writer').text('writer').after('&nbsp;&nbsp;'),
+       				        $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
+        				    $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
        				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').attr('class', 'tf'),
        				        $('<input>').attr('type', 'button').attr('id', 'rt_insert').attr('name', 'rt_insert').attr('idx', tidx).addClass('action').val('답글달기')
         				   
@@ -55,7 +64,7 @@ mypath = '<%=request.getContextPath()%>';
        				)// form 끝
        			);
        		        	// 댓글 입력 폼을 현재 클릭된 버튼 다음에 추가
-       		        	$(this).next().next().after(tcommentForm);
+       		        	$(this).parent(".dw").append(tcommentForm);
        	
        		        
 			}else if (vacation == "rt_insert"){
@@ -79,14 +88,23 @@ mypath = '<%=request.getContextPath()%>';
 				  $.tcommentDeleteServer(); 
 				 
 			}else if(vacation == "t_modify"){
-				$(".action[name='t_modify']").next().remove();
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
  				tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
 			   /*  nickname = $(this).parent('div').closest('#${res.tcomment_id}').attr('nick'); */
 			    // 댓글 입력 폼 생성
+			    
+			    
+ 				 <%
+					dsrc="기본프로필.png";
+					if(smemVO.getMem_image()!=null){
+						dsrc=request.getContextPath()+"/profileImageView.do";
+					}
+				%>
 			    var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-tInsert').append(
 			        $('<div>').append(
-			            $('<img>').attr('src', '../images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
-			            $('<span>').attr('id', 'writer').text('nickname').after('&nbsp;&nbsp;'),
+			            $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
+			            $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
 			            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').val(tcon), // 수정할 댓글 내용을 textarea에 세팅
 			            $('<input>').attr('type', 'button').attr('id', 'rt_modify').attr('name', 'rt_modify').attr('idx', tidx).addClass('action').val('수정하기') // 수정하기 버튼 생성
 			        )
@@ -95,20 +113,14 @@ mypath = '<%=request.getContextPath()%>';
 			    // 현재 클릭된 수정 버튼이 속한 댓글 div 다음에 댓글 입력 폼을 추가
 			    $(this).after(modifyForm);
 			    
-			    tparent = $(this).parent().find('#content');
+			    tparent = $(this).parent().find('.content');
 
 			    tmodicont = $('#mInsert textarea').val(tparent.text());
 			    
 					tmo = $(modifyForm).parent();
 					
 					// 수정하기 버튼을 클릭해서 수정완료 후 수정하기 버튼을 클릭했을때
-				 $(document).on('click', '#rt_modify', function(res){
-					 tcontent = $('#mInsert textarea').val();
-					 $.tcommentUpdateServer();
-					 $("#pdiv").remove();
-					 //$(".div").remove();
-					 
-				})  
+				 
 				// 더보기 버튼 클릭시
 			}else if(vacation == "moreList"){
 					page+=1;
@@ -123,6 +135,7 @@ mypath = '<%=request.getContextPath()%>';
 	
 </script>
 <style type="text/css">
+
 #tcLayer{
 	display: flex;
   	flex-wrap: nowrap; 
@@ -130,11 +143,17 @@ mypath = '<%=request.getContextPath()%>';
 }
 /* 댓글 작성 폼  */
 #tInsert {
- 	width: 100%;
+	margin: 0 auto;
+ 	width: 750px;
 	margin-bottom: 10px;
 	display: flex;
-	border-bottom: 2px solid navy; /* 1px 두께의 검은색 선 추가 */
+	border-bottom: 2px solid gray; /* 1px 두께의 검은색 선 추가 */
 	align-items: center;
+	padding-top: 20px;
+	padding-bottom: 20px; 
+}
+#tInsert span {
+	margin-left:20px; 
 
 }
 #tInsert span { 
@@ -149,7 +168,6 @@ mypath = '<%=request.getContextPath()%>';
 	margin-right: 10px;
 	display: inline-block;
 	width: 500px;
-	height: 20px;
 	resize: none;
 }
  #btn {
@@ -157,27 +175,24 @@ mypath = '<%=request.getContextPath()%>';
 	vertical-align: top;
 	color: black;
 	border: none;
-	background: darkgray;
+	background: rgb(199,199,204);
 	font-style: oblique;
+	padding: 10px
 } 
 .a1{
-	margin: 10px;
+	padding-left: 10px;
 }
 .a2{
-	margin-left: 40px;
-	margin-right : 10px;
-	margin-bottom: 10px; 
-    padding: 10px; 
+    padding-left: 50px; 
 }
 .a3{
-	margin-left: 90px;
+	padding-left: 90px;
 } 
 .re-tInsert{ /*댓글 등록, 수정 폼 class 값 */
 	margin-top: 20px;
 	width: 100%;
 	margin-bottom: 10px;
 	display: flex;
-	border-bottom: 2px solid navy; 
 }
 .re-tInsert span{
 	margin-right: 30px;
@@ -199,9 +214,10 @@ mypath = '<%=request.getContextPath()%>';
 	border: none; 
 	cursor: pointer; 
 	padding: 0;
-	font-size: medium;
+	font-size: 14px;
 	font-weight: bold; 
-	color: navy;
+	color: gray;
+	
 }
 #mInsert #reArea {
 	margin-right: 10px;
@@ -210,37 +226,66 @@ mypath = '<%=request.getContextPath()%>';
 	resize: none;
 }
 #rt_modify{ /* 수정버튼 */
-	display: inline-block;
-	vertical-align: top;
-	background-color: transparent; 
-	border: none; 
-	cursor: pointer; 
-	padding: 0;
-	font-size: medium;
-	font-weight: bold; 
-	color: navy;
+	margin-top: 8px;
 } 
-.dw .writer, .dw #cdate {
+.dw .writer {
 	vertical-align:  middle; 
 	display : inline-block;
 	height : 40px;
-	margin-top :-10px;
+	margin-bottom:15px;
+	font-size: 14px;
+}
+.rmwriter{
+	vertical-align:  middle; 
+	display : inline-block;
+	margin-top :6px;
+	font-size: 14px;
+}
+.dw .cdate {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	color:gray;
+	font-size: 9px;
 	
+}
+#rt_insert{
+	margin-top: 8px;
+}
+.dw .content {
+	font-size: 13px;
+	padding-top: 10px;
+	
+}
+.dw{
+	padding-top:10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgb(174,174,178);
+}
+.dw:last-child{
+	border:none;
 }
 #moreList{
 	display: block;
-	text-align: center;
+	margin: 0 auto;
+}
+#tctLayer{
+	padding: 20px;
+}
+.mrprofile{
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
 }
 </style>
 </head>	
 <body>
 <!-- 댓글 작성 폼 -->
 <form id="tInsert">
-	<span>댓글</span>&nbsp;&nbsp;
- 	<textarea rows="5" cols="10" id="tarea" placeholder="댓글을 입력해주세요." class="tf"></textarea>&nbsp;&nbsp;&nbsp;
+	<span>댓글</span>
+ 	<textarea rows="5" cols="10" id="tarea" placeholder="댓글을 입력해주세요." class="tf"></textarea>
  	<input type="button" value="댓글작성" id="btn" name = "tcmt">
-</form><br><br> 
-
+</form> 
 <!-- 처음 댓글 입력 폼이 들어가는 곳 -->
 <div id="tctLayer"></div>
 

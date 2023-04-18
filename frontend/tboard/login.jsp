@@ -8,8 +8,9 @@
 </head>
 <body>
 <form action="<%=request.getContextPath()%>/login.do" method="post">
-	id: <input type="text" name="id"><br>
+	id: <input type="text" name="memId"><br>
 	<input type="submit">
+		
 </form>
 </body>
 </html>
