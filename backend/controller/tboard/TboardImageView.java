@@ -31,9 +31,8 @@ public class TboardImageView extends HttpServlet {
 		Long imgno = Long.parseLong(str);
 		ITboardService service = TboardServiceImpl.getInstance();
 		TImageVO tImageVO = service.selectImage(imgno);
-		String uploadPath = "C:/Users/변정민/Desktop/tboard_image";
-		// 테스트용 
-		// String uploadPath = "D:/중프/tboard_image";
+
+		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
 		
 		File f = new File(uploadPath);
 		if(!f.exists()) {

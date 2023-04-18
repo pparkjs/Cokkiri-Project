@@ -49,7 +49,13 @@ function onMessage(event) {
 			chat.append(message);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
 		}else{
-			img="<img class='profile' alt='images/기본프로필.png' src='images/기본프로필.png'>"
+			
+			src='images/기본프로필.png'
+			if(typeof ymem.mem_image!='undefined' && ymem.mem_image!=null && ymem.mem_image!=""){
+				src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+ymem.mem_id
+			}
+			
+			img="<img class='profile' alt='images/기본프로필.png' src='"+src+"'>"
 
 			message = $("<div class='m ymessage' id='"+message.message_id+"'>"+img+"<span class='mcont'> "+message.message+"</span><span class='mdate'>"+curtime+"</span></div> ")
 			chat.append(message);
@@ -85,13 +91,25 @@ $(()=>{
 			mmem_id=res.mymem_id;
 			
 			
-			pimg = $("<img class='profile' alt='images/기본프로필.png' src='images/기본프로필.png'>")
+			src='images/기본프로필.png'
+			if(typeof res.writer.mem_image!='undefined' && res.writer.mem_image!=null && res.writer.mem_image!=""){
+				src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+res.writer.mem_id
+			}
+				
+			tsrc='images/default.PNG'
+			if(typeof res.fimgid!='undefined' && res.fimgid!=null && res.fimgid!=""){
+				tsrc = "<%=request.getContextPath()%>/images/TboardImageView.do?imgno="+res.fimgid
+			}
+			
+			
+			
+			pimg = $("<img class='profile' alt='images/기본프로필.png' src='"+src+"'>")
 			writer = $("<h4 class='ynick'>"+res.writer.mem_nickname+"</h4>")
 			$(".tboardprofile").append(pimg).append(writer);
 			
 			
 			timg = $("<img class='timg'>")
-			timg.attr("src","/cokkiri/images/TboardImageView.do?imgno="+res.fimgid)
+			timg.attr("src",tsrc)
 			$(".tdiv").append(timg);
 			
 			div=$("<div class='tcon'></div>");
@@ -221,9 +239,13 @@ $(()=>{
 						messageDate=messageTime(cdate)
 						
 						message_content=v.message_content.replace(/\n/g,"<br>")
+						src='images/기본프로필.png'
+						if(typeof ymem.mem_image!='undefined' && ymem.mem_image!=null && ymem.mem_image!=""){
+							src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+ymem.mem_id
+						}
 						if(v.mem_id==ymem_id){
 							whosmessage="ymessage"
-							img="<img class='profile' alt=''images/기본프로필.png' src='images/기본프로필.png'>"
+							img="<img class='profile' alt=''images/기본프로필.png' src='"+src+"'>"
 								message = $("<div class='m "+whosmessage+"' id='"+v.message_id+"'>"+img+isread+"<span class='mcont'> "+message_content +"</span><span class='mdate'>"+messageDate+"</span></div> ")
 						}else{
 							whosmessage="mmessage"

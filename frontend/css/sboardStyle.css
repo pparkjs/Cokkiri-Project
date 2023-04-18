@@ -5,8 +5,8 @@
 }
 .con_sboard_header{ position: relative; padding-top: 25px; padding-bottom: 25px;}
 .sb_type{ width: 100px; height: 32px; margin-left: 200px; }
-.sb_search{ width: 300px; height: 32px;}
-.con_sboard_header #search{position: absolute; width : 25px; height: 25px; left: 568px; top: 29px; cursor: pointer;}
+.sb_search{ width: 300px; height: 35px;}
+.con_sboard_header #search{position: absolute; width : 25px; height: 23px; left: 568px; top: 29px; cursor: pointer;}
 .con_sboard_header #regi{position: absolute; height: 25px; right: 304px; width : 33px; height: 33px;}
 
 .con_sboard_main{ width : 100%;  height : 100%;}
@@ -116,10 +116,14 @@ width: 800px; margin: 35px auto;}
 .mem_img img{width : 100%; height: 600px; }
 
 
+/* 관리자 신고체크  부분 */
+.notify_con{display:flex; align-items:center; position:absolute; position: absolute; top: 32px;  right: 303px;}
+.no_check{width: 18px; height: 18px;}
+.notify_con p{margin-left: 10px;  font-size: 14px; font-weight: bold;}
 
-
-
-
+.bottom_notify{display:flex; justify-content: center; align-items: center; margin-left:428px; }
+.bottom_notify p{font-size:16px; margin-left : 6px;}
+.no{display: none;}
 
 
 

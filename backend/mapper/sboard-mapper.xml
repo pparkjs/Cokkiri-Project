@@ -14,23 +14,20 @@
     	</where>
     </sql>
     
-    <!-- 전체 게시글 개수 구하기 -->
-<!--     <select id="totalConut" resultType="int" parameterType="map"> -->
-<!--     	select count(*) from sboard -->
-<!--     	<include refid="dynamicCondition"/>  -->
-<!--     </select> -->
     
     <!-- 더보기로 6개씩 가져오기 -->
 	<select id="selectByMore" parameterType="map" resultType="sboardVo">
 		select A.* from
    		  (select rownum as rnum, B.* from
-              (select C.*, 
+              (select E.* from(select C.*, 
 					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
 					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
 					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
-					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
-				from sboard C
-              <include refid="dynamicCondition"/> 
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+					(select mem_add from member D where D.mem_id = C.mem_id) region
+						from sboard C
+				  <include refid="dynamicCondition"/>  ) E
+				where region like '%'||#{region}||'%'
                 order by sboard_id desc) B
       <![CDATA[    
             where rownum <= 12+(12*#{more})) A 
@@ -154,6 +151,25 @@
 		insert into snotify values(#{mem_id}, #{sboard_id}, sysdate)
 	</insert>
 	
+
+	    <!-- 신고 테이블 더보기로 6개씩 가져오기 -->
+	<select id="notifyByMore" parameterType="map" resultType="sboardVo">
+		select A.* from
+	   		  (select rownum as rnum, B.* from
+	              (select E.* from(select C.*, 
+	                    (select count(*) from snotify D where C.sboard_id=D.sboard_id ) sum_notify,
+	                    (select mem_add from member D where D.mem_id = C.mem_id) region
+						   from sboard C 
+						<include refid="dynamicCondition"/>) E
+					where  region like '%'||#{region}||'%' and sum_notify >= 1 
+	                order by sboard_id desc) B 
+      <![CDATA[    
+          where rownum <= 12+(12*#{more})) A 
+        where A.rnum >= 1+(12*#{more}) 
+      ]]>  
+	</select>
+	
+
 	<!-- 마이페이지에서 사용자가 좋아요한 게시글만 출력 -->
 	<select id="selectByMoreMypageLike" resultType="sboardVo" parameterType="Map">
 		select rownum as rnum, B.*
@@ -228,4 +244,5 @@
 		]]>
 	
 	</select>
+
 </mapper>

@@ -40,13 +40,23 @@
 }
 .title{
 	font-size: 1.0em;
-	font-weight: 100;
+	font-weight: 900;
 	margin-bottom: 5px;
 }
 .price{
 	font-weight: 900;
 	font-size: 0.9em;
 	margin-bottom: 5px;
+}
+.state{
+	display: inline-block;
+    width: 60px;
+    text-align:center;
+    color:white;
+    border-radius:12px;
+    background: rgb(174,174,178);
+    padding: 2px;
+    margin-right: 8px;
 }
 .add{
 	font-weight: 100;
@@ -112,6 +122,7 @@
 <script type="text/javascript">
 
 $((ev)=>{
+	ad=null;
 	page=1;
 	boardstate=null;
 	category=null;
@@ -140,6 +151,9 @@ $((ev)=>{
 	categoryRecieve()
 	
 	console.log(page, category, sword, boardstate);
+	if($("#notifycheck").is(":checked") == true){
+	    
+	}
 	listRecieveFromOne(page,category,sword,boardstate);
 	
 	
@@ -153,7 +167,11 @@ $((ev)=>{
 	
 	$("#btn").on("click",function(){
 		page=page+1;
-		listRecieve(page,category,sword,boardstate);
+		if($("#notifycheck").is(":checked") == true){
+			notifyListRecieve(page,category,sword,boardstate)
+		}else{
+			listRecieve(page,category,sword,boardstate);
+		}
 		
 	})
 	$("#searchbtn").on("click",function(){
@@ -161,7 +179,11 @@ $((ev)=>{
 		category= $("#category option:selected").attr("id");
 		sword = $("#search").val();
 		$(".box").empty();
-		listRecieve(page,category,sword,boardstate);
+		if($("#notifycheck").is(":checked") == true){
+			notifyListRecieve(page,category,sword,boardstate)
+		}else{
+			listRecieve(page,category,sword,boardstate);
+		}
 		
 	})
 	
@@ -174,18 +196,45 @@ $((ev)=>{
 		location.href="<%=request.getContextPath()%>/writeForm.do"
 	})
 	
-	$(".btns").on("click",function(){
+	$(".btns").on("click",function(e){
+		flag=false;
+		if($(this).attr("class").indexOf("btnactive")!=-1){
+			flag=true;
+		}
 		$(".btns").removeClass("btnactive");
 		$(this).addClass("btnactive")
 		page=1;
 		category=null;
 		sword=null;
 		boardstate=$(this).text();
+		if(flag){
+			$(".btns").removeClass("btnactive");
+			boardstate=null;
+		}
 		$(".box").empty();
-		listRecieve(page,category,sword,boardstate);
+		if($("#notifycheck").is(":checked") == true){
+			notifyListRecieve(page,category,sword,boardstate)
+		}else{
+			listRecieve(page,category,sword,boardstate);
+		}
 		$("#default").prop("selected", true);
 	})
 	
+	
+	$(document).on("change","#notifycheck",function(){
+		$(".btns").removeClass("btnactive");
+		$(".box").empty();
+		page=1;
+		category=null;
+		sword=null;
+		boardstate=null;
+		if($("#notifycheck").is(":checked") == true){
+			notifyListRecieve(page,category,sword,boardstate)
+		}else{
+			listRecieve(page,category,sword,boardstate);
+		}
+	})
+				
 })
 
 

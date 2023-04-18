@@ -31,13 +31,13 @@ public class TboardInfo extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		
 		String id = request.getParameter("id");
-		Long a = Long.parseLong(id);
+		Long tboard_id = Long.parseLong(id);
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		
-		int cnt = service.incrementHit(a);
+		int cnt = service.incrementHit(tboard_id);
 		
-		TBoardVO boardVO = service.selectTboardInfo(a);
-		List<TImageVO> ilist = service.selecttImgBytboardId(a);
+		TBoardVO boardVO = service.selectTboardInfo(tboard_id);
+		List<TImageVO> ilist = service.selecttImgBytboardId(tboard_id);
 		IMemberService service2 = MemberServiceImpl.getInstance();
 		MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 		
@@ -45,13 +45,13 @@ public class TboardInfo extends HttpServlet {
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		//session에서 현재 회원의 id를 꺼냈다고 가정
 		map.put("mem_id", smem.getMem_id());
-		map.put("tboard_id", a);
+		map.put("tboard_id", tboard_id);
 		int mylist = service.selectMylist(map);
-		int tnotify = service.selectTnotify(map);
 		
 		String category_id = boardVO.getCategory_id();
 		String category_name = service.selectCategoryName(category_id);
 		
+		request.setAttribute("smem", smem);
 		request.setAttribute("memberVO", memberVO);
 		request.setAttribute("board", boardVO);
 		request.setAttribute("img", ilist);

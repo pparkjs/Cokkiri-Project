@@ -56,8 +56,10 @@ public class TboardUpdate extends HttpServlet {
 	  	tBoardVO.setTboard_state(state);
 	  	tBoardVO.setTboard_title(title);
 	  	tBoardVO.setTboard_content(content);
-	  	tBoardVO.setMem_id(smem.getMem_id());
-	  	
+	  	if(!smem.getAdmin_auth().equals("Y")) {
+	  		tBoardVO.setMem_id(smem.getMem_id());
+	  	}
+
 	  	ITboardService service = TboardServiceImpl.getInstance();
 	  	int upTboard = service.updateTboard(tBoardVO);
 	  	List<TImageVO> ilist = service.selecttImgBytboardId(Long.parseLong(tboard_id));
@@ -76,7 +78,7 @@ public class TboardUpdate extends HttpServlet {
 	  	
 	  	
 		// 업로드될 파일 경로 설정
-		String uploadPath = "C:/Users/변정민/Desktop/tboard_image";
+		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
 
 		// 저장될 폴더가 없으면 새로만든다.
 		File f = new File(uploadPath);

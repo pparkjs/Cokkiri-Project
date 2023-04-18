@@ -31,22 +31,20 @@ public class TcommentUpdate extends HttpServlet {
 		
 		String tcontent = request.getParameter("tcontent");
 		
-		String issecret = request.getParameter("issecret");
+
 		
 		TcommentVO vo = new TcommentVO();
 		
-		if(issecret.equals("true")) {
-			vo.setTcomment_secret("true");
-		} else {
-			vo.setTcomment_secret("false");
-		}
+
 		
 		vo.setTcomment_id(tcommentId);
 		vo.setTcomment_content(tcontent);
 		
 		ITcommentService service = TcommentServiceImpl.getInstance();
 		
-		int result = service.updateTcomment(vo);
+		int result =0;
+		
+		result= service.updateTcomment(vo);
 		
 		Gson gson = new Gson();
 		

@@ -1,11 +1,13 @@
 package dao.memberDAO;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import util.MybatisSqlSessionFactory;
 import vo.MemberVO;
+import vo.NoticeVO;
 
 public class MemberDAOImpl implements IMemberDAO {
 	private static IMemberDAO dao;
@@ -112,6 +114,7 @@ public class MemberDAOImpl implements IMemberDAO {
 		MemberVO memberVO = session.selectOne("member.selectMemberinfoByNick",nickname);
 		session.close();
 		
+		
 		return memberVO;
 	}
 
@@ -142,6 +145,37 @@ public class MemberDAOImpl implements IMemberDAO {
 	}
 
 	@Override
+
+	public List<MemberVO> listByPage(Map<String, Object> map) {
+		SqlSession session = null;
+		List<MemberVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("member.listByPage", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public int totalCount(Map<String, Object> map) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.selectOne("member.totalCount", map);
+		 } catch (Exception e) {
+		 	e.printStackTrace();
+     } finally {
+			 session.close();
+	  	}
+		 return res;
+	 }
+
 	public String selectMemberIdByTelAndName(MemberVO memVo) {
 		// TODO Auto-generated method stub
 		SqlSession session = null;

@@ -21,8 +21,24 @@ public class SboardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		int more = Integer.parseInt(request.getParameter("more"));
+		String vtype = request.getParameter("sb_type");
+		String vtext = request.getParameter("sb_search");
+		String region = request.getParameter("region");
+		
+		ISboardService service = SboardServiceImpl.getInstance();
+		HttpSession session = request.getSession();
+
+		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
+
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
+
+		List<SboardVO> list = service.notifyByMore(morePage);
+
+		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("/view/sboardList.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -31,6 +47,7 @@ public class SboardList extends HttpServlet {
 		int more = Integer.parseInt(request.getParameter("more"));
 		String vtype = request.getParameter("sb_type");
 		String vtext = request.getParameter("sb_search");
+		String region = request.getParameter("region");
 		
 		ISboardService service = SboardServiceImpl.getInstance();
 		HttpSession session = request.getSession();
@@ -38,7 +55,7 @@ public class SboardList extends HttpServlet {
 		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
 		String memId = memVo.getMem_id();
 		
-		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId);
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
 		List<SboardVO> list = service.selectByMore(morePage);
 		
 		request.setAttribute("list", list);

@@ -75,7 +75,9 @@ where rn between 1 and (#{page_num})*12
 	 <select id="selectTnotify" parameterType="map" resultType="int">
 	 	select count(*) from tnotify where mem_id=#{mem_id} and tboard_id=#{tboard_id}
 	 </select>
-	 
+	 <select id="selectTnotifys" parameterType="Long" resultType="int">
+	 	select count(*) from tnotify where tboard_id=#{tboard_id}
+	 </select>
 	 <select id="selectCategoryName" parameterType="String" resultType="String">
 	 	select category_name from category where category_id=#{category_id}
 	 </select>
@@ -127,7 +129,7 @@ where rn between 1 and (#{page_num})*12
 	 </delete>
 	 <select id="selectTboardRecommend" resultType="tboardVo" parameterType="map">
 	 	SELECT * FROM
-		( SELECT * FROM tboard where category_id=#{category} and mem_id in(select mem_id from member where mem_add=#{mem_add})
+		( SELECT * FROM tboard where category_id=#{category} and mem_id in(select mem_id from member where mem_add like '%'||#{mem_add}||'%')
 		and tboard_id!=#{tboard_id} ORDER BY dbms_random.value )
 		<![CDATA[WHERE rownum <=#{cnt}]]>
 	 </select>

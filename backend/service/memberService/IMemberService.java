@@ -1,11 +1,13 @@
 package service.memberService;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import vo.MemberVO;
+import vo.PageVO;
 
 public interface IMemberService {
 	
@@ -39,9 +41,19 @@ public interface IMemberService {
 	// 회원 아이디로 회원정보 조회
 	public MemberVO selectMemberById(String memId);
 	
+	// 페이지별 정보 구하기 - 페이징 처리
+	public PageVO pageInfo(int page, String stext);
+	
+	// 회원 리스트 - 검색 포함
+	public List<MemberVO> listByPage(Map<String, Object> map);
+	
+	// 전체 글 개수
+	public int totalCount(Map<String, Object> map);
+
 	// 휴대전화, 이름으로 아이디 조회
 	public String selectMemberIdByTelAndName(MemberVO memVo);
 	
 	// 비밀번호 변경
 	public int updateMemberPw(MemberVO memVo);
+
 }

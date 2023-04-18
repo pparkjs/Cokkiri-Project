@@ -4,7 +4,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -20,6 +22,7 @@ import nl.captcha.text.producer.NumbersAnswerProducer;
 import util.NaverTelMessage;
 import util.SetTextProducer;
 import vo.MemberVO;
+import vo.PageVO;
 
 public class MemberServiceImpl implements IMemberService {
 	private IMemberDAO dao;
@@ -99,6 +102,51 @@ public class MemberServiceImpl implements IMemberService {
 	}
 
 	@Override
+	public PageVO pageInfo(int page, String stext) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("stext", stext);
+		
+		int count = this.totalCount(map); // 전체 게시글 갯수 구하기
+		
+		// 전체 페이지 수 구하기
+		int totalPage = (int)Math.ceil((double)count / PageVO.getPerList());
+		
+		//start, end구하기 해당 페이지당 8개 게시글
+		int start = (page-1) * PageVO.getPerList() + 1; // 1, 9, 17
+		int end = start + PageVO.getPerList() - 1; //8, 16, 24
+		
+		// end가 최대 개수보다 클때 거름
+		if(end > count) end = count;
+		
+		//시작페이지와 끝페이지
+		int perPage = PageVO.getPerPage();
+		int startPage = ((page-1) / perPage * perPage) + 1;
+		int endPage = startPage + perPage - 1;
+		
+		// endPage가 전체 페이지보다 클경우 거름
+		if(endPage > totalPage) endPage = totalPage;
+		
+		PageVO vo = new PageVO();
+		vo.setStart(start);
+		vo.setEnd(end);
+		
+		vo.setStartPage(startPage);
+		vo.setEndPage(endPage);
+		vo.setTotalPage(totalPage);
+		
+		return vo;
+	}
+
+	@Override
+	public List<MemberVO> listByPage(Map<String, Object> map) {
+		return dao.listByPage(map);
+	}
+
+	@Override
+	public int totalCount(Map<String, Object> map) {
+		return dao.totalCount(map);
+  }
+  
 	public String selectMemberIdByTelAndName(MemberVO memVo) {
 		return dao.selectMemberIdByTelAndName(memVo);
 	}

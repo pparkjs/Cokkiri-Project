@@ -140,10 +140,59 @@ function likeOrUnlikeClick(){
 	
 }
 
-
+ //관리자가 신고체크 클릭시 신고받은 게시글 가져오기
+function notifyCheckView(mr){
+	vtype = $('.sb_type option:selected').val().trim();
+	vtext = $('.sb_search').val().trim();
+	$.ajax({
+		url : `${mypath}/SboardList.do`,
+		type : 'get',
+		data :	{"more" : mr,
+			     "sb_type" : vtype,
+			     "sb_search" : vtext,
+			     "region" : frontRegion},
+		success : function(res){
+			
+			noList = "";
+			
+			$.each(res.datas, function(i, v){
+				title = v.sboard_title.slice(0, 45);
+				date = elapsedTime(v.sboard_cdate);
+				// 게시판 생성되는 부분				
+				noList += `<div class="sb">
+								<div class="sb_top">
+									<img src=${mypath}/images/기본프로필.png>
+									<p class="writer" id="${v.mem_id}">익명</p>
+									<p class="date">${date}</p>
+								</div>
+								<div class="sb_middle">
+									<a class="${v.sboard_id}" href="${mypath}/SboardView.do?sboardId=${v.sboard_id}">${title}</a>				
+								</div>
+								<div class="sb_bottom">
+									<div class="bottom_notify">
+									    <input type="checkbox" class="no" id="notify_img">
+										<label for="notify_img">`
+				 noList +=					`<img class="uk" id="${v.sboard_id}" src="${mypath}/images/신고함.png">`
+			  
+				 noList +=						`</label>
+										<p>${v.sum_notify}</p>
+									</div>
+								</div>
+							</div>`
+			})
+			
+			console.log(noList)
+			$('.sboard').append(noList);
+		},
+		error : function(xhr){
+			alert("상태 : " + xhr.status);
+		},
+		dataType : 'json'
+	})
+}
+ 
+ // 게시글 리스트 가져오기
  function sboardListServer(mr){
-	 
-	 
 	vtype = $('.sb_type option:selected').val().trim();
 	vtext = $('.sb_search').val().trim();
 
@@ -152,7 +201,9 @@ function likeOrUnlikeClick(){
 		type : 'post',
 		data :	{"more" : mr,
 			     "sb_type" : vtype,
-			     "sb_search" : vtext},
+			     "sb_search" : vtext,
+			     "region" : frontRegion},
+			     
 		success : function(res){
 			
 			addList = "";
@@ -210,6 +261,4 @@ function likeOrUnlikeClick(){
 		dataType : 'json'
 	})
 	
-	
-	 
  }

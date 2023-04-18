@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.tcommentService.ITcommentService;
 import service.tcommentService.TcommentServiceImpl;
+import vo.MemberVO;
 import vo.TcommentVO;
 
 
@@ -30,7 +33,8 @@ public class TcommentInsert extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		int tboardId = Integer.parseInt(request.getParameter("tboardId"));
-		String memId = request.getParameter("memId");
+		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("memberVo");
+		String memId = memberVO.getMem_id();
 		String tcontent = request.getParameter("tcontent");
 		String pid = request.getParameter("tcommentPid");
 		TcommentVO vo = new TcommentVO();
@@ -51,7 +55,9 @@ public class TcommentInsert extends HttpServlet {
 		int result = service.insertTcomment(vo);
 		
 		TcommentVO tcomment = service.getTcomment(vo.getTcomment_id());
-		
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		MemberVO mem = service2.selectMemberinfo(tcomment.getMem_id());
+		tcomment.setMemberVO(mem);
 		Gson gson = new Gson();
 		String json = gson.toJson(tcomment);
 		

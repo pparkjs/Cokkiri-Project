@@ -74,4 +74,7 @@ public interface ITboardService {
 	
 	// 게시글 번호로 판매상태 찾기
 	public String selectTboardState(int tboard_id);
+
+	public int selectTnotifys(Long tboard_id);
+
 }

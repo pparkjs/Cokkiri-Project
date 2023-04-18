@@ -25,7 +25,7 @@ public interface ISboardService {
 	public List<SboardVO> selectByMore(Map<String, Object> map);
 	
 	// 더보기, 타입, 검색text 처리할 메소드
-	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id);
+	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id, String region);
 	
 	//조회수 증가
 	public int updateHit(int num);
@@ -60,6 +60,9 @@ public interface ISboardService {
 	// 신고하기 메소드
 	public int sboardNotify(SboardVO vo);
 	
+	// 신고게시물의 리스트 - 더보기 페이징
+	public List<SboardVO> notifyByMore(Map<String, Object> map);
+	
 	// 마이페이지에서 사용자가 좋아요한 게시글만 출력
 	public List<SboardVO> selectByMoreMypageLike(String memId, int more);
 	// 마이페이지에서 사용자가 싫어요한 게시글만 출력
@@ -68,4 +71,5 @@ public interface ISboardService {
 	public List<SboardVO> selectByMoerMypageMypost(String memId, int more);
 	// 마이페이지에서 사용자가 댓글을 쓴 게시글만 출력
 	public List<SboardVO> selectByMoerMypageMycomment(String memId, int more);
+
 }

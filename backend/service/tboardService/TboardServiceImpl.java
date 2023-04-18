@@ -198,6 +198,11 @@ public class TboardServiceImpl implements ITboardService {
 	@Override
 	public String selectTboardState(int tboard_id) {
 		return dao.selectTboardState(tboard_id);
+  }
+  
+	public int selectTnotifys(Long tboard_id) {
+		// TODO Auto-generated method stub
+		return dao.selectTnotifys(tboard_id);
 	}
 
 	

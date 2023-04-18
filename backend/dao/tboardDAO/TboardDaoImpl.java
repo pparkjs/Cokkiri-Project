@@ -309,11 +309,14 @@ public class TboardDaoImpl implements ITboardDao{
 			session.close();
 		}
 		return tboardState;
+  }
+  
+	@Override
+	public int selectTnotifys(Long tboard_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		int res = session.selectOne("selectTnotifys",tboard_id);
+		session.close();
+		return res;
 	}
 
-
-
-
-
-	
 }
