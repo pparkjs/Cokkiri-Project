@@ -1,0 +1,66 @@
+@charset "UTF-8";
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);* { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+@font-face {
+    font-family: 'yg-jalnan';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.2/JalnanOTF00.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+* {
+	/* border: 1px solid blue; */
+}
+
+.container *{
+	box-sizing: border-box;
+}
+
+.container #banner {
+	padding : 40px 0;
+	width : 1280px;
+	height: 250px;
+	margin: 0 auto;
+}
+.container #banner h1{
+	font-family: 'yg-jalnan', sans-serif;
+	color: rgb(28,28,30);
+}
+
+.container #containerpMenuRoot {
+	border-bottom: 2px solid rgb(229, 229, 234);	
+	border-top: 2px solid rgb(229, 229, 234);	
+}
+
+.container #containerpMenuRoot #containerpMenu{
+	padding : 15px 0;
+	width : 700px;
+	margin: 0 auto;
+	text-align: center;
+	display: flex;
+	justify-content: space-between;
+}
+.container #containerpMenuRoot #containerpMenu a{
+	text-decoration: none;
+	color : rgb(28,28,30);
+	font-weight: 500;
+	text-align: center;
+}
+
+.container #selectBtn {
+	width : 500px;
+	margin : 25px auto;
+	display: flex;
+	justify-content: space-between; /* 수평방향으로 양끝에 배치 */
+	align-items: center; /* 수직 방향으로 중앙정렬 */
+}
+.container #selectBtn input{
+	
+	width : 80px;
+	height : 35px;
+	border-radius: 120px;
+	background-color: white;
+	border: 1px solid rgb(229, 229, 234);
+	font-size: 14px;
+	color: rgb(28,28,30);
+}

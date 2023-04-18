@@ -6,6 +6,7 @@ import java.util.Map;
 import vo.CategoryVO;
 import vo.TBoardVO;
 import vo.TImageVO;
+import vo.MypageTboardVO;
 
 public interface ITboardDao {
 	
@@ -59,5 +60,21 @@ public interface ITboardDao {
 	
 	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map);
 	
+	// 좋아요한 회원만 불러오기
+	public List<MypageTboardVO> selectMyWishList(Map<String, Object> map);
+	
+	// 사용자가 올린 게시글만 보기
+	public List<MypageTboardVO> selectMyTboardList(Map<String, Object> map);
+	
+	// 판매완료 날짜 업데이트
+	public int updateTboardCompleteDate(int tboard_id);
+	
+	// 판매완료 취소
+	public int updateTboardCompleteDateNull(int tboard_id);
+	
+	// 게시글 번호로 판매상태 찾기
+	public String selectTboardState(int tboard_id);
+
 	public int selectTnotifys(Long tboard_id);
+
 }

@@ -1,1 +1,82 @@
 @charset "UTF-8";
+.mypageSboard {
+	width : 800px;
+	margin : 0 auto;
+}
+.sb .sb_top{
+	display: flex;
+	align-items: center;
+}
+.sb .sb_top img{
+	width : 50px;
+	height: 50px;
+}
+
+.sb .sb_top .writer{
+    font-size: 16px;
+    font-weight: 600;
+    margin-left: 15px;
+    
+}
+.sb .sb_top .date{
+    font-size: 16px;
+    color: rgb(142,142,147);
+    position: absolute;
+    margin-left: 742px;
+}
+
+.sb_middle {
+	margin-top: 10px;
+	margin-bottom: 15px;
+}
+.sb_middle a{
+	text-decoration: none;
+    color: rgb(28,28,30);
+    font-size: 20px;
+    font-weight: 600;
+}
+.sb_bottom{
+	display: flex; 
+	justify-content: flex-end;
+}
+.sb_bottom .ck{
+	display: none;
+}
+.sb_bottom div{
+	margin-left: 20px;
+}
+.hit{ 
+	display: flex;
+}
+.hit p{
+	font-size:16px; 
+}
+.like{
+	display:flex;
+}
+.like p{
+	font-size:16px; margin-left : 6px; 
+}
+.unlike{
+	display:flex;
+}
+.unlike p{
+	font-size:16px; margin-left : 6px;
+	}
+
+.moreContainer {
+	display : flex; 
+	justify-content: center;
+	margin-top : 50px;
+	margin-bottom : 50px;
+}
+#more img{
+	width : 60px; height : 30px; margin-bottom: 30px; cursor: pointer;
+}
+.like img{cursor: pointer;}
+.unlike img{cursor: pointer;} 
+.hrborder {
+	display: block;
+    margin: 25px 0;
+    border: 1px solid rgb(229,229,234);
+}

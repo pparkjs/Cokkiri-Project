@@ -184,7 +184,7 @@
                 order by sboard_id desc
                ) B
         <![CDATA[     
-			where b.me_like = 1 and rownum <= 6*#{more}
+			where b.me_like = 1 and rownum <= 6*to_number(#{more})
 		]]>
 	</select>
 	
@@ -202,7 +202,7 @@
                 order by sboard_id desc
                ) B
         <![CDATA[     
-			where b.me_unlike = 1 and rownum <= 6*#{more}
+			where b.me_unlike = 1 and rownum <= 6*to_number(#{more})
 		]]>
 	
 	</select>
@@ -217,12 +217,11 @@
 							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
 							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
 						from sboard C
-		                where C.MEM_ID = 'qkrwjdtn1'
+		                where C.MEM_ID = #{mem_id}
 		                order by sboard_id desc
 		               ) B
         <![CDATA[     
-		where rownum <= 6*#{more};
-		select SBOARD_ID from sboard where MEM_ID = #{mem_id};
+		where rownum <= 6*to_number(#{more});
 		]]>
 	
 	</select>
@@ -241,7 +240,7 @@
 		               ) B, SCOMMENT S
         <![CDATA[     
 		where B.SBOARD_ID = S.SBOARD_ID AND S.MEM_ID = #{mem_id}
-		AND rownum <= 3*#{more};
+		AND rownum <= 3*to_number(#{more});
 		]]>
 	
 	</select>

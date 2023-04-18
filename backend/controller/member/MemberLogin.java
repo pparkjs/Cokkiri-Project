@@ -65,6 +65,7 @@ public class MemberLogin extends HttpServlet {
 			result = "false";
 		}
 		request.setAttribute("result", result);
+		System.out.println("result"+ result);
 		request.getRequestDispatcher("/view/member/loginResult.jsp").forward(request, response);
 		
 		
