@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.pcommenService.IPcommentService;
 import service.pcommenService.PcommentServiceImpl;
+import vo.MemberVO;
 import vo.PcommentVO;
 
 
@@ -31,6 +34,7 @@ public class PcommentInsert extends HttpServlet {
 		String memId = request.getParameter("memId");
 		String pcontent = request.getParameter("pcontent");
 		String pid = request.getParameter("pcommentPid");
+		
 		PcommentVO vo = new PcommentVO();
 		if(pid!=null) {	// 대댓글
 			int pcommentPid = Integer.parseInt(request.getParameter("pcommentPid"));
@@ -43,16 +47,20 @@ public class PcommentInsert extends HttpServlet {
 			vo.setMem_id(memId);
 			vo.setPboard_id(pboardId);
 		}
-		System.out.println(vo);
 		IPcommentService service = PcommentServiceImpl.getInstance();
 		int result = service.insertPcomment(vo);
 		
 		PcommentVO pcomment = service.getPcomment(vo.getPcomment_id());
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		System.out.println(pcomment.getMem_id());
+		MemberVO mem = service2.selectMemberinfo(pcomment.getMem_id());
+		pcomment.setMem_nickname(mem.getMem_nickname());
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(pcomment);
 		
-		response.getWriter().print(json);
+		response.getWriter().write(json);
+		response.flushBuffer();
 	}
 
 }
