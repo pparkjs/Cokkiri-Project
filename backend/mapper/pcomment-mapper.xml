@@ -8,9 +8,9 @@
 <!-- 댓글 작성 -->
 <insert id="insertPcomment" parameterType="pcommentVo">
 	  insert into pcomment
-	    (pcomment_id, pcomment_pid, pboard_id, mem_id,ptcomment_content, pcomment_cdate, pcomment_secret, pcomment_isremove)
+	    (pcomment_id, pcomment_pid, pboard_id, mem_id,pcomment_content, pcomment_cdate, pcomment_isremove)
 	    values
-	    (PCOMMENT_SEQ.nextval, #{pcomment_pid}, #{pboard_id}, #{mem_id}, #{pcomment_content}, SYSDATE, #{pcomment_secret}, 'n')
+	    (PCOMMENT_SEQ.nextval, #{pcomment_pid}, #{pboard_id}, #{mem_id}, #{pcomment_content}, SYSDATE, 'N')
 
 	    <selectKey resultType="int" keyProperty="pcomment_id">
 	    	select pcomment_seq.currval from dual
@@ -20,23 +20,23 @@
 <!-- 댓글 리스트  -->
 <select id="getAllPcomment" resultType="pcommentVo" parameterType="pcommentVo">
   
-  <![CDATA[
-  SELECT *
-FROM (
-  SELECT rownum rn, level, pcomment_id, pcomment_pid, pboard_id, mem_id, pcomment_content,
+ <![CDATA[
+ SELECT *
+ FROM (
+  SELECT rownum rn, level, pcomment_id, pcomment_pid, pboard_id, mem_id,
+    LPAD(' ↳ ', 5 * (level - 1), ' ') || pcomment_content AS pcomment_content, 
     CASE
       WHEN (SYSDATE - pcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
       WHEN (SYSDATE - pcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - pcomment_cdate) * 24 * 60 * 60 / 60), '분전')
       WHEN (SYSDATE - pcomment_cdate) * 24 * 60 * 60 < 24 * 60 * 60 THEN CONCAT(FLOOR((SYSDATE - pcomment_cdate) * 24 * 60 * 60 / (60 * 60)), '시간전')
       ELSE TO_CHAR(pcomment_cdate, 'YYYY-MM-DD HH24:MI:SS')
     END
-  AS pcomment_cdate,
-  pcomment_secret, pcomment_isremove
+  AS pcomment_cdate, pcomment_isremove
   FROM pcomment
-  WHERE pboard_id = #{pboard_id}
+  WHERE pboard_id = #{pboard_id} 
   START WITH pcomment_pid = 0
   CONNECT BY PRIOR pcomment_id = pcomment_pid
-  ORDER SIBLINGS BY pcomment_cdate DESC, pcomment_id DESC
+  ORDER SIBLINGS BY pcomment_id DESC
 ) WHERE rn BETWEEN #{startPcomment} AND #{endPcomment}
     ]]>
 </select>
@@ -49,9 +49,9 @@ FROM (
 </update> 
 
 <!-- 댓글 수정시 삭제여부 -->
-<update id="updateTPcommentIsremove" parameterType="int">
+<update id="updatePcommentIsremove" parameterType="int">
 	update pcomment
-	set pcomment_isremove='y'
+	set pcomment_isremove='Y'
 	where pcomment_id=#{pcomment_id}
 </update>
 
