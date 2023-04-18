@@ -14,22 +14,24 @@
     	</where>
     </sql>
     
-    <!-- 전체 게시글 개수 구하기 -->
-<!--     <select id="totalConut" resultType="int" parameterType="map"> -->
-<!--     	select count(*) from sboard -->
-<!--     	<include refid="dynamicCondition"/>  -->
-<!--     </select> -->
     
     <!-- 더보기로 6개씩 가져오기 -->
 	<select id="selectByMore" parameterType="map" resultType="sboardVo">
 		select A.* from
    		  (select rownum as rnum, B.* from
-              (select * from sboard
-              <include refid="dynamicCondition"/> 
+              (select E.* from(select C.*, 
+					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+					(select mem_add from member D where D.mem_id = C.mem_id) region
+						from sboard C
+				  <include refid="dynamicCondition"/>  ) E
+				where region like '%'||#{region}||'%'
                 order by sboard_id desc) B
       <![CDATA[    
-            where rownum <= 6+(6*#{more})) A 
-        where A.rnum >= 1+(6*#{more})
+            where rownum <= 12+(12*#{more})) A 
+        where A.rnum >= 1+(12*#{more})
       ]]>  
 	</select>
 	
@@ -56,11 +58,192 @@
 	<!-- 해당 게시글 출력 쿼리 -->
 	<select id="sboardSelect" parameterType="String" resultType="sboardVo">
 		select A.*, B.simage_id, B.simg_origin_name, B.simg_save_name 
-		  from sboard A, simage B
-		  where A.sboard_id = B.sboard_id 
-		    and A.sboard_id = #{sboard_id}
+	      from simage B
+	      right outer join sboard A on(A.sboard_id = B.sboard_id)
+	      where A.sboard_id = #{sboard_id}
 	</select>
 	
+	<!-- 게시판 번호에 해당하는 이미지 행 삭제 -->
+	<delete id="simageDeleteBySboardId" parameterType="int">
+		delete from simage where sboard_id = #{sboard_id}
+	</delete>
 	
+	<!-- 게시판 번호에 해당하는 게시판 삭제 -->
+	<delete id="sboardDelete" parameterType="int">
+		delete from sboard where sboard_id = #{sboard_id}
+	</delete>
 	
+	<!-- 게시물의 내용 제목 업데이트 -->
+	<update id="sboardUpdate" parameterType="sboardVo">
+		update sboard set sboard_title = #{sboard_title}, sboard_content = #{sboard_content},
+		                  sboard_mdate = sysdate 
+		  where sboard_id = #{sboard_id}
+	</update>
+	
+	<!-- 해당 게시판에 이미지 개수 구하기 -->
+	<select id="simageCount" parameterType="int" resultType="int">
+		select count(*) from simage where sboard_id = #{sboard_id}
+	</select>
+	
+	<!-- 조회수 업데이트 -->
+	<update id="updateHit" parameterType="int">
+		update sboard set sboard_hit = sboard_hit + 1 where sboard_id = #{sboard_id}
+	</update>
+	
+	<!-- 좋아요 버튼 누를시 적용될 쿼리 -->
+	<insert id="likeInsert" parameterType="sboardVo">
+		insert into sboardstate values(sboardstate_seq.nextval, #{mem_id}, #{sboard_id}, #{sbstate_like}, 0)
+	</insert>
+	
+	<!-- 최초 좋아요인지 체크 -->
+	<select id="likeCheck" parameterType="sboardVo" resultType="int">
+		select count(*) from sboardstate where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+	</select>
+	
+	<!-- 좋아요 중복 체크 -->
+	<select id="likeByButton" parameterType="sboardVo" resultType="int">
+		select count(*) from sboardstate where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+          and sbstate_like = #{sbstate_like}
+	</select>
+	
+	<!-- 좋아요 업데이트 -->
+	<update id="likeUpdate" parameterType="sboardVo">
+		update sboardstate set sbstate_like = 1, sbstate_unlike = 0 
+		  where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+	</update>
+	
+	<!-- 좋아요 싫어요 취소 -->
+	<delete id="likeDelete" parameterType="sboardVo">
+		delete from sboardstate where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+	</delete>
+	
+	<!-- 싫어요 업데이트 -->
+	<update id="disLikeUpdate" parameterType="sboardVo">
+		update sboardstate set sbstate_like = 0, sbstate_unlike = 1 
+		  where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+	</update>
+	
+	<!-- 싫어요 버튼 누를시 적용될 쿼리 -->
+	<insert id="disLikeInsert" parameterType="sboardVo">
+		insert into sboardstate values(sboardstate_seq.nextval, #{mem_id}, #{sboard_id}, 0, 1)
+	</insert>
+	
+	<!-- 좋아요, 싫어요, 조회수, 신고상태 조회 -->
+	<select id="viewState" parameterType="sboardVo" resultType="sboardVo">
+		select a.sboard_id,
+		       a.sboard_hit,
+		       (select nvl(sum(sbstate_like),0) from sboardstate b where b.sboard_id=a.sboard_id) sbstate_like,
+		       (select nvl(sum(sbstate_unlike),0) from sboardstate b where b.sboard_id=a.sboard_id) sbstate_unlike,
+		       nvl((select sbstate_like from sboardstate b where b.sboard_id=a.sboard_id and b.mem_id=#{mem_id}),0) me_like,
+		       nvl((select sbstate_unlike from sboardstate b where b.sboard_id=a.sboard_id and b.mem_id=#{mem_id}),0 ) me_unlike,
+		       (select count(*) from snotify b where b.sboard_id=a.sboard_id and b.mem_id=#{mem_id} ) me_notify
+		  from sboard a
+		  where a.sboard_id = #{sboard_id}
+	</select>
+	
+	<!-- 신고하기 중복체크 -->
+	<select id="notifyCheck" parameterType="sboardVo" resultType="int">
+		select count(*) from snotify where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+	</select>
+	
+	<!-- 신고하기 -->
+	<insert id="sboardNotify" parameterType="sboardVo" >
+		insert into snotify values(#{mem_id}, #{sboard_id}, sysdate)
+	</insert>
+	
+
+	    <!-- 신고 테이블 더보기로 6개씩 가져오기 -->
+	<select id="notifyByMore" parameterType="map" resultType="sboardVo">
+		select A.* from
+	   		  (select rownum as rnum, B.* from
+	              (select E.* from(select C.*, 
+	                    (select count(*) from snotify D where C.sboard_id=D.sboard_id ) sum_notify,
+	                    (select mem_add from member D where D.mem_id = C.mem_id) region
+						   from sboard C 
+						<include refid="dynamicCondition"/>) E
+					where  region like '%'||#{region}||'%' and sum_notify >= 1 
+	                order by sboard_id desc) B 
+      <![CDATA[    
+          where rownum <= 12+(12*#{more})) A 
+        where A.rnum >= 1+(12*#{more}) 
+      ]]>  
+	</select>
+	
+
+	<!-- 마이페이지에서 사용자가 좋아요한 게시글만 출력 -->
+	<select id="selectByMoreMypageLike" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+             from
+              (select C.*, 
+					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+				from sboard C
+              
+                order by sboard_id desc
+               ) B
+        <![CDATA[     
+			where b.me_like = 1 and rownum <= 6*#{more}
+		]]>
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 싫어요한 게시글만 출력 -->
+	<select id="selectByMoerMypageUnlike" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+             from
+              (select C.*, 
+					(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+					(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+					nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+				from sboard C
+              
+                order by sboard_id desc
+               ) B
+        <![CDATA[     
+			where b.me_unlike = 1 and rownum <= 6*#{more}
+		]]>
+	
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 작성한 게시글만 출력 -->
+	<select id="selectByMoerMypageMypost" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+		             from
+		              (select C.*, 
+							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+						from sboard C
+		                where C.MEM_ID = 'qkrwjdtn1'
+		                order by sboard_id desc
+		               ) B
+        <![CDATA[     
+		where rownum <= 6*#{more};
+		select SBOARD_ID from sboard where MEM_ID = #{mem_id};
+		]]>
+	
+	</select>
+	
+	<!-- 마이페이지에서 사용자가 댓글을 쓴 게시글만 출력 -->
+	<select id="selectByMoerMypageMycomment" resultType="sboardVo" parameterType="Map">
+		select rownum as rnum, B.*
+		             from
+		              (select C.*, 
+							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+						from sboard C
+		                order by sboard_id desc
+		               ) B, SCOMMENT S
+        <![CDATA[     
+		where B.SBOARD_ID = S.SBOARD_ID AND S.MEM_ID = #{mem_id}
+		AND rownum <= 3*#{more};
+		]]>
+	
+	</select>
+
 </mapper>

@@ -42,10 +42,9 @@ public class TboardInfo extends HttpServlet {
 		MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 		
 		Map<String, Object> map = new HashMap<>();
-		
+		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		//session에서 현재 회원의 id를 꺼냈다고 가정
-		HttpSession session = request.getSession();
-		map.put("mem_id", (String)session.getAttribute("id"));
+		map.put("mem_id", smem.getMem_id());
 		map.put("tboard_id", a);
 		int mylist = service.selectMylist(map);
 		int tnotify = service.selectTnotify(map);
@@ -53,6 +52,7 @@ public class TboardInfo extends HttpServlet {
 		String category_id = boardVO.getCategory_id();
 		String category_name = service.selectCategoryName(category_id);
 		
+		request.setAttribute("smem", smem);
 		request.setAttribute("memberVO", memberVO);
 		request.setAttribute("board", boardVO);
 		request.setAttribute("img", ilist);

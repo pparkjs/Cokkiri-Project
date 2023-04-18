@@ -1,9 +1,8 @@
 @charset "UTF-8";
-@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+* { 
+ font-family: 'Noto Sans KR', sans-serif;
 }
 
 * {
@@ -51,7 +50,7 @@ nav input {
 	border-radius: 20px;
 	background-color: rgb(242,242,247);
 	font-size: 14px;
-	font-weight: 700;
+	font-weight: 600;
 }
 
 .main{
@@ -66,4 +65,110 @@ nav input {
 
 .loginbox {
 	width: 300px;
+}
+
+
+/* modal */
+.modal {
+	display : none;
+	position: fixed;
+	width : 100%;
+	height : 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+}
+
+.box {
+	position: absolute;
+	margin: 0 auto;
+	
+	width : 450px;
+	height: 500px;
+	
+	/* 가운데 위치 */
+	/*좌상단 기준으로*/
+	top : 50%;
+	left : 50%;
+	/*요소의 중심축을 중앙으로 이동*/
+	transform: translate(-50%, -50%);
+	
+	padding: 25px;
+	background-color: white;
+	border-radius: 20px;
+	box-shadow: 0 2px 3px 0 lightgray;
+	
+}
+.modalContent h3{
+	margin-top: 0;
+	margin-bottom: 40px;
+	font-size: 20px;
+	font-weight: 600;
+	color: rgb(28,28,30);
+	text-align: center;
+}
+.modalContent label{
+	font-size: 14px;
+	color: rgb(28,28,30);
+	font-weight: 600;
+}
+
+.modalContent .findIdModalInputId{
+	margin-bottom: 20px;	
+}
+.modalContent .findIdModalInputTel .messageCheckBox {
+	margin-top: 5px;	
+}
+.modalContent .modalInputBox {
+	display: flex;
+	margin-top: 5px;	
+	justify-content: space-between;
+	width: 100%;
+	flex-wrap: wrap;
+}
+
+.modalContent input{
+	padding : 10px;
+	border-radius: 5px;
+	border: 1px solid rgb(209, 209, 214);
+}
+.input input[type="text"]{
+	width : 284px;
+}
+.findIdModalInputTel input[type="button"]{
+	width : 110px;
+	text-align: center;
+	border: none;
+}
+.input {
+	margin-top: 5px;
+}
+.modalBtnBox {
+	height: 30px;
+	margin-bottom: 30px;
+}
+
+.modalBtnBox img {
+    width: 30px;
+    float: right;
+}
+
+.modalContent .nextBen{
+    width: calc(100% - 50px); /* 부모 요소의 너비를 고려하여 버튼의 너비 조정 */
+	position: absolute;
+	bottom: 25px;
+	left: 50%; /* 좌측 정렬로 변경 */
+	transform: translateX(-50%);
+    background-color: rgb(56,102,233);
+    border-radius: 100px;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.findpwIDInput input{
+	width : 100%
+}
+.findpwIDInput {
+	margin-top: 5px;
 }

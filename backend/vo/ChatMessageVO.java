@@ -7,6 +7,59 @@ public class ChatMessageVO {
 	private String message_cdate;
 	private Long room_id;
 	private String mem_id;
+	private int res;
+	private MemberVO ymem;
+	private String sender;
+	private String reciever;
+	private int noread;
+	private Long croom_id;
+	private String message;
+	
+	
+	
+	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getSender() {
+		return sender;
+	}
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
+	public String getReciever() {
+		return reciever;
+	}
+	public void setReciever(String reciever) {
+		this.reciever = reciever;
+	}
+	public int getNoread() {
+		return noread;
+	}
+	public void setNoread(int noread) {
+		this.noread = noread;
+	}
+	public Long getCroom_id() {
+		return croom_id;
+	}
+	public void setCroom_id(Long croom_id) {
+		this.croom_id = croom_id;
+	}
+	public MemberVO getYmem() {
+		return ymem;
+	}
+	public void setYmem(MemberVO ymem) {
+		this.ymem = ymem;
+	}
+	public int getRes() {
+		return res;
+	}
+	public void setRes(int res) {
+		this.res = res;
+	}
 	public Long getMessage_id() {
 		return message_id;
 	}

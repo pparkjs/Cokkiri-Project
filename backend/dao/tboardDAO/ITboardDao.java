@@ -57,5 +57,7 @@ public interface ITboardDao {
 	
 	public List<TBoardVO>selecttboardsByPagefromOne(Map<String, Object> map);
 	
+	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map);
 	
+	public int selectTnotifys(Long tboard_id);
 }

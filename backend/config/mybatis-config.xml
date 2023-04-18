@@ -25,8 +25,11 @@
 		<typeAlias type="vo.SimageVO" alias="simageVo"/>
 		<typeAlias type="vo.PboardVO" alias="pboardVo"/>
 		<typeAlias type="vo.PimageVO" alias="pimgVo"/>
-		
-	<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
+		<typeAlias type="vo.NoticeVO" alias="noticeVo"/>
+		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
+		<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
+		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
+
 	</typeAliases>
 	
 	<!-- DB연결 설정하기 -->
@@ -46,12 +49,16 @@
 	
 	<!--  DB에 사용되는 SQL문이 저장된 mapper파일 등록하는 부분 -->
 	<mappers>
-		<mapper resource="mapper/member-mapper.xml"/>
-		<mapper resource="mapper/tboard-mapper.xml"/>
-		<mapper resource="mapper/chat-mapper.xml"/>
-		<mapper resource="mapper/tcomment-mapper.xml"/>
-		<mapper resource="mapper/sboard-mapper.xml"/>
-		<mapper resource="mapper/pboard-mapper.xml"/>
+
+    <mapper resource="mapper/pcomment-mapper.xml"/>
+    <mapper resource="mapper/member-mapper.xml"/>
+    <mapper resource="mapper/tboard-mapper.xml"/>
+    <mapper resource="mapper/chat-mapper.xml"/>
+    <mapper resource="mapper/tcomment-mapper.xml"/>
+    <mapper resource="mapper/sboard-mapper.xml"/>
+    <mapper resource="mapper/notice-mapper.xml"/>
+    <mapper resource="mapper/alarm-mapper.xml"/>
+
 	</mappers>
 	
 </configuration>

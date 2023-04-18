@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="notice">
+	<!-- 동적 쿼리 (제목으로 검색 데이터 안들어오면 실행x) -->
+    <sql id="dynamicCondition">
+    	<where>
+    		<if test="stext != ''">
+    			nboard_title like '%'||#{stext}||'%'
+    		</if>
+    	</where>
+    </sql>
+    
+    <!-- 전체 글 개수 -->
+    <select id="totalCount" resultType="int" parameterType="map">
+		select count(*) from noticeboard
+			<include refid="dynamicCondition"/> <!-- 해당 조건 만족해야 실행함-->
+	</select>
+    
+    <!-- 페이지별 리스트 검색포함 -->
+	<select id="listByPage" parameterType="map" resultType="noticeVo">
+		 select A.* from 
+	     (select rownum as rnum , B.* from
+	        ( select * from noticeboard
+	        <include refid="dynamicCondition"/>  <!-- 태그로 실행되는데 해당 조건 만족해야 실행함-->
+	           order by nboard_id desc ) B
+	    <!-- 캐릭터data이거 안주면 < 꺽세 기호가 태그로 인식됨 우리는 데이터로 줄거다 -->
+	      <![CDATA[   
+	       where rownum <= #{end}) A 
+	       where A.rnum >= #{start}
+	        ]]>
+	</select>
+	
+	<!-- 해당 게시글 상세보기 -->
+	<select id="selectNotice" parameterType="int" resultType="noticeVo">
+		select * from noticeboard where nboard_id = #{nboard_id}
+	</select>
+	
+	<!-- 글쓰기 -->
+	<insert id="insertNotice" parameterType="noticeVo">
+		insert into noticeboard
+			values(
+				   noticeboard_seq.nextval,
+				   #{nboard_title}, #{nboard_content}, sysdate, #{mem_id}
+				   )
+	</insert>
+	
+	<!-- 글삭제 -->
+	<delete id="deleteNotice" parameterType="int">
+		delete from noticeboard where nboard_id = #{nboard_id}
+	</delete>
+	
+	<!-- 글 수정 -->
+	<update id="updateNotice" parameterType="noticeVo">
+		update noticeboard set nboard_title = #{nboard_title}, nboard_content = #{nboard_content}
+		                   where nboard_id = #{nboard_id}
+	</update>
+	
+ </mapper>

@@ -2,11 +2,18 @@ package vo;
 
 public class TBoardAndAttVO {
 	private TBoardVO boardVO;
-	private String add;
+	private MemberVO writer;
 	private Long fimgid;
 	private int mylist;
+	private String mymem_id;
+	private int notifynum;
 	
-	
+	public int getNotifynum() {
+		return notifynum;
+	}
+	public void setNotifynum(int notifynum) {
+		this.notifynum = notifynum;
+	}
 	public int getMylist() {
 		return mylist;
 	}
@@ -14,14 +21,21 @@ public class TBoardAndAttVO {
 		this.mylist = mylist;
 	}
 
-	public String getAdd() {
-		return add;
-	}
-	public void setAdd(String add) {
-		this.add = add;
-	}
+	
 
 
+	public String getMymem_id() {
+		return mymem_id;
+	}
+	public void setMymem_id(String mymem_id) {
+		this.mymem_id = mymem_id;
+	}
+	public MemberVO getWriter() {
+		return writer;
+	}
+	public void setWriter(MemberVO writer) {
+		this.writer = writer;
+	}
 	public Long getFimgid() {
 		return fimgid;
 	}
@@ -33,11 +47,6 @@ public class TBoardAndAttVO {
 	}
 	public void setBoardVO(TBoardVO boardVO) {
 		this.boardVO = boardVO;
-	}
-	@Override
-	public String toString() {
-		return "TBoardAndAttVO [boardVO=" + boardVO + ", add=" + add + ", fimgid=" + fimgid + ", mylist=" + mylist
-				+ "]";
 	}
 
 	

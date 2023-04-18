@@ -1,0 +1,123 @@
+@charset "UTF-8";
+.con_notice{
+    width: 1375px;
+    margin: 20px auto;
+}
+
+.con_notice_header{ position: relative; padding-top: 25px; padding-bottom: 25px;}
+.notice_search{ width: 560px; height: 23px; padding-left: 20px}
+.con_notice_header #search{position: absolute; width : 25px; height: 25px; left: 553px; top: 27px; cursor: pointer;}
+.con_notice_header #regi{position: absolute;  right: 131px; width : 33px; height: 33px;}
+.notice_table{width:100%; border-top : 3px solid black;}
+.notice_writer{ width: 194px;}
+.notice_date{width: 300px;}
+th, td{border-bottom: 1px solid rgb(174, 174, 178); padding-top: 20px; padding-bottom: 20px; text-align: center;}
+.n_title{text-decoration: none; color: black;}
+
+
+.notice_page{ width: 21vw;  margin: 10px auto; display: flex; justify-content: center;}
+.pagination{list-style: none;}
+.pagination li{display : inline-block;  width: 36px; text-align: center;}
+.pagination li a{text-decoration: none; color : black; text-align: center; font-weight: 700;}
+.pagination li:hover{background: black;}
+.pagination li a:hover{color : white;}
+#prev_li{width: 50px;}
+#next_li{width: 50px;}
+.active{background: black;}
+#page_click{color : white;}
+
+
+/* 공지사항 게시판 게시글 등록 */
+.con_notice{ margin: 50px auto;   width: 1369px;}
+.con_regist h1{margin-bottom: 20px; }
+.notice_header{border-bottom: 2px solid black;}
+
+.notice_title, .notice_content{display : flex; margin-top: 25px;}
+.txt{font-size: 25px; width:150px; margin-left:20px;}
+.txt span{font-size:13px;}
+
+.notice_title{border-bottom: 2px solid rgb(217, 213, 213);}
+
+.notice_title{padding-bottom: 25px;}
+#maxTitle{margin-top: 5px; margin-left: 40px;}
+.notice_title textarea{padding-top:7px; padding-left:8px;}
+.notice_content{padding-bottom: 69px; border-bottom: 2px solid black;}
+#maxContent{margin-top: 10px; position: absolute; bottom: -29px; right: 0px;}
+.notice_content textarea{padding-top:7px; padding-left:8px;}
+.ntc{position: relative;}
+.notice_bottom{ height : 100px;}
+.notice_btn {
+	border-radius:25px;
+	text-align:center;
+	font-size:20px;
+	color:white;
+	padding: 1px 40px;
+	background: black;
+	border-width:0px;
+	margin-left:1212px;
+	margin-top: 20px;
+}
+
+.notice_btn:active {
+	position:relative;
+	top:3px
+}
+
+.notice_btn:hover {
+	background: #d6d6d6;
+}
+
+/* 해당 게시글 view */
+
+.admin_notice{display: flex; flex-direction : column; 
+width: 1076px; margin: 35px auto;}
+.admin_header{display : flex;   border-bottom: 1px solid rgb(209, 209, 214);  align-items: center; padding-bottom: 10px;}
+#modify , #delete{color:rgb(99, 99, 102); font-weight:bold; padding : 1px 15px; margin-right: 4px; cursor: pointer;}
+.admin_top{ display : flex; align-items: center; margin-top: 20px;}
+.admin_top .a_date{font-size: 15px; color:rgb(142, 142, 147);}
+.admin_top img {width : 60px; height : 60px;}
+.admin_top .a_writer{margin-left : 15px; font-size: 22px; font-weight: bold;}
+
+.admin_t{font-size: 34px;  font-weight: bold;  width: 928px;word-break: break-all;}
+.admin_content{height:700px;}
+.admin_content .admin_ct{margin-top: 35px; font-size: 18px; word-break: break-all;}
+.a_list{display: flex; justify-content: center;}
+.a_back{ cursor: pointer; padding: 0px 29px; background: white; border: 1px solid black;}
+.a_back:hover{background:rgb(209, 209, 214);}
+
+/*  회원관리 list */
+
+.con_memManage{
+    width: 1375px;
+    margin: 20px auto;
+}
+
+.con_memManage_header{ position: relative; padding-top: 25px; padding-bottom: 25px;}
+.memManage_search{ width: 700px; height: 23px; padding-left: 20px}
+.con_memManage_header #search{position: absolute; width : 25px; height: 25px; left: 690px; top: 27px; cursor: pointer;}
+.con_memManage_header #regi{position: absolute;  right: 131px; width : 33px; height: 33px;}
+.memManage_table{width:100%; border-top : 3px solid black;}
+.memManage_id{ width: 100px;}
+.memManage_name{width: 100px;}
+.memManage_nick{width: 100px;}
+.memManage_birth{width: 100px;}
+.memManage_gend{width: 100px;}
+.memManage_email{width: 100px;}
+.memManage_phone{width: 100px;}
+.memManage_addr{width: 100px;}
+th, td{border-bottom: 1px solid rgb(174, 174, 178); padding-top: 20px; padding-bottom: 20px; text-align: center;}
+.memManage_title{text-decoration: none; color: black;}
+
+.memManage_page{ width: 21vw;  margin: 10px auto; display: flex; justify-content: center;}
+.pagination{list-style: none;}
+.pagination li{display : inline-block;  width: 36px; text-align: center;}
+.pagination li a{text-decoration: none; color : black; text-align: center; font-weight: 700;}
+.pagination li:hover{background: black;}
+.pagination li a:hover{color : white;}
+#prev_li{width: 50px;}
+#next_li{width: 50px;}
+.active{background: black;}
+#page_click{color : white;}
+
+
+

@@ -9,7 +9,7 @@
 </head>
 <body>
 <!-- header -->
-<%@ include file="/module/header.jsp" %>
+<%@ include file="/module/header.jsp" %> 
                
         <!-- container 시작 -->
         <div class="container">
@@ -43,7 +43,7 @@
                         <p class="home2__p">익명을 통해 마음껏 자신의 고민을 풀거나<br>
                             궁금사항을 말해 스트레스를 날려보아요. 
                         </p><br><br>
-                        <a class="home1_button" href="#">비밀게시판 바로가기</a>
+                        <a class="home1_button" href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판 바로가기</a>
                     </div>
                     <div class="home2__images2">
                         <img src="../images/책.png" alt="">

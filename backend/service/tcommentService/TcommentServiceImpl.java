@@ -26,9 +26,43 @@ public class TcommentServiceImpl implements ITcommentService {
 	}
 
 	@Override
-	public List<TcommentVO> getAllTcomment(int tboardId) {
+	public List<TcommentVO> getAllTcomment(TcommentVO vo) {
 		
-		return dao.getAllTcomment(tboardId);
+		return dao.getAllTcomment(vo);
 	}
+
+	@Override
+	public TcommentVO getTcomment(int tcomment_id) {
+		
+		return dao.getTcomment(tcomment_id);
+	}
+
+
+	/*
+	 * @Override public int selectChildIsExist(int tcomment_id) {
+	 * 
+	 * return dao.selectChildIsExist(tcomment_id); }
+	 */
+
+	@Override
+	public int updateTcommentIsremove(int tcomment_id) {
+	
+		return dao.updateTcommentIsremove(tcomment_id);
+	}
+
+	@Override
+	public int updateTcomment(TcommentVO vo) {
+		
+		return dao.updateTcomment(vo);
+	}
+
+	@Override
+	public int updateTcommentSecret(int tcomment_id) {
+		
+		return dao.updateTcommentSecret(tcomment_id);
+	}
+
+
+	
 	
 }

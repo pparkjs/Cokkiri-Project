@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import service.tboardService.ITboardService;
 import service.tboardService.TboardServiceImpl;
+import vo.MemberVO;
 
 
 @WebServlet("/tboardBtnInfo.do")
@@ -26,9 +27,13 @@ public class TboardBtnInfo extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		String mem_id = request.getParameter("mem_id");
-		String smem_id=(String)request.getSession().getAttribute("id");
+		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		PrintWriter out = response.getWriter();
-		if(mem_id.equals(smem_id)) {
+		if(smem.getAdmin_auth().equals("Y")) {
+			out.print("{ \"res\":\"ok\"}");
+			return;
+		}
+		if(mem_id.equals(smem.getMem_id())) {
 			out.print("{ \"res\":\"ok\"}");
 		}else {
 			
@@ -36,7 +41,7 @@ public class TboardBtnInfo extends HttpServlet {
 			
 			ITboardService service = TboardServiceImpl.getInstance();
 			Map<String, Object> map = new HashMap<>();
-			map.put("mem_id", smem_id);
+			map.put("mem_id", smem.getMem_id());
 			map.put("tboard_id",tboard_id);
 			int mylist = service.selectMylist(map);
 			int notify = service.selectTnotify(map);

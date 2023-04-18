@@ -12,6 +12,8 @@
  <meta name="viewport" content="width=device-width, initial-scale=1">
  <script src="js/jquery-3.6.4.min.js" type="text/javascript"></script>
  <script src="js/tboardInfo.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery.serializejson.min.js"></script>
+<script type="text/javascript" src="js/tcomment.js"></script>
 <title>Insert title here</title>
 <link rel="stylesheet" href="css/mycss.css">
 
@@ -109,6 +111,7 @@
 }
 
 #chatBtn{
+	border: 1px solid black;
 }
 #rest1{
 	flex: 6;
@@ -121,12 +124,16 @@
 	display: flex;
 	flex-direction: row;
 	padding-bottom: 5px;
-
+	align-items: center;
 }
 #notifyAndMylist button{
 	border-radius: 12px;
-	border: 1px solid black;
+	border: none;
 	background-color: white;
+	width:70px;
+	padding: 10px; 
+	margin: 5px;
+	border:1px solid black;
 }
 #notify{
 	flex: 1;
@@ -153,6 +160,12 @@
 	min-height: 300px;
 	text-align: left;
 }
+#tcommentdiv{
+	margin: 0px auto;
+	width: 800px;
+	min-height: 300px;
+	text-align: left;
+}
 #recommend h2{
 	margin: 40px 0px 40px 20px;
 }
@@ -170,22 +183,22 @@
 	background-position: center;
 }       
 #nbtn{
-	background-image: url(images/tnotify.svg);
+	background-image: url(images/tnotify.png);
 	background-repeat: no-repeat;
 	background-size: 30px 30px;
 }
 #ncbtn{
-	background-image: url(images/tnotifyed.svg);
+	background-image: url(images/tnotifyed.png);
 	background-repeat: no-repeat;
-	background-size: 30px 30px;
+	background-size: 28px 28px;
 }
 #mlbtn{
-	background-image: url(images/mylist2.svg);
+	background-image: url(images/mylist.png);
 	background-repeat: no-repeat;
 	background-size: 25px 25px;
 } 
 #mlcbtn{
-	background-image: url(images/mylistChecked.svg);
+	background-image: url(images/mylistChecked.png);
 	background-repeat: no-repeat;
 	background-size: 25px 25px;
 }
@@ -200,11 +213,10 @@
 #price{
 	font-weight: bolder;
 }
-        
-
+.navbar__mapLogo{
+	text-align: left;
+}
 </style>
-</head>
-<body>
 <%
 List<TImageVO> list = (List<TImageVO>)request.getAttribute("img"); 
 MemberVO memberVO = (MemberVO)request.getAttribute("memberVO");
@@ -212,8 +224,33 @@ TBoardVO boardVO=(TBoardVO)request.getAttribute("board");
 String category = (String)request.getAttribute("category");
 DecimalFormat decimalFormat = new DecimalFormat("###,###");
 String price = decimalFormat.format(boardVO.getTboard_price());
-
+MemberVO smem = (MemberVO)request.getAttribute("smem");
 %>
+<script>
+$(()=>{
+	path = "<%=request.getContextPath()%>"
+	tboard_id = "<%=boardVO.getTboard_id()%>"
+	mem_id="<%=boardVO.getMem_id()%>"
+	smem_id="<%=smem.getMem_id()%>"
+	slideImage();
+	
+	recommendlistRecieve(<%=boardVO.getCategory_id()%>,tboard_id);
+	
+	btnCreate(mem_id,tboard_id);
+	
+	btnChage(tboard_id)
+	
+	time="<%=category%> · "
+	time+=elapsedTime("<%=boardVO.getTboard_cdate()%>");
+	$("#cd").append(time);
+	$("#chatBtn").on("click",function(){
+		location.href=`\${path}/chatRoomCreate.do?tboard_id=\${tboard_id}`
+	})
+	
+})
+</script>
+</head>
+<body>
 
 
     <div class="wrap">
@@ -297,7 +334,11 @@ String price = decimalFormat.format(boardVO.getTboard_price());
 						</div>
 						<hr>
 					</div>
+					<div id="tcommentdiv">
+						<%@ include file="/tcomment/tcommentMain.jsp" %>
+					</div>
 				<div id="recommend" class="box">
+				<hr>
 					<h2>이런 게시글은 어떠세요?</h2>
 				</div>
 		
@@ -309,33 +350,5 @@ String price = decimalFormat.format(boardVO.getTboard_price());
         <%@ include file="/module/footer.jsp" %>
 </div>
 
-
-
-
-
-
-
-
-		
-
-<script>
-$(()=>{
-	path = "<%=request.getContextPath()%>"
-	tboard_id = "<%=boardVO.getTboard_id()%>"
-	mem_id="<%=boardVO.getMem_id()%>"
-	slideImage();
-	recommendlistRecieve(1,null,null);
-	btnCreate(mem_id,tboard_id);
-	
-	btnChage(tboard_id)
-	
-	time="<%=category%> · "+elapsedTime("<%=boardVO.getTboard_cdate()%>");
-	$("#cd").append(time);
-	$("#chatBtn").on("click",function(){
-		location.href=`\${path}/chatroom.do?tboard_id=\${tboard_id}`
-	})
-	
-})
-</script>
 </body>
 </html>

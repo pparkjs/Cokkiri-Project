@@ -51,12 +51,12 @@ public class SboardDAOImpl implements ISboardDAO {
 	}
 
 	@Override
-	public int sboardDelete(SboardVO vo) {
+	public int sboardDelete(int sbId) {
 		SqlSession session = null;
 		int res = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			res = session.delete("sboard.sboardDelete", vo);
+			res = session.delete("sboard.sboardDelete", sbId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -104,7 +104,7 @@ public class SboardDAOImpl implements ISboardDAO {
 		int res = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			res = session.update("sboard.sboardInsert", num);
+			res = session.update("sboard.updateHit", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -121,7 +121,245 @@ public class SboardDAOImpl implements ISboardDAO {
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
 			list = session.selectList("sboard.sboardSelect", sbId);
-			System.out.println(list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public int likeInsert(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.insert("sboard.likeInsert", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int likeCheck(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.selectOne("sboard.likeCheck", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int likeDelete(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.delete("sboard.likeDelete", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int likeByButton(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.selectOne("sboard.likeByButton", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int likeUpdate(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.update("sboard.likeUpdate", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int disLikeInsert(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.insert("sboard.disLikeInsert", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int disLikeUpdate(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.update("sboard.disLikeUpdate", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public SboardVO viewState(SboardVO vo) {
+		SqlSession session = null;
+		SboardVO sbVo = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			sbVo = session.selectOne("sboard.viewState", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return sbVo;
+	}
+
+	@Override
+	public int notifyCheck(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.selectOne("sboard.notifyCheck", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public int sboardNotify(SboardVO vo) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			res = session.insert("sboard.sboardNotify", vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public List<SboardVO> notifyByMore(Map<String, Object> map) {
+  	SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.notifyByMore", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+  }
+
+	public List<SboardVO> selectByMoreMypageLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoreMypageLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageUnlike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageUnlike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMypost(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageMypost", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<SboardVO> selectByMoerMypageMycomment(Map<String, Object> map) {
+		SqlSession session = null;
+		List<SboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("sboard.selectByMoerMypageMycomment", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

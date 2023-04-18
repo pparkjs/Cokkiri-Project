@@ -32,12 +32,12 @@ public class TcommentDAOImpl implements ITcommentDAO{
 	}
 
 	@Override
-	public List<TcommentVO> getAllTcomment(int tboardId) {
+	public List<TcommentVO> getAllTcomment(TcommentVO vo) {
 		SqlSession session = null;
 		List<TcommentVO> list = null;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			list = session.selectList("tcomment.getAllTcomment", tboardId);
+			list = session.selectList("tcomment.getAllTcomment", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -45,5 +45,82 @@ public class TcommentDAOImpl implements ITcommentDAO{
 		}
 		return list;
 	}
+
+	@Override
+	public TcommentVO getTcomment(int tcomment_id) {
+		SqlSession session = null;
+		TcommentVO vo = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			vo = session.selectOne("tcomment.getTcomment", tcomment_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return vo;
+	}
+
+	/*
+	 * @Override public int selectChildIsExist(int tcomment_id) { SqlSession session
+	 * = null; int cnt = 0; try { session =
+	 * MybatisSqlSessionFactory.getSqlSession(); cnt =
+	 * session.selectOne("tcomment.selectChildIsExist",tcomment_id); } catch
+	 * (Exception e) { e.printStackTrace(); }finally { session.close(); } return
+	 * cnt; }
+	 */
+
+	@Override
+	public int updateTcommentIsremove(int tcomment_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("tcomment.updateTcommentIsremove",tcomment_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int updateTcomment(TcommentVO vo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("tcomment.updateTcomment",vo);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
+	@Override
+	public int updateTcommentSecret(int tcomment_id) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("tcomment.updateTcommentSecret", tcomment_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return 0;
+	}
+	
+	
+
+	
+
 	
 }

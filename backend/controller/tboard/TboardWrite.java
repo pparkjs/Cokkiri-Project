@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 
 import service.tboardService.ITboardService;
 import service.tboardService.TboardServiceImpl;
+import vo.MemberVO;
 import vo.TBoardVO;
 import vo.TImageVO;
 
@@ -42,8 +43,7 @@ public class TboardWrite extends HttpServlet {
 	  	String title = request.getParameter("title");	
 	  	String content = request.getParameter("content");	
 	  	//session에서 memid를 꺼냈다고 가정
-	  	HttpSession session = request.getSession();
-	  	String mem_id = (String)session.getAttribute("id");
+	  	MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 	  	
 	  	//tboardVO 생성
 	  	TBoardVO tBoardVO = new TBoardVO();
@@ -52,7 +52,7 @@ public class TboardWrite extends HttpServlet {
 	  	tBoardVO.setTboard_state(state);
 	  	tBoardVO.setTboard_title(title);
 	  	tBoardVO.setTboard_content(content);
-	  	tBoardVO.setMem_id(mem_id);
+	  	tBoardVO.setMem_id(smem.getMem_id());
 	  	
 	  	//tboard먼저 insert
 	  	ITboardService service = TboardServiceImpl.getInstance();
