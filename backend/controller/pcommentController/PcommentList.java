@@ -40,7 +40,6 @@ public class PcommentList extends HttpServlet {
 		
 		IPcommentService service = PcommentServiceImpl.getInstance();
 		IMemberService service2 = MemberServiceImpl.getInstance();
-		MemberVO memVo = new MemberVO();
 		
 		List<PcommentVO> result = service.getAllPcomment(vo);
 		for(int i=0; i<result.size(); i++) {
@@ -48,10 +47,7 @@ public class PcommentList extends HttpServlet {
 			pcommentVO.setMemberVO(service2.selectMemberinfo(pcommentVO.getMem_id()));
 			result.set(i, pcommentVO);
 		}
-		for (PcommentVO pcommentVO : result) {
-			System.out.println(pcommentVO);
-		}
-		System.out.println("pcomment" + result);
+		
 		request.setAttribute("pcommentList", result);
 		request.getRequestDispatcher("/view/pcommentList.jsp").forward(request, response);
 	}
