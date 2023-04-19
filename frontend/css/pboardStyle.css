@@ -2,7 +2,7 @@
 
 
 /* 마이플레이스 메인화면 */
-.header{position: relative; padding-top: 60px; padding-bottom: 10px;}
+.header{position: relative; }
 .pb_type{width : 100px; height:32px; margin-left: 350px; border-radius: 10px; border: 1px solid lightgray;}
 .pb_search{width:280px; height:32px; margin-left: 5px; border: 1px solid lightgray; border-radius: 10px;}
 .pb_searchplace{width:280px; height:32px; margin-bottom:20px;  margin-left: 280px; margin-top: 100px;  border: 1px solid lightgray; border-radius: 10px;}
@@ -11,7 +11,7 @@
     width: 25px;
     height: 25px;
     left: 705px;
-    top: 66px;
+    top: 4px;
     cursor: pointer;}
  
 .pboard{display: grid;

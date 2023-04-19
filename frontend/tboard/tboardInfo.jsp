@@ -224,6 +224,7 @@ String category = (String)request.getAttribute("category");
 DecimalFormat decimalFormat = new DecimalFormat("###,###");
 String price = decimalFormat.format(boardVO.getTboard_price());
 MemberVO smem = (MemberVO)request.getAttribute("smem");
+MemberVO memVo = (MemberVO)session.getAttribute("memberVo");	
 %>
 <script>
 $(()=>{
@@ -253,8 +254,11 @@ $(()=>{
 
 
     <div class="wrap">
-        <%@ include file="/module/header.jsp" %>
-
+        <%if(memVo.getAdmin_auth().equals("N")){ %> 
+		<%@ include file="/module/header.jsp" %>
+		<%}else{ %>
+		 <%@ include file="/module/adminHeader.jsp" %>
+		<%} %>
 		<div id="out">
 			
 				
