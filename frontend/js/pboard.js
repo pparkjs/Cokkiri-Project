@@ -53,7 +53,6 @@
 
 // 게시물 전체 보인 부분의 좋아요 싫어요 처리
 function likeOrUnlikeClick(){
-
 	// 좋아요 버튼클릭
 	$(document).on('click','.lk', function(){
 		boardId = $(this).attr('id') // 클릭한 boardId 가져옴
@@ -219,10 +218,13 @@ function notifyCheckView(mr){
 			$.each(res.datas, function(i, v){
 				title = v.pboard_title.slice(0, 45);
 				date = elapsedTime(v.pboard_cdate);
-								
+				src=`../images/default.PNG`	
+				if(typeof v.pboard_fimg!="undefined"&& v.pboard_fimg!=null&&v.pboard_fimg!=""){
+					src=`${mypath}/Pimage.do?imgno=`+v.pboard_fimg;
+				}			
 			    feed += ` <div class="feedbox">
 			 				<div class="f_img">
-								<img class="feed_img" src="${mypath}/images/카페사진.jpeg">
+								<img class="feed_img" src="${src}">
 							</div>	
 							<div class="feed_main">
 								<div class="innerbox">

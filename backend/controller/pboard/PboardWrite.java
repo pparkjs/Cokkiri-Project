@@ -58,7 +58,7 @@ public class PboardWrite extends HttpServlet {
 		
 		System.out.println("인설트: " + res);
 		
-		String uploadPath = "c:/pimage/file";
+		String uploadPath = "c:/cokkiri/imgServer";
 		
 		File f = new File(uploadPath);		
 		// 폴더 없으면 새로 만들기

@@ -68,9 +68,7 @@ select A.* from
 					  pboard_addr = #{pboard_addr},
 		              pboard_mdate = sysdate 
 		  where pboard_id = #{pboard_id}
-	
-	
-	 pboard_id = #{pboard_id}
+
 </update>
 
 <!-- 게시글 삭제  -->
@@ -78,6 +76,12 @@ select A.* from
 	delete from pboard where pboard_id= #{pboard_id}
 </delete>
 
+<select id="selectPimage" parameterType="int" resultType="pimgVo">
+	select * from pimg where pboard_id=#{pboard_id}
+</select>
+<select id="selectPimageByNo" parameterType="int" resultType="pimgVo">
+	select * from pimg where pimg_id=#{pimg_id}
+</select>
 
 <!-- image  -->
 <!-- 해당 게시판에 이미지 추가 -->
@@ -104,7 +108,7 @@ select A.* from
 
 <!-- 좋아요 버튼 누를시 적용될 쿼리 -->
 	<insert id="likeInsert" parameterType="pboardVo">
-		insert into pboardstate values(pboardstate_seq.nextval, #{mem_id}, #{pboard_id}, #{pbstate_like}, 0)
+		insert into pboardstate values(pboardstate_seq.nextval, #{pbstate_like}, 0,  #{mem_id}, #{pboard_id})
 	</insert>
 
 <!-- 최초 좋아요인지 체크 -->
@@ -137,7 +141,7 @@ select A.* from
 
 <!-- 싫어요 버튼 누를시 적용될 쿼리 -->
 	<insert id="disLikeInsert" parameterType="pboardVo">
-		insert into pboardstate values(pboardstate_seq.nextval, #{mem_id}, #{pboard_id}, 0, 1)
+		insert into pboardstate values(pboardstate_seq.nextval, 0, 1,  #{mem_id}, #{pboard_id})
 	</insert>
 	
 <!-- 좋아요, 싫어요, 조회수, 신고상태 조회 -->

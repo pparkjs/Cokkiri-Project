@@ -32,22 +32,41 @@ public class UpdatePboard extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+	}
+	
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
 		PboardVO pvo = new PboardVO();
 		
-		pvo.setMem_id(request.getParameter("memId"));
+		int pbId = Integer.parseInt( request.getParameter("pboardId"));
+		System.out.println("아이디보드" + pbId);
+		pvo.setPboard_id(pbId);
 		pvo.setPboard_title(request.getParameter("title"));
 		pvo.setPboard_content(request.getParameter("content"));
 		
 		IPboardService service = PboardServiceImpl.getInstance();
+		IPimageService imgsv = PimageServiceImpl.getInstance();
 		
 		
-		int res = service.insertBoard(pvo);
-		System.out.println("insert res = " + res);
+		int res = service.updateBoard(pvo);
+		
+		System.out.println("res : " + res);
+		int fileCnt = imgsv.pimgCount(pbId);
+		System.out.println("fileCnt : " + fileCnt);
+		
+		if(fileCnt > 0) {
+			imgsv.deletePimgByPboardId(pbId); // 삭제
+		}
+		
+		System.out.println("update res = " + res);
 		
 		String uploadPath = "c:/cokkiri/imgServer";
+		
 		
 		File f = new File(uploadPath);
 		
@@ -67,7 +86,7 @@ public class UpdatePboard extends HttpServlet {
 
 				PimageVO pi = new PimageVO();
 
-				pi.setPboard_id(pvo.getPboard_id());
+				pi.setPboard_id(pbId);
 				pi.setPimg_origin_name(fileName);
 
 				// 파일 이름 중복 방지
@@ -84,9 +103,10 @@ public class UpdatePboard extends HttpServlet {
 				plist.add(pi);
 			}
 		}
-				
+		
+		int result = 0;
+		
 		//DB에 insert
-		IPimageService imgsv = PimageServiceImpl.getInstance();
 		
 		for (PimageVO pivo : plist) {
 			System.out.println(pivo);
@@ -108,12 +128,8 @@ public class UpdatePboard extends HttpServlet {
 			}
 		}
 		return fileName;
-	}
-	
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	}	
 
 }
+
+

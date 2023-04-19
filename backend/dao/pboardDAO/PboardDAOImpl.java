@@ -157,7 +157,7 @@ public class PboardDAOImpl implements IPboardDAO {
 		int res = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			res = session.insert("pboard.likeCheck", vo);
+			res = session.selectOne("pboard.likeCheck", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

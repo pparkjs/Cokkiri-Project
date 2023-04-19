@@ -104,6 +104,7 @@ $.retcommentWriteServer = function() {
 		},
 		dataType: 'json',
 		success: function(res) {
+			page=1;
 			$.tcommentListServer(1)
 
 		},

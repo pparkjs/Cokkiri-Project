@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
 
@@ -89,8 +90,7 @@ $(function(){
 	 		readURL(this);
 		})
 		
-		
-		
+				
 		content = "<%=pbList.get(0).getPboard_content()%>"
 		
 		econtent = content.replace(/<br>/g, "\n");
@@ -111,6 +111,7 @@ function fileAdd() {
 	  const url = "<%=request.getContextPath() %>/PimageSrcView.do?imgName=<%=vo.getPrimg_save_name() %>";
 	  imgUrls.push(url); // 배열에 URL 추가
 	}
+	console.log(imgUrls);
 	<%
 	}
 	%>
@@ -136,6 +137,7 @@ function fileAdd() {
 					</div>`;
 		//첨부한img 뒤에 추가
 		$('.rg_images').append(vwrap);
+		console.log(vwrap)
 	   fcnt = fcnt + 1;
 	  
 	   const url = imgUrls[i];
@@ -167,7 +169,7 @@ function fileAdd() {
 
 <body>
 <%@ include file="/module/header.jsp" %>
-
+<h1><%=pbList.get(0).getPboard_id() %></h1>
 	<div class="writebody">
 		<form action="<%=request.getContextPath()%>/UpdatePboard.do?pboardId=<%=pbList.get(0).getPboard_id() %>"
 			method="post" enctype="multipart/form-data">
@@ -184,8 +186,8 @@ function fileAdd() {
 				<div class="img_wrap1">
 					<input type="file" class="file" id="f1" name="img_file1">
 					<div class="file_background">
-						<label for="f1"> <img class="img_up"
-							src="<%=request.getContextPath()%>/images/카메라.png">
+						<label for="f1"> 
+							<img class="img_up"	src="<%=request.getContextPath()%>/images/카메라.png">
 						</label>
 					</div>
 				</div>
@@ -208,16 +210,16 @@ function fileAdd() {
 			</div>
 			<br><br>
 			
- 			<div class="place" > 
-				<div id="clickLatlng" style="border-bottom: 2px solid lightgray;"></div> 
- 					<div class="text" style="margin-top: 30px;">장소 검색 
-<!--  						<input type="text" id="v1" class="pb_searchplace" name=place placeholder=" 주소를 입력해주세요" style="width:300px; height:30px; ">  -->
-					</div>	 
-					<div> 
-						<input type="submit" class="saveBtn" value="위치 저장하기" style= "margin-left: 1020px; margin-bottom: 20px; border-radius:20px; width:100px; height:30px; background: white;">
-					</div> 
-			<div id="map" style="width: 60%; height: 400px; margin-left : 300px;"></div> 
-			</div>	 
+<!--  			<div class="place" >  -->
+<!-- 				<div id="clickLatlng" style="border-bottom: 2px solid lightgray;"></div>  -->
+<!--  					<div class="text" style="margin-top: 30px;">장소 검색  -->
+<!-- <!--  						<input type="text" id="v1" class="pb_searchplace" name=place placeholder=" 주소를 입력해주세요" style="width:300px; height:30px; ">  --> -->
+<!-- 					</div>	  -->
+<!-- 					<div>  -->
+<!-- 						<input type="submit" class="saveBtn" value="위치 저장하기" style= "margin-left: 1020px; margin-bottom: 20px; border-radius:20px; width:100px; height:30px; background: white;"> -->
+<!-- 					</div>  -->
+<!-- 			<div id="map" style="width: 60%; height: 400px; margin-left : 300px;"></div>  -->
+<!-- 			</div>	  -->
 			<br><br>
 			<div class="button">
 				<input type="button" class="upload_btn" value="수정하기">
@@ -229,13 +231,13 @@ function fileAdd() {
 
 
 <script>
- 		var container = document.getElementById('map');
- 		var options = {
- 			center: new kakao.maps.LatLng(36.350710442653956, 127.38473542742071),
- 			level: 5
- 		};
+//  		var container = document.getElementById('map');
+//  		var options = {
+//  			center: new kakao.maps.LatLng(36.350710442653956, 127.38473542742071),
+//  			level: 5
+//  		};
 
- 		var map = new kakao.maps.Map(container, options);
+//  		var map = new kakao.maps.Map(container, options);
 </script>
 
 <%@ include file="/module/footer.jsp" %>
