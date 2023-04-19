@@ -41,7 +41,8 @@ $(function(){
 		 //console.log(pidx);
 		if (vacation == "p_insert") {
 			$('.pformdiv').remove();
-			$("#pdiv").remove();
+// 			$("#pdiv").remove();
+			$('re-pInsert').parent('div').remove();
 			
 			// $('.re-pInsert').parent("div").remove();
 			// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
@@ -53,7 +54,7 @@ $(function(){
 				}
 			%>
    			 pcommentForm = $('<div>').attr("class","pformdiv").append($('<form>').attr('id','repInsert').addClass('re-pInsert').append(
-   				    $('<div>').append(
+   				    $('<div>').attr('class','pret').append(
    				        $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
     				    $('<span>').attr('class', 'rmwriter').text('<%=pmemVO.getMem_nickname()%>'),
    				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'preArea'),
@@ -85,14 +86,16 @@ $(function(){
 			 $(".pformdiv").remove();
 
 		}else if (vacation == "p_delete"){
+			$('.re-pInsert').parent('div').remove();
+			$('.pformdiv').remove();
 			 target = $(this).attr('idx');
 			 target = $("#pctLayer").find("#"+target);
 			 $.pcommentDeleteServer(); 
 			 
 		}else if(vacation == "p_modify"){
-				 $('.pformdiv').remove();
-				 $("#pdiv").remove();
-// 				$(".action[name='p_modify']").next().remove();
+// 				 $('.pformdiv').remove();
+// 				 $("#pdiv").remove();
+ 				$(".action[name='p_modify']").next().remove();
 				pcon = $(this).parent('div').closest('.re-pInsert').find('textarea').val();
 //				var tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
 				
@@ -104,7 +107,7 @@ $(function(){
 				 %>
 		    // 댓글 입력 폼 생성
 		     var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'pmInsert').addClass('re-pInsert').append(
-		        $('<div>').append(
+		        $('<div>').attr('class','pmod').append(
 		            $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
 		            $('<span>').attr('class', 'rmwriter').text('<%=pmemVO.getMem_nickname()%>'),
 		            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'preArea').val(pcon), // 수정할 댓글 내용을 textarea에 세팅
@@ -142,14 +145,18 @@ $(function(){
 </script>
 <style type="text/css">
  #pctLayer{
-	padding: 20px;
+	display: flex;
+  	flex-wrap: nowrap;  
+  	overflow-x: auto; 
+  	padding: 20px;
 } 
 /* 댓글 작성 폼  */
 #pInsert {
- 	width: 100%;
+ 	margin: 0 auto;
+ 	width: 844px;
 	margin-bottom: 10px;
 	display: flex;
-	border-bottom: 2px solid navy; /* 1px 두께의 검은색 선 추가 */
+	border-bottom: 2px solid gray; /* 1px 두께의 검은색 선 추가 */
 	align-items: center;
 	padding-top: 20px;
 	padding-bottom: 20px; 
@@ -166,17 +173,20 @@ $(function(){
 #pInsert #parea {
 	margin-right: 10px;
 	display: inline-block;
-	width: 500px;
+	width: 616px;
 	resize: none;
+	padding-top: 8px;
+    padding-left: 10px;
 }
  #btn {
 	display: inline-block;
 	vertical-align: top;
 	color: black;
 	border: none;
-	background: rgb(199,199,204);
+	background: rgb(209,209,214);
 	font-style: oblique;
-	padding: 10px
+	padding: 10px;
+	cursor: pointer;
 } 
 .a1{
 	padding-left: 10px;
@@ -188,24 +198,28 @@ $(function(){
 	padding-left: 90px;
 }  
 .re-pInsert{ /*댓글 등록, 수정 폼 class 값 */
-	margin-top: 20px;
+	/* margin-top: 20px;
 	width: 100%;
 	margin-bottom: 10px;
-	display: flex;
-}
+	display: flex; */
+} 
 .re-pInsert span{
-	margin-right: 30px;
-	display: inline-block;
-	vertical-align: top; 
-	margin-bottom: 10px;
-	font-weight: bold;
+	margin-left: 7px;
 }
 #repInsert #preArea{
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
+	padding-left: 5px;
+    padding-top: 5px;
 }
+.pret{display : flex; align-items: center; margin-top: 8px;}
+.pret span{margin-left:7px;}
+
+.pmod{display : flex; align-items: center; margin-top: 8px;}
+
 .action{
 	display: inline-block;
 	vertical-align: top;
@@ -215,13 +229,17 @@ $(function(){
 	padding: 0;
 	font-size: 14px;
 	font-weight: bold; 
-	color: navy;
+	color: gray;
+	margin-left: 8px;
 }
 #pmInsert #preArea {
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
+	padding-left: 5px;
+    padding-top: 5px;
 }
 #rp_modify{ /* 수정버튼 */
 	display: inline-block;
@@ -232,30 +250,28 @@ $(function(){
 	padding: 0;
 	font-size: medium;
 	font-weight: bold; 
-	color: navy;
+	font-size: 14px;
 } 
 .dw .writer {
 	vertical-align:  middle; 
 	display : inline-block;
 	height : 40px;
-	margin-bottom:15px;
+	margin-top :-5px;
 	font-size: 14px;
+	margin-left: 5px;
 }
-.rmwriter{
+/* .rmwriter{
 	vertical-align:  middle; 
 	display : inline-block;
 	margin-top :6px;
 	font-size: 14px;
-}
+} */
 .dw .cdate {
 	vertical-align:  middle; 
 	display : inline-block;
 	height : 40px;
 	color:gray;
-	font-size: 9px;
-}
-#rp_insert{
-	margin-top: 8px;
+	font-size: 9px; 
 }
 .dw .content {
 	font-size: 13px;
