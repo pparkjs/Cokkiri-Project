@@ -36,6 +36,11 @@ function onMessage(event) {
 			noReadCnt = "<div class='nread'>1</div>";
 			message_content = message.message_content;
 			ymem_id=message.ymem.mem_id;
+			
+			mem_add=message.ymem.mem_add
+			findex = mem_add.indexOf(" ");
+			mem_add = mem_add.substring(findex+1,mem_add.length)
+			
 			code=""
 			code+="<div class='rooms' id='"+message.room_id+"'>"
 			code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
@@ -134,12 +139,15 @@ function chatListLoad(){
 					if(typeof v.yourMember.mem_image!='undefined' && v.yourMember.mem_image!=null && v.yourMember.mem_image!=""){
 						src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+v.yourMember.mem_id
 					}
-					
+					//대전 오류동 어디어디
+					mem_add=v.yourMember.mem_add
+					findex = mem_add.indexOf(" ");
+					mem_add = mem_add.substring(findex+1,mem_add.length)
 					code=""
 					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
 					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="'+src+'"></div>'
 					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
-					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<span class='pspan'>"+mem_add+" · "+noReadCnt+"</span>"
 					code+="<p>"+v.LastMessageVO.message_content+"</p>"
 					code+="</div></div>"
 					$("#chatList").append(code);
@@ -223,11 +231,15 @@ function chatListReload(){
 					mmem_id=v.myMember.mem_id;
 					message_content = v.LastMessageVO.message_content;
 					
+					mem_add=v.yourMember.mem_add
+					findex = mem_add.indexOf(" ");
+					mem_add = mem_add.substring(findex+1,mem_add.length)
+					
 					code=""
 					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
 					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
 					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
-					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<span class='pspan'>"+mem_add+" · "+noReadCnt+"</span>"
 					code+="<p>"+v.LastMessageVO.message_content+"</p>"
 					code+="</div></div>"
 					$("#chatList").append(code);
@@ -359,7 +371,7 @@ $(()=>{
 					if(i==res.mlist.length-1){
 						datespan.text(elapsedTime(v.message_cdate));
 						$("#typing").empty();
-						$("#typing").append($("<textarea rows='5' cols='80'></textarea>")).append($("<button id='send'>전송</button>"))
+						$("#typing").append($("<textarea rows='5' cols='70'></textarea>")).append($("<button id='send'>전송</button>"))
 					}
 				})
 				
@@ -403,164 +415,6 @@ $(()=>{
 </script>
 <style type="text/css">
 
-#box{
-	display:flex;
-	width: 1000px;
-	height: 700px;
-	margin: 0 auto;
-	border-radius: 12px;
-}
-#chatList{
-	flex: 1;
-	overflow: auto;
-	border: 2px solid gray;
-	border-radius: 12px;
-}
-
-#chatRoom{
-	flex: 2;
-	display: flex;
-	flex-direction: column;
-	border:2px solid gray;
-	border-left: 1px;
-	border-radius: 12px;
-}
-#tboard{
-	flex: 1
-}
-#chat{
-	flex: 3;
-	overflow: auto;
-	padding: 10px;
-}
-#chat::-webkit-scrollbar {
-  display: none;
-}
-#typing{
-	flex: 1
-}
-.profile{
-	width: 50px;
-	height: 50px;
-	border-radius: 100%;
-	margin-top: 5px;
-}
-.rooms{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-top: 1px solid gray;
-	border-bottom: 1px solid gray;
-	height: 70px;
-}
-.rooms:last-child{
-	border-bottom:2px solid gray;
-}
-.chatinfo{
-	flex: 4;
-}
-.chatinfo h3{
-	display: inline-block;
-}
-.profilediv{
-	flex: 1;
-	text-align: center;
-}
-.pspan{
-	font-size: 0.8em;
-	color: gray;
-	margin-left: 20px;
-}
-.timg{
-	flex:0.8;
-	width: 70px;
-	height: 70px;
-	border-radius: 4px;
-	
-}
-.tcon{
-	flex: 4;
-	margin-left: 20px;
-}
-.tdiv{
-	display: flex;
-	padding-left: 20px;
-	justify-content: center;
-	align-items: center;
-	margin-top: 3px;
-}
-.ynick{
-	margin-left: 20px;
-}
-.tboardprofile{
-	display: flex;
-	align-items: center;
-	padding-left: 20px;
-}
-.tboardcon{
-	margin-bottom: 10px;
-}
-.state{
-	background: rgb(48,209,88);
-	border-radius: 4px;
-	margin-right: 10px;
-	padding: 0 15px;
-	color: white;
-}
-.price{
-	font-weight: bold;
-}
-.nread{
-	display:inline-block;
-	background: red;
-	border-radius: 100%;
-	padding: 2px 8px;
-	color: white;
-}
-.ymessage{
-	text-align: left;
-	
-}
-.mmessage{
-	text-align: right;
-	justify-content: flex-end;
-}
-.m{
-	min-height: 62px;
-	display: flex;
-	align-items: center;
-}
-.date{
-	display:inline-block;
-}
-#typing{
-	text-align: center;
-}
-textarea {
-	margin-top: 10px;
-	border: 1px solid gray;
-    resize: none;	
-}
-.chatdate{
-	text-align: center;
-}
-.roomactive{
-	background: rgb(208, 225, 225)
-}
-.mcont{
-	margin: 0 10px;
-	border: 2px solid black;
-	padding: 5px;
-	border-radius: 8px;
-}
-.mdate{
-	font-size: 12px;
-}
-.mread{
-	font-size: 12px;
-	margin: 0 5px;
-	color:  rgb(255, 204,0);
-}
 </style>
 </head>
 <body>

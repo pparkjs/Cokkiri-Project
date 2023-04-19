@@ -1,4 +1,3 @@
-@charset "UTF-8";
 
 #box{
 	display:flex;
@@ -13,7 +12,9 @@
 	border: 2px solid gray;
 	border-radius: 12px;
 }
-
+.rooms:last-child{
+	border-bottom:2px solid gray;
+}
 #chatRoom{
 	flex: 2;
 	display: flex;
@@ -34,7 +35,8 @@
   display: none;
 }
 #typing{
-	flex: 1
+	flex: 1;
+	display: flex;
 }
 .profile{
 	width: 50px;
@@ -50,9 +52,7 @@
 	border-bottom: 1px solid gray;
 	height: 70px;
 }
-.rooms:last-child{
-	border-bottom:2px solid gray;
-}
+
 .chatinfo{
 	flex: 4;
 }
@@ -112,6 +112,7 @@
 	background: red;
 	border-radius: 100%;
 	padding: 2px 8px;
+	color: white;
 }
 .ymessage{
 	text-align: left;
@@ -136,6 +137,8 @@ textarea {
 	margin-top: 10px;
 	border: 1px solid gray;
     resize: none;	
+    margin-left: 30px;
+    margin-bottom: 10px;
 }
 .chatdate{
 	text-align: center;
@@ -156,4 +159,13 @@ textarea {
 	font-size: 12px;
 	margin: 0 5px;
 	color:  rgb(255, 204,0);
+}
+#send{
+	margin: 5px;
+    width: 70px;
+    margin-top: 80px;
+    margin-bottom: 10px;
+    border: none;
+    background: rgb(199,199,204);
+    border-radius: 5px;
 }

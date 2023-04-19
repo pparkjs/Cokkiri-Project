@@ -39,6 +39,6 @@
                         </div>
                     </div>
                 </div>  
-                 <a class="admin_logout" href="#">로그아웃</a>
+                 <a class="admin_logout" href="<%=request.getContextPath()%>/logout.do">로그아웃</a>
             </div>
         </div> 

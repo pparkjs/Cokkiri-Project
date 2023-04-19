@@ -15,6 +15,9 @@
 	border: 2px solid gray;
 	border-radius: 12px;
 }
+textarea {
+	margin-left: 200px;
+}
 </style>
 <script src="js/chatcommon.js" type="text/javascript"></script>
 <script src="js/jquery-3.6.4.min.js" type="text/javascript"></script>
