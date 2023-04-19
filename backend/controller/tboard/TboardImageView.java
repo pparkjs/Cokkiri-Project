@@ -31,6 +31,7 @@ public class TboardImageView extends HttpServlet {
 		Long imgno = Long.parseLong(str);
 		ITboardService service = TboardServiceImpl.getInstance();
 		TImageVO tImageVO = service.selectImage(imgno);
+
 		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
 		
 		File f = new File(uploadPath);

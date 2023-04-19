@@ -1,3 +1,4 @@
+<%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -10,9 +11,8 @@
 		dataType: "json",
 		success: function(res) {
 			add=res.member.mem_add;
-			console.log(res.alarm)
 			$(".area").text(add.split(" ")[0]);
-			if(typeof res.alarm=='undefined' || res.alarm==null | res.alarm==""){
+			if(typeof res.alarm=='undefined' || res.alarm==null || res.alarm==""){
 				acnt=0;
 			}else{
 				acnt=res.alarm.length;
@@ -41,6 +41,16 @@ $(()=>{
 			$(".alarmsidebar").css("display","block")
 		}
 	})
+	
+	<%
+		MemberVO sessionmem = (MemberVO)request.getSession().getAttribute("memberVo");
+	%>
+	mem_img="<%=sessionmem.getMem_image()%>"
+	if(typeof mem_img!='undefined' && mem_img!=null && mem_img!=""&&mem_img!="null"){
+		$(".myimage").attr("src","<%=request.getContextPath()%>/profileImageView.do")
+	}
+	
+	
 })
 	
 </script>
@@ -93,7 +103,7 @@ $(()=>{
                 </div>
                 <ul class="navbar__board">
                     <li class="item">
-                   		<a class="a1" href="#">중고거래</a>
+                   		<a class="a1" href="<%=request.getContextPath()%>/tboard/tboard.jsp">중고거래</a>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
                     <li><a href="<%=request.getContextPath()%>/pboard/pboard.jsp">마이플레이스</a></li>
@@ -136,14 +146,14 @@ $(()=>{
                 <div class="navbar__mymenu">
                     <!-- <input type="checkbox" id="mymenu"> -->
                     <div class="navbar__label" >
-                        <img class="myimage" src="<%=request.getContextPath()%>/images/기본프로필.png" alt="기본프로필.png">
+                        <img class="myimage" src='<%=request.getContextPath()%>/images/기본프로필.png' alt="기본프로필.png">
                    		 <div class="sidebar" >
                        		<ul class="sidebar__list">
-                         	  <li><a href="#">My 프로필</a></li>
-                          	  <li><a href="#">관심목록</a></li>
+                         	  <li><a href="<%=request.getContextPath()%>/mypage/myProfile.jsp">My 프로필</a></li>
+                          	  <li><a href="<%=request.getContextPath()%>/mypage/mypageWishList.jsp">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
-                          	  <li><a href="<%=request.getContextPath()%>/mypage/secretBoard.jsp">내 글 보기</a></li>
-                          	  <li><a href="#">로그아웃</a></li>
+                          	  <li><a href="<%=request.getContextPath()%>/mypage/mypageTboard.jsp">내 글 보기</a></li>
+                          	  <li><a href="<%=request.getContextPath()%>/logout.do">로그아웃</a></li>
                      	    </ul>
                     	</div>
                     </div>

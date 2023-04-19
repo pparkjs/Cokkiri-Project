@@ -51,6 +51,7 @@ nav input {
 	background-color: rgb(242,242,247);
 	font-size: 14px;
 	font-weight: 600;
+	cursor: pointer;
 }
 
 .main{

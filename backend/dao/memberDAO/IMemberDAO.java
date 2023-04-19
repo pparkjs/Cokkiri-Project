@@ -48,4 +48,6 @@ public interface IMemberDAO {
 	// 비밀번호 변경
 	public int updateMemberPw(MemberVO memVo);
 
+	// 회원정보 업데이트
+	public int updatemember(MemberVO memVo);
 }

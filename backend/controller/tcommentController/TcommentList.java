@@ -47,17 +47,10 @@ public class TcommentList extends HttpServlet {
 		for(int i=0; i<result.size(); i++) {
 			TcommentVO tcommentVO = result.get(i);
 			MemberVO mem = service2.selectMemberinfo(tcommentVO.getMem_id());
-			tcommentVO.setMem_nickname(mem.getMem_nickname());
+			tcommentVO.setMemberVO(mem);
 			result.set(i, tcommentVO);
 			
 		}
-		
-		/*
-		 * for(int i=0; i<result.size(); i++) { int cnt =
-		 * service.selectChildIsExist(result.get(i).getTcomment_id()); if(cnt>0) {
-		 * TcommentVO tcommentVO = result.get(i); tcommentVO.setHasparent("y");
-		 * result.set(i, tcommentVO); } System.out.println(result.get(i)); }
-		 */
 
 		request.setAttribute("tcommentList", result);
 		request.getRequestDispatcher("/view/tcommentList.jsp").forward(request, response);

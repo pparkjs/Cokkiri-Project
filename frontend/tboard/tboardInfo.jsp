@@ -300,7 +300,14 @@ $(()=>{
 				<div id="content">
 				      	<div id="userinfo">
 				      		<div id="profilediv">
-				      			<img id="profile" alt="images/기본프로필.png" src="images/기본프로필.png">
+				      			<%String src="";
+				      			if(memberVO.getMem_image()!=null){
+				      				src=request.getContextPath()+"/profileImageView.do?mem_id="+memberVO.getMem_id();
+				      			}else{
+				      				src="images/기본프로필.png";
+				      			}
+				      			%>
+				      			<img id="profile" alt="images/기본프로필.png" src="<%=src%>">
 				      		</div>
 							<div id="addAndNick">
 								<div id = "nick">

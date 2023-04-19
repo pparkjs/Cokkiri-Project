@@ -54,7 +54,7 @@
     text-align:center;
     color:white;
     border-radius:12px;
-    background: rgb(56,102,223);
+    background: rgb(174,174,178);
     padding: 2px;
     margin-right: 8px;
 }
@@ -196,13 +196,21 @@ $((ev)=>{
 		location.href="<%=request.getContextPath()%>/writeForm.do"
 	})
 	
-	$(".btns").on("click",function(){
+	$(".btns").on("click",function(e){
+		flag=false;
+		if($(this).attr("class").indexOf("btnactive")!=-1){
+			flag=true;
+		}
 		$(".btns").removeClass("btnactive");
 		$(this).addClass("btnactive")
 		page=1;
 		category=null;
 		sword=null;
 		boardstate=$(this).text();
+		if(flag){
+			$(".btns").removeClass("btnactive");
+			boardstate=null;
+		}
 		$(".box").empty();
 		if($("#notifycheck").is(":checked") == true){
 			notifyListRecieve(page,category,sword,boardstate)
@@ -211,7 +219,8 @@ $((ev)=>{
 		}
 		$("#default").prop("selected", true);
 	})
-
+	
+	
 	$(document).on("change","#notifycheck",function(){
 		$(".btns").removeClass("btnactive");
 		$(".box").empty();

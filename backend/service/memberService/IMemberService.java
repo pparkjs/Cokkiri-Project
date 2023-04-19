@@ -56,4 +56,6 @@ public interface IMemberService {
 	// 비밀번호 변경
 	public int updateMemberPw(MemberVO memVo);
 
+	// 회원정보 변경
+	public int updatemember(MemberVO memVo);
 }

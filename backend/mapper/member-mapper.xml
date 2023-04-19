@@ -67,9 +67,11 @@
     <!-- 페이지별 회원리스트 검색포함 -->
 	<select id="listByPage" parameterType="map" resultType="memberVo">
 		 select A.* from 
-	     (select rownum as rnum , B.* from
-	        ( select * from member
-	        <include refid="dynamicCondition"/>  <!-- 태그로 실행되는데 해당 조건 만족해야 실행함-->
+	     (select rownum as rnum , B.* from 
+	        ( select * from member where mem_name != '관리자'
+	        <if test="stext != ''"><!-- 태그로 실행되는데 해당 조건 만족해야 실행함-->
+    			and mem_nickname like '%'||#{stext}||'%'
+    		</if>
 	           order by mem_name) B
 	    <!-- 캐릭터data이거 안주면 < 꺽세 기호가 태그로 인식됨 우리는 데이터로 줄거다 -->
 	      <![CDATA[   
@@ -81,5 +83,17 @@
 	<update id="updateMemberPw" parameterType="memberVo">
 		update member set mem_pw = SHA256.ENCRYPT(#{mem_pw}) where mem_id=#{mem_id}
 	</update>
-
+	<update id="updatemember" parameterType="memberVo">
+		update member set 
+				mem_name = #{mem_name},
+				mem_nickname = #{mem_nickname},
+				mem_add = #{mem_add}
+			<if test= "mem_tel != null and mem_name != ''">
+				,mem_tel = #{mem_tel}
+			</if>
+			<if test= "mem_image != null and mem_image != ''">
+				,mem_image = #{mem_image}
+			</if>
+			where mem_id=#{mem_id}
+	</update>
 </mapper>

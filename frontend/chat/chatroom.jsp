@@ -91,7 +91,7 @@ function onMessage(event) {
 			chat.append(message);
 			$("#chat").scrollTop($("#chat")[0].scrollHeight);
 		}else{
-			img="<img class='profile' alt='../images/기본프로필.png' src='../images/기본프로필.png'>"
+			img="<img class='profile' alt='../images/기본프로필.png' src='"+src+"'>"
 
 			message = $("<div class='m ymessage' id='"+message.message_id+"'>"+img+"<span class='mcont'> "+message.message+"</span><span class='mdate'>"+curtime+"</span></div> ")
 			chat.append(message);
@@ -128,10 +128,14 @@ function chatListLoad(){
 					}
 					mmem_id=v.myMember.mem_id;
 					message_content = v.LastMessageVO.message_content;
+					src='../images/기본프로필.png'
+					if(typeof v.yourMember.mem_image!='undefined' && v.yourMember.mem_image!=null && v.yourMember.mem_image!=""){
+						src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+v.yourMember.mem_id
+					}
 					
 					code=""
 					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
-					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
+					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="'+src+'"></div>'
 					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
 					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
 					code+="<p>"+v.LastMessageVO.message_content+"</p>"
@@ -294,13 +298,25 @@ $(()=>{
 		ynick=$(this).find(".chatinfo h3").text()
 		$.ajax({
 
+			
 			url: "<%=request.getContextPath()%>/chatmessage.do",
 			type: "post",
 			data:{"room_id":room_id,"yournick":ynick},
 			dataType: "json",
 			success: function(res) {
-				tcode='<div class="tboardprofile"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"><h4 class="ynick">'+ynick+'</h4></div>'
-				tcode+=`<hr><div class="tdiv"><img class="timg" src='\${path}/images/TboardImageView.do?imgno=\${res.fTImageVO.timg_id}'>`
+				
+				src='../images/기본프로필.png'
+				if(typeof res.yourMember.mem_image!='undefined' && res.yourMember.mem_image!=null && res.yourMember.mem_image!=""){
+					src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+res.yourMember.mem_id
+				}
+				
+				tsrc='../images/default.PNG'
+				if(typeof res.fTImageVO!='undefined' && res.fTImageVO!=null && res.fTImageVO!=""){
+					tsrc = "<%=request.getContextPath()%>/images/TboardImageView.do?imgno="+res.fTImageVO.timg_id
+				}
+				
+				tcode='<div class="tboardprofile"><img class="profile" alt="../images/기본프로필.png" src="'+src+'"><h4 class="ynick">'+ynick+'</h4></div>'
+				tcode+=`<hr><div class="tdiv"><img class="timg" src='\${tsrc}'>`
 				tcode+="<div class='tcon'><h3 class='tboardcon'>"+res.tBoardVO.tboard_title+"</h3><span class='state'>"+res.tBoardVO.tboard_state+"</span><span class='price'>"+res.tBoardVO.tboard_price+" 원</span></div></div>"
 				$("#tboard").html(tcode);
 				
@@ -325,7 +341,7 @@ $(()=>{
 					message_content=v.message_content.replace(/\n/g,"<br>")
 					if(v.mem_id==ymem_id){
 						whosmessage="ymessage"
-						img="<img class='profile' alt=''../images/기본프로필.png' src='../images/기본프로필.png'>"
+						img="<img class='profile' alt=''../images/기본프로필.png' src='"+src+"'>"
 							message = $("<div class='m "+whosmessage+"' id='"+v.message_id+"'>"+img+isread+"<span class='mcont'> "+message_content +"</span><span class='mdate'>"+messageDate+"</span></div> ")
 					}else{
 						whosmessage="mmessage"
@@ -497,6 +513,7 @@ $(()=>{
 	background: red;
 	border-radius: 100%;
 	padding: 2px 8px;
+	color: white;
 }
 .ymessage{
 	text-align: left;

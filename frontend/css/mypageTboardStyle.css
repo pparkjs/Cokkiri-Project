@@ -1,0 +1,100 @@
+@charset "UTF-8";
+.mypageTboard {
+	width : 800px;
+	margin : 50px auto;
+	
+}
+.td_list {
+	display: flex;
+	justify-content: space-between;
+	width : 800px;
+	
+}
+.tb_img img{
+	display : inline-block;
+	width : 250px;
+	height: 250px;
+}
+
+.tb_content {
+	width : 525px;
+	position: relative;
+	height: 250px
+}
+.title p{
+	font-size: 25px;
+    font-weight: 600;
+    color: rgb(28,28,50);
+}
+.add p {
+	font-weight: 400;
+    font-size: 18px;
+    color: rgb(142,142,147);
+}
+.status{
+	position: relative;
+    display: flex;
+    margin-top: 20px;
+	
+}
+.status input{
+	padding: 5px;
+    width: 100px;
+    background-color: rgb(56,102,233);
+    text-align: center;
+    border-radius: 1000px;
+    color: white;
+    font-size: 16px;
+    font-weight: 400;
+	border: none;
+	cursor: pointer;
+}
+.status .price{
+	position: absolute;
+    top: 0px;
+    left: 112px;
+    font-size: 20px;
+    font-weight: 600;
+	
+}
+.tb_content .tb_content_bottom {
+	position: absolute;
+    bottom: -4px;
+    display: flex;
+    justify-content: flex-end;
+    right: 0;
+}
+
+.tb_content_bottom img {
+	width : 30px;
+	height: 30px;
+}
+
+.tb_content_bottom p {
+	font-size: 16px;
+	padding: 4px;
+}
+.hit {
+	display: flex;
+	position : relative;
+	margin-right: 20px;
+}
+
+.wish {
+	display: flex;
+	position : relative;
+}
+.hrborder {
+	display: block;
+    margin: 25px 0;
+    border: 1px solid rgb(229,229,234);
+}
+.moreContainer {
+	display : flex; 
+	justify-content: center;
+	margin-top : 50px;
+	margin-bottom : 50px;
+}
+#more img{
+	width : 60px; height : 30px; margin-bottom: 30px; cursor: pointer;
+}

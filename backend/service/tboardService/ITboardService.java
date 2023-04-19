@@ -8,6 +8,7 @@ import vo.MemberVO;
 import vo.TBoardAndAttVO;
 import vo.TBoardVO;
 import vo.TImageVO;
+import vo.MypageTboardVO;
 
 public interface ITboardService {
 
@@ -59,5 +60,21 @@ public interface ITboardService {
 	
 	public List<TBoardVO> selectTboardRecommend(Map<String, Object> map);
 	
+	// 찜한 목록 불러오기
+	public List<MypageTboardVO> selectMyWishList(String mem_id, int more);
+	
+	// 사용자가 올린 게시글만 보기
+	public List<MypageTboardVO> selectMyTboardList(String mem_id, int more);
+	
+	// 판매완료 날짜 업데이트
+	public int updateTboardCompleteDate(int tboard_id);
+	
+	// 판매완료 취소
+	public int updateTboardCompleteDateNull(int tboard_id);
+	
+	// 게시글 번호로 판매상태 찾기
+	public String selectTboardState(int tboard_id);
+
 	public int selectTnotifys(Long tboard_id);
+
 }

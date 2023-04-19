@@ -156,4 +156,9 @@ public class MemberServiceImpl implements IMemberService {
 		return dao.updateMemberPw(memVo);
 	}
 
+	@Override
+	public int updatemember(MemberVO memVo) {
+		return dao.updatemember(memVo);
+	}
+
 }

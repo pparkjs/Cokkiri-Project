@@ -9,9 +9,8 @@ public class TcommentVO {
 	String tcomment_cdate;
 	String tcomment_mdate;
 	String tcomment_rdate;
-//	String tcomment_secret;
 	String tcomment_isremove;
-	String mem_nickname;
+	MemberVO memberVO;
 	int level;
 	int startTcomment;
 	int endTcomment;
@@ -88,14 +87,15 @@ public class TcommentVO {
 //	public void setTcomment_secret(String tcomment_secret) {
 //		this.tcomment_secret = tcomment_secret;
 //	}
-	public String getMem_nickname() {
-		return mem_nickname;
-	}
-	public void setMem_nickname(String mem_nickname) {
-		this.mem_nickname = mem_nickname;
-	}
+	
 	public String getTcomment_isremove() {
 		return tcomment_isremove;
+	}
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
 	}
 	public void setTcomment_isremove(String tcomment_isremove) {
 		this.tcomment_isremove = tcomment_isremove;

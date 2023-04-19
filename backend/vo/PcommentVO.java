@@ -1,21 +1,27 @@
 package vo;
 
 public class PcommentVO {
-	int pcomment_id;
-	int pcomment_pid;
-	int pboard_id;
-	String mem_id;
-	String pcomment_content;
-	String pcomment_cdate  ;
-	String pcomment_mdate  ;
-	String pcomment_rdate  ;
-	String pcomment_isremove;
-	String pcomment_secret;
-	int level;
-	int startPcomment;
-	int endPcomment;
+	private int pcomment_id;
+	private int pcomment_pid = 0;
+	private int pboard_id;
+	private String mem_id;
+	private String pcomment_content;
+	private String pcomment_cdate;
+	private String pcomment_mdate;
+	private String pcomment_rdate;
+	private String pcomment_isremove;
+	private MemberVO memberVO;
+	private int level;
+	private int startPcomment;
+	private int endPcomment;
 	
 	
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
 	public int getLevel() {
 		return level;
 	}
@@ -88,12 +94,7 @@ public class PcommentVO {
 	public void setPcomment_isremove(String pcomment_isremove) {
 		this.pcomment_isremove = pcomment_isremove;
 	}
-	public String getPcomment_secret() {
-		return pcomment_secret;
-	}
-	public void setPcomment_secret(String pcomment_secret) {
-		this.pcomment_secret = pcomment_secret;
-	}
+
 	
 	
 }

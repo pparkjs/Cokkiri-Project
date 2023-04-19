@@ -90,10 +90,10 @@ public class TboardMain extends HttpServlet {
 			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
 			if(boardVO.getTboard_title().getBytes().length>18) {
 				String title=boardVO.getTboard_title();
-				if(title.length()>16) {
-					boardVO.setTboard_title(title.substring(0, 16)+"..");
-				}else if(title.length()>10){			
-					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/3)+"..");
+				if(title.replace(" ", "").length()>16) {
+					boardVO.setTboard_title(title.substring(0,title.length()-title.length()/3)+"..");
+				}else if(title.replace(" ", "").length()>10){			
+					boardVO.setTboard_title(title.substring(0, title.length()-title.length()/6)+"..");
 				}
 				
 			}

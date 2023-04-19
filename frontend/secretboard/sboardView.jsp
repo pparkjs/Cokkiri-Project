@@ -16,9 +16,11 @@
 <link rel="stylesheet" href="<%=request.getContextPath()%>/css/sboardStyle.css">
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/sbView.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/js/scomment.js"></script>
 
 <script>
 boardId = `<%=sbList.get(0).getSboard_id() %>`;
+boardWriterId = `<%=sbList.get(0).getMem_id()%>`;
 memId = `<%=memVo.getMem_id()%>`;
 mypath = `<%=request.getContextPath() %>`;
 $(function(){
@@ -128,7 +130,10 @@ function imageView(){
 		</div>
 		<%} %>
 	</div>
-
+	
+    <div class="scommentdiv">
+    	<%@ include file="/secretboard/scommentMain.jsp" %>
+    </div>
 </div>
 	
  <%@ include file="/module/footer.jsp" %>		

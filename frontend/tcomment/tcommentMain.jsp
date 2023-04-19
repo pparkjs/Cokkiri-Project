@@ -1,3 +1,5 @@
+<%@page import="vo.MemberVO"%>
+<%@page import="java.lang.reflect.Member"%>
 <%@page import="vo.TcommentVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -41,14 +43,20 @@ $(document).on('click', '#rt_modify', function(e){
 			 tidx = $(this).attr('idx');
 			if (vacation == "t_insert") {
 				
-				 $('.re-tInsert').parent("div").remove();
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
 				// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
-				
-<%--         		<%= id %>  --%>
+				 <%
+					MemberVO smemVO=(MemberVO)request.getSession().getAttribute("memberVo");
+					String dsrc="기본프로필.png";
+					if(smemVO.getMem_image()!=null){
+						dsrc=request.getContextPath()+"/profileImageView.do";
+					}
+				%>
        			 tcommentForm = $('<div>').attr("class","formdiv").append($('<form>').attr('id','retInsert').addClass('re-tInsert').append(
-       				    $('<div>').append(
-       				        $('<img>').attr('src', 'images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
-        				    $('<span>').attr('class', 'writer').text('writer').after('&nbsp;&nbsp;'),
+       				    $('<div>').attr('class', 'tin').append(
+       				        $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
+        				    $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
        				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').attr('class', 'tf'),
        				        $('<input>').attr('type', 'button').attr('id', 'rt_insert').attr('name', 'rt_insert').attr('idx', tidx).addClass('action').val('답글달기')
         				   
@@ -67,7 +75,8 @@ $(document).on('click', '#rt_modify', function(e){
  				 // 답글이 달리면 이 번호는 부모 댓글 아이디로 가야하고 자식 댓글 아이디는 시퀀스로 생성된 새로운 아이디
 				 pcomment=$("#tctLayer").find("#"+tcommentPid).attr("id")
  				 pcommentLevel=$("#tctLayer").find("#"+tcommentPid).attr("class");
- 				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
+ 				 console.log(pcommentLevel);
+				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
 				 console.log(pcomment, pcommentLevel, tcommentPid)
 				 
 				 $.retcommentWriteServer();
@@ -76,17 +85,28 @@ $(document).on('click', '#rt_modify', function(e){
 			}else if (vacation == "t_delete"){
 				 target = $(this).attr('idx');
 				 target = $("#tctLayer").find("#"+target);
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
 				  $.tcommentDeleteServer(); 
 				 
 			}else if(vacation == "t_modify"){
-				$(".action[name='t_modify']").next().remove();
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
  				tcon = $(this).parent('div').closest('.re-tInsert').find('textarea').val();
 			   /*  nickname = $(this).parent('div').closest('#${res.tcomment_id}').attr('nick'); */
 			    // 댓글 입력 폼 생성
+			    
+			    
+ 				<%
+					dsrc="기본프로필.png";
+					if(smemVO.getMem_image()!=null){
+						dsrc=request.getContextPath()+"/profileImageView.do";
+					}
+				%>
 			    var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-tInsert').append(
-			        $('<div>').append(
-			            $('<img>').attr('src', 'images/기본프로필.png').attr('alt', '기본프로필.png').attr('width', '30px').attr('height', '30px').after('&nbsp;&nbsp;'),
-			            $('<span>').attr('class', 'writer').text('nickname').after('&nbsp;&nbsp;'),
+			        $('<div>').attr('class', 'tmod').append(
+			            $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
+			            $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
 			            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').val(tcon), // 수정할 댓글 내용을 textarea에 세팅
 			            $('<input>').attr('type', 'button').attr('id', 'rt_modify').attr('name', 'rt_modify').attr('idx', tidx).addClass('action').val('수정하기') // 수정하기 버튼 생성
 			        )
@@ -175,20 +195,20 @@ $(document).on('click', '#rt_modify', function(e){
 	width: 100%;
 	margin-bottom: 10px;
 	display: flex;
-	border-bottom: 2px solid navy; 
 }
 .re-tInsert span{
-	margin-right: 30px;
 	display: inline-block;
 	vertical-align: top; 
 	margin-bottom: 10px;
 	font-weight: bold;
+	margin-left: 7px;
 }
 #retInsert #reArea{
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
 }
 .action{
 	display: inline-block;
@@ -200,30 +220,27 @@ $(document).on('click', '#rt_modify', function(e){
 	font-size: 14px;
 	font-weight: bold; 
 	color: gray;
-	
+	margin-left: 8px
 }
 #mInsert #reArea {
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
 }
-#rt_modify{ /* 수정버튼 */
-	display: inline-block;
-	vertical-align: top;
-	background-color: transparent; 
-	border: none; 
-	cursor: pointer; 
-	padding: 0;
-	font-size: medium;
-	font-weight: bold; 
-	color: navy;
-} 
+
 .dw .writer {
 	vertical-align:  middle; 
 	display : inline-block;
 	height : 40px;
-	margin-top :-5px;
+	margin-bottom:15px;
+	font-size: 14px;
+}
+.rmwriter{
+	vertical-align:  middle; 
+	display : inline-block;
+	margin-top :6px;
 	font-size: 14px;
 }
 .dw .cdate {
@@ -234,6 +251,7 @@ $(document).on('click', '#rt_modify', function(e){
 	font-size: 9px;
 	
 }
+
 .dw .content {
 	font-size: 13px;
 	padding-top: 10px;
@@ -254,6 +272,13 @@ $(document).on('click', '#rt_modify', function(e){
 #tctLayer{
 	padding: 20px;
 }
+.mrprofile{
+	width: 30px;
+	height: 30px;
+	border-radius: 100%;
+}
+.tin{display:flex; align-items: center; margin-top: 8px;}
+.tmod{display:flex; align-items: center; margin-top: 8px;}
 </style>
 </head>	
 <body>
