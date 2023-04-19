@@ -11,6 +11,8 @@ import com.google.gson.Gson;
 
 import service.pcommenService.IPcommentService;
 import service.pcommenService.PcommentServiceImpl;
+import vo.MemberVO;
+import vo.PcommentVO;
 
 
 @WebServlet("/pcommentDelete.do")
@@ -29,8 +31,13 @@ public class PcommentDelete extends HttpServlet {
 		int pcommentId = Integer.parseInt(request.getParameter("pcommentId"));
 		
 		IPcommentService service = PcommentServiceImpl.getInstance();
+		MemberVO memberVO = (MemberVO)request.getSession().getAttribute("memberVo");
+		PcommentVO pcomment = service.getPcomment(pcommentId);
 		
-		int result = service.updatePcommentIsremove(pcommentId);
+		int result=0;
+		if(memberVO.getMem_id().equals(pcomment.getMem_id())) {
+			result = service.updatePcommentIsremove(pcommentId);
+		}
 		
 		Gson gson = new Gson();
 		

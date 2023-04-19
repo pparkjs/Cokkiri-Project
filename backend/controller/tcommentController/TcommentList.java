@@ -51,8 +51,6 @@ public class TcommentList extends HttpServlet {
 			result.set(i, tcommentVO);
 			
 		}
-		
-
 
 		request.setAttribute("tcommentList", result);
 		request.getRequestDispatcher("/view/tcommentList.jsp").forward(request, response);
