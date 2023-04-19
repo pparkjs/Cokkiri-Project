@@ -17,68 +17,168 @@
     </sql>
 
 
+<!-- 더보기로 4개씩 가져오기 -->
 <select id="selectByPage" parameterType="map" resultType="pboardVo">
 select A.* from
    		  (select rownum as rnum, B.* from
-              (select * from pboard
-              <include refid="dynamicCondition"/> 
+              (select E.* from(select C.*, 
+					(select nvl(sum(pbstate_like),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_like  ,
+					(select nvl(sum(pbstate_unlike),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_unlike,
+					nvl((select pbstate_like from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0) me_like,
+					nvl((select pbstate_unlike from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+					(select mem_add  from member D where D.mem_id = C.mem_id) region
+						from pboard C
+				  <include refid="dynamicCondition"/>  ) E
+				where region like '%'||#{region}||'%'
                 order by pboard_id desc) B
       <![CDATA[    
             where rownum <= 6+(4*#{more})) A 
         where A.rnum >= 1+(4*#{more})
-      ]]>  
-		           
-</select>
-
-<!-- board -->
-<select id="selectById" resultType="pboardVo">
-	select from pboard where mem_id = #{mem_id}
+      ]]>  		           
 </select>
 
 
+<!-- 해당 게시글 출력 -->
+	<select id="pboardSelect" parameterType="String" resultType="pboardVo">
+		select A.*, B.pimg_id, B.pimg_origin_name, B.primg_save_name 
+	      from pimg B
+	      right outer join pboard A on(A.pboard_id = B.pboard_id)
+	      where A.pboard_id = #{pboard_id}
+	</select>
+
+
+<!-- pboard 게시글 등록-->
 <insert id="insertBoard" parameterType="pboardVo">
  	<selectKey resultType="int" keyProperty="pboard_id" order="BEFORE">
  		select pboard_seq.nextval from dual
  	</selectKey>						
  	insert into pboard 
-		values(#{pboard_id},
-				#{mem_id},
-				#{pboard_title},
-				#{pboard_content},
-				0, 
-				sysdate, null, null, null, 0, 0)
+			values(#{pboard_id},
+				   #{mem_id},
+				   #{pboard_title},
+				   #{pboard_content},
+				   0, 
+				   sysdate, null, null, null)
 </insert>
 
-
+<!-- 게시글 업데이트 -->
 <update id="updateBoard" parameterType="pboardVo">
 	update pboard set pboard_title = #{pboard_title}, 
 					  pboard_content = #{pboard_content},
+					  pboard_addr = #{pboard_addr},
 		              pboard_mdate = sysdate 
 		  where pboard_id = #{pboard_id}
 	
 	
 	 pboard_id = #{pboard_id}
 </update>
- 
+
+<!-- 게시글 삭제  -->
 <delete id="deleteBoard" parameterType="int">
 	delete from pboard where pboard_id= #{pboard_id}
 </delete>
 
 
 <!-- image  -->
+<!-- 해당 게시판에 이미지 추가 -->
 <insert id="insertPimage" parameterType="pimgVo">
 	insert into pimg
 		     values(pimage_seq.nextval, #{pboard_id}, #{pimg_origin_name},
 		            #{primg_save_name})
 </insert> 
  
+<!-- 해당 게시판 이미지 개수 구하기 -->
+	<select id="pimgCount" parameterType="int" resultType="int">
+		select count(*) from pimg where pboard_id = #{pboard_id}
+	</select>
+
+<!-- 게시판 번호 해당하는 이미지 삭제 -->
+	<delete id="deletePimgByPboardId" parameterType="int">
+		delete from pimg where pboard_id = #{pboard_id}
+	</delete>  	
 	
-<delete id="deletePimgByPboardId" parameterType="int">
-	delete from pimg where pboard_id = #{pboard_id}
-</delete>  	
+<!-- 조회수 업데이트 -->
+	<update id="updateHit" parameterType="int">
+		update pboard set pboard_hit = pboard_hit + 1 where pboard_id = #{pboard_id}
+	</update>	
+
+<!-- 좋아요 버튼 누를시 적용될 쿼리 -->
+	<insert id="likeInsert" parameterType="pboardVo">
+		insert into pboardstate values(pboardstate_seq.nextval, #{mem_id}, #{pboard_id}, #{pbstate_like}, 0)
+	</insert>
+
+<!-- 최초 좋아요인지 체크 -->
+	<select id="likeCheck" parameterType="pboardVo" resultType="int">
+		select count(*) from pboardstate where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+	</select>
+	
+<!-- 좋아요 중복 체크 -->
+	<select id="likeByButton" parameterType="pboardVo" resultType="int">
+		select count(*) from pboardstate where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+          and pbstate_like = #{pbstate_like}
+	</select>
+	
+<!-- 좋아요 업데이트 -->
+	<update id="likeUpdate" parameterType="pboardVo">
+		update pboardstate set pbstate_like = 1, pbstate_unlike = 0 
+		  where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+	</update>	
+	
+<!-- 좋아요 싫어요 취소 -->
+	<delete id="likeDelete" parameterType="pboardVo">
+		delete from pboardstate where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+	</delete>
+
+<!-- 싫어요 업데이트 -->
+	<update id="disLikeUpdate" parameterType="pboardVo">
+		update pboardstate set pbstate_like = 0, pbstate_unlike = 1 
+		  where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+	</update>
+
+<!-- 싫어요 버튼 누를시 적용될 쿼리 -->
+	<insert id="disLikeInsert" parameterType="pboardVo">
+		insert into pboardstate values(pboardstate_seq.nextval, #{mem_id}, #{pboard_id}, 0, 1)
+	</insert>
+	
+<!-- 좋아요, 싫어요, 조회수, 신고상태 조회 -->
+	<select id="viewState" parameterType="pboardVo" resultType="pboardVo">
+		select a.pboard_id,
+		       a.pboard_hit,
+		       (select nvl(sum(pbstate_like),0) from pboardstate b where b.pboard_id=a.pboard_id) pbstate_like,
+		       (select nvl(sum(pbstate_unlike),0) from pboardstate b where b.pboard_id=a.pboard_id) pbstate_unlike,
+		       nvl((select pbstate_like from pboardstate b where b.pboard_id=a.pboard_id and b.mem_id=#{mem_id}),0) me_like,
+		       nvl((select pbstate_unlike from pboardstate b where b.pboard_id=a.pboard_id and b.mem_id=#{mem_id}),0 ) me_unlike,
+		       (select count(*) from pnotify b where b.pboard_id=a.pboard_id and b.mem_id=#{mem_id} ) me_notify
+		  from pboard a
+		  where a.pboard_id = #{pboard_id}
+	</select>
+	
+<!-- 신고하기 중복체크 -->
+	<select id="notifyCheck" parameterType="pboardVo" resultType="int">
+		select count(*) from pnotify where pboard_id = #{pboard_id} and mem_id = #{mem_id}
+	</select>
+	
+<!-- 신고하기 -->
+	<insert id="pboardNotify" parameterType="pboardVo" >
+		insert into pnotify values(#{mem_id}, #{pboard_id}, sysdate)
+	</insert>	
+	
+<!-- 신고 테이블 더보기로 6개씩 가져오기 -->
+	<select id="notifyByMore" parameterType="map" resultType="pboardVo">
+		select A.* from
+	   		  (select rownum as rnum, B.* from
+	              (select E.* from(select C.*, 
+	                    (select count(*) from pnotify D where C.pboard_id=D.pboard_id ) sum_notify,
+	                    (select mem_add from member D where D.mem_id = C.mem_id) region
+						   from pboard C 
+						<include refid="dynamicCondition"/>) E
+					where  region like '%'||#{region}||'%' and sum_notify >= 1 
+	                order by pboard_id desc) B 
+      <![CDATA[    
+          where rownum <= 12+(12*#{more})) A 
+        where A.rnum >= 1+(12*#{more}) 
+      ]]>  
+	</select>	
 	
 	
-<!-- <insert id="saveLocation" parameterType="map"> -->
-<!-- 	insert into pboard (lat, lng) values (#{lat}, #{lng}) -->
-<!-- </insert>	 -->
 </mapper>
