@@ -1,0 +1,149 @@
+@charset "UTF-8";
+
+
+#scLayer{
+	display: flex;
+  	flex-wrap: nowrap; 
+  	overflow-x: auto; 
+}
+/* 댓글 작성 폼  */
+#sInsert {
+	margin: 0 auto;
+ 	width: 844px;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid gray; /* 1px 두께의 검은색 선 추가 */
+	align-items: center;
+	padding-top: 20px;
+	padding-bottom: 20px; 
+}
+#sInsert span {
+	margin-left:20px; 
+
+}
+#sInsert span { 
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; /* 텍스트와 정렬을 맞추기 위해 상단 정렬 */
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+/* 댓글 등록 폼 */
+#sInsert #sarea {
+	margin-right: 10px;
+	display: inline-block;
+	width: 616px;
+	resize: none;
+	padding-top: 8px;
+    padding-left: 10px;
+}
+ #btn {
+	display: inline-block;
+	vertical-align: top;
+	color: black;
+	border: none;
+	background: rgb(209,209,214);
+	font-style: oblique;
+	padding: 10px;
+	cursor: pointer;
+	
+} 
+.a1{
+	padding-left: 10px;
+}
+.a2{
+    padding-left: 50px; 
+}
+.a3{
+	padding-left: 90px;
+} 
+.re-sInsert{ /*댓글 등록, 수정 폼 class 값 */
+}
+.re-sInsert span{
+
+	margin-left: 7px;
+}
+#retInsert #reArea{
+	margin-right: 10px;
+	width: 500px;
+	height: 42px;
+	resize: none;
+	margin-left: 7px;
+	padding-left: 5px;
+    padding-top: 5px;
+}
+
+.sret{display : flex; align-items: center; margin-top: 8px;}
+.sret span{margin-left:7px;}
+
+.smod{display : flex; align-items: center; margin-top: 8px;}
+.mod span{margin-left:7px;}
+.action{
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: 14px;
+	font-weight: bold; 
+	color: gray;
+	margin-left: 8px;
+}
+#mInsert #reArea {
+	margin-right: 10px;
+	width: 500px;
+	height: 42px;
+	resize: none;
+	margin-left: 7px;
+	padding-left: 5px;
+    padding-top: 5px;
+	
+}
+#rs_modify{ /* 수정버튼 */
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	font-size: 14px;
+} 
+.dw .writer {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	margin-top :-5px;
+	font-size: 14px;
+	margin-left: 5px;
+}
+.dw .cdate {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	color:gray;
+	font-size: 9px;
+	
+}
+.dw .content {
+	font-size: 13px;
+	padding-top: 10px;
+	
+}
+.dw{
+	padding-top:10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgb(174,174,178);
+}
+.dw:last-child{
+	border:none;
+}
+#moreList{
+	display: block;
+	margin: 0 auto;
+}
+#tctLayer{
+	padding: 20px;
+}
