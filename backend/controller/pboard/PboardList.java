@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import service.pboardService.IPboardService;
 import service.pboardService.PboardServiceImpl;
+import vo.MemberVO;
 import vo.PboardVO;
 
 
@@ -19,22 +21,46 @@ import vo.PboardVO;
 public class PboardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int more = Integer.parseInt(request.getParameter("more"));
-		System.out.println(more);
-		String type = request.getParameter("pb_type");
-		String text = request.getParameter("pb_search");
+		
+		String vtype = request.getParameter("pb_type");
+		String vtext = request.getParameter("pb_search");
+		String region = request.getParameter("region");
 		
 		IPboardService service = PboardServiceImpl.getInstance();
-		 
-		Map<String, Object> morePage = service.morePage(more, type, text);
-		List<PboardVO> list = service.selectByPage(morePage);
-		System.out.println("list : " + list);
-		request.setAttribute("list", list);
+		HttpSession session = request.getSession();
 		
+		MemberVO memVo =  (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
+		
+		List<PboardVO> list = service.selectByPage(morePage);
+		
+		request.setAttribute("list", list);
+		request.getRequestDispatcher("/view/pboardList.jsp").forward(request, response);
+	}
+	
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");	
+		
+		int more = Integer.parseInt(request.getParameter("more"));
+		
+		String vtype = request.getParameter("pb_type");
+		String vtext = request.getParameter("pb_search");
+		String region = request.getParameter("region");
+		
+		IPboardService service = PboardServiceImpl.getInstance();
+		HttpSession session = request.getSession();
+
+		MemberVO memVo =  (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
+		
+		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
+		List<PboardVO> list = service.selectByPage(morePage);
+		request.setAttribute("list", list);
 		request.getRequestDispatcher("/view/pboardList.jsp").forward(request, response);
 	}
 

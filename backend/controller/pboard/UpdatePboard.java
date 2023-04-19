@@ -47,7 +47,7 @@ public class UpdatePboard extends HttpServlet {
 		int res = service.insertBoard(pvo);
 		System.out.println("insert res = " + res);
 		
-		String uploadPath = "c:/pimage/file";
+		String uploadPath = "c:/cokkiri/imgServer";
 		
 		File f = new File(uploadPath);
 		

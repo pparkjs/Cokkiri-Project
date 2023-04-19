@@ -118,7 +118,7 @@ $(function(){
 		<div class="sboard">
 			<!-- 이곳에 DB에서 가져온 게시판 넣을 거 -->	
 		</div>
-	</div>
+	</div >
 	<div class="more">
 		  <img id="more_btn" src="<%=request.getContextPath()%>/images/더보기버튼.png">
 	</div>

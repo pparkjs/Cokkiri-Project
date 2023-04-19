@@ -8,7 +8,5 @@
 </head>
 <body>
 
-<a href="<%=request.getContextPath()%>/loginTest.do">로그인</a>
-
 </body>
 </html>
