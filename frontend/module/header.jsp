@@ -149,7 +149,7 @@ $(()=>{
                         <img class="myimage" src='<%=request.getContextPath()%>/images/기본프로필.png' alt="기본프로필.png">
                    		 <div class="sidebar" >
                        		<ul class="sidebar__list">
-                         	  <li><a href="#">My 프로필</a></li>
+                         	  <li><a href="<%=request.getContextPath()%>/mypage/myProfile.jsp">My 프로필</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/mypage/mypageWishList.jsp">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/mypage/mypageTboard.jsp">내 글 보기</a></li>
