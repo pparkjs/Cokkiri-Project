@@ -251,8 +251,7 @@ function mypageSboardListServer(pageNum, btnValue){
 			},
 			success : function(res){
 				addList = "";
-				count = 0;
-			console.log(res);
+				count = 1;
 				$.each(res.datas, function(i, v){
 					title = v.sboard_title.slice(0, 45);
 					date = elapsedTime(v.sboard_cdate);
