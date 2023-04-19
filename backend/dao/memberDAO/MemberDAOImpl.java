@@ -203,4 +203,18 @@ public class MemberDAOImpl implements IMemberDAO {
 		return cnt;
 	}
 
+	@Override
+	public int updatemember(MemberVO memVo) {
+		SqlSession session = null;
+		int cnt = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			cnt = session.update("member.updatemember", memVo);
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return cnt;
+	}
+
 }
