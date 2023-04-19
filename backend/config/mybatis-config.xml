@@ -28,6 +28,7 @@
 		<typeAlias type="vo.NoticeVO" alias="noticeVo"/>
 		<typeAlias type="vo.TcommentVO" alias="tcommentVo"/>
 		<typeAlias type="vo.PcommentVO" alias="pcommentVo"/>
+		<typeAlias type="vo.ScommentVO" alias="scommentVo"/>
 		<typeAlias type="vo.AlarmVO" alias="alarmVo"/>
 
 	</typeAliases>
@@ -55,6 +56,7 @@
     <mapper resource="mapper/tboard-mapper.xml"/>
     <mapper resource="mapper/chat-mapper.xml"/>
     <mapper resource="mapper/tcomment-mapper.xml"/>
+    <mapper resource="mapper/scomment-mapper.xml"/>
     <mapper resource="mapper/sboard-mapper.xml"/>
     <mapper resource="mapper/notice-mapper.xml"/>
     <mapper resource="mapper/alarm-mapper.xml"/>
