@@ -106,7 +106,7 @@
 	flex: 1;
 }
 #addAndNick{
-	flex:2;
+	flex:4;
 	text-align: left;
 }
 

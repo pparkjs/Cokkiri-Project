@@ -306,7 +306,13 @@ $(function() {
 			<form action="<%=request.getContextPath()%>/memberUpdate.do" method="post" id="updateForm" enctype="multipart/form-data">
 				<div class="profile">
 					<div class="profileImgBox">
-						<img id="profileImg" alt="userProfile" src="<%=request.getContextPath()%>/profileImageView.do">
+					<%
+					String src=request.getContextPath()+"/images/기본프로필.png";
+					if(memVo.getMem_image()!=null){
+						src=request.getContextPath()+"/profileImageView.do";
+					}
+						%>
+						<img id="profileImg" alt="userProfile" src="<%=src%>">
 					</div>
 					
 					<div class="camara">

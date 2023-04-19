@@ -45,7 +45,7 @@ public class MemberUpdate extends HttpServlet {
 		String mem_id = memVo.getMem_id();
 	
 		// 업로드된 파일이 저장될 폴더 설정
-		String uploadPath = "C:/Users/gram/Desktop/tboard_image";
+		String uploadPath = "c:/cokkiri/imgServer";
 				
 		// 저장될 폴더가 없으면 새로 만든다.
 		File file = new File(uploadPath);
