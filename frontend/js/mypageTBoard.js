@@ -24,23 +24,6 @@ function soldout(){
 				dataType : 'json'
 			})
 			
-		} else if (status == "거래취소"){
-			$.ajax({
-				url : `${mypath}/tboardCDateUpdateNull.do`,
-				type : 'post',
-				data : { "tboard_id" : tboardId },
-				success : function(res){
-					if(res.result == "ok"){
-						thisBtn.val(res.tboardState);
-						console.log()
-					}
-				},
-				error : function(xhr){
-					alert(xhr.status);
-				},
-				dataType : 'json'
-			})
-			
 		} else {
 			$.ajax({
 				url : `${mypath}/tboardCDateUpdateSysdate.do`,
@@ -49,7 +32,7 @@ function soldout(){
 				success : function(res){
 					console.log(res);
 					if(res.result == "ok"){
-						thisBtn.val("거래취소");
+						thisBtn.val("거래완료");
 					}
 				},
 				error : function(xhr){
