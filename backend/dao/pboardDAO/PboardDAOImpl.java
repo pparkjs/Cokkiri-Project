@@ -311,5 +311,69 @@ public class PboardDAOImpl implements IPboardDAO {
 		return list;
 	}
 
+	@Override
+	public List<PboardVO> selectMyLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyUnLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyUnLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyWrite(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyWrite", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyComment(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyComment", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
 
 }
