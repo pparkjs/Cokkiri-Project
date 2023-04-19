@@ -1,5 +1,7 @@
 package dao.pimageDAO;
 
+import java.util.List;
+
 import vo.PimageVO;
 
 public interface IPimageDAO {
@@ -15,4 +17,8 @@ public interface IPimageDAO {
 		
 	// boardId로 이미지 개수 카운트
 	public int pimgCount(int pbId);
+	
+	public List<PimageVO> selectPimage(int pboard_id);
+	
+	public PimageVO selectPimageByNo(int pimg_no);
 }
