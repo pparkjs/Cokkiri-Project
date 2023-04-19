@@ -209,17 +209,17 @@
 	
 	<!-- 마이페이지에서 사용자가 작성한 게시글만 출력 -->
 	<select id="selectByMoerMypageMypost" resultType="sboardVo" parameterType="Map">
-		select rownum as rnum, B.*
+		select rownum, b.*
 		             from
-		              (select C.*, 
-							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
-							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
-							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
-							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
-						from sboard C
-		                where C.MEM_ID = #{mem_id}
+		              (select c.*, 
+							(select nvl(sum(sbstate_like),0) from sboardstate d where d.sboard_id=c.sboard_id) sbstate_like,
+							(select nvl(sum(sbstate_unlike),0) from sboardstate d where d.sboard_id=c.sboard_id) sbstate_unlike,
+							nvl((select sbstate_like from sboardstate d where d.sboard_id=c.sboard_id and d.mem_id=#{mem_id}),0) me_like,
+							nvl((select sbstate_unlike from sboardstate d where d.sboard_id=c.sboard_id and d.mem_id=#{mem_id}),0 ) me_unlike
+						from sboard c
+		                where c.mem_id = #{mem_id}
 		                order by sboard_id desc
-		               ) B
+		               ) b
         <![CDATA[     
 		where rownum <= 6*to_number(#{more})
 		]]>
@@ -229,18 +229,19 @@
 	<!-- 마이페이지에서 사용자가 댓글을 쓴 게시글만 출력 -->
 	<select id="selectByMoerMypageMycomment" resultType="sboardVo" parameterType="Map">
 		select rownum as rnum, B.*
-		             from
-		              (select C.*, 
-							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
-							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
-							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
-							nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
-						from sboard C
-		                order by sboard_id desc
-		               ) B, SCOMMENT S
-        <![CDATA[     
-		where B.SBOARD_ID = S.SBOARD_ID AND S.MEM_ID = #{mem_id}
-		AND rownum <= 3*to_number(#{more})
+		from
+		    (select C.*, 
+		           (select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
+		           (select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
+		           nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,
+		           nvl((select sbstate_unlike from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0 ) me_unlike
+		    from sboard C
+		    right join (select DISTINCT(A.SBOARD_ID) from scomment A where A.mem_id = #{mem_id} and SCOMMENT_ISREMOVE = 'n') E
+		    on( C.SBOARD_ID = E.SBOARD_ID )
+		    order by C.sboard_id desc) B
+	
+		<![CDATA[     
+		where rownum <= 6*to_number(#{more})
 		]]>
 	
 	</select>

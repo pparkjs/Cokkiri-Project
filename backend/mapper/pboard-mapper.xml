@@ -184,5 +184,79 @@ select A.* from
       ]]>  
 	</select>	
 	
-	
+<select id="selectMyLike" parameterType="Map" resultType="pboardVo">
+	select rownum, B.*
+	from
+	    (
+	        select 
+	            C.*,
+	                (select nvl(sum(pbstate_like),0) from pboardstate D where D.PBOARD_ID=C.PBOARD_ID) pbstate_like  ,
+	                (select nvl(sum(pbstate_unlike),0) from pboardstate D where D.PBOARD_ID=C.PBOARD_ID) pbstate_unlike,
+	                nvl((select pbstate_like from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0) me_like,
+	                nvl((select pbstate_unlike from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+	                C.PBOARD_ADDR as region
+	        from pboard C
+	        order by pboard_id desc
+	    ) B
+	<![CDATA[ 
+	where B.me_like = 1 and rownum <= 6*to_number(#{more})
+	]]>
+</select>	
+<select id="selectMyUnLike" parameterType="Map" resultType="pboardVo">
+	select rownum, B.*
+	from
+	    (
+	        select 
+	            C.*,
+	                (select nvl(sum(pbstate_like),0) from pboardstate D where D.PBOARD_ID=C.PBOARD_ID) pbstate_like  ,
+	                (select nvl(sum(pbstate_unlike),0) from pboardstate D where D.PBOARD_ID=C.PBOARD_ID) pbstate_unlike,
+	                nvl((select pbstate_like from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0) me_like,
+	                nvl((select pbstate_unlike from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+	                C.PBOARD_ADDR as region
+	        from pboard C
+	        order by pboard_id desc
+	    ) B
+	<![CDATA[ 
+	where B.me_unlike = 1 and rownum <= 6*to_number(#{more})
+	]]>
+</select>	
+<select id="selectMyWrite" parameterType="Map" resultType="pboardVo">
+	select rownum, B.*
+	      from
+	        (
+	            select 
+	                C.*,
+	                (select nvl(sum(pbstate_like),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_like  ,
+	                (select nvl(sum(pbstate_unlike),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_unlike,
+	                nvl((select pbstate_like from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0) me_like,
+	                nvl((select pbstate_unlike from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+	                C.PBOARD_ADDR as region
+	            from pboard C
+	            where C.MEM_ID = #{mem_id}
+	            order by pboard_id desc
+	        )B
+	<![CDATA[ 
+	where rownum <= 6*to_number(#{more})
+	]]>      
+</select>	
+<select id="selectMyComment" parameterType="Map" resultType="pboardVo">
+	select rownum, B.*
+	      from
+	        (
+	            select 
+	                C.*,
+	                (select nvl(sum(pbstate_like),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_like  ,
+	                (select nvl(sum(pbstate_unlike),0) from pboardstate D where D.pboard_id=C.pboard_id) pbstate_unlike,
+	                nvl((select pbstate_like from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0) me_like,
+	                nvl((select pbstate_unlike from pboardstate D where D.pboard_id=C.pboard_id and D.mem_id=#{mem_id}),0 ) me_unlike,
+	                C.PBOARD_ADDR as region
+	            from pboard C
+	            right join (select DISTINCT(A.pboard_id) from PCOMMENT A where A.MEM_ID = #{mem_id} and A.PCOMMENT_ISREMOVE = 'N')E
+	            on( C.PBOARD_ID = E.PBOARD_ID)
+	            order by C.pboard_id desc
+	        )B
+	<![CDATA[ 
+	where rownum <= 6*1
+	]]>      
+</select>	
 </mapper>

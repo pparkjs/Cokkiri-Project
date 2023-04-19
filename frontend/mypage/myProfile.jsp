@@ -21,7 +21,6 @@ body * {
 .container #banner h1 {
 	text-align: center;
 }
-
 #profileContainer {
 	width : 374px;
 	margin : 0 auto;
@@ -31,14 +30,12 @@ body * {
 	position: relative;
 }
 .profileImgBox img {
-
 	display: inline-block;
 	width: 250px;
 	height: 250px;
 	border-radius: 50%;
 	margin: 0 auto;
 }
-
 .camara img{
 	width : 50px;
 	height : 50px;
@@ -50,7 +47,6 @@ body * {
     bottom: 0;
     right: 80px;
 }
-
 .profile #profileImg {
 	display: block;
 	width : 250px;
@@ -65,14 +61,11 @@ body * {
 	margin-top: 20px;
 	
 }
-
 .row {
 	position: relative;
-
 }
 .row:not(:first-child) {
 	margin-top: 25px;
-
 }
 .row input {
 	margin-top: 5px;
@@ -122,7 +115,6 @@ body * {
 	border: none;
 	cursor: pointer;
 }
-
 </style>
 <script type="text/javascript">
 mypath = `<%=request.getContextPath() %>`;
@@ -131,13 +123,11 @@ function sample6_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
             var addr = ''; // 주소 변수
             var extraAddr = ''; // 참고항목 변수
             var extvalue = ''; // 참고항목에 저장될 값
-
             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
             	//addr = data.jibunAddress;
@@ -147,7 +137,6 @@ function sample6_execDaumPostcode() {
             	 var split_addr = data.jibunAddress.split(' '); // 공백 기준으로 주소를 분리
                  addr = split_addr[0] + ' ' + split_addr[1] + ' ' + split_addr[2]; // 동까지만 주소 변수에 저장
             }
-
             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
             if(data.userSelectedType === 'R'){
                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -160,7 +149,6 @@ function sample6_execDaumPostcode() {
                 // document.getElementById("sample6_extraAddress").value = '';
             	extvalue = '';
             }
-
             // 우편번호와 주소 정보를 해당 필드에 넣는다.
             document.getElementById("add").value = addr;
             // 커서를 상세주소 필드로 이동한다.
@@ -168,8 +156,6 @@ function sample6_execDaumPostcode() {
         }
     }).open();
 }
-
-
 $(function() {
 	$('#file').change(function(event) {
 		console.log('제빌');
