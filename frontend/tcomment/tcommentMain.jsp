@@ -95,7 +95,7 @@ $(document).on('click', '#rt_modify', function(e){
 			    // 댓글 입력 폼 생성
 			    
 			    
- 				 <%
+ 				<%
 					dsrc="기본프로필.png";
 					if(smemVO.getMem_image()!=null){
 						dsrc=request.getContextPath()+"/profileImageView.do";
@@ -247,7 +247,6 @@ $(document).on('click', '#rt_modify', function(e){
 	height : 40px;
 	color:gray;
 	font-size: 9px;
-	margin-bottom: 6px;
 	
 }
 #rt_insert{
