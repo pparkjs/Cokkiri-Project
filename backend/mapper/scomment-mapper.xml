@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper 
+	 PUBLIC "-//mybatis.org//DTD Mapper 3.0/EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="scomment">
+
+
+<!--해당 댓글 아이디에 댓글 정보 가져오기 -->
+<select id="getScomment" resultType="scommentVo" parameterType="int">
+	<![CDATA[
+	select SCOMMENT_ID,SCOMMENT_PID,SBOARD_ID,MEM_ID,SCOMMENT_CONTENT,
+	CASE
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - scomment_cdate) * 24 * 60 * 60 / 60), '분전')
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 24 * 60 * 60 THEN CONCAT(FLOOR((SYSDATE - scomment_cdate) * 24 * 60 * 60 / (60 * 60)), '시간전')
+      ELSE TO_CHAR(scomment_cdate, 'YYYY-MM-DD HH24:MI:SS')
+    END
+  AS scomment_cdate
+,SCOMMENT_MDATE,SCOMMENT_RDATE,SCOMMENT_ISREMOVE,scomment_writer from scomment where scomment_id=#{scomment_id}
+  ]]>
+</select>
+
+<!-- 댓글 리스트  -->
+<select id="getAllScomment" resultType="scommentVo" parameterType="scommentVo">
+  
+  <![CDATA[
+SELECT *
+FROM (
+  SELECT rownum rn, level, scomment_id, scomment_pid, sboard_id, mem_id,
+    CASE
+      WHEN level = 1 THEN scomment_content 
+      ELSE scomment_content 
+    END AS scomment_content, 
+    CASE
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - scomment_cdate) * 24 * 60 * 60 / 60), '분전')
+      WHEN (SYSDATE - scomment_cdate) * 24 * 60 * 60 < 24 * 60 * 60 THEN CONCAT(FLOOR((SYSDATE - scomment_cdate) * 24 * 60 * 60 / (60 * 60)), '시간전')
+      ELSE TO_CHAR(scomment_cdate, 'YYYY-MM-DD HH24:MI:SS')
+    END
+  AS scomment_cdate, scomment_isremove, scomment_writer
+  FROM scomment
+  WHERE sboard_id = #{sboard_id}
+  START WITH scomment_pid = 0
+  CONNECT BY PRIOR scomment_id = scomment_pid
+  ORDER SIBLINGS BY scomment_id DESC
+) WHERE rn BETWEEN #{startScomment} AND #{endScomment}
+    ]]>
+</select>
+
+<!-- 댓글 수정 -->
+<update id="updateScomment" parameterType="scommentVo">
+	update scomment 
+		set scomment_content = #{scomment_content}, scomment_mdate = sysdate
+		where scomment_id = #{scomment_id}
+</update> 
+
+<!-- 댓글 수정시 삭제여부 -->
+<update id="updateScommentIsremove" parameterType="int">
+	update scomment
+	set scomment_isremove='y'
+	where scomment_id=#{scomment_id}
+</update>
+
+<!-- 해당 게시글에 댓글 작성했는지 체크-->
+<select id="scommendWritedCheck" resultType="scommentVo" parameterType="scommentVo">
+	select * from scomment where sboard_id = #{sboard_id} and mem_id = #{mem_id}
+</select>
+
+<!-- 해당 게시글에 첫 댓글 작성 -->
+<insert id="insertScomment" parameterType="scommentVo">
+ 	insert into scomment
+	    (scomment_id, scomment_pid, sboard_id, mem_id, scomment_content, scomment_cdate, scomment_isremove, scomment_writer)
+	    values
+	    (SCOMMENT_SEQ.nextval, #{scomment_pid}, #{sboard_id}, #{mem_id}, #{scomment_content}, SYSDATE, 'n', 
+	     (select nvl(max(scomment_writer),0)+1 as writer from scomment where sboard_id = #{sboard_id}))
+       <selectKey resultType="int" keyProperty="scomment_id">
+	    	select scomment_seq.currval from dual <!-- currval 현재 시퀀스 알고싶다. -->
+	    </selectKey>
+</insert>
+
+<!-- 해당 게시글에 이미 작성했을 때 -->
+<insert id="insertScommentByWrited" parameterType="scommentVo">
+	  insert into scomment
+	    (scomment_id, scomment_pid, sboard_id, mem_id, scomment_content, scomment_cdate, scomment_isremove, scomment_writer)
+	    values
+	    (SCOMMENT_SEQ.nextval, #{scomment_pid}, #{sboard_id}, #{mem_id}, #{scomment_content}, SYSDATE, 'n', #{scomment_writer})
+
+	    <selectKey resultType="int" keyProperty="scomment_id">
+	    	select scomment_seq.currval from dual <!-- currval 현재 시퀀스 알고싶다. -->
+	    </selectKey>
+</insert>
+
+
+
+</mapper>
+
