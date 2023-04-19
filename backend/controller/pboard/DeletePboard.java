@@ -19,16 +19,16 @@ public class DeletePboard extends HttpServlet {
        
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int pId = Integer.parseInt(request.getParameter("id"));
+		int pboardId = Integer.parseInt(request.getParameter("pdId"));
 		
 		
 		IPimageService imgService = PimageServiceImpl.getInstance();
 		IPboardService service = PboardServiceImpl.getInstance();
 		
-		int result = imgService.deletePimgByPboardId(pId);
-		service.deleteBoard(pId);
+		int result = imgService.deletePimgByPboardId(pboardId);
+		service.deleteBoard(pboardId);
 		
-		response.sendRedirect(request.getContextPath() + "/");
+		response.sendRedirect(request.getContextPath() + "pboard/pboard.jsp");
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
