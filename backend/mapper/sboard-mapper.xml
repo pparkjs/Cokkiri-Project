@@ -221,7 +221,7 @@
 		                order by sboard_id desc
 		               ) B
         <![CDATA[     
-		where rownum <= 6*to_number(#{more});
+		where rownum <= 6*to_number(#{more})
 		]]>
 	
 	</select>
@@ -240,7 +240,7 @@
 		               ) B, SCOMMENT S
         <![CDATA[     
 		where B.SBOARD_ID = S.SBOARD_ID AND S.MEM_ID = #{mem_id}
-		AND rownum <= 3*to_number(#{more});
+		AND rownum <= 3*to_number(#{more})
 		]]>
 	
 	</select>

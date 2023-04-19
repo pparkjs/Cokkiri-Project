@@ -83,5 +83,17 @@
 	<update id="updateMemberPw" parameterType="memberVo">
 		update member set mem_pw = SHA256.ENCRYPT(#{mem_pw}) where mem_id=#{mem_id}
 	</update>
-
+	<update id="updatemember" parameterType="memberVo">
+		update member set 
+				mem_name = #{mem_name},
+				mem_nickname = #{mem_nickname},
+				mem_add = #{mem_add}
+			<if test= "mem_tel != null and mem_name != ''">
+				,mem_tel = #{mem_tel}
+			</if>
+			<if test= "mem_image != null and mem_image != ''">
+				,mem_image = #{mem_image}
+			</if>
+			where mem_id=#{mem_id}
+	</update>
 </mapper>

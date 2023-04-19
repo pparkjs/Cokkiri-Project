@@ -18,15 +18,7 @@ public class Logout extends HttpServlet {
 		// 세션에 저장된 고객정보 삭제
 		request.getSession().removeAttribute("memberVo");
 		
-		// 쿠키값 삭제
-		Cookie[] cookies = request.getCookies();
-		for(Cookie cookie : cookies) {
-			String name = cookie.getName();
-			if("id".equals(name)) {
-				cookie.setMaxAge(0);
-				response.addCookie(cookie);
-			}
-		}
+		
 		
 		response.sendRedirect(request.getContextPath() + "/login/login.jsp");
 	}
