@@ -76,7 +76,11 @@ function imageView(){
 	
 </script>
 <body>
+<%if(memVo.getAdmin_auth().equals("N")){ %> 
 <%@ include file="/module/header.jsp" %>
+<%}else{ %>
+ <%@ include file="/module/adminHeader.jsp" %>
+<%} %>
 <div class="main_body"><h1 style="text-align: center; font-size: 20px; margin-top: 15px;" >'우리끼리' 공유 맛집</h1></div>
 	<div class="mem_header">
 	<%if(pbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
