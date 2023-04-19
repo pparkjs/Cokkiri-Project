@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%
+MemberVO memVo = (MemberVO)session.getAttribute("memberVo");	
+%>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -81,7 +84,6 @@
 	height:80px;
 	margin: 0 auto;
 	padding-right: 50px;
-	border-top: 2px solid rgb(217, 217, 217);
 	border-bottom: 2px solid rgb(217, 217, 217);
 	justify-content: center;
 	align-items:center;
@@ -269,7 +271,11 @@ $((ev)=>{
 <body>
 
     <div class="wrap">
-        <%@ include file="/module/header.jsp" %>
+        <%if(memVo.getAdmin_auth().equals("N")){ %> 
+		<%@ include file="/module/header.jsp" %>
+		<%}else{ %>
+		<%@ include file="/module/adminHeader.jsp" %>
+		<%} %>
 
 
 		<div id="out">
@@ -279,11 +285,15 @@ $((ev)=>{
 					<option id="default">카테고리
 				</select>
 				<input type="text" id="search">
-				<img id="searchbtn" src="<%=request.getContextPath()%>/images/돋보기.png"></button>
+				<img id="searchbtn" src="<%=request.getContextPath()%>/images/돋보기.png">
 			</div>
 			<div id="rest"></div>	
 			<div id="searchr">
-				<button id="write"></button>
+				<%if(memVo.getAdmin_auth().equals("N")){ %> 
+					<button id="write"></button>
+				<%}else{ %>
+					
+				<%} %>
 			</div>
 		</div>
 		<div id="btnbar">
