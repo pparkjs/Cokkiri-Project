@@ -26,7 +26,7 @@
                     </li>
                     <li><a href="<%=request.getContextPath()%>/tboard/tboard.jsp">중고거래</a></li>
                     <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
-                    <li><a href="#">마이플레이스</a></li>
+                    <li><a href="<%=request.getContextPath()%>/pboard/pboard.jsp">마이플레이스</a></li>
                     <li><a href="<%=request.getContextPath()%>/admin/noticeboard.jsp">공지사항</a></li>
                 </ul>
                 
