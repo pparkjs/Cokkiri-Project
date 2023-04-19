@@ -38,11 +38,11 @@ public class ProfileImageView extends HttpServlet {
 		
 		String mem_id = (String)request.getParameter("mem_id");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
-		if(mem_id!=null) {
+		if(smem!=null) {
 			IMemberService service = MemberServiceImpl.getInstance();
-			smem=service.selectMemberinfo(mem_id);
+			smem=service.selectMemberinfo(smem.getMem_id());
 		}
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "C:/Users/gram/Desktop/tboard_image";
 
 		File f = new File(uploadPath);
 		if(!f.exists()) {
@@ -52,7 +52,9 @@ public class ProfileImageView extends HttpServlet {
 		String imgPath = uploadPath+File.separator+smem.getMem_image();
 		File imgFile = new File(imgPath);
 		
+		System.out.println("하무가저1" + smem);
 		if(imgFile.exists()) {
+			System.out.println("하무가저2");
 			BufferedInputStream bin=null;
 			BufferedOutputStream bout = null;
 			
