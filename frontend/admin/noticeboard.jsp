@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%
+MemberVO memVo = (MemberVO)session.getAttribute("memberVo");	
+%>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -52,7 +55,12 @@ $(function(){
 </script>
 </head>
 <body>
+<%if(memVo.getAdmin_auth().equals("N")){ %> 
+<%@ include file="/module/header.jsp" %>
+<%}else{ %>
  <%@ include file="/module/adminHeader.jsp" %>
+<%} %>
+
  <div class="con_notice">
  	<div class="con_notice_header">
  		<input type="text" class="notice_search" placeholder="제목 검색">
