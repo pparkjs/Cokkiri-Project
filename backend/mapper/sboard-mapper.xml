@@ -230,7 +230,7 @@
 	<select id="selectByMoerMypageMycomment" resultType="sboardVo" parameterType="Map">
 		select rownum as rnum, B.*
 		             from
-		              (select distinct C.*, 
+		              (select C.*, 
 							(select nvl(sum(sbstate_like),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_like  ,
 							(select nvl(sum(sbstate_unlike),0) from sboardstate D where D.sboard_id=C.sboard_id) sbstate_unlike,
 							nvl((select sbstate_like from sboardstate D where D.sboard_id=C.sboard_id and D.mem_id=#{mem_id}),0) me_like,

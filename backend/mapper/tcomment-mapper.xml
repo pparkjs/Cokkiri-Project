@@ -39,6 +39,7 @@
  SELECT *
 FROM (
   SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id,
+    LPAD(' ↳ ', 5 * (level - 1), ' ') || tcomment_content AS tcomment_content, 
     CASE
       WHEN level = 1 THEN tcomment_content 
       ELSE tcomment_content 

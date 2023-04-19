@@ -26,6 +26,7 @@ public class MemInfo extends HttpServlet {
 		// TODO Auto-generated method stub
 		response.setContentType("html/text; charset=utf-8");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
+		
 		IMemberService memservice = MemberServiceImpl.getInstance();
 		MemberVO memberVO = memservice.selectMemberinfo(smem.getMem_id());
 		IHeaderService service = HeaderServiceImpl.getInstance();
@@ -41,6 +42,7 @@ public class MemInfo extends HttpServlet {
 		request.setAttribute("memberVO", memberVO);
 		request.setAttribute("alarm", list);
 		request.getRequestDispatcher("/view/headerres.jsp").forward(request, response);
+		
 		
 		
 	}

@@ -9,7 +9,6 @@
     
  <%
  
- 
  List<PboardVO> list = (List<PboardVO>)request.getAttribute("list");
  
  JsonObject obj = new JsonObject();

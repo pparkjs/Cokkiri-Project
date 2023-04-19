@@ -33,12 +33,12 @@ public class PimageDAOImpl implements IPimageDAO {
 	}
 
 	@Override
-	public int deletePimgByPboardId(int pboardId) {
+	public int deletePimgByPboardId(int pbId) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.deletePimgByPboardId", pboardId);
+			cnt = session.insert("pboard.deletePimgByPboardId", pbId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -49,12 +49,12 @@ public class PimageDAOImpl implements IPimageDAO {
 	}
 
 	@Override
-	public int updatePimg(PimageVO vo) {
+	public int pimageUpadateByOldName(PimageVO vo) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.updatePimg", vo);
+			cnt = session.insert("pboard.pimageUpadateByOldName", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -62,6 +62,24 @@ public class PimageDAOImpl implements IPimageDAO {
 			session.close();
 		}
 		return cnt;
+	}
+
+
+	@Override
+	public int pimgCount(int pbId) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			
+			res = session.selectOne("pboard.pimgCount", pbId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return res;
 	}
 
 }

@@ -205,7 +205,7 @@ function notifyCheckView(mr){
 			     "region" : frontRegion},
 			     
 		success : function(res){
-			
+			//console.log(res.datas);
 			addList = "";
 			
 			$.each(res.datas, function(i, v){

@@ -33,16 +33,10 @@ public class PboardServiceImpl implements IPboardService {
 	}
 
 	@Override
-	public int deleteBoard(int boardId) {
-		return dao.deleteBoard(boardId);
+	public int deleteBoard(int pbId) {
+		return dao.deleteBoard(pbId);
 	}
-
-
-	@Override
-	public List<PboardVO> selectById(String memId) {
-		return dao.selectById(memId);
-	}
-
+	
 	@Override
 	public int updateHit(int num) {
 		return dao.updateHit(num);
@@ -50,27 +44,85 @@ public class PboardServiceImpl implements IPboardService {
 	
 
 	@Override
-	public Map<String, Object> morePage(int more, String type, String text) {
+	public Map<String, Object> morePage(int more, String vtype, String vtext, String mem_id, String region){
 		Map<String, Object> map = new HashMap<>();
 		map.put("more", more);
-		map.put("pb_type", type);
-		map.put("pb_search", text);
-		return map;
+		map.put("pb_type", vtype);
+		map.put("pb_search", vtext);
+		map.put("mem_id", mem_id);
+		map.put("region", region);
 		
+		return map;
 	}
 
 	@Override
-	public List<PboardVO> selectByPage(Map<String, Object> map) {		
-		return dao.selectByPage(map);
+	public List<PboardVO> pboardSelect(String pbId) {
+		return dao.pboardSelect(pbId);
 	}
 
-//	@Override
-//	public Map<String, Object> saveLocation(double lat, double lng) {
-//		Map<String, Object> map = new HashMap<>();
-//		map.put("lat", lat);
-//		map.put("lng", lng);
-//		
-//		return map;
-//	}
+	
+	@Override
+	public List<PboardVO> selectByPage(Map<String, Object> map) {
+		return dao.selectByPage(map);
+	}
+	
+	@Override
+	public int totalCount(Map<String, Object> map) {
+		return dao.totalCount(map);
+	}
 
+	@Override
+	public int likeInsert(PboardVO vo) {
+		return dao.likeInsert(vo);
+	}
+
+	@Override
+	public int likeCheck(PboardVO vo) {
+		return dao.likeCheck(vo);
+	}
+
+	@Override
+	public int likeByButton(PboardVO vo) {
+		return dao.likeByButton(vo);
+	}
+
+	@Override
+	public int likeUpdate(PboardVO vo) {
+		return dao.likeUpdate(vo);
+	}
+
+	@Override
+	public int likeDelete(PboardVO vo) {
+		return dao.likeDelete(vo);
+	}
+
+	@Override
+	public int disLikeInsert(PboardVO vo) {
+		return dao.disLikeInsert(vo);
+	}
+
+	@Override
+	public int disLikeUpdate(PboardVO vo) {
+		return dao.disLikeUpdate(vo);
+	}
+
+	@Override
+	public PboardVO viewState(PboardVO vo) {
+		return dao.viewState(vo);
+	}
+
+	@Override
+	public int notifyCheck(PboardVO vo) {
+		return dao.notifyCheck(vo);
+	}
+
+	@Override
+	public int pboardNotify(PboardVO vo) {
+		return dao.pboardNotify(vo);
+	}
+
+	@Override
+	public List<PboardVO> notifyByMore(Map<String, Object> map) {
+		return dao.notifyByMore(map);
+	}
 }

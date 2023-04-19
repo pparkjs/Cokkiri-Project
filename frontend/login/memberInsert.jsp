@@ -96,11 +96,11 @@ $(function() {
 		
 		// Ajax 요청
 		$.ajax({
-			url : '<%=request.getContextPath()%>/sendMessage.do',
+			url : '<%=request.getContextPath()%>/InsertSendMessage.do',
 			type : 'post',
 			data : {"tel" : tel},
 			success : function(res){
-				if(res.result == "true"){
+				if(res.result == "false"){
 					alert("인증 번호를 전송했습니다");
 				} else {
 					alert("이미 가입된 전화번호입니다.");

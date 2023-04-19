@@ -62,7 +62,7 @@
                         <p class="home3__p">우리지역의 최고의 맛집, 명소 <br>
                             혼자 알지 말고 우리끼리 공유해요.
                         </p><br><br>
-                        <a class="home1_button" href="#">마이플레이스 바로가기</a>
+                        <a class="home1_button" href="<%=request.getContextPath()%>/pboard/pboard.jsp">마이플레이스 바로가기</a>
                     </div>
                     <div class="home3__images">
                         <img src="../images/장소.png" alt="">

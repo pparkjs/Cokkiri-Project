@@ -38,10 +38,11 @@ public class ProfileImageView extends HttpServlet {
 		
 		String mem_id = (String)request.getParameter("mem_id");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
-		if(mem_id!=null) {
+		if(smem!=null) {
 			IMemberService service = MemberServiceImpl.getInstance();
-			smem=service.selectMemberinfo(mem_id);
+			smem=service.selectMemberinfo(smem.getMem_id());
 		}
+
 		String uploadPath = "c:/cokkiri/imgServer";
 
 		File f = new File(uploadPath);

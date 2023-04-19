@@ -75,7 +75,8 @@ $(document).on('click', '#rt_modify', function(e){
  				 // 답글이 달리면 이 번호는 부모 댓글 아이디로 가야하고 자식 댓글 아이디는 시퀀스로 생성된 새로운 아이디
 				 pcomment=$("#tctLayer").find("#"+tcommentPid).attr("id")
  				 pcommentLevel=$("#tctLayer").find("#"+tcommentPid).attr("class");
- 				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
+ 				 console.log(pcommentLevel);
+				 parentcomment=$("#tctLayer").find("#"+tcommentPid);
 				 console.log(pcomment, pcommentLevel, tcommentPid)
 				 
 				 $.retcommentWriteServer();
@@ -96,7 +97,7 @@ $(document).on('click', '#rt_modify', function(e){
 			    // 댓글 입력 폼 생성
 			    
 			    
- 				 <%
+ 				<%
 					dsrc="기본프로필.png";
 					if(smemVO.getMem_image()!=null){
 						dsrc=request.getContextPath()+"/profileImageView.do";
@@ -248,7 +249,6 @@ $(document).on('click', '#rt_modify', function(e){
 	height : 40px;
 	color:gray;
 	font-size: 9px;
-	margin-bottom: 6px;
 	
 }
 

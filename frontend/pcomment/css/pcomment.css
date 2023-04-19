@@ -1,0 +1,109 @@
+@charset "UTF-8";
+#pctLayer{
+	display: flex;
+  	flex-wrap: nowrap; 
+  	overflow-x: auto; 
+}
+/* 댓글 작성 폼  */
+#pInsert {
+ 	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; /* 1px 두께의 검은색 선 추가 */
+	align-items: center;
+
+}
+#pInsert span { 
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; /* 텍스트와 정렬을 맞추기 위해 상단 정렬 */
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+/* 댓글 등록 폼 */
+#pInsert #parea {
+	margin-right: 10px;
+	display: inline-block;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+ #btn {
+	display: inline-block;
+	vertical-align: top;
+	color: black;
+	border: none;
+	background: darkgray;
+	font-style: oblique;
+} 
+.b1{
+	margin: 10px;
+}
+.b2{
+	margin-left: 40px;
+	margin-right : 10px;
+	margin-bottom: 10px; 
+    padding: 10px; 
+}
+.b3{
+	margin-left: 90px;
+} 
+.re-pInsert{ /*댓글 등록, 수정 폼 class 값 */
+	margin-top: 20px;
+	width: 100%;
+	margin-bottom: 10px;
+	display: flex;
+	border-bottom: 2px solid navy; 
+}
+.re-pInsert span{
+	margin-right: 30px;
+	display: inline-block;
+	vertical-align: top; 
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+#repInsert #preArea{
+	margin-right: 10px;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+.action{
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
+}
+#pmInsert #preArea {
+	margin-right: 10px;
+	width: 500px;
+	height: 20px;
+	resize: none;
+}
+#rp_modify{ /* 수정버튼 */
+	display: inline-block;
+	vertical-align: top;
+	background-color: transparent; 
+	border: none; 
+	cursor: pointer; 
+	padding: 0;
+	font-size: medium;
+	font-weight: bold; 
+	color: navy;
+} 
+.pw .writer, .pw #cdate {
+	vertical-align:  middle; 
+	display : inline-block;
+	height : 40px;
+	margin-top :-10px;
+	
+}
+#moreList{
+	display: block;
+	text-align: center;
+}

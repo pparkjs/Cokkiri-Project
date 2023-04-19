@@ -34,6 +34,7 @@ function soldout(){
 					if(res.result == "ok"){
 						thisBtn.val("거래완료");
 						console.log()
+
 					}
 				},
 				error : function(xhr){
@@ -42,7 +43,8 @@ function soldout(){
 				dataType : 'json'
 			})
 			
-		} 
+		}
+	
 	
 	})
 }
