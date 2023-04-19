@@ -32,7 +32,7 @@ public class TboardImageView extends HttpServlet {
 		ITboardService service = TboardServiceImpl.getInstance();
 		TImageVO tImageVO = service.selectImage(imgno);
 
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "c:/cokkiri/imgServer";
 		
 		File f = new File(uploadPath);
 		if(!f.exists()) {

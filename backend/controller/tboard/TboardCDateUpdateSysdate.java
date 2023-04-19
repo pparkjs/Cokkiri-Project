@@ -28,8 +28,11 @@ public class TboardCDateUpdateSysdate extends HttpServlet {
 		
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		int res = service.updateTboardCompleteDate(tboardId);
-		String tboardState = service.selectTboardState(tboardId);
+
+		String result = null;
+		String tboardState = service.selectTboardState(tboardId);		
 				
+
 		JsonObject jsonObject = new JsonObject();	
 		if(res == 1) {
 			jsonObject.addProperty("result", "ok");

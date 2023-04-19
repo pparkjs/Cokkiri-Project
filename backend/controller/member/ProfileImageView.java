@@ -42,7 +42,8 @@ public class ProfileImageView extends HttpServlet {
 			IMemberService service = MemberServiceImpl.getInstance();
 			smem=service.selectMemberinfo(smem.getMem_id());
 		}
-		String uploadPath = "C:/Users/gram/Desktop/tboard_image";
+
+		String uploadPath = "c:/cokkiri/imgServer";
 
 		File f = new File(uploadPath);
 		if(!f.exists()) {
@@ -52,9 +53,7 @@ public class ProfileImageView extends HttpServlet {
 		String imgPath = uploadPath+File.separator+smem.getMem_image();
 		File imgFile = new File(imgPath);
 		
-		System.out.println("하무가저1" + smem);
 		if(imgFile.exists()) {
-			System.out.println("하무가저2");
 			BufferedInputStream bin=null;
 			BufferedOutputStream bout = null;
 			

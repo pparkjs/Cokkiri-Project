@@ -7,6 +7,7 @@ function soldout(){
 		var status = $(this).val();
 		var tboardId = $(this).attr('name');
 		var thisBtn = $(this);
+		console.log(status)
 		if (status == "거래완료") {
 			$.ajax({
 				url : `${mypath}/tboardCDateUpdateSysdate.do`,
@@ -24,15 +25,16 @@ function soldout(){
 				dataType : 'json'
 			})
 			
-		} else {
+		} else{
 			$.ajax({
-				url : `${mypath}/tboardCDateUpdateSysdate.do`,
+				url : `${mypath}/tboardCDateUpdateNull.do`,
 				type : 'post',
 				data : { "tboard_id" : tboardId },
 				success : function(res){
-					console.log(res);
 					if(res.result == "ok"){
 						thisBtn.val("거래완료");
+						console.log()
+
 					}
 				},
 				error : function(xhr){
@@ -63,9 +65,13 @@ function mypageTboardListServer(more){
 				}
 				count = count + 1;
 				// 게시판 생성되는 부분
+				imgsrc=`${mypath}/images/default.PNG`
+				if(typeof v.tboard_imgNo!="undefined" &&v.tboard_imgNo!=null && v.tboard_imgNo!=""){
+					imgsrc=`${mypath}/images/TboardImageView.do?imgno=${v.tboard_imgNo}`
+				}
 				addList += `<div class="td_list">
 								<div class="tb_img">
-									<img src="${mypath}/images/TboardImageView.do?imgno=${v.tboard_imgNo}">
+									<img src="${imgsrc}">
 								</div>
 								<div class="tb_content">
 									<div class="title ele" id="${v.tboard_id}">

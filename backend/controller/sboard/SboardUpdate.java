@@ -55,7 +55,7 @@ public class SboardUpdate extends HttpServlet {
 		if(fileCnt > 0) {
 			mService.simageDeleteBySboardId(sbId); // 삭제
 		}
-		String uploadPath = "e:/cokkiri/imgServer";
+		String uploadPath = "c:/cokkiri/imgServer";
 
 		// 저장될 폴더가 없으면 새로 만든다.
 		File f = new File(uploadPath);

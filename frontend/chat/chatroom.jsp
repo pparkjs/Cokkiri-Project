@@ -76,7 +76,7 @@ function onMessage(event) {
 		curdate = today.getFullYear()+"-"+('0' + (today.getMonth() + 1)).slice(-2)+"-"+('0' + today.getDate()).slice(-2);
 		curtime = ('0' + today.getHours()).slice(-2)+":"+('0' + today.getMinutes()).slice(-2)+":"+('0' + today.getSeconds()).slice(-2)
 		curtime = messageTime([curdate,curtime]);
-		lastdate=date
+		lastdate=$(".chatdate").last().text()
 		if(curdate!=lastdate){
 			p=$("<p class='chatdate'>"+curdate+"</p>");
 			chat.append(p);
@@ -115,7 +115,9 @@ function chatListLoad(){
 		type: "post",
 		dataType: "json",
 		success: function(res) {
+			console.log(res)
 			$.each(res,function(i,v){
+				console.log(v)
 				curclass=$("#"+v.chatRoomVO.room_id+"").find(".pspan").find("div")
 				curparent=$("#"+v.chatRoomVO.room_id+"").attr("id")
 				if(curparent==null||curparent==""||typeof curparent=="undefined"){

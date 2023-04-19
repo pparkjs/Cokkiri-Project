@@ -19,9 +19,13 @@ function mypageWishListServer(more){
 				}
 				count = count + 1;
 				// 게시판 생성되는 부분
+				imgsrc=`${mypath}/images/default.PNG`
+				if(typeof v.tboard_imgNo!="undefined" &&v.tboard_imgNo!=null && v.tboard_imgNo!=""){
+					imgsrc=`${mypath}/images/TboardImageView.do?imgno=${v.tboard_imgNo}`
+				}
 				addList += `<div class="ele" id = ${v.tboard_id}>
 								<div class="tb_img">
-									<img src="${mypath}/images/TboardImageView.do?imgno=${v.tboard_imgNo}">
+									<img src="${imgsrc}">
 								</div>
 								<div class="tb_content">
 									<div class="title">

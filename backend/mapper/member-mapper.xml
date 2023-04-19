@@ -76,7 +76,7 @@
 	    <!-- 캐릭터data이거 안주면 < 꺽세 기호가 태그로 인식됨 우리는 데이터로 줄거다 -->
 	      <![CDATA[   
 	       where rownum <= #{end}) A 
-	       where A.rnum >= #{start} and A.mem_name != '관리자'
+	       where A.rnum >= #{start}
 	        ]]>
 	</select>
 	

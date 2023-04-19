@@ -56,7 +56,7 @@ public class InsertSboard extends HttpServlet {
 		int res = bService.sboardInsert(sb); 
 
 		if(res > 0) { // board에 게시글 등록이 성공하면
-			String uploadPath = "e:/cokkiri/imgServer";
+			String uploadPath = "c:/cokkiri/imgServer";
 
 			// 저장될 폴더가 없으면 새로 만든다.
 			File f = new File(uploadPath);

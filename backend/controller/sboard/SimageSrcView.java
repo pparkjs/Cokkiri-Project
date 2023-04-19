@@ -25,8 +25,7 @@ public class SimageSrcView extends HttpServlet {
 		response.setCharacterEncoding("utf-8");
 		
 		String img = request.getParameter("imgName"); //uuid 이름 가져옴 
-		
-		String uploadPath = "e:/cokkiri/imgServer";
+		String uploadPath = "c:/cokkiri/imgServer";
 		
 		File f = new File(uploadPath);
 		if(!f.exists()) {
