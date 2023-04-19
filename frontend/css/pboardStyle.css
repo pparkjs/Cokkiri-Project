@@ -7,7 +7,12 @@
 .pb_search{width:280px; height:32px; margin-left: 5px; border: 1px solid lightgray; border-radius: 10px;}
 .pb_searchplace{width:280px; height:32px; margin-bottom:20px;  margin-left: 280px; margin-top: 100px;  border: 1px solid lightgray; border-radius: 10px;}
 #write{position: absolute; height: 6px; right: 350px; width : 28px; height: 33px;}
-#search{position: absolute; width : 30px; height: 20px; left: 620px; top: 65px; cursor: pointer;}
+#search{position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 705px;
+    top: 66px;
+    cursor: pointer;}
  
 .pboard{display: grid;
     width: 1018px;
@@ -38,7 +43,7 @@
 
 .viewMore{display: flex; justify-content: center;}
 .morebtn{width : 35px; height : 28px; margin-bottom: 30px; cursor: pointer;}
-
+.ck{display: none;}
 
 /* 게시글 등록 */
 .writebody{ margin: 50px auto;   width: 1369px;}

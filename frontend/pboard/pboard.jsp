@@ -54,6 +54,18 @@ $(function(){
 	
 	likeOrUnlikeClick();
 		
+	
+	$('.morebtn').on('click',function(){
+		 if($('.no_check').is(':checked')){
+			more = more + 1;
+			notifyCheckView(more);
+		} else {
+			more = more + 1;
+			pboardListServer(more);		
+		}
+	
+	})
+	
 	$('.no_check').on('change', function(){
 		more = 0; //체크박스가 바뀔때마다 0으로 줌
 		if($('.no_check').is(':checked')){ // 체크 되면 true 풀리면 false 반환
@@ -64,17 +76,7 @@ $(function(){
 			pboardListServer(0);
 		}
 	})
-		
-	$('.morebtn').on('click',function(){
-		 if($('.no_check').is(':checked')){
-			more = more + 1;
-			notifyCheckView(more);
-		} else {
-			more = more + 1;
-			pboardListServer(more);		
-		}
-	
-	})				
+				
 })
 </script>
 

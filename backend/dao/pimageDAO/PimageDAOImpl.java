@@ -1,8 +1,11 @@
 package dao.pimageDAO;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import util.MybatisSqlSessionFactory;
+import vo.PboardVO;
 import vo.PimageVO;
 
 public class PimageDAOImpl implements IPimageDAO {
@@ -38,7 +41,7 @@ public class PimageDAOImpl implements IPimageDAO {
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.deletePimgByPboardId", pbId);
+			cnt = session.delete("pboard.deletePimgByPboardId", pbId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,7 +57,7 @@ public class PimageDAOImpl implements IPimageDAO {
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.pimageUpadateByOldName", vo);
+			cnt = session.update("pboard.pimageUpadateByOldName", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -80,6 +83,22 @@ public class PimageDAOImpl implements IPimageDAO {
 			session.close();
 		}
 		return res;
+	}
+
+	@Override
+	public List<PimageVO> selectPimage(int pboard_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		List<PimageVO> list = session.selectList("selectPimage",pboard_id);
+		session.close();
+		return list;
+	}
+
+	@Override
+	public PimageVO selectPimageByNo(int pimg_no) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		PimageVO pimageVO= session.selectOne("selectPimageByNo",pimg_no);
+		session.close();
+		return pimageVO;
 	}
 
 }
