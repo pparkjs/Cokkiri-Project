@@ -52,7 +52,7 @@ $(function(){
 		console.log(dateView)
 		$('.mDate').append(dateView);
 	<%} %>
-
+	
 })
 
 function imageView(){
@@ -86,13 +86,14 @@ function imageView(){
 	</div>
 	
 	<div class="mem_top">
-		<img src="<%=request.getContextPath()%>/images/기본프로필.png">
+		<img src="<%=request.getContextPath()%>/images/기본프로필.pngsdf">
 		<p class="m_writer">익명</p>
 		<p class="m_date"><%= sbList.get(0).getSboard_cdate() %></p>
 	</div>
 	
 	<div class="mem_img">
 	</div>
+	
 	
 	<div class="mem_title">
 		<div class="mem_t">

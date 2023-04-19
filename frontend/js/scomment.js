@@ -9,6 +9,7 @@ $.scommentListServer = function(page) {
 		},
 		dataType: 'json',
 		success: function(res) {
+			$('#tctLayer').empty();
 			//var code2="";
 				console.log(res);
 			$.each(res, function(i, v) {
@@ -102,37 +103,8 @@ $.retcommentWriteServer = function() {
 		},
 		dataType: 'json',
 		success: function(res) {
-			level = "";
-			code = "";
-			console.log(res)
-			if (pcommentLevel.indexOf('a1')!=-1) {
-				level = 2;
-			} else if (pcommentLevel.indexOf('a2')!=-1) {
-				level = 3;
-			} else {
-				level = 3
-			}
-			dimg="";
-			if(level!=1){
-					dimg=`<img src='${path}/images/대댓글.png' width="15px" height="15px">`;
-				}
-			code += `<div class="dw a${level}" id="${res.scomment_id}">
-								<img alt="기본프로필.png" src="${path}/images/기본프로필.png" width="40px" height="40px">&nbsp;
-								<span class="writer">익명${res.scomment_writer}</span>&nbsp;&nbsp;
-								<span class="cdate">${res.scomment_cdate}</span><br>
-								${dimg}<span class="content">${reContent}</span><br><br>
-								<input type="button" name="s_insert" idx="${res.scomment_id}" class="action" value="답글달기">&nbsp;`
-					
-					if(res.mem_id==memId){	 //로그인한 아이디오비교
-						
-					code+=			`<input type="button" name="s_delete" idx="${res.scomment_id}" class="action" value="댓글삭제">&nbsp;
-								<input type="button" name="s_modify" idx="${res.scomment_id}" class="action" value="댓글수정">
-							`
-					}
-				code+=`</div>`
-				
-			parentcomment.after(code)
-
+			page=1;
+			$.scommentListServer(1)
 		},
 		error: function(xhr) {
 			alert(xhr.status);
