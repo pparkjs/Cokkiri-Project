@@ -247,6 +247,7 @@ $(document).on('click', '#rt_modify', function(e){
 	height : 40px;
 	color:gray;
 	font-size: 9px;
+	margin-bottom: 6px;
 	
 }
 #rt_insert{

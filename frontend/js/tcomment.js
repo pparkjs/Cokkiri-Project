@@ -48,13 +48,8 @@ $.tcommentListServer = function(page) {
 								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
 								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
 								<span class="cdate">${v.tcomment_cdate}</span><br> 
-								${dimg}<span class="content">삭제된 댓글입니다.</span><br><br>
-								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">`
-				if(v.mem_id==smem_id){	
-							code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
-							`
-					}
+								${dimg}<span class="content">삭제된 댓글입니다.</span><br><br>`
+
 					code+=`</div>`
 				}
 
@@ -159,6 +154,7 @@ $.tcommentDeleteServer = function() {
 		success: function(res) {
 			if (res == 1) {
 				target.find(".content").text("삭제된 댓글 입니다.")
+				target.find("input").remove();
 			} else {
 				alert("다른사람의 댓글입니다.")
 			}
