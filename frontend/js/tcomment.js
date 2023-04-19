@@ -23,14 +23,18 @@ $.tcommentListServer = function(page) {
 				dimg="";
 				if(level!=1){
 					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
+					code += `<div class="dw a${level} son"  id="${v.tcomment_id}">`	
+				}else{
+						code += `<div class="dw a${level}" id="${v.tcomment_id}">`
 				}
 				dsrc='images/기본프로필.png'
 				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
 					dsrc=path+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+					
 				}
 				
 				if (v.tcomment_isremove == 'n') {
-					code += `<div class="dw a${level}" id="${v.tcomment_id}">
+					code += `
 								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
 								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
 								<span class="cdate">${v.tcomment_cdate}</span><br>
@@ -44,7 +48,7 @@ $.tcommentListServer = function(page) {
 					}
 					code+=`</div>`
 				} else if (v.tcomment_isremove == 'y') {
-					code += `<div class="dw a${level}" id="${v.tcomment_id}">
+					code += `
 								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
 								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
 								<span class="cdate">${v.tcomment_cdate}</span><br> 
@@ -113,13 +117,16 @@ $.retcommentWriteServer = function() {
 			dimg="";
 			if(level!=1){
 					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
+					code += `<div class="dw a${level} son"  id="${res.tcomment_id}">`	
+				}else{
+					code += `<div class="dw a${level}"  id="${res.tcomment_id}">`	
 				}
 			dsrc='images/기본프로필.png'
 			if(res.memberVO.mem_image!=null&&res.memberVO.mem_image!=""&&typeof res.memberVO.mem_image!="undefined"){
 				dsrc=path+"/profileImageView.do?mem_id="+res.memberVO.mem_id
 			}	
 				
-			code += `<div class="dw a${level}" id="${res.tcomment_id}">
+			code += `
 								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
 								<span class="writer">${res.memberVO.mem_nickname}</span>
 								<span class="cdate">${res.tcomment_cdate}</span><br>
