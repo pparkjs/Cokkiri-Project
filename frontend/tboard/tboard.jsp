@@ -94,6 +94,7 @@
 #searchl{	
 	flex: 8;
 	text-align: center;
+	position: relative;
 }
 #category{	
 	height: 32px;
@@ -104,7 +105,7 @@
 }
 #searchbtn{	
 	position:absolute;
-	left:710px;
+	left:395px;
     width: 32px;
     height: 32px;
 	border: none;
