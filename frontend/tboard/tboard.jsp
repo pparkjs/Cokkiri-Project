@@ -30,8 +30,8 @@
 }
 .ele{
 	display: inline-block;
-	margin: 10px 19px;
-	padding: 5px;
+	margin: 10px 10px;
+	padding: 10px;
 	border: 1px solid rgb(217, 217, 217);
 	border-radius: 12px;
 	cursor: pointer;
@@ -53,10 +53,10 @@
 	display: inline-block;
     width: 60px;
     text-align:center;
-    color:white;
+    color:rgb(99,99,102);
     border-radius:12px;
-    background: rgb(174,174,178);
-    padding: 2px;
+    background: rgb(229,229,234);
+    padding: 4px;
     margin-right: 8px;
     font-size: 14px;
     font-weight: 400;
@@ -95,6 +95,20 @@
 	flex: 8;
 	text-align: center;
 }
+#category{	
+	height: 32px;
+}
+#search{	
+	height: 28px;
+	width: 250px;
+}
+#searchbtn{	
+	position:absolute;
+	left:710px;
+    width: 32px;
+    height: 32px;
+	border: none;
+}
 #searchr{
 	flex: 1;
 }
@@ -115,6 +129,16 @@
 	border:1px solid rgb(209,209,214);
 	background: white;
 	
+}
+#write{
+	background-color:white;
+	background-image: url(../images/글쓰기.png);
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    border: none;
 }
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
@@ -254,11 +278,11 @@ $((ev)=>{
 					<option id="default">카테고리
 				</select>
 				<input type="text" id="search">
-				<button id="searchbtn">검색</button>
+				<img id="searchbtn" src="<%=request.getContextPath()%>/images/돋보기.png"></button>
 			</div>
 			<div id="rest"></div>	
 			<div id="searchr">
-				<button id="write">글쓰기</button>
+				<button id="write"></button>
 			</div>
 		</div>
 		<div id="btnbar">
