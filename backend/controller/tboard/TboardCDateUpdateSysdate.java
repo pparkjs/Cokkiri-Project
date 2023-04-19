@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import service.tboardService.TboardServiceImpl;
 
 @WebServlet("/tboardCDateUpdateSysdate.do")
@@ -26,16 +29,20 @@ public class TboardCDateUpdateSysdate extends HttpServlet {
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		int res = service.updateTboardCompleteDate(tboardId);
 		String result = null;
-				
+		String tboardState = service.selectTboardState(tboardId);		
+		JsonObject jsonObject = new JsonObject();	
 		if(res == 1) {
-			result = "ok";
-			
+			jsonObject.addProperty("result", "ok");
+			jsonObject.addProperty("tboardState", tboardState);
 		} else {
-			result = "no";
+			jsonObject.addProperty("result", "no");
 		}
 		
-		request.setAttribute("result", result);
-		request.getRequestDispatcher("/view/result.jsp").forward(request, response);
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(jsonObject);
+		response.getWriter().write(json);
+		response.flushBuffer();
 	}
 
 }

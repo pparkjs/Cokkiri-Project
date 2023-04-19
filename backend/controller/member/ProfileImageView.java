@@ -42,7 +42,7 @@ public class ProfileImageView extends HttpServlet {
 			IMemberService service = MemberServiceImpl.getInstance();
 			smem=service.selectMemberinfo(mem_id);
 		}
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "c:/cokkiri/imgServer";
 
 		File f = new File(uploadPath);
 		if(!f.exists()) {

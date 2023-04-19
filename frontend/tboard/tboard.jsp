@@ -8,8 +8,9 @@
 <link rel="stylesheet" href="../css/mycss.css">
 <style type="text/css">
 .btnactive{
-	background: rgb(51, 207, 255) !important;
-	border: 2px solid black !important;
+	background: rgb(56, 102, 233) !important;
+	border: none !important;
+	color: white;
 }
 .img{
 	width: 200px;
@@ -57,6 +58,8 @@
     background: rgb(174,174,178);
     padding: 2px;
     margin-right: 8px;
+    font-size: 14px;
+    font-weight: 400;
 }
 .add{
 	font-weight: 100;
@@ -109,13 +112,10 @@
 	margin-left: 10px;
 	margin-right: 10px;
 	border-radius: 20px;
-	border:none;
-	background: rgb(230, 249, 255);
+	border:1px solid rgb(209,209,214);
+	background: white;
+	
 }
-#btnbar button:hover{
-	background: rgb(204, 243, 255);
-}
-
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
 <script src="../js/tboard.js" type="text/javascript"></script>

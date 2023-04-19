@@ -54,7 +54,7 @@
 		user = mmem_id;
 
 		
-		webSocket = new WebSocket('ws://localhost:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
+		webSocket = new WebSocket('ws://192.168.146.61:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
 	    inputMessage = $("textarea");
 	    
 	    webSocket.onerror = function(event) {
@@ -91,7 +91,7 @@
 		user = mmem_id;
 
 		
-		webSocket = new WebSocket('ws://localhost:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
+		webSocket = new WebSocket('ws://192.168.146.61:8090/cokkiri/Chatting?room_id='+room_id+"&mem_id="+user);
 	    
 	    webSocket.onerror = function(event) {
 	        onError(event)

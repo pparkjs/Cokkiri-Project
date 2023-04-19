@@ -67,8 +67,7 @@ public class TboardWrite extends HttpServlet {
 	  	
 	  	
 	  	
-		// 업로드될 파일 경로 설정
-		String uploadPath = "C:/Users/PC-26/Desktop/tboard_image";
+		String uploadPath = "c:/cokkiri/imgServer";
 
 		// 저장될 폴더가 없으면 새로만든다.
 		File f = new File(uploadPath);
@@ -105,7 +104,7 @@ public class TboardWrite extends HttpServlet {
 
 				// 실제 저장되는 파일 이름이 중복되는 것을 방지하기 위해서 uuid객체를 이용하여
 				// 저장할 파일명을 만든다.
-				String saveFileName = UUID.randomUUID().toString();
+				String saveFileName = UUID.randomUUID().toString()+"_"+fileName;
 
 				// 이 값을 VO에 저장 파일명으로 저장한다.
 				tImageVO.setTimg_save_name(saveFileName);

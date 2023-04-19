@@ -127,13 +127,12 @@
 	align-items: center;
 }
 #notifyAndMylist button{
-	border-radius: 12px;
-	border: none;
-	background-color: white;
-	width:70px;
-	padding: 10px; 
+	background-color: white; 
 	margin: 5px;
-	border:1px solid black;
+	width: 80px;
+    height: 40px;
+    border-radius: 20px;
+    border: 1px solid rgb(209,209,214);
 }
 #notify{
 	flex: 1;
@@ -312,7 +311,7 @@ $(()=>{
 							<div id="addAndNick">
 								<div id = "nick">
 									<%=memberVO.getMem_nickname() %>
-									<%if(!boardVO.getMem_id().equals((String)request.getSession().getAttribute("id"))) {%>
+									<%if(!boardVO.getMem_id().equals(smem.getMem_id())) {%>
 									<button id="chatBtn" type="button">1:1대화</button>
 									<%} %>
 								</div>
