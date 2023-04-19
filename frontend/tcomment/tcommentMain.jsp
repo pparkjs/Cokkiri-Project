@@ -54,7 +54,7 @@ $(document).on('click', '#rt_modify', function(e){
 					}
 				%>
        			 tcommentForm = $('<div>').attr("class","formdiv").append($('<form>').attr('id','retInsert').addClass('re-tInsert').append(
-       				    $('<div>').append(
+       				    $('<div>').attr('class', 'tin').append(
        				        $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
         				    $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
        				        $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').attr('class', 'tf'),
@@ -84,6 +84,8 @@ $(document).on('click', '#rt_modify', function(e){
 			}else if (vacation == "t_delete"){
 				 target = $(this).attr('idx');
 				 target = $("#tctLayer").find("#"+target);
+				 $('.formdiv').remove();
+				 $("#pdiv").remove();
 				  $.tcommentDeleteServer(); 
 				 
 			}else if(vacation == "t_modify"){
@@ -101,7 +103,7 @@ $(document).on('click', '#rt_modify', function(e){
 					}
 				%>
 			    var modifyForm = $('<div>').attr('id', 'pdiv').append($('<form>').attr('id', 'mInsert').addClass('re-tInsert').append(
-			        $('<div>').append(
+			        $('<div>').attr('class', 'tmod').append(
 			            $('<img>').attr('src', '<%=dsrc%>').attr('alt', '<%=dsrc%>').attr('class', 'mrprofile'),
 			            $('<span>').attr('class', 'rmwriter').text('<%=smemVO.getMem_nickname()%>'),
 			            $('<textarea>').attr('rows', '5').attr('cols', '10').attr('id', 'reArea').val(tcon), // 수정할 댓글 내용을 textarea에 세팅
@@ -194,17 +196,18 @@ $(document).on('click', '#rt_modify', function(e){
 	display: flex;
 }
 .re-tInsert span{
-	margin-right: 30px;
 	display: inline-block;
 	vertical-align: top; 
 	margin-bottom: 10px;
 	font-weight: bold;
+	margin-left: 7px;
 }
 #retInsert #reArea{
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
 }
 .action{
 	display: inline-block;
@@ -216,17 +219,16 @@ $(document).on('click', '#rt_modify', function(e){
 	font-size: 14px;
 	font-weight: bold; 
 	color: gray;
-	
+	margin-left: 8px
 }
 #mInsert #reArea {
 	margin-right: 10px;
 	width: 500px;
-	height: 20px;
+	height: 42px;
 	resize: none;
+	margin-left: 7px;
 }
-#rt_modify{ /* 수정버튼 */
-	margin-top: 8px;
-} 
+
 .dw .writer {
 	vertical-align:  middle; 
 	display : inline-block;
@@ -246,11 +248,10 @@ $(document).on('click', '#rt_modify', function(e){
 	height : 40px;
 	color:gray;
 	font-size: 9px;
+	margin-bottom: 6px;
 	
 }
-#rt_insert{
-	margin-top: 8px;
-}
+
 .dw .content {
 	font-size: 13px;
 	padding-top: 10px;
@@ -276,6 +277,8 @@ $(document).on('click', '#rt_modify', function(e){
 	height: 30px;
 	border-radius: 100%;
 }
+.tin{display:flex; align-items: center; margin-top: 8px;}
+.tmod{display:flex; align-items: center; margin-top: 8px;}
 </style>
 </head>	
 <body>
