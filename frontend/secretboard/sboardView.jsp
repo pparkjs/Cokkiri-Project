@@ -86,7 +86,7 @@ function imageView(){
 	</div>
 	
 	<div class="mem_top">
-		<img src="<%=request.getContextPath()%>/images/기본프로필.pngsdf">
+		<img src="<%=request.getContextPath()%>/images/기본프로필.png">
 		<p class="m_writer">익명</p>
 		<p class="m_date"><%= sbList.get(0).getSboard_cdate() %></p>
 	</div>
