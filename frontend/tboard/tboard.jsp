@@ -197,6 +197,7 @@ $((ev)=>{
 	})
 	
 	$(".btns").on("click",function(e){
+		$("#search").val("");
 		flag=false;
 		if($(this).attr("class").indexOf("btnactive")!=-1){
 			flag=true;
