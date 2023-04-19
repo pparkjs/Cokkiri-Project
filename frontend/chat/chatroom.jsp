@@ -36,6 +36,11 @@ function onMessage(event) {
 			noReadCnt = "<div class='nread'>1</div>";
 			message_content = message.message_content;
 			ymem_id=message.ymem.mem_id;
+			
+			mem_add=message.ymem.mem_add
+			findex = mem_add.indexOf(" ");
+			mem_add = mem_add.substring(findex+1,mem_add.length)
+			
 			code=""
 			code+="<div class='rooms' id='"+message.room_id+"'>"
 			code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
@@ -134,12 +139,15 @@ function chatListLoad(){
 					if(typeof v.yourMember.mem_image!='undefined' && v.yourMember.mem_image!=null && v.yourMember.mem_image!=""){
 						src = "<%=request.getContextPath()%>/profileImageView.do?mem_id="+v.yourMember.mem_id
 					}
-					
+					//대전 오류동 어디어디
+					mem_add=v.yourMember.mem_add
+					findex = mem_add.indexOf(" ");
+					mem_add = mem_add.substring(findex+1,mem_add.length)
 					code=""
 					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
 					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="'+src+'"></div>'
 					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
-					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<span class='pspan'>"+mem_add+" · "+noReadCnt+"</span>"
 					code+="<p>"+v.LastMessageVO.message_content+"</p>"
 					code+="</div></div>"
 					$("#chatList").append(code);
@@ -223,11 +231,15 @@ function chatListReload(){
 					mmem_id=v.myMember.mem_id;
 					message_content = v.LastMessageVO.message_content;
 					
+					mem_add=v.yourMember.mem_add
+					findex = mem_add.indexOf(" ");
+					mem_add = mem_add.substring(findex+1,mem_add.length)
+					
 					code=""
 					code+="<div class='rooms' id='"+v.chatRoomVO.room_id+"'>"
 					code+='<div class="profilediv"><img class="profile" alt="../images/기본프로필.png" src="../images/기본프로필.png"></div>'
 					code+="<div class='chatinfo'><h3>"+v.yourMember.mem_nickname+"</h3>"
-					code+="<span class='pspan'>"+v.yourMember.mem_add+" · "+noReadCnt+"</span>"
+					code+="<span class='pspan'>"+mem_add+" · "+noReadCnt+"</span>"
 					code+="<p>"+v.LastMessageVO.message_content+"</p>"
 					code+="</div></div>"
 					$("#chatList").append(code);
@@ -359,7 +371,7 @@ $(()=>{
 					if(i==res.mlist.length-1){
 						datespan.text(elapsedTime(v.message_cdate));
 						$("#typing").empty();
-						$("#typing").append($("<textarea rows='5' cols='80'></textarea>")).append($("<button id='send'>전송</button>"))
+						$("#typing").append($("<textarea rows='5' cols='70'></textarea>")).append($("<button id='send'>전송</button>"))
 					}
 				})
 				
@@ -416,7 +428,9 @@ $(()=>{
 	border: 2px solid gray;
 	border-radius: 12px;
 }
-
+.rooms:last-child{
+	border-bottom:2px solid gray;
+}
 #chatRoom{
 	flex: 2;
 	display: flex;
@@ -437,7 +451,8 @@ $(()=>{
   display: none;
 }
 #typing{
-	flex: 1
+	flex: 1;
+	display: flex;
 }
 .profile{
 	width: 50px;
@@ -453,9 +468,7 @@ $(()=>{
 	border-bottom: 1px solid gray;
 	height: 70px;
 }
-.rooms:last-child{
-	border-bottom:2px solid gray;
-}
+
 .chatinfo{
 	flex: 4;
 }
@@ -540,6 +553,8 @@ textarea {
 	margin-top: 10px;
 	border: 1px solid gray;
     resize: none;	
+    margin-left: 30px;
+    margin-bottom: 10px;
 }
 .chatdate{
 	text-align: center;
@@ -560,6 +575,12 @@ textarea {
 	font-size: 12px;
 	margin: 0 5px;
 	color:  rgb(255, 204,0);
+}
+#send{
+	margin: 5px;
+    width: 70px;
+    margin-top: 80px;
+    margin-bottom: 10px;
 }
 </style>
 </head>
