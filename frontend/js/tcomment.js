@@ -11,6 +11,7 @@ $.tcommentListServer = function(page) {
 		success: function(res) {
 			/* alert("성공"); */
 			//var code2="";
+			$('#tctLayer').empty();
 			$.each(res, function(i, v) {
 				tcontent = v.tcomment_content;
 				//				cont = cont.replaceAll(/\n/g, "<br>");
@@ -56,7 +57,6 @@ $.tcommentListServer = function(page) {
 
 					code+=`</div>`
 				}
-
 				$('#tctLayer').append(code);
 			})
 
@@ -104,43 +104,7 @@ $.retcommentWriteServer = function() {
 		},
 		dataType: 'json',
 		success: function(res) {
-			level = "";
-			code = "";
-			console.log(pcommentLevel)
-			if (pcommentLevel.indexOf('a1')!=-1) {
-				level = 2;
-			} else if (pcommentLevel.indexOf('a2')!=-1) {
-				level = 3;
-			} else {
-				level = 3
-			}
-			dimg="";
-			if(level!=1){
-					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
-					code += `<div class="dw a${level} son"  id="${res.tcomment_id}">`	
-				}else{
-					code += `<div class="dw a${level}"  id="${res.tcomment_id}">`	
-				}
-			dsrc='images/기본프로필.png'
-			if(res.memberVO.mem_image!=null&&res.memberVO.mem_image!=""&&typeof res.memberVO.mem_image!="undefined"){
-				dsrc=path+"/profileImageView.do?mem_id="+res.memberVO.mem_id
-			}	
-				
-			code += `
-								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
-								<span class="writer">${res.memberVO.mem_nickname}</span>
-								<span class="cdate">${res.tcomment_cdate}</span><br>
-								${dimg}<span class="content">${reContent}</span><br><br>
-								<input type="button" name="t_insert" idx="${res.tcomment_id}" class="action" value="답글달기">`
-					
-					if(res.mem_id==smem_id){	
-						
-					code+=			`<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">
-							`
-					}
-				code+=`</div>`
-			parentcomment.after(code)
+			$.tcommentListServer(1)
 
 		},
 		error: function(xhr) {
