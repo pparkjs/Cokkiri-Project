@@ -174,12 +174,13 @@ $(document).on('click', '#rt_modify', function(e){
 }
  #btn {
 	display: inline-block;
-	vertical-align: top;
-	color: black;
-	border: none;
-	background: rgb(199,199,204);
-	font-style: oblique;
-	padding: 10px
+    vertical-align: top;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: rgb(56,102,233);
+    padding: 6px 17px;
+    border-radius: 1268px;
 } 
 .a1{
 	padding-left: 10px;

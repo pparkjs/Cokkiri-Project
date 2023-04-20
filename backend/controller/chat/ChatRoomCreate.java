@@ -32,7 +32,6 @@ public class ChatRoomCreate extends HttpServlet {
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		Long tboard_id= Long.parseLong(request.getParameter("tboard_id"));
 		String fmessage = request.getParameter("fmessage");
-		
 		IChatService service = ChatServiceImpl.getInstance();
 		ChatRoomVO chatRoomVO = new ChatRoomVO();
 		chatRoomVO.setMem_id(smem.getMem_id());

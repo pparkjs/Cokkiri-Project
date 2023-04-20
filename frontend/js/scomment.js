@@ -9,6 +9,71 @@ $.scommentListServer = function(page) {
 		},
 		dataType: 'json',
 		success: function(res) {
+			//var code2="";
+				console.log(res);
+			$.each(res, function(i, v) {
+				scontent = v.scomment_content;
+				//				cont = cont.replaceAll(/\n/g, "<br>");
+				level = v.level
+				if (level > 3) {
+					level = 3;
+				}
+				var code = "";
+				//console.log(v.level)
+				dimg="";
+				if(level!=1){
+					dimg=`<img src="${path}/images/대댓글.png" width="15px" height="15px">`;
+				}
+				if (v.scomment_isremove == 'n') { // 삭제 안된 거 일때
+				
+				 
+					code += `<div class="dw a${level}" id="${v.scomment_id}">
+								<img alt="기본프로필.png" src="${path}/images/기본프로필.png" width="40px" height="40px">`
+				 if(v.mem_id == boardWriterId){					
+					code +=		`<span  class="writer" class="writer">익명(글쓴이)</span>&nbsp;&nbsp;`
+				 }else{
+					code +=		`<span  class="writer" class="writer">익명${v.scomment_writer}</span>&nbsp;&nbsp;`
+				 }
+					code +=		`<span class="cdate">${v.scomment_cdate}</span><br>
+								${dimg}<span class="content">${scontent}</span><br><br>
+								<input type="button" name="s_insert" idx="${v.scomment_id}" class="action" value="답글달기">&nbsp;`
+				if(v.mem_id==memId){	//로그인한 내가 쓴건지 비교
+						
+					code+=			`<input type="button" name="s_delete" idx="${v.scomment_id}" class="action" value="댓글삭제">&nbsp;
+								<input type="button" name="s_modify" idx="${v.scomment_id}" class="action" value="댓글수정">
+							`
+					}
+					code+=`</div>`
+				} else if (v.scomment_isremove == 'y') { //삭제 된 거 일때
+					code += `<div class="dw a${level}" id="${v.scomment_id}">
+								<img alt="기본프로필.png" src="${path}/images/기본프로필.png" width="40px" height="40px">&nbsp;
+								<span  class="writer" class="writer">익명${v.scomment_writer}</span>&nbsp;&nbsp;
+								<span class="cdate">${v.scomment_cdate}</span><br> 
+								${dimg}<span class="content">삭제된 댓글입니다.</span><br><br>`
+					code+=`</div>`
+				}
+
+				$('#tctLayer').append(code);
+			})
+
+		},
+		error: function(xhr) {
+			alert('상태: ' + xhr.status);
+		}
+	})
+}
+
+
+$.scommentListServer2 = function(page) {
+	$.ajax({
+		url: `${path}/scommentList.do`,
+		type: 'post',
+		data: {
+			"sboardId": boardId, // sboard_id
+			"page": page
+		},
+		dataType: 'json',
+		success: function(res) {
 			$('#tctLayer').empty();
 			//var code2="";
 				console.log(res);
@@ -64,6 +129,8 @@ $.scommentListServer = function(page) {
 	})
 }
 
+
+
 // 댓글 등록
 $.scommentWriteServer = function() {
 	$.ajax({
@@ -104,7 +171,7 @@ $.retcommentWriteServer = function() {
 		dataType: 'json',
 		success: function(res) {
 			page=1;
-			$.scommentListServer(1)
+			$.scommentListServer2(1)
 		},
 		error: function(xhr) {
 			alert(xhr.status);

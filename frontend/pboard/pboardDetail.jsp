@@ -23,6 +23,7 @@
 <script >
 
 boardId = `<%=pbList.get(0).getPboard_id()%>`;
+pboard_id = `<%=pbList.get(0).getPboard_id()%>`;
 memId = `<%=memVo.getMem_id()%>`;
 mypath = `<%=request.getContextPath()%>`;
 boardWriterId = `<%=pbList.get(0).getMem_id()%>`;
@@ -110,10 +111,10 @@ if(writerVo.getMem_image()!=null){
 					src="<%=profilesrc%>">
 			</div>
 			<span   style="font-size: 22px;" class="feed_name_txt" ><%=pbList.get(0).getMem_id()%> </span>
-			<p class="m_date" style="font-size: 17px;  margin-left: 430px;"><%= pbList.get(0).getPboard_cdate() %></p>
+			<p class="m_date"><%= pbList.get(0).getPboard_cdate() %></p>
 		</div>
 
-		<div class="mem_img" style="width:730px; height:760; margin-bottom: 50px; margin-left: 85px;">
+		<div class="mem_img" style="width:802px; height:760; margin-bottom: 50px; margin: 0 auto;">
 		</div>
 	
 
@@ -149,11 +150,13 @@ if(writerVo.getMem_image()!=null){
 				<%} %>
 			</div>
 			<br>
-			<div id="map" style="width: 80%; height: 300px; margin-left : 90px; border-top: 1px solid lightgray;" ></div>
+			<div id="map" style="width: 100%; height: 430px; border-top: 1px solid lightgray;" ></div>
 			
-<!-- 			<div class="pcommentdiv"> -->
-<%-- 	    		<%@ include file="/pcomment/pcommentMain.jsp" %> --%>
-<!-- 	    	</div> -->
+			
+			<div id="pcommentdiv">
+				<%@ include file="/pcomment/pcommentMain.jsp" %>
+			</div>
+			
 		</div>
 </div>	
 

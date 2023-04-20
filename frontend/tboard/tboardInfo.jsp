@@ -93,7 +93,7 @@
 #userinfo{
 	display: flex;
 	flex-direction: row;
-	padding-bottom: 5px;
+	padding-bottom: 13px;
 	padding-top: 20px;
 	padding-left: 8px;
 }
@@ -106,12 +106,19 @@
 	flex: 1;
 }
 #addAndNick{
-	flex:4;
+	flex:10;
 	text-align: left;
 }
 
 #chatBtn{
-	border: 1px solid black;
+	display: inline-block;
+    vertical-align: top;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: rgb(56,102,233);
+    padding: 6px 17px;
+    border-radius: 1268px;
 }
 #rest1{
 	flex: 6;
@@ -127,12 +134,12 @@
 	align-items: center;
 }
 #notifyAndMylist button{
-	background-color: white; 
-	margin: 5px;
-	width: 80px;
-    height: 40px;
+	 background-color: white;
+    margin: 5px;
+    width: 40px;
+    height: 27px;
     border-radius: 20px;
-    border: 1px solid rgb(209,209,214);
+    border: none;
 }
 #notify{
 	flex: 1;
@@ -332,7 +339,7 @@ $(()=>{
 								<div id = "nick">
 									<%=memberVO.getMem_nickname() %>
 									<%if(!boardVO.getMem_id().equals(smem.getMem_id())) {%>
-									<button id="chatBtn" type="button">1:1대화</button>
+									<button id="chatBtn" type="button">채팅하기</button>
 									<%} %>
 								</div>
 								<div id = "add">

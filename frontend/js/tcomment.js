@@ -11,7 +11,6 @@ $.tcommentListServer = function(page) {
 		success: function(res) {
 			/* alert("성공"); */
 			//var code2="";
-			$('#tctLayer').empty();
 			$.each(res, function(i, v) {
 				tcontent = v.tcomment_content;
 				//				cont = cont.replaceAll(/\n/g, "<br>");
@@ -67,6 +66,74 @@ $.tcommentListServer = function(page) {
 	})
 }
 
+$.tcommentListServer2 = function(page) {
+	$.ajax({
+		url: `${path}/tcommentList.do`,
+		type: 'post',
+		data: {
+			"tboardId": tboard_id, // tboard_id
+			"page": page,
+		},
+		dataType: 'json',
+		success: function(res) {
+			/* alert("성공"); */
+			//var code2="";
+			$.each(res, function(i, v) {
+				tcontent = v.tcomment_content;
+				//				cont = cont.replaceAll(/\n/g, "<br>");
+				level = v.level
+				if (level > 3) {
+					level = 3;
+				}
+				var code = "";
+				//console.log(v.level)
+				dimg="";
+				if(level!=1){
+					dimg=`<img src='images/대댓글.png' width="15px" height="15px">`;
+					code += `<div class="dw a${level} son"  id="${v.tcomment_id}">`	
+				}else{
+						code += `<div class="dw a${level}" id="${v.tcomment_id}">`
+				}
+				dsrc='images/기본프로필.png'
+				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
+					dsrc=path+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+					
+				}
+				
+				if (v.tcomment_isremove == 'n') {
+					code += `
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
+								<span class="cdate">${v.tcomment_cdate}</span><br>
+								${dimg}<span class="content">${tcontent}</span><br><br>
+								<input type="button" name="t_insert" idx="${v.tcomment_id}" class="action" value="답글달기">`
+				if(v.mem_id==smem_id){	
+						
+					code+=			`<input type="button" name="t_delete" idx="${v.tcomment_id}" class="action" value="댓글삭제">
+								<input type="button" name="t_modify" idx="${v.tcomment_id}" class="action" value="댓글수정">
+							`
+					}
+					code+=`</div>`
+				} else if (v.tcomment_isremove == 'y') {
+					code += `
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
+								<span class="cdate">${v.tcomment_cdate}</span><br> 
+								${dimg}<span class="content">삭제된 댓글입니다.</span><br><br>`
+
+					code+=`</div>`
+				}
+				$('#tctLayer').append(code);
+			})
+
+		},
+		error: function(xhr) {
+			alert(xhr.status);
+		}
+	})
+}
+
+
 // 댓글 등록
 $.tcommentWriteServer = function() {
 	$.ajax({
@@ -105,7 +172,7 @@ $.retcommentWriteServer = function() {
 		dataType: 'json',
 		success: function(res) {
 			page=1;
-			$.tcommentListServer(1)
+			$.tcommentListServer2(1)
 
 		},
 		error: function(xhr) {
