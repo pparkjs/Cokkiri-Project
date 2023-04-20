@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<%
+MemberVO memVo = (MemberVO)session.getAttribute("memberVo");	
+%>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -30,8 +33,8 @@
 }
 .ele{
 	display: inline-block;
-	margin: 10px 19px;
-	padding: 5px;
+	margin: 10px 10px;
+	padding: 10px;
 	border: 1px solid rgb(217, 217, 217);
 	border-radius: 12px;
 	cursor: pointer;
@@ -53,10 +56,10 @@
 	display: inline-block;
     width: 60px;
     text-align:center;
-    color:white;
+    color:rgb(99,99,102);
     border-radius:12px;
-    background: rgb(174,174,178);
-    padding: 2px;
+    background: rgb(229,229,234);
+    padding: 4px;
     margin-right: 8px;
     font-size: 14px;
     font-weight: 400;
@@ -81,7 +84,6 @@
 	height:80px;
 	margin: 0 auto;
 	padding-right: 50px;
-	border-top: 2px solid rgb(217, 217, 217);
 	border-bottom: 2px solid rgb(217, 217, 217);
 	justify-content: center;
 	align-items:center;
@@ -94,6 +96,21 @@
 #searchl{	
 	flex: 8;
 	text-align: center;
+	position: relative;
+}
+#category{	
+	height: 32px;
+}
+#search{	
+	height: 28px;
+	width: 250px;
+}
+#searchbtn{	
+	position:absolute;
+	left:395px;
+    width: 32px;
+    height: 32px;
+	border: none;
 }
 #searchr{
 	flex: 1;
@@ -115,6 +132,20 @@
 	border:1px solid rgb(209,209,214);
 	background: white;
 	
+}
+#write{
+	background-color:white;
+	background-image: url(../images/글쓰기.png);
+    background-repeat: no-repeat;
+    background-size: 28px 28px;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    border: none;
+}
+#btn{
+	width: 60px;
+	height: 30px;
 }
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
@@ -197,6 +228,7 @@ $((ev)=>{
 	})
 	
 	$(".btns").on("click",function(e){
+		$("#search").val("");
 		flag=false;
 		if($(this).attr("class").indexOf("btnactive")!=-1){
 			flag=true;
@@ -243,7 +275,11 @@ $((ev)=>{
 <body>
 
     <div class="wrap">
-        <%@ include file="/module/header.jsp" %>
+        <%if(memVo.getAdmin_auth().equals("N")){ %> 
+		<%@ include file="/module/header.jsp" %>
+		<%}else{ %>
+		<%@ include file="/module/adminHeader.jsp" %>
+		<%} %>
 
 
 		<div id="out">
@@ -253,11 +289,15 @@ $((ev)=>{
 					<option id="default">카테고리
 				</select>
 				<input type="text" id="search">
-				<button id="searchbtn">검색</button>
+				<img id="searchbtn" src="<%=request.getContextPath()%>/images/돋보기.png">
 			</div>
 			<div id="rest"></div>	
 			<div id="searchr">
-				<button id="write">글쓰기</button>
+				<%if(memVo.getAdmin_auth().equals("N")){ %> 
+					<button id="write"></button>
+				<%}else{ %>
+					
+				<%} %>
 			</div>
 		</div>
 		<div id="btnbar">
@@ -269,7 +309,7 @@ $((ev)=>{
 		
 		</div>
 		<div id="under">
-			<button id="btn">목록 더보기</button>
+			<img src='../images/더보기버튼.png' id="btn"> </img>
 		</div>
 		</div>
 

@@ -29,7 +29,7 @@ public class TboardCDateUpdateNull extends HttpServlet {
 		TboardServiceImpl service = TboardServiceImpl.getInstance();
 		int res = service.updateTboardCompleteDateNull(tboardId);
 		String tboardState = service.selectTboardState(tboardId);
-		
+		System.out.println(tboardId);
 		
 		JsonObject jsonObject = new JsonObject();	
 		if(res == 1) {

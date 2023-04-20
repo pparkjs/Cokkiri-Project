@@ -34,15 +34,12 @@
 
 <!-- 댓글 리스트  -->
 <select id="getAllTcomment" resultType="tcommentVo" parameterType="tcommentVo">
-  
+    
   <![CDATA[
  SELECT *
 FROM (
   SELECT rownum rn, level, tcomment_id, tcomment_pid, tboard_id, mem_id,
-    CASE
-      WHEN level = 1 THEN tcomment_content 
-      ELSE tcomment_content 
-    END AS tcomment_content, 
+    tcomment_content , 
     CASE
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 THEN '방금전'
       WHEN (SYSDATE - tcomment_cdate) * 24 * 60 * 60 < 60 * 60 THEN CONCAT(FLOOR((SYSDATE - tcomment_cdate) * 24 * 60 * 60 / 60), '분전')

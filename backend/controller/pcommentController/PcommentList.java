@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.pcommenService.IPcommentService;
 import service.pcommenService.PcommentServiceImpl;
+import vo.MemberVO;
 import vo.PcommentVO;
 
 
@@ -34,8 +37,16 @@ public class PcommentList extends HttpServlet {
 		vo.setPboard_id(pboardId);
 		vo.setStartPcomment((page-1)*5+1);
 		vo.setEndPcomment((page)*5);
+		
 		IPcommentService service = PcommentServiceImpl.getInstance();
+		IMemberService service2 = MemberServiceImpl.getInstance();
+		
 		List<PcommentVO> result = service.getAllPcomment(vo);
+		for(int i=0; i<result.size(); i++) {
+			PcommentVO pcommentVO = result.get(i);
+			pcommentVO.setMemberVO(service2.selectMemberinfo(pcommentVO.getMem_id()));
+			result.set(i, pcommentVO);
+		}
 		
 		request.setAttribute("pcommentList", result);
 		request.getRequestDispatcher("/view/pcommentList.jsp").forward(request, response);

@@ -1,8 +1,11 @@
 package dao.pimageDAO;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import util.MybatisSqlSessionFactory;
+import vo.PboardVO;
 import vo.PimageVO;
 
 public class PimageDAOImpl implements IPimageDAO {
@@ -33,12 +36,12 @@ public class PimageDAOImpl implements IPimageDAO {
 	}
 
 	@Override
-	public int deletePimgByPboardId(int pboardId) {
+	public int deletePimgByPboardId(int pbId) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.deletePimgByPboardId", pboardId);
+			cnt = session.delete("pboard.deletePimgByPboardId", pbId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -49,12 +52,12 @@ public class PimageDAOImpl implements IPimageDAO {
 	}
 
 	@Override
-	public int updatePimg(PimageVO vo) {
+	public int pimageUpadateByOldName(PimageVO vo) {
 		SqlSession session = null;
 		int cnt = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			cnt = session.insert("pboard.updatePimg", vo);
+			cnt = session.update("pboard.pimageUpadateByOldName", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -62,6 +65,40 @@ public class PimageDAOImpl implements IPimageDAO {
 			session.close();
 		}
 		return cnt;
+	}
+
+
+	@Override
+	public int pimgCount(int pbId) {
+		SqlSession session = null;
+		int res = 0;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			
+			res = session.selectOne("pboard.pimgCount", pbId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			session.commit();
+			session.close();
+		}
+		return res;
+	}
+
+	@Override
+	public List<PimageVO> selectPimage(int pboard_id) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		List<PimageVO> list = session.selectList("selectPimage",pboard_id);
+		session.close();
+		return list;
+	}
+
+	@Override
+	public PimageVO selectPimageByNo(int pimg_no) {
+		SqlSession session = MybatisSqlSessionFactory.getSqlSession();
+		PimageVO pimageVO= session.selectOne("selectPimageByNo",pimg_no);
+		session.close();
+		return pimageVO;
 	}
 
 }

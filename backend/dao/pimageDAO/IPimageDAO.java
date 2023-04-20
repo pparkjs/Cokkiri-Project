@@ -1,16 +1,24 @@
 package dao.pimageDAO;
 
+import java.util.List;
+
 import vo.PimageVO;
 
 public interface IPimageDAO {
 	
-	// pimage테이블에 사진 insert
+	// pimg 테이블에 사진 insert
 	public int insertPimage(PimageVO vo);
 	
-	// pimage테이블에서 게시글 id와 일치하는 행 제거
-	public int deletePimgByPboardId(int pboardId);
+	// pimg 테이블에서 게시글 id와 일치하는 행 제거
+	public int deletePimgByPboardId(int pbId);
 	
-	//수정
-	public int updatePimg(PimageVO vo);
+	//pimg 테이블 업데이트
+	public int pimageUpadateByOldName(PimageVO vo);
 		
+	// boardId로 이미지 개수 카운트
+	public int pimgCount(int pbId);
+	
+	public List<PimageVO> selectPimage(int pboard_id);
+	
+	public PimageVO selectPimageByNo(int pimg_no);
 }

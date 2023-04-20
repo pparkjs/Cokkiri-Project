@@ -52,7 +52,7 @@ $(function(){
 		console.log(dateView)
 		$('.mDate').append(dateView);
 	<%} %>
-
+	
 })
 
 function imageView(){
@@ -74,7 +74,11 @@ function imageView(){
 </script>
 </head>
 <body>
+<%if(memVo.getAdmin_auth().equals("N")){ %> 
 <%@ include file="/module/header.jsp" %>
+<%}else{ %>
+ <%@ include file="/module/adminHeader.jsp" %>
+<%} %>
 <div class="mem_sboard">
 	<div class="mem_header">
 	<%if(sbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
@@ -93,6 +97,7 @@ function imageView(){
 	
 	<div class="mem_img">
 	</div>
+	
 	
 	<div class="mem_title">
 		<div class="mem_t">

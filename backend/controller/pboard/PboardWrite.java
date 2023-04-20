@@ -12,12 +12,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import service.pboardService.IPboardService;
 import service.pboardService.PboardServiceImpl;
 import service.pimageService.IPimageService;
 import service.pimageService.PimageServiceImpl;
+import vo.MemberVO;
 import vo.PboardVO;
 import vo.PimageVO;
 
@@ -35,26 +37,30 @@ public class PboardWrite extends HttpServlet {
 		
 	}
 
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		
+		HttpSession session = request.getSession();
+		MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
+		String memId = memVo.getMem_id();
+		
 		PboardVO pvo = new PboardVO();
 		
-		pvo.setMem_id(request.getParameter("memId"));
+		pvo.setMem_id(memId);
 		pvo.setPboard_title(request.getParameter("title"));
 		pvo.setPboard_content(request.getParameter("content"));
+//		pvo.setPboard_addr(request.getParameter("place"));
 		
 		IPboardService service = PboardServiceImpl.getInstance();
 		
 		int res = service.insertBoard(pvo);
-		System.out.println("insert res = " + res);
 		
-		String uploadPath = "c:/pimage/file";
+		System.out.println("인설트: " + res);
 		
-		File f = new File(uploadPath);
+		String uploadPath = "c:/cokkiri/imgServer";
 		
+		File f = new File(uploadPath);		
 		// 폴더 없으면 새로 만들기
 		if (!f.exists()) {
 			f.mkdirs();

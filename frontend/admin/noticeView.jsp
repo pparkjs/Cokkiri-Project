@@ -28,16 +28,17 @@ $(function(){
 	})
 	
 	$('.a_back').on('click', function(){
+		
 		location.href="<%=request.getContextPath()%>/admin/noticeboard.jsp";
 	})
 })
 </script>
 </head>
 <body>
-<%if(vo.getMem_id().equals(memVo.getMem_id())){ %>
-<%@ include file="/module/adminHeader.jsp" %>
-<%}else{ %>
+<%if(memVo.getAdmin_auth().equals("N")){ %> 
 <%@ include file="/module/header.jsp" %>
+<%}else{ %>
+ <%@ include file="/module/adminHeader.jsp" %>
 <%} %>
 <div class="admin_notice">
 	<div class="admin_header">

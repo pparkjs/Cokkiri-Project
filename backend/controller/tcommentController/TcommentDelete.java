@@ -33,6 +33,7 @@ public class TcommentDelete extends HttpServlet {
 		ITcommentService service = TcommentServiceImpl.getInstance();
 		MemberVO memberVO = (MemberVO) request.getSession().getAttribute("memberVo");
 		TcommentVO tcomment = service.getTcomment(tcommentId);
+		
 		int result=0;
 		if(memberVO.getMem_id().equals(tcomment.getMem_id())) {
 			result = service.updateTcommentIsremove(tcommentId);

@@ -24,7 +24,7 @@ import vo.TImageVO;
 @WebServlet("/profileImageView.do")
 public class ProfileImageView extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
 
     public ProfileImageView() {
         super();
@@ -35,46 +35,46 @@ public class ProfileImageView extends HttpServlet {
 
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		
+
 		String mem_id = (String)request.getParameter("mem_id");
 		MemberVO smem = (MemberVO)request.getSession().getAttribute("memberVo");
 		if(mem_id!=null) {
 			IMemberService service = MemberServiceImpl.getInstance();
 			smem=service.selectMemberinfo(mem_id);
 		}
-		String uploadPath = "c:/cokkiri/imgServer";
+		String uploadPath = "C:/cokkiri/imgServer";
 
 		File f = new File(uploadPath);
 		if(!f.exists()) {
 			f.mkdirs();
 		}
-		
+
 		String imgPath = uploadPath+File.separator+smem.getMem_image();
 		File imgFile = new File(imgPath);
-		
+
 		if(imgFile.exists()) {
 			BufferedInputStream bin=null;
 			BufferedOutputStream bout = null;
-			
+
 			try {
 				//출력용 스트림 객체 생성
 				bout = new BufferedOutputStream(response.getOutputStream());
 				bin = new BufferedInputStream(new FileInputStream(imgFile));
-				
+
 				byte[] temp = new byte[1024];
 				int len=0;
 				while((len=bin.read(temp))>0) {
 					bout.write(temp,0,len);
 				}
 				bout.flush();
-				
+
 			} catch (Exception e) {
 				System.out.println("입출력 오류: "+e.getMessage());
 			}finally {
 				if(bin!=null) bin.close();
 				if(bout!=null) bout.close();
 			}
-			
+
 		}
 	}
 

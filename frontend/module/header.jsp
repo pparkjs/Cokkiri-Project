@@ -106,7 +106,7 @@ $(()=>{
                    		<a class="a1" href="<%=request.getContextPath()%>/tboard/tboard.jsp">중고거래</a>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
-                    <li><a href="#">마이플레이스</a></li>
+                    <li><a href="<%=request.getContextPath()%>/pboard/pboard.jsp">마이플레이스</a></li>
                     <li><a href="<%=request.getContextPath()%>/admin/memNotice.jsp">공지사항</a></li>
                 </ul>
                 <div class ="navbar__mapLogo">
@@ -149,7 +149,7 @@ $(()=>{
                         <img class="myimage" src='<%=request.getContextPath()%>/images/기본프로필.png' alt="기본프로필.png">
                    		 <div class="sidebar" >
                        		<ul class="sidebar__list">
-                         	  <li><a href="#">My 프로필</a></li>
+                         	  <li><a href="<%=request.getContextPath()%>/mypage/myProfile.jsp">My 프로필</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/mypage/mypageWishList.jsp">관심목록</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/chatRoom.do">채팅방</a></li>
                           	  <li><a href="<%=request.getContextPath()%>/mypage/mypageTboard.jsp">내 글 보기</a></li>
