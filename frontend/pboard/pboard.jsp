@@ -96,7 +96,8 @@ $(function(){
 					<option value="title">제목</option>
 					<option value="content">내용</option>
 					<option value="place">장소</option>
-				</select> <input type="text" class="pb_search" placeholder="  search">
+				</select> 
+				<input type="text" class="pb_search" placeholder="  search">
 				<img id="search" src="<%=request.getContextPath()%>/images/돋보기.png">
 				
 				<%if(memVo.getAdmin_auth().equals("N")){ %> 

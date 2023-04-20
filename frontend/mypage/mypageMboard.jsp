@@ -1,6 +1,7 @@
 <%@page import="vo.MemberVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,17 +9,25 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mainStyle.css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/css/mypage.css">
+<link rel="stylesheet" href="<%=request.getContextPath() %>/css/mypageMboard.css">
 <script type="text/javascript" src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/mypageMboard.js"></script>
 <% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
+<%
+String myprofile = request.getContextPath()+"/images/기본프로필.png";
+if(memVo.getMem_image()!=null){
+	myprofile=request.getContextPath()+"/profileImageView.do";
+}
+%>
 <script type="text/javascript">
 mypath = `<%=request.getContextPath() %>`;
 memId = `<%=memVo.getMem_id()%>`;
+profileImg = `<%=myprofile%>`;
 hit = 0; //조회수
 more = 1; // 더보기 버튼
 $(function() {
 	// 외부스크립트
-	mypageSboardListServer(1,"내글"); 
+	mypageMboardListServer(1,"내글"); 
 	more = 1;
 	btnValue = "";
 	
@@ -28,7 +37,7 @@ $(function() {
 	// 더보기 버튼 클릭시 6개씩 추가
 	$('#more').on('click', function() {
 		more = more + 1;
-		mypageSboardListServer(more, btnValue);
+		mypageSboardListServer(more, btnValue, profileImg);
 	})
 	// 버튼을 누르면 해당 게시물이 나옴
 	// 내글
@@ -36,34 +45,40 @@ $(function() {
 		btnValue = "내글";
 		$('#mypageSboard').empty(); 
 		more = 1;
-		mypageSboardListServer(more, btnValue); 
+		mypageMboardListServer(more, btnValue, profileImg); 
 	})
 	// 댓글
 	$('#commentBtn').on('click', function() {
 		btnValue = "댓글";
 		$('#mypageSboard').empty(); 
 		more = 1;
-		mypageSboardListServer(more, btnValue); 
+		mypageMboardListServer(more, btnValue, profileImg); 
 	})
 	// 좋아요
 	$('#likeBtn').on('click', function() {
 		btnValue = "좋아요";
 		$('#mypageSboard').empty(); 
 		more = 1;
-		mypageSboardListServer(more, btnValue); 
+		mypageMboardListServer(more, btnValue, profileImg); 
 	})
 	// 싫어요
 	$('#nulikeBtn').on('click', function() {
 		btnValue = "싫어요";
 		$('#mypageSboard').empty(); 
 		more = 1;
-		mypageSboardListServer(more, btnValue); 
+		mypageMboardListServer(more, btnValue, profileImg); 
 	})
 	
 	
 	likeOrUnlikeClick();
 })
 </script>
+<style type="text/css">
+.container #containerpMenuRoot #containerpMenu .mboard{
+	color: rgb(56,102,233);
+	font-weight: 600;
+}
+</style>
 </head>
 <body>
 <!-- header -->
@@ -93,7 +108,7 @@ $(function() {
 		<!-- 게시판 리스트 -->
 		<div class="boardList">
 			
-			<div class="mypageSboard">
+			<div class="mypageMboard">
 				<!-- DB에서 게시판 가져오기 -->
 			</div>
 		</div>

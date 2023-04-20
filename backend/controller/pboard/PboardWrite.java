@@ -50,7 +50,7 @@ public class PboardWrite extends HttpServlet {
 		pvo.setMem_id(memId);
 		pvo.setPboard_title(request.getParameter("title"));
 		pvo.setPboard_content(request.getParameter("content"));
-//		pvo.setPboard_addr(request.getParameter("place"));
+		pvo.setPboard_addr(request.getParameter("place"));
 		
 		IPboardService service = PboardServiceImpl.getInstance();
 		
