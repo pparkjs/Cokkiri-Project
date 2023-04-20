@@ -13,9 +13,10 @@
 <script type="text/javascript">
 mypath = '<%=request.getContextPath()%>';
 $(document).on('click', '#rp_modify', function(e){
-	pcontent = $('#pInsert textarea').val();
+	pcontent = $('#pdiv textarea').val();
 	$.pcommentUpdateServer();
 	$('#pdiv').remove();
+	$('#pformdiv').remove();
 })
 page = 1;
 $(function(){
@@ -41,8 +42,8 @@ $(function(){
 		 //console.log(pidx);
 		if (vacation == "p_insert") {
 			$('.pformdiv').remove();
-// 			$("#pdiv").remove();
-			$('re-pInsert').parent('div').remove();
+ 			$("#pdiv").remove();
+
 			
 			// $('.re-pInsert').parent("div").remove();
 			// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
@@ -119,18 +120,10 @@ $(function(){
 		    $(this).after(modifyForm);
 		    
 		    pparent = $(this).parent().find('.content');
-
 		    pmodicont = $('#pmInsert textarea').val(pparent.text());
 		    
 				ptmo = $(modifyForm).parent();
 				
-				// 수정하기 버튼을 클릭해서 수정완료 후 수정하기 버튼을 클릭했을때
-// 			 $(document).on('click', '#rp_modify', function(res){
-// 				 pcontent = $('#pmInsert textarea').val();
-// 				 $.pcommentUpdateServer();
-// 				 $('#pdiv').remove();
-// 			})  
-			// 더보기 버튼 클릭시
 		}else if(vacation == "moreList"){
 				page+=1;
 				$.pcommentListServer(page);
@@ -145,8 +138,6 @@ $(function(){
 </script>
 <style type="text/css">
  #pctLayer{
-	display: flex;
-  	flex-wrap: nowrap;  
   	overflow-x: auto; 
   	padding: 20px;
 } 
@@ -178,24 +169,35 @@ $(function(){
 	padding-top: 8px;
     padding-left: 10px;
 }
+#profile{	width: 35px;
+			height: 35px;
+			border-radius: 100%;}
  #btn {
 	display: inline-block;
-	vertical-align: top;
-	color: black;
-	border: none;
-	background: rgb(209,209,214);
-	font-style: oblique;
-	padding: 10px;
-	cursor: pointer;
+    vertical-align: top;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: rgb(56,102,233);
+    padding: 6px 17px;
+    border-radius: 1268px;
 } 
 .a1{
-	padding-left: 10px;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(174,174,178);
 }
 .a2{
 	padding-left: 50px; 
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(174,174,178);
 }
 .a3{
 	padding-left: 90px;
+	padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(174,174,178);
 }  
 .re-pInsert{ /*댓글 등록, 수정 폼 class 값 */
 	/* margin-top: 20px;
@@ -287,8 +289,8 @@ dw{
 	border:none;
 }
 .mrprofile{
-	width: 30px;
-	height: 30px;
+	width: 35px;
+	height: 35px;
 	border-radius: 100%;
 }
 #moreList{
@@ -303,7 +305,7 @@ dw{
 	<span>댓글</span>&nbsp;&nbsp;
  	<textarea rows="5" cols="10" id="parea" placeholder="댓글을 입력해주세요."></textarea>
  	<input type="button" value="댓글작성" id="btn" name = "pcmt">
-</form><br><br> 
+</form> 
 
 <!-- 처음 댓글 입력 폼이 들어가는 곳 -->
 <div id="pctLayer"></div>

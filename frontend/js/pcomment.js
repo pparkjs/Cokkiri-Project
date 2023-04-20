@@ -9,6 +9,72 @@ $.pcommentListServer = function(page){
 		 dataType : 'json',
 		 success : function(res){
 //			 console.log(res);
+			$.each(res, function(i,v){
+				pcontent = v.pcomment_content;
+//				cont = cont.replaceAll(/\n/g, "<br>");
+				level = v.level
+				if(level>3){
+					level=3;
+				}
+				var code= "";
+				dimg=""
+				if(level!=1){
+					dimg=`<img src='${mypath}/images/대댓글.png' width="15px" height="15px">`;
+					code += `<div class="dw a${level} son"  id="${v.pcomment_id}">`	
+				}else{
+						code += `<div class="dw a${level}" id="${v.pcomment_id}">`
+				}
+				dsrc='images/기본프로필.png'
+				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
+					dsrc=mypath+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+				}
+				
+				if(v.pcomment_isremove=='N'){
+					
+					code += `
+								<img id="profile" alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">
+								<span class="writer">${v.memberVO.mem_nickname}</span>
+								<span class="cdate">${v.pcomment_cdate}</span><br>
+								${dimg}<span class="content">${pcontent}</span><br><br>
+								<input type="button" name="p_insert" idx="${v.pcomment_id}" class="action" value="답글달기">`
+			   if(v.mem_id==memId){	
+						
+					code+=		`<input type="button" name="p_delete" idx="${v.pcomment_id}" class="action" value="댓글삭제">
+								<input type="button" name="p_modify" idx="${v.pcomment_id}" class="action" value="댓글수정">
+							`
+					}
+					code+=`</div>`
+				}else if(v.pcomment_isremove=='Y'){
+					code += `
+								<img alt="기본프로필.png" src="../images/기본프로필.png" width="40px" height="40px">
+								<span  class="writer" class="writer">${v.memberVO.mem_nickname}</span>
+								<span class="cdate">${v.pcomment_cdate}</span><br>
+								${dimg}<span class="content">삭제된 댓글 입니다.</span><br><br>`
+								
+					code+=`</div>`		
+				}
+				
+				$('#pctLayer').append(code);
+			})
+			
+		 },
+		 error  : function(xhr){
+			 alert(xhr.status);
+		 }
+	})
+}
+
+
+$.pcommentListServer2 = function(page){
+	$.ajax({
+		 url: `${mypath}/pcommentList.do`,
+		 type : 'post',
+		 data : {"pboardId" : pboard_id, // pboard_id
+		 		 "page": page
+		 		 }, 
+		 dataType : 'json',
+		 success : function(res){
+//			 console.log(res);
 			$('#pctLayer').empty();
 			$.each(res, function(i,v){
 				pcontent = v.pcomment_content;
@@ -20,14 +86,14 @@ $.pcommentListServer = function(page){
 				var code= "";
 				dimg=""
 				if(level!=1){
-					dimg=`<img src='${mypath}images/대댓글.png' width="15px" height="15px">`;
+					dimg=`<img src='${mypath}/images/대댓글.png' width="15px" height="15px">`;
 					code += `<div class="dw a${level} son"  id="${v.pcomment_id}">`	
 				}else{
 						code += `<div class="dw a${level}" id="${v.pcomment_id}">`
 				}
 				dsrc='images/기본프로필.png'
 				if(v.memberVO.mem_image!=null&&v.memberVO.mem_image!=""&&typeof v.memberVO.mem_image!="undefined"){
-					dsrc=path+"/profileImageView.do?mem_id="+v.memberVO.mem_id
+					dsrc=mypath+"/profileImageView.do?mem_id="+v.memberVO.mem_id
 				}
 				
 				if(v.pcomment_isremove=='N'){
@@ -99,38 +165,8 @@ $.repcommentWriteServer = function(){
 				"pcommentPid" : pcommentPid},
 		dataType : 'json',
 		success : function(res){
-			/*level="";
-			code="";
-			if (ppcommentLevel.indexOf('a1')!=-1) {
-				level = 2;
-			} else if (ppcommentLevel.indexOf('a2')!=-1) {
-				level = 3;
-			} else {
-				level = 3
-			}
-			dimg="";
-			if(level!=1){
-					dimg=`<img src='${mypath}images/대댓글.png' width="15px" height="15px">`;
-				}
-			dsrc='images/기본프로필.png'
-			if(res.memberVO.mem_image!=null&&res.memberVO.mem_image!=""&&typeof res.memberVO.mem_image!="undefined"){
-				dsrc=path+"/profileImageView.do?mem_id="+res.memberVO.mem_id
-			}
-			code += `<div class="dw a${level}" id="${res.pcomment_id}">
-					<img alt="기본프로필.png" src="${dsrc}" width="40px" height="40px">&nbsp;
-					<span  class="writer" class="writer">${res.memberVO.mem_nickname}</span>
-					<span class="cdate">${res.pcomment_cdate}</span><br>
-					${dimg}<span class="content">${reContent}</span><br><br>
-					<input type="button" name="p_insert" idx="${res.pcomment_id}" class="action" value="답글달기">`
-					if(res.mem_id==smem_id){	
-						
-					code+=		`<input type="button" name="t_delete" idx="${res.tcomment_id}" class="action" value="댓글삭제">
-								<input type="button" name="t_modify" idx="${res.tcomment_id}" class="action" value="댓글수정">
-							`
-					}
-				code+=`</div>`
-			pparentcomment.after(code)*/
-			$.pcommentListServer(1)
+			page=1;
+			$.pcommentListServer2(1)
 		},
 		error : function(xhr){
 			alert(xhr.status);
@@ -174,7 +210,7 @@ $.pcommentUpdateServer = function(target){
 		},
 		dataType : 'json',
 		success : function(res){
-			
+			 console.log(pcontent)
 			if(res > 0){
 				pparent.text(pcontent);
 			}

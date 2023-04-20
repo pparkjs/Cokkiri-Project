@@ -107,7 +107,7 @@ function fileAdd() {
 	<%
 	for(PboardVO vo : pbList){
 	%>
-	if("<%= vo.getPimg_origin_name() %>" !== "null") {
+	if("<%= vo.getPrimg_save_name() %>" !== "null") {
 	  const url = "<%=request.getContextPath() %>/PimageSrcView.do?imgName=<%=vo.getPrimg_save_name() %>";
 	  imgUrls.push(url); // 배열에 URL 추가
 	}

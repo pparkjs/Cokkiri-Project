@@ -134,7 +134,10 @@ $(()=>{
 	})
 	$(document).on("click","#send",function(){
 		text = $("#ta").val();
-		if(prechatExist==false){
+		if(text==""){
+			
+		}
+		else if(prechatExist==false){
 			//채팅방 생성후, 소켓 접속 , 메시지 전송후 db저장		
 			$.ajax({
 

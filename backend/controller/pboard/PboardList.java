@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.pboardService.IPboardService;
 import service.pboardService.PboardServiceImpl;
 import service.pimageService.IPimageService;
@@ -65,6 +67,7 @@ public class PboardList extends HttpServlet {
 		String vtext = request.getParameter("pb_search");
 		String region = request.getParameter("region");
 		
+		IMemberService mservice = MemberServiceImpl.getInstance();
 		IPboardService service = PboardServiceImpl.getInstance();
 		IPimageService imgservice = PimageServiceImpl.getInstance();
 		HttpSession session = request.getSession();
@@ -81,6 +84,8 @@ public class PboardList extends HttpServlet {
 			if(ilist!=null&&ilist.size()!=0) {
 				pboardVO.setPboard_fimg(ilist.get(0).getPimg_id());
 			}
+			pboardVO.setWriter(mservice.selectMemberinfo(pboardVO.getMem_id()));
+			
 			list.set(i, pboardVO);
 		}
 		

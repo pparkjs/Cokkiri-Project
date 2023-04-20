@@ -10,7 +10,7 @@
 
 <% List<PboardVO> pbList = (List<PboardVO>)session.getAttribute("pbList"); %>
 <% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
- 
+<% MemberVO writerVo = (MemberVO)session.getAttribute("writer"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -23,6 +23,7 @@
 <script >
 
 boardId = `<%=pbList.get(0).getPboard_id()%>`;
+pboard_id = `<%=pbList.get(0).getPboard_id()%>`;
 memId = `<%=memVo.getMem_id()%>`;
 mypath = `<%=request.getContextPath()%>`;
 boardWriterId = `<%=pbList.get(0).getMem_id()%>`;
@@ -94,20 +95,26 @@ function imageView(){
 	</div>
 	
 	
+<% 
+String profilesrc="../images/기본프로필.png";
 
+if(writerVo.getMem_image()!=null){
+    profilesrc=request.getContextPath()+"/profileImageView.do?mem_id="+writerVo.getMem_id();
+}
+%>
 
 <div class="main_body">
 	<div class="feed_box2">
 		<div class="feed_name">
 			<div class="profile_box">
 				<img class="profile_img"
-					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHYYkHVAza2xsjRZ977X0TE-LGNLaFM9uY0A&usqp=CAU">
+					src="<%=profilesrc%>">
 			</div>
 			<span   style="font-size: 22px;" class="feed_name_txt" ><%=pbList.get(0).getMem_id()%> </span>
-			<p class="m_date" style="font-size: 17px;  margin-left: 430px;"><%= pbList.get(0).getPboard_cdate() %></p>
+			<p class="m_date"><%= pbList.get(0).getPboard_cdate() %></p>
 		</div>
 
-		<div class="mem_img" style="width:730px; height:760; margin-bottom: 50px; margin-left: 85px;">
+		<div class="mem_img" style="width:802px; height:760; margin-bottom: 50px; margin: 0 auto;">
 		</div>
 	
 
@@ -143,54 +150,38 @@ function imageView(){
 				<%} %>
 			</div>
 			<br>
-			<div id="map" style="width: 80%; height: 300px; margin-left : 90px; border-top: 1px solid lightgray;" ></div>
+			<div id="map" style="width: 100%; height: 430px; border-top: 1px solid lightgray;" ></div>
 			
-<!-- 			<div class="pcommentdiv"> -->
-<%-- 	    		<%@ include file="/pcomment/pcommentMain.jsp" %> --%>
-<!-- 	    	</div> -->
+			
+			<div id="pcommentdiv">
+				<%@ include file="/pcomment/pcommentMain.jsp" %>
+			</div>
+			
 		</div>
 </div>	
 
 
 <script>
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-mapOption = {
-    center: new kakao.maps.LatLng(36.350536229269395, 127.3849643404652), // 지도의 중심좌표
+mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+mapOption = { 
+    center: new kakao.maps.LatLng<%=pbList.get(0).getPboard_addr()%>, // 지도의 중심좌표
     level: 3 // 지도의 확대 레벨
-};  
+};
 
-//지도를 생성  
-var map = new kakao.maps.Map(mapContainer, mapOption); 
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-//주소-좌표 변환 객체 생성
-var geocoder = new kakao.maps.services.Geocoder();
-//var location = $('#v3').val();
+//마커가 표시될 위치입니다 
+var markerPosition  = new kakao.maps.LatLng<%=pbList.get(0).getPboard_addr()%>; 
 
-//주소로 좌표를 검색 대전 중구 계룡로 860-9 
-geocoder.addressSearch('<%=pbList.get(0).getPboard_addr()%>', function(result, status) {
-	console.log(result)
-// 정상적으로 검색이 완료됐으면 
- if (status === kakao.maps.services.Status.OK) {
+//마커를 생성합니다
+var marker = new kakao.maps.Marker({
+position: markerPosition
+});
 
-    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+//마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
 
-    // 결과값으로 받은 위치를 마커로 표시
-    var marker = new kakao.maps.Marker({
-        map: map,
-        position: coords
-    });
-
-    // 인포윈도우로 장소에 대한 설명을 표시
-    var infowindow = new kakao.maps.InfoWindow({
-        content: '<div style="width:150px;text-align:center;padding:6px 0;">Here!</div>'
-    });
-    infowindow.open(map, marker);
-
-    // 지도의 중심을 결과값으로 받은 위치로 이동
-    map.setCenter(coords);
-} 
-});    
 
 
 </script>

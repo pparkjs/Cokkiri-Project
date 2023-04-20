@@ -93,7 +93,7 @@
 #userinfo{
 	display: flex;
 	flex-direction: row;
-	padding-bottom: 5px;
+	padding-bottom: 13px;
 	padding-top: 20px;
 	padding-left: 8px;
 }
@@ -106,12 +106,19 @@
 	flex: 1;
 }
 #addAndNick{
-	flex:4;
+	flex:10;
 	text-align: left;
 }
 
 #chatBtn{
-	border: 1px solid black;
+	display: inline-block;
+    vertical-align: top;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: rgb(56,102,233);
+    padding: 6px 17px;
+    border-radius: 1268px;
 }
 #rest1{
 	flex: 6;
@@ -127,12 +134,12 @@
 	align-items: center;
 }
 #notifyAndMylist button{
-	background-color: white; 
-	margin: 5px;
-	width: 80px;
-    height: 40px;
+	 background-color: white;
+    margin: 5px;
+    width: 40px;
+    height: 27px;
     border-radius: 20px;
-    border: 1px solid rgb(209,209,214);
+    border: none;
 }
 #notify{
 	flex: 1;
@@ -215,6 +222,18 @@
 .navbar__mapLogo{
 	text-align: left;
 }
+.state{
+	display: inline-block;
+    width: 60px;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    background: rgb(174,174,178);
+    padding: 2px;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 400;
+}
 </style>
 <%
 List<TImageVO> list = (List<TImageVO>)request.getAttribute("img"); 
@@ -247,6 +266,10 @@ $(()=>{
 		location.href=`\${path}/chatRoomCreate.do?tboard_id=\${tboard_id}`
 	})
 	
+	
+	$(document).on("click",".ele",function(){
+		location.href="<%=request.getContextPath()%>/tboardInfo.do?id="+$(this).attr("id")		
+	})
 })
 </script>
 </head>
@@ -316,7 +339,7 @@ $(()=>{
 								<div id = "nick">
 									<%=memberVO.getMem_nickname() %>
 									<%if(!boardVO.getMem_id().equals(smem.getMem_id())) {%>
-									<button id="chatBtn" type="button">1:1대화</button>
+									<button id="chatBtn" type="button">채팅하기</button>
 									<%} %>
 								</div>
 								<div id = "add">

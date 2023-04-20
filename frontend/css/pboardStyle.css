@@ -75,7 +75,7 @@
 .writebody h1 {margin-bottom: 20px;}
 
 
-.rg_images, .title, .content{display : flex; margin-top: 25px;}
+.rg_images, .title{display : flex; margin-top: 25px;}
 .text{position: relative;  font-size: 25px; width:150px; margin-left:20px; }
 .text span{font-size:13px;}
 
@@ -130,10 +130,10 @@
 .feed_content{padding: 0px 10px; margin-bottom: 10px;}
 .feed_like{padding: 0px 10px;}
 .feed_reply{padding: 0px 10px; display: flex; flex-direction: column; margin-top: 20px;}
-.feed_txt{font-size: 18px;  margin-left: 40px;}
-.feed_name{padding: 10px; display: flex; align-items: center; margin-top: 20px; margin-bottom: 20px; margin-left: 70px;}
+.feed_txt{font-size: 18px;  margin-left: 40px; margin-top: 30px;}
+.feed_name{padding: 10px; display: flex; align-items: center; margin-top: 20px; margin-bottom: 20px;  margin-left: 40px;}
 .feed_name_txt{font-size: 14px; padding: 0px 10px; font-weight: bold;}
-.profile_box {width: 40px; height: 40px; border-radius: 70%; overflow: hidden;}
+.profile_box {width: 60px; height: 60px; border-radius: 70%; overflow: hidden;}
 .profile_img {width: 100%; height: 100%; object-fit: cover;}
 .name_content{display: flex; flex-direction: column;}
 .name_content_txt{
@@ -146,7 +146,7 @@
     white-space: nowrap;
     width: 190px;
 }
-
+.m_date{margin-left: 475px; font-size: 17px;}
 .big_profile_box {
     width: 60px;
     height: 60px;
@@ -167,12 +167,12 @@
 .mem_content .mem_ct{margin-top: 35px; font-size: 18px; word-break: break-all;}
 .mDate{color : rgb(174, 174, 178); font-size : 14px; margin-top: 17px;}
 
-.mem_btns{display : flex; margin-top:35px; margin-bottom : 20px; margin-left: 12px;}
+.mem_btns{display : flex; margin-top:35px; margin-bottom : 20px; margin-left: 46px;}
 
 .mem_btns img{width : 30px; height : 30px; }
 #mLike{cursor: pointer;}
 #mUnlike{cursor: pointer;}
-#mNotify{cursor: pointer;}
+#mNotify{cursor: pointer; margin-left: 337px;}
 .mem_btns div{display : flex; justify-content: center; align-items: center;}
 .m_notify{margin-left : 246px;}
 .m_like, .m_unlike{margin-left: 30px;}

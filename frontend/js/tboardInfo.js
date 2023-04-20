@@ -118,15 +118,20 @@ recommendlistRecieve = function(category,curtboard_id) {
 				} else {
 					img = `${path}/images/TboardImageView.do?imgno=${img}`;
 				}
+				
+				vstate=v["boardVO"]["tboard_state"]
+				if(v.boardVO.tboard_completedate!=null&&typeof v.boardVO.tboard_completedate!="undefined"&&v.boardVO.tboard_completedate!=""){
+					vstate = "거래완료"
+				}
 				$img = $("<img class='img' src='" + img + "'>")
 
 				$ptitle = $("<p class='nomargin title'>" + v["boardVO"]["tboard_title"] + "</p>")
 
-				$pprice = $("<p class='nomargin price'>" + v["boardVO"]["tboard_price"] + "원</p>")
+				$pprice = $("<p class='nomargin price'><span class='state'>"+vstate+"</span>" + v["boardVO"]["tboard_price"] + "원</p>")
 
 				$padd = $("<p class='nomargin add'>" + v["writer"]["mem_add"] + "</p>")
 
-				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " 찜 " + v["mylist"] + "</p>")
+				$pview = $("<p class='nomargin viewcnt'>조회수 " + v["boardVO"]["tboard_hit"] + " · 찜 " + v["mylist"] + "</p>")
 
 				$div.append($img).append($ptitle).append($pprice).append($padd).append($pview)
 

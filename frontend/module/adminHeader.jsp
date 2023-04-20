@@ -22,7 +22,7 @@
                 </div>
                 <ul class="navbar__board">
                     <li class="item">
-                   		<a class="a1" href="<%=request.getContextPath()%>/admin/memManagement.jsp">회원관리</a>
+                   		<a href="<%=request.getContextPath()%>/admin/memManagement.jsp">회원관리</a>
                     </li>
                     <li><a href="<%=request.getContextPath()%>/tboard/tboard.jsp">중고거래</a></li>
                     <li><a href="<%=request.getContextPath()%>/secretboard/sboard.jsp">비밀게시판</a></li>
