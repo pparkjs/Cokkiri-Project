@@ -143,6 +143,10 @@ MemberVO memVo = (MemberVO)session.getAttribute("memberVo");
     background-position: center;
     border: none;
 }
+#btn{
+	width: 60px;
+	height: 30px;
+}
 </style>
 <script src="../js/jquery-3.6.4.min.js" type="text/javascript"></script>
 <script src="../js/tboard.js" type="text/javascript"></script>
@@ -305,7 +309,7 @@ $((ev)=>{
 		
 		</div>
 		<div id="under">
-			<button id="btn">목록 더보기</button>
+			<img src='../images/더보기버튼.png' id="btn"> </img>
 		</div>
 		</div>
 
