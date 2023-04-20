@@ -125,4 +125,36 @@ public class PboardServiceImpl implements IPboardService {
 	public List<PboardVO> notifyByMore(Map<String, Object> map) {
 		return dao.notifyByMore(map);
 	}
+
+	@Override
+	public List<PboardVO> selectMyLike(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectMyLike(map);
+	}
+
+	@Override
+	public List<PboardVO> selectMyUnLike(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectMyUnLike(map);
+	}
+
+	@Override
+	public List<PboardVO> selectMyWrite(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectMyWrite(map);
+	}
+
+	@Override
+	public List<PboardVO> selectMyComment(String memId, int more) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("more", more);
+		map.put("mem_id", memId);
+		return dao.selectMyComment(map);
+	}
 }

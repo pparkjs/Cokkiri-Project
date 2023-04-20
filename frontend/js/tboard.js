@@ -63,8 +63,8 @@ listRecieveFromOne = function(pagenum, category, sword,boardstate) {
 		success: function(res) {
 			if(res.admin==1){
 				checkbox=$("<input type='checkbox' id='notifycheck'>")
-				span=$("<span id='checkspan'>신고게시글</span>")
-				$("#searchl").append(checkbox).append(span);
+				span=$("<span id='checkspan'>신고</span>")
+				$("#searchr").append(checkbox).append(span);
 				ad='y';
 			}else{
 				ad='n';

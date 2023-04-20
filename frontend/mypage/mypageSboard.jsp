@@ -87,7 +87,7 @@ $(function() {
 	<section>
 		<div id="selectBtn">
 			<input type="button" value="내글" name="board" class="SearchBtn" id="boardBtn">
-			<input type="button" value="댓글" name="comment" class="SearchBtn" id="commentBtn">
+			<input type="button" value="댓글 단 글" name="comment" class="SearchBtn" id="commentBtn">
 			<input type="button" value="좋아요" name="like" class="SearchBtn" id="likeBtn">
 			<input type="button" value="싫어요" name="nulike" class="SearchBtn" id="nulikeBtn">
 			

@@ -85,6 +85,12 @@ public class TboardNotify extends HttpServlet {
 		
 		for (TBoardVO boardVO : List) {
 			TBoardAndAttVO tBoardAndAttVO = new TBoardAndAttVO();
+			int notifynum = service.selectTnotifys(boardVO.getTboard_id());
+			if(notifynum==0) {
+				continue;
+			}
+			tBoardAndAttVO.setNotifynum(notifynum);
+			
 			if(boardVO.getTboard_title().getBytes().length>18) {
 				String title=boardVO.getTboard_title();
 				if(title.length()>16) {
@@ -95,8 +101,7 @@ public class TboardNotify extends HttpServlet {
 				
 			}
 			tBoardAndAttVO.setBoardVO(boardVO);
-			int notifynum = service.selectTnotifys(boardVO.getTboard_id());
-			tBoardAndAttVO.setNotifynum(notifynum);
+			
 			List<TImageVO> imgList = service.selecttImgBytboardId(boardVO.getTboard_id());
 			MemberVO memberVO = service2.selectMemberinfo(boardVO.getMem_id());
 			
