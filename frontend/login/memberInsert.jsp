@@ -501,6 +501,12 @@ input:focus {
 /* 커서포인터 */
 .inputTextAndButton input:nth-child(2), .inputImgAndButton input,.membJoinContainer input {
 	cursor: pointer;
+}
+.joinRow p {
+	margin-top: 3px;
+    font-size: 14px;
+    color: rgb(255,59,48);
+}
 
 }
 </style>
