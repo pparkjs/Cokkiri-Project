@@ -31,6 +31,9 @@ hit = 0; //조회수
 	 frontRegion = '';
 <%}%>
 
+
+
+
 $(function(){
 	
 	//외부스크립트

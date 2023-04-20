@@ -48,7 +48,7 @@ $(document).on('click', '#rt_modify', function(e){
 				// 답글 작성 버튼이 클릭시 댓글 입력 폼을 나타내는 코드
 				 <%
 					MemberVO smemVO=(MemberVO)request.getSession().getAttribute("memberVo");
-					String dsrc="기본프로필.png";
+					String dsrc="images/기본프로필.png";
 					if(smemVO.getMem_image()!=null){
 						dsrc=request.getContextPath()+"/profileImageView.do";
 					}
@@ -98,7 +98,7 @@ $(document).on('click', '#rt_modify', function(e){
 			    
 			    
  				<%
-					dsrc="기본프로필.png";
+					dsrc="images/기본프로필.png";
 					if(smemVO.getMem_image()!=null){
 						dsrc=request.getContextPath()+"/profileImageView.do";
 					}

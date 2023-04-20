@@ -176,7 +176,7 @@ function notifyCheckView(mr){
 									<div class="top">
 										<img class="profile" src="${mypath}/images/프로필-40px.png">
 										<p class="writer" id="${v.mem_id}">${v.mem_id}</p>
-										<p class="date">${v.pboard_cdate}</p>
+										<p class="date">${date}</p>
 									</div>
 									<div class="pb_middle">
 										<a class="${v.pboard_id}" href="${mypath}/pboardDetail.do?pboardId=${v.pboard_id}">${v.pboard_title}</a>				
@@ -275,7 +275,7 @@ function saveLocation(){
 									<div class="top">
 										<img class="profile" src="${profilesrc}">
 										<p class="writer" id="${v.mem_id}">${v.mem_id}</p>
-										<p class="date">${v.pboard_cdate}</p>
+										<p class="date">${date}</p>
 									</div>
 									<div class="pb_middle">
 										<a class="${v.pboard_id}" href="${mypath}/pboardDetail.do?pboardId=${v.pboard_id}">${v.pboard_title}</a>				

@@ -38,7 +38,7 @@ function getImageFiles(e) {
 	const imagePreview = document.querySelector('.image-preview');
 	const docFrag = new DocumentFragment();
 	const uploadbtn = document.querySelector('#upload');
-
+	console.log(uploadFiles)
 	if ([...files].length >= 7 || uploadFiles.length + [...files].length >= 7) {
 		alert('이미지는 최대 6개 까지 업로드가 가능합니다.');
 		return;
@@ -121,10 +121,10 @@ function modifyImageLoad(tboard_id) {
 
 		success: function(res) {		
 			res.forEach(function(v){		
-				console.log(v);
 				a=("data:image/jpeg;base64,"+v.file)
 				var file = base64ToFile(v)
 				uploadFiles.push(file);
+				console.log(file)
 				var preview = createElement2(a, file);
 				preview.classList.add("animation-init");
 				imagePreview.insertBefore(preview, uploadbtn);
@@ -151,8 +151,7 @@ base64ToFile=function(data){
 	while(n--) {
 		u8arr[n] = bstr.charCodeAt(n);
 	}
-	
-	return new File([u8arr], data.saveName, {type:"text/xml"});
+	return new File([u8arr], data.originName, {type:"text/xml"});
 }
 
 

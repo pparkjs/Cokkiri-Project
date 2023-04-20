@@ -78,6 +78,7 @@ $.tcommentListServer2 = function(page) {
 		success: function(res) {
 			/* alert("성공"); */
 			//var code2="";
+			$('#tctLayer').empty();
 			$.each(res, function(i, v) {
 				tcontent = v.tcomment_content;
 				//				cont = cont.replaceAll(/\n/g, "<br>");

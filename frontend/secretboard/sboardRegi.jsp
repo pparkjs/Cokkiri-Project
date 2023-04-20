@@ -93,7 +93,7 @@ $(function(){
 		</div>
 		<!-- 이미지 업로드 -->
 		<div class="rg_images">
-			<div class="txt">이미지<br><span>(최대 5개까지 첨부가능)</span></div>
+			<div class="txt">이미지<br><span>(최대 6개까지 첨부가능)</span></div>
 			
 			<div class="img_wrap1">
 				<input type="file" class="file" id="f1" name="img_file1">

@@ -33,7 +33,6 @@ public class ModifyImage extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
-
 		Long timg_id = Long.parseLong(request.getParameter("timg_id"));
 
 		ITboardService service = TboardServiceImpl.getInstance();
@@ -90,7 +89,7 @@ public class ModifyImage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
-
+		response.setContentType("text/html; charset=utf-8");
 
 		
 		Long tboard_id = Long.parseLong(request.getParameter("tboard_id"));
