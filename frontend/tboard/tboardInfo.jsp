@@ -215,6 +215,18 @@
 .navbar__mapLogo{
 	text-align: left;
 }
+.state{
+	display: inline-block;
+    width: 60px;
+    text-align: center;
+    color: white;
+    border-radius: 12px;
+    background: rgb(174,174,178);
+    padding: 2px;
+    margin-right: 8px;
+    font-size: 14px;
+    font-weight: 400;
+}
 </style>
 <%
 List<TImageVO> list = (List<TImageVO>)request.getAttribute("img"); 
@@ -246,6 +258,10 @@ $(()=>{
 		location.href=`\${path}/chatRoomCreate.do?tboard_id=\${tboard_id}`
 	})
 	
+	
+	$(document).on("click",".ele",function(){
+		location.href="<%=request.getContextPath()%>/tboardInfo.do?id="+$(this).attr("id")		
+	})
 })
 </script>
 </head>

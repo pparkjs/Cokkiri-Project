@@ -37,7 +37,7 @@ public class TboardRecommend extends HttpServlet {
 		IMemberService mservice = MemberServiceImpl.getInstance();
 		MemberVO memberVO = mservice.selectMemberinfo(smem.getMem_id());
 		Map<String, Object> map = new HashMap<>();
-		map.put("mem_add", memberVO.getMem_add());
+		map.put("mem_add", memberVO.getMem_add().split(" ")[0]);
 		map.put("category", category);
 		map.put("cnt",6);
 		map.put("tboard_id", tboard_id);
