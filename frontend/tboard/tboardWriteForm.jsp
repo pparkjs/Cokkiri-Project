@@ -96,13 +96,14 @@ label {
 	background: white;
 	color: black;
 	cursor: pointer;
+	width: 81px;
 }
 .act{
 	padding: 6px 15px;
 	margin-right: 20px;
 	border-radius: 20px; 
 	border: none;
-	background: rgb(100,210,255);
+	background: rgb(56,102,233);
 	color: white;
 	cursor: pointer;
 }

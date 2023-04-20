@@ -1,5 +1,7 @@
 package service.pimageService;
 
+import java.util.List;
+
 import dao.pimageDAO.IPimageDAO;
 import dao.pimageDAO.PimageDAOImpl;
 import vo.PimageVO;
@@ -35,5 +37,17 @@ public class PimageServiceImpl implements IPimageService {
 	@Override
 	public int pimgCount(int pbId) {
 		return dao.pimgCount(pbId);
+	}
+
+	@Override
+	public List<PimageVO> selectPimage(int pboard_id) {
+		// TODO Auto-generated method stub
+		return dao.selectPimage(pboard_id);
+	}
+
+	@Override
+	public PimageVO selectPimageByNo(int pimg_no) {
+		// TODO Auto-generated method stub
+		return dao.selectPimageByNo(pimg_no);
 	}	
 }

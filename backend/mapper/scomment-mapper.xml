@@ -92,7 +92,5 @@ FROM (
 	    </selectKey>
 </insert>
 
-
-
 </mapper>
 

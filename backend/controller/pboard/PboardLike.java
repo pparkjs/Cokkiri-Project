@@ -22,7 +22,9 @@ public class PboardLike extends HttpServlet {
 		int likeCnt = Integer.parseInt(request.getParameter("likeCnt"));
 		int boardId = Integer.parseInt(request.getParameter("boardId"));
 		String memId = request.getParameter("memId");
-		
+		System.out.println("라이크 번호" + likeCnt);
+		System.out.println("보드아이디" + boardId);
+		System.out.println("멤버아이디" + memId);
 		PboardVO vo = new PboardVO();
 		
 		vo.setPbstate_like(likeCnt);
@@ -33,9 +35,12 @@ public class PboardLike extends HttpServlet {
 		
 		int check = service.likeCheck(vo);
 		
+		System.out.println("체크 : " + check);
+		
 		//먼저 좋아요 버튼 눌렀을때 첫 버튼일 때  좋아요 생성
 		if(check == 0) {
 			int res = service.likeInsert(vo);
+			System.out.println("res : " + res);
 			
 			request.setAttribute("result", res);
 			

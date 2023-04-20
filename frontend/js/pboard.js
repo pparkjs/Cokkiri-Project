@@ -53,7 +53,6 @@
 
 // 게시물 전체 보인 부분의 좋아요 싫어요 처리
 function likeOrUnlikeClick(){
-
 	// 좋아요 버튼클릭
 	$(document).on('click','.lk', function(){
 		boardId = $(this).attr('id') // 클릭한 boardId 가져옴
@@ -161,26 +160,36 @@ function notifyCheckView(mr){
 			$.each(res.datas, function(i, v){
 				title = v.pboard_title.slice(0, 45);
 				date = elapsedTime(v.pboard_cdate);
-				// 게시판 생성되는 부분				
-				noList += `<div class="pb">
-								<div class="pb_top">
-									<img src=${mypath}/images/기본프로필.png>
-									<p class="writer" id="${v.mem_id}">${v.mem_id}</p>
-									<p class="date">${date}</p>
-								</div>
-								<div class="pb_middle">
-									<a class="${v.pboard_id}" href="${mypath}/PboardView.do?pboardId=${v.pboard_id}">${title}</a>				
-								</div>
+				src=`../images/default.PNG`	
+				if(typeof v.pboard_fimg!="undefined"&& v.pboard_fimg!=null&&v.pboard_fimg!=""){
+					src=`${mypath}/Pimage.do?imgno=`+v.pboard_fimg;
+				}			
+			    noList += ` <div class="feedbox">
+			 				<div class="f_img">
+								<img class="feed_img" src="${src}">
+							</div>	
+							<div class="feed_main">
+								<div class="innerbox">
+									<div class="top">
+										<img class="profile" src="${mypath}/images/프로필-40px.png">
+										<p class="writer" id="${v.mem_id}">${v.mem_id}</p>
+										<p class="date">${v.pboard_cdate}</p>
+									</div>
+									<div class="pb_middle">
+										<a class="${v.pboard_id}" href="${mypath}/pboardDetail.do?pboardId=${v.pboard_id}">${v.pboard_title}</a>				
+									</div>
+							    </div>
 								<div class="pb_bottom">
-									<div class="bottom_notify">
-									    <input type="checkbox" class="no" id="notify_img">
-										<label for="notify_img">`
-				 noList +=					`<img class="uk" id="${v.pboard_id}" src="${mypath}/images/신고함.png">`
-			  
+									<div class="unlike">
+									    <input type="checkbox" class="ck" id="unlike_img">
+										<label for="unlike_img">`
+			     noList +=					`<img class="uk" id="${v.pboard_id}" src="${mypath}/images/신고함.png">`
+			  	 
 				 noList +=						`</label>
 										<p>${v.sum_notify}</p>
 									</div>
-								</div>
+								 </div>
+							   </div>
 							</div>`
 			})
 			
@@ -219,10 +228,13 @@ function notifyCheckView(mr){
 			$.each(res.datas, function(i, v){
 				title = v.pboard_title.slice(0, 45);
 				date = elapsedTime(v.pboard_cdate);
-								
+				src=`../images/default.PNG`	
+				if(typeof v.pboard_fimg!="undefined"&& v.pboard_fimg!=null&&v.pboard_fimg!=""){
+					src=`${mypath}/Pimage.do?imgno=`+v.pboard_fimg;
+				}			
 			    feed += ` <div class="feedbox">
 			 				<div class="f_img">
-								<img class="feed_img" src="${mypath}/images/카페사진.jpeg">
+								<img class="feed_img" src="${src}">
 							</div>	
 							<div class="feed_main">
 								<div class="innerbox">

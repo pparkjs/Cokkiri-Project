@@ -11,6 +11,7 @@ public class PboardVO {
 	private String pboard_mdate;
 	private String pboard_rdate;
 	private String pboard_addr;
+	private int pboard_fimg;
 	
 	// 이미지 테이블의 컬럼 추가
 	private int pimg_id;
@@ -37,6 +38,13 @@ public class PboardVO {
 	// 신고 합계
 	private String sum_notify ;
 	
+	
+	public int getPboard_fimg() {
+		return pboard_fimg;
+	}
+	public void setPboard_fimg(int pboard_fimg) {
+		this.pboard_fimg = pboard_fimg;
+	}
 	public int getPimg_id() {
 		return pimg_id;
 	}

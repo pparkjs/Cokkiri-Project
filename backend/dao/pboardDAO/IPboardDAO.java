@@ -62,7 +62,17 @@ public interface IPboardDAO {
 	// 신고게시물의 리스트 - 더보기 페이징
 	public List<PboardVO> notifyByMore(Map<String, Object> map);	
 	
+	// 사용자가 좋아요한 게시물 리스트
+	public List<PboardVO> selectMyLike(Map<String, Object> map);
 	
+	// 사용자가 싫어요한 게시물 리스트
+	public List<PboardVO> selectMyUnLike(Map<String, Object> map);
+	
+	// 사용자가 작성한 게시물 리스트
+	public List<PboardVO> selectMyWrite(Map<String, Object> map);
+	
+	// 사용자가 댓글을 단 게시물 리스트
+	public List<PboardVO> selectMyComment(Map<String, Object> map);
 
 	
 }

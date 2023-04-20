@@ -13,8 +13,11 @@ import javax.servlet.http.HttpSession;
 
 import service.pboardService.IPboardService;
 import service.pboardService.PboardServiceImpl;
+import service.pimageService.IPimageService;
+import service.pimageService.PimageServiceImpl;
 import vo.MemberVO;
 import vo.PboardVO;
+import vo.PimageVO;
 
 
 @WebServlet("/PboardList.do")
@@ -30,13 +33,23 @@ public class PboardList extends HttpServlet {
 		String region = request.getParameter("region");
 		
 		IPboardService service = PboardServiceImpl.getInstance();
+		IPimageService imgservice = PimageServiceImpl.getInstance();
 		HttpSession session = request.getSession();
 		
 		MemberVO memVo =  (MemberVO)session.getAttribute("memberVo");
 		String memId = memVo.getMem_id();
 		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
 		
-		List<PboardVO> list = service.selectByPage(morePage);
+		List<PboardVO> list = service.notifyByMore(morePage);
+		
+		for (int i=0; i<list.size(); i++) {
+			PboardVO pboardVO = list.get(i);
+			List<PimageVO> ilist = imgservice.selectPimage(pboardVO.getPboard_id());
+			if(ilist!=null&&ilist.size()!=0) {
+				pboardVO.setPboard_fimg(ilist.get(0).getPimg_id());
+			}
+			list.set(i, pboardVO);
+		}
 		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/view/pboardList.jsp").forward(request, response);
@@ -53,6 +66,7 @@ public class PboardList extends HttpServlet {
 		String region = request.getParameter("region");
 		
 		IPboardService service = PboardServiceImpl.getInstance();
+		IPimageService imgservice = PimageServiceImpl.getInstance();
 		HttpSession session = request.getSession();
 
 		MemberVO memVo =  (MemberVO)session.getAttribute("memberVo");
@@ -60,6 +74,16 @@ public class PboardList extends HttpServlet {
 		
 		Map<String, Object> morePage = service.morePage(more, vtype, vtext, memId, region);
 		List<PboardVO> list = service.selectByPage(morePage);
+		
+		for (int i=0; i<list.size(); i++) {
+			PboardVO pboardVO = list.get(i);
+			List<PimageVO> ilist = imgservice.selectPimage(pboardVO.getPboard_id());
+			if(ilist!=null&&ilist.size()!=0) {
+				pboardVO.setPboard_fimg(ilist.get(0).getPimg_id());
+			}
+			list.set(i, pboardVO);
+		}
+		
 		request.setAttribute("list", list);
 		request.getRequestDispatcher("/view/pboardList.jsp").forward(request, response);
 	}

@@ -157,7 +157,7 @@ public class PboardDAOImpl implements IPboardDAO {
 		int res = 0;
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
-			res = session.insert("pboard.likeCheck", vo);
+			res = session.selectOne("pboard.likeCheck", vo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -302,6 +302,70 @@ public class PboardDAOImpl implements IPboardDAO {
 		try {
 			session = MybatisSqlSessionFactory.getSqlSession();
 			list = session.selectList("pboard.notifyByMore", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyUnLike(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyUnLike", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyWrite(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyWrite", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.commit();
+			session.close();
+		}
+		return list;
+	}
+
+	@Override
+	public List<PboardVO> selectMyComment(Map<String, Object> map) {
+		SqlSession session = null;
+		List<PboardVO> list = null;
+		try {
+			session = MybatisSqlSessionFactory.getSqlSession();
+			list = session.selectList("pboard.selectMyComment", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

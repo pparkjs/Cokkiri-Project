@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page isELIgnored="true" %>
 <!DOCTYPE html>
 <html>
 
@@ -21,11 +22,10 @@
 </head>
 <script >
 
-boardId = "<%=pbList.get(0).getPboard_id()%>";
+boardId = `<%=pbList.get(0).getPboard_id()%>`;
 memId = `<%=memVo.getMem_id()%>`;
-mypath = "<%=request.getContextPath()%>";
-console.log("boardId=====", boardId)
-
+mypath = `<%=request.getContextPath()%>`;
+boardWriterId = `<%=pbList.get(0).getMem_id()%>`;
 $(function(){
 	// 이미지 보여지는 부분
 	imageView();
@@ -41,6 +41,7 @@ $(function(){
 	
 	$('#delete').on('click', function(){
 		if(confirm('정말 삭제하시겠습니까?')){ // 확인누르면 true반환 취소 누르면 false반환
+			alert(<%=pbList.get(0).getPboard_id()%>);
 			location.href="<%=request.getContextPath()%>/DeletePboard.do?pbId=<%=pbList.get(0).getPboard_id()%>";
 		}
 	})
@@ -75,7 +76,11 @@ function imageView(){
 	
 </script>
 <body>
+<%if(memVo.getAdmin_auth().equals("N")){ %> 
 <%@ include file="/module/header.jsp" %>
+<%}else{ %>
+ <%@ include file="/module/adminHeader.jsp" %>
+<%} %>
 <div class="main_body"><h1 style="text-align: center; font-size: 20px; margin-top: 15px;" >'우리끼리' 공유 맛집</h1></div>
 	<div class="mem_header">
 	<%if(pbList.get(0).getMem_id().equals(memVo.getMem_id())){ %>
@@ -97,9 +102,8 @@ function imageView(){
 					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHYYkHVAza2xsjRZ977X0TE-LGNLaFM9uY0A&usqp=CAU">
 			</div>
 			<span class="feed_name_txt"><%=pbList.get(0).getMem_id()%> </span>
+			<p class="m_date"><%= pbList.get(0).getPboard_cdate() %></p>
 		</div>
-		<img class="feedImg"
-			src="https://pup-review-phinf.pstatic.net/MjAyMzA0MDJfMjM2/MDAxNjgwNDE0MDcxMTk3.lzz9xgSBhbDoh-vOH8wJL8JznGsUFIVRTrME_82bU6Ig.WxDLtpT73NV1DyVcCXCp2o8RoZdUIg8E60QdVnKZaIcg.JPEG/0E12B117-A284-4F1D-8327-08C8053E4347.jpeg?type=w828_60_sharpen">
 
 		<div class="mem_img">
 		</div>
@@ -107,7 +111,7 @@ function imageView(){
 
 		<div class="feed_content">
 			<p class="feed_txt">
-				<b><%=pbList.get(0).getMem_id()%></b> <%=pbList.get(0).getPboard_content()%>
+				 <%=pbList.get(0).getPboard_content()%>
 			</p>
 		</div>
 		

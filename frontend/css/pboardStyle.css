@@ -2,12 +2,17 @@
 
 
 /* 마이플레이스 메인화면 */
-.header{position: relative; padding-top: 60px; padding-bottom: 10px;}
+.header{position: relative; }
 .pb_type{width : 100px; height:32px; margin-left: 350px; border-radius: 10px; border: 1px solid lightgray;}
 .pb_search{width:280px; height:32px; margin-left: 5px; border: 1px solid lightgray; border-radius: 10px;}
 .pb_searchplace{width:280px; height:32px; margin-bottom:20px;  margin-left: 280px; margin-top: 100px;  border: 1px solid lightgray; border-radius: 10px;}
 #write{position: absolute; height: 6px; right: 350px; width : 28px; height: 33px;}
-#search{position: absolute; width : 30px; height: 20px; left: 620px; top: 65px; cursor: pointer;}
+#search{position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 705px;
+    top: 4px;
+    cursor: pointer;}
  
 .pboard{display: grid;
     width: 1018px;
@@ -38,7 +43,7 @@
 
 .viewMore{display: flex; justify-content: center;}
 .morebtn{width : 35px; height : 28px; margin-bottom: 30px; cursor: pointer;}
-
+.ck{display: none;}
 
 /* 게시글 등록 */
 .writebody{ margin: 50px auto;   width: 1369px;}
@@ -139,13 +144,13 @@ width: 800px; margin: 35px auto;}
 .mem_content .mem_ct{margin-top: 35px; font-size: 18px; word-break: break-all;}
 .mDate{color : rgb(174, 174, 178); font-size : 14px; margin-top: 17px;}
 
-.mem_btns{display : flex; margin-top: 8px; margin-bottom : 20px; margin-left: 300px;}
+.mem_btns{display : flex; margin-top:35px; margin-bottom : 20px; margin-left: 12px;}
 .mem_btns img{width : 30px; height : 30px; }
 #mLike{cursor: pointer;}
 #mUnlike{cursor: pointer;}
 #mNotify{cursor: pointer;}
 .mem_btns div{display : flex; justify-content: center; align-items: center;}
-.m_notify{margin-left : 575px;}
+.m_notify{margin-left : 246px;}
 .m_like, .m_unlike{margin-left: 30px;}
 #htext, #lktext, #untext{margin-left:4px;}
 
