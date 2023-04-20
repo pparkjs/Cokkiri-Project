@@ -61,11 +61,18 @@ nav input {
 	align-items: center;
 	justify-content: center;
 	height: 100%;
-	
+	background-image: url("../images/loginbackground.jpg");
+	background-size: cover;
 }
 
 .loginbox {
-	width: 300px;
+	width: 350px;
+	padding: 25px;
+    background-color: white;
+    border-radius: 20px;
+    opacity : 0.9;
+    backdrop-filter: blur(2px);
+   
 }
 
 
@@ -206,4 +213,7 @@ nav input {
     font-size: 25px;
     font-weight: 600;
     margin-top: 164px;
+}
+.mRePwBox {
+	margin-top: 10px;
 }
