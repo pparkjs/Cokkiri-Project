@@ -86,8 +86,8 @@ $(function(){
 			 $(".pformdiv").remove();
 
 		}else if (vacation == "p_delete"){
-			$('.re-pInsert').parent('div').remove();
-			$('.pformdiv').remove();
+			 $('.re-pInsert').parent('div').remove();
+			 $('.pformdiv').remove();
 			 target = $(this).attr('idx');
 			 target = $("#pctLayer").find("#"+target);
 			 $.pcommentDeleteServer(); 
