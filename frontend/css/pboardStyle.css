@@ -5,7 +5,24 @@
 .header{position: relative; padding-top: 60px; padding-bottom: 10px;}
 .pb_type{width : 100px; height:32px; margin-left: 350px; border-radius: 10px; border: 1px solid lightgray;}
 .pb_search{width:280px; height:32px; margin-left: 5px; border: 1px solid lightgray; border-radius: 10px;}
-.pb_searchplace{width:280px; height:32px; margin-bottom:20px;  margin-left: 280px; margin-top: 100px;  border: 1px solid lightgray; border-radius: 10px;}
+.pb_searchplace { position: absolute;
+    width: 300px;
+    height: 40px;
+    margin-left: 174px;
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+.saveBtn{ 
+	position: absolute;	
+	margin-left: 485px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    width: 100px;
+    height: 40px;
+    background: white;
+   
+}
 #write{position: absolute; height: 6px; right: 350px; width : 28px; height: 33px;}
 #search{position: absolute;
     width: 25px;
@@ -13,7 +30,7 @@
     left: 705px;
     top: 66px;
     cursor: pointer;}
- 
+#psearch{position:absolute; width: 25px; height: 25px; left: 542px; top: 9px; cursor: pointer;} 
 .pboard{display: grid;
     width: 1018px;
     grid-template-columns: 1fr 1fr;
@@ -22,11 +39,18 @@
 .profile{width: 38px; height: 38px; display: inline-block;}
 .writer{display: inline-block; font-size: 13px; margin-left: 7px;}
 .innerbox{ display: flex;  flex-direction: column;} 
-.feedbox{ display : flex; border : 1px solid lightgray;  width:482px;height: 178px;margin:13px; background:white;} 
+ .feedbox{ display : flex; border : 1px solid lightgray;  width:482px;height: 178px;margin:13px; background:white; }  
 .feed_main{display : flex; flex-direction: column; margin-top: 18px; margin-left: 14px;}
 .f_img{width: 178px; height : 100%;}
 .top{display : flex;  align-items: center;}
 .date{font-size : 10px; margin-left: 73px;}
+.feed_box2{    background-color: white;
+    border-radius: 20px;
+    width: 900px;
+    margin: 20px;
+    min-height: auto;
+    padding-bottom: 20px;
+}
 
 .pb_middle{margin-top : 10px;}
 .pb_middle a{text-decoration: none; color: black;}
@@ -52,7 +76,7 @@
 
 
 .rg_images, .title, .content{display : flex; margin-top: 25px;}
-.text{font-size: 25px; width:150px; margin-left:20px;}
+.text{position: relative;  font-size: 25px; width:150px; margin-left:20px; }
 .text span{font-size:13px;}
 
 .rg_images, .wr_title{border-bottom: 2px solid rgb(217, 213, 213);}
@@ -106,8 +130,8 @@
 .feed_content{padding: 0px 10px; margin-bottom: 10px;}
 .feed_like{padding: 0px 10px;}
 .feed_reply{padding: 0px 10px; display: flex; flex-direction: column; margin-top: 20px;}
-.feed_txt{font-size: 14px;}
-.feed_name{padding: 10px; display: flex; align-items: center;}
+.feed_txt{font-size: 18px;  margin-left: 40px;}
+.feed_name{padding: 10px; display: flex; align-items: center; margin-top: 20px; margin-bottom: 20px; margin-left: 70px;}
 .feed_name_txt{font-size: 14px; padding: 0px 10px; font-weight: bold;}
 .profile_box {width: 40px; height: 40px; border-radius: 70%; overflow: hidden;}
 .profile_img {width: 100%; height: 100%; object-fit: cover;}
@@ -130,8 +154,7 @@
     overflow: hidden;
 }
 
-.mem_sboard{display: flex; flex-direction : column; 
-width: 800px; margin: 35px auto;}
+
 .mem_header{display : flex; justify-content: end; background-color: #FAFAFA; }
 #modify{margin-right : 25px;}
 #modify , #delete{padding : 1px 15px; margin-right: 20px; cursor: pointer; border-radius: 20px; width : 70px; height:30px; background: white;}
@@ -144,7 +167,7 @@ width: 800px; margin: 35px auto;}
 .mem_content .mem_ct{margin-top: 35px; font-size: 18px; word-break: break-all;}
 .mDate{color : rgb(174, 174, 178); font-size : 14px; margin-top: 17px;}
 
-.mem_btns{display : flex; margin-top: 8px; margin-bottom : 20px; margin-left: 300px;}
+.mem_btns{display : flex; margin-top: 15px; margin-bottom : 20px; margin-left: 608px;}
 .mem_btns img{width : 30px; height : 30px; }
 #mLike{cursor: pointer;}
 #mUnlike{cursor: pointer;}
