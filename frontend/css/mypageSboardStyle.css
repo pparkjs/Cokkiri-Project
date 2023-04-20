@@ -71,7 +71,10 @@
 	margin-bottom : 50px;
 }
 #more img{
-	width : 60px; height : 30px; margin-bottom: 30px; cursor: pointer;
+	width: 35px;
+    height: 24px; 
+    margin-bottom: 30px; 
+    cursor: pointer;
 }
 .like img{cursor: pointer;}
 .unlike img{cursor: pointer;} 
