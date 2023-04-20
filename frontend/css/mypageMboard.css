@@ -1,0 +1,134 @@
+@charset "UTF-8";
+.mypageMboard {
+	width : 800px;
+	margin : 0 auto;
+}
+.feedbox {
+	display: flex;
+    justify-content: space-between;
+    width: 800px;
+}
+.f_img img{
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    
+}
+
+.feed_main {
+	width: 525px;
+    position: relative;
+    height: 250px;
+}
+
+.top {
+    position: relative;
+    height: 40px;
+	
+}
+.profile {
+	position: absolute;
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+}
+
+.writer {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 60px;
+    font-size: 16px;
+    font-weight: 500;
+    color: rgb(28,28,30);
+}
+
+.date {
+    position: absolute;
+    bottom: -5px;
+    font-size: 12px;
+    left: 60px;
+    color: rgb(142,142,147);
+	
+}
+
+.pb_middle {
+    margin-top: 20px;
+}
+
+.pb_middle a{
+    font-size: 20px;
+    text-decoration: none;
+    color: rgb(28,28,30);
+    font-weight: 600;
+}
+
+.pb_middle p{
+    font-size: 16px;
+	color: rgb(142,142,147);
+    font-weight: 500;
+}
+
+.pb_bottom {
+	display: flex; 
+	justify-content: flex-end;
+	position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.pb_bottom .ck{
+	display: none;
+}
+
+.pb_bottom div{
+	margin-left: 20px;
+}
+
+.hit{ 
+	display: flex;
+}
+.hit p{
+	font-size:16px; 
+}
+.like{
+	display:flex;
+}
+.like p{
+	font-size:16px; margin-left : 6px; 
+}
+.unlike{
+	display:flex;
+}
+.unlike p{
+	font-size:16px; margin-left : 6px;
+}
+
+.moreContainer {
+	display : flex; 
+	justify-content: center;
+	margin-top : 50px;
+	margin-bottom : 50px;
+}
+.moreBtn{
+	background: none;
+    border: none;
+	
+}
+#more img{
+	width: 35px;
+    height: 30px; 
+    margin-bottom: 30px; 
+    cursor: pointer;
+}
+.like img{cursor: pointer;}
+.unlike img{cursor: pointer;} 
+.hrborder {
+	display: block;
+    margin: 25px 0;
+    border: 1px solid rgb(229,229,234);
+}
+
+.boardList {
+	margin-top: 50px;
+}

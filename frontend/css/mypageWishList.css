@@ -111,16 +111,33 @@
 	display: flex;
 	position : relative;
 }
+.moreContainer {
+	display : flex; 
+	justify-content: center;
+	margin-top : 50px;
+	margin-bottom : 50px;
+	background: none;
+    border: none;
+}
+#more img{
+	width: 35px;
+    height: 30px; 
+    margin-bottom: 30px; 
+    cursor: pointer;
+}
+.like img{cursor: pointer;}
+.unlike img{cursor: pointer;} 
 .hrborder {
 	display: block;
     margin: 25px 0;
     border: 1px solid rgb(229,229,234);
 }
-.moreContainer {
-	margin-top : 50px;
-	margin-bottom : 50px;
-	display : flex; justify-content: center;
+
+.boardList {
+	margin-top: 50px;
 }
-#more img{
-	width : 60px; height : 30px; margin-bottom: 30px; cursor: pointer;
+.moreBtn{
+	background: none;
+    border: none;
+	
 }
