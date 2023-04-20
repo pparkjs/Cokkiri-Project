@@ -82,7 +82,7 @@
 /*   box-shadow: 1px 1px 2px 1px; */
   background: white;
   display: none;  
-  box-shadow: 10px 5px rgb(142,142,147); /* 여기 바꿔 은지야 */
+  box-shadow: 0 0 5px 2px rgb(209,209,214);
 }
 .navbar__label:hover .sidebar {
   display: block;
