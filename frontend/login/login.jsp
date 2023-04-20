@@ -132,11 +132,10 @@ $(function() {
 					if(res.result == "true"){
 						$('#idModalSearch').hide();
 						$('#modalContentId').empty(); //모달창 내용 초기화
-						$('#modalContentId').append('<p id="findIdResult" class="findresultOne">'+ res.memId + '<p>')
+						$('#modalContentId').append('<div class = "findresultBox"><div class = "idfindhead">회원님의 아이디는 </div><span id="findIdResult" class="findresultOne">'+ res.memId + '</span><span class = "idfindbody"> 입니다</span></div>')
 						
 					} else if(res.result == "false"){
-						$('#modalContentId').empty(); //모달창 내용 초기화
-						$('#modalContentId').append('<p id="findIdResult" class="findresultOne">가입하지 않은 회원입니다.<p>')
+						alert("가입하지 않은 회원입니다");
 						
 					}
 				},
@@ -172,8 +171,6 @@ $(function() {
 			data : {"id" : userId},
 			success : function(res) {
 				if(res.result=="false"){ // 아이디가 존재할때
-					//$('#modalContentPw').html("");
-					console.log("dho제발!!!!!!!!");
 					$('#modalContentPw').empty(); //모달창 내용 초기화
 					var code = "";
 					code += '<div class = modalPwRepw>';
@@ -226,7 +223,7 @@ $(function() {
 			success : function(res) {
 				if(res.result=="true"){ // 비밀번호가 변경되면 
 					$('#modalContentPw').empty(); //모달창 내용 초기화
-					$('#modalContentPw').append('<p class = modalPwRepw>비밀번호가 변경되었습니다.</p>');
+					$('#modalContentPw').append('<p class = modalPwRepwresult>비밀번호가 변경되었습니다.</p>');
 				} 
 			},
 			error : function(xhr) {
