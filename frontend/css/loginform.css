@@ -173,3 +173,37 @@ nav input {
 .findpwIDInput {
 	margin-top: 5px;
 }
+
+.findresultBox {
+	text-align: center;
+    margin-top: 142px;
+}
+.idfindhead {
+    color: rgb(28,28,30);
+    font-size: 20px;
+    font-weight: 500;
+}
+.findresultOne {
+	color: rgb(56,102,233);
+    font-size: 30px;
+    font-weight: 600;
+}
+.idfindbody {
+	color: rgb(58,58,60);
+    font-size: 30px;
+    font-weight: 600;
+}
+.modalPwRepw label{
+    display: inline-block;
+	width: 90px;
+}
+.modalPwRepw input{
+    width: 305px;
+}
+.modalPwRepwresult {
+    text-align: center;
+    color: rgb(58,58,60);
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 164px;
+}
