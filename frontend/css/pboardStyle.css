@@ -36,14 +36,23 @@
     grid-template-columns: 1fr 1fr;
     margin: 29px auto;}
 .feed_img {width : 178px; height:178px;}
-.profile{width: 38px; height: 38px; display: inline-block;}
-.writer{display: inline-block; font-size: 13px; margin-left: 7px;}
+.profile{flex:1;width: 38px; height: 38px; display: inline-block; border-radius: 100%;}
+.writer{flex:3; display: inline-block; font-size: 13px; margin-left: 7px;}
 .innerbox{ display: flex;  flex-direction: column;} 
- .feedbox{ display : flex; border : 1px solid lightgray;  width:482px;height: 178px;margin:13px; background:white; }  
+ .feedbox{     position: relative;
+    display: flex;
+    border: 1px solid lightgray;
+    width: 482px;
+    height: 178px;
+    margin: 13px;
+    background: white;}  
 .feed_main{display : flex; flex-direction: column; margin-top: 18px; margin-left: 14px;}
 .f_img{width: 178px; height : 100%;}
 .top{display : flex;  align-items: center;}
-.date{font-size : 10px; margin-left: 73px;}
+.date{    position: absolute;
+    flex: 2;
+    font-size: 10px;
+    right: 19px;}
 .feed_box2{    background-color: white;
     border-radius: 20px;
     width: 900px;
@@ -94,25 +103,30 @@
 #maxTitle{margin-top: 5px; margin-left: 40px;}
 .title textarea{padding-top:7px; padding-left:8px; border-bottom: 2px solid rgb(217, 213, 213);}
 .place{padding-bottom: 69px; border-bottom: 2px solid black;}
-#maxContent{margin-top: 10px; position: absolute; bottom: -29px; right: 0px;}
+#maxContent{margin-top: 10px; position: absolute; right: 21px;
+    top: 338px;}
 .content textarea{padding-top:7px; padding-left:8px;}
 .wrc{position: relative;}
 .button{ height : 100px;}
 .upload_btn {
-	border-radius:25px;
-	text-align:center;
-	font-size:20px;
-	color:white;
-	padding: 1px 40px;
-	background: black;
-	border-width:0px;
-	margin-left:1212px;
-	margin-top: 20px;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+    border: none;
+    font-weight: 600;
+    background: rgb(56,102,233);
+    padding: 10px 33px;
+    border-radius: 1268px;
+    margin-left: 1226px;
+    margin-top: -29px;
+    font-size: 16px;
 }
 
 .upload_btn:active {position:relative; top:3px}
 .upload_btn:hover {background: #d6d6d6;}
-
+.wrc textarea{position: relative;
+    left: 170px;
+    bottom: 31px;}
 
 /* 상세보기 */
 .main_body {display: flex; justify-content: center; padding-top: 20px; background-color: #FAFAFA;}
@@ -146,7 +160,7 @@
     white-space: nowrap;
     width: 190px;
 }
-.m_date{margin-left: 475px; font-size: 17px;}
+.m_date{margin-left: 405px; font-size: 17px;}
 .big_profile_box {
     width: 60px;
     height: 60px;

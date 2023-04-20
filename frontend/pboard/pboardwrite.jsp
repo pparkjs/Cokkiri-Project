@@ -56,6 +56,9 @@
 #pagination {margin:10px auto;text-align: center;}
 #pagination a {display:inline-block;margin-right:10px;}
 #pagination .on {font-weight: bold; cursor: default;color:#777;}
+.map_wrap{position: relative;
+    left: 170px;
+    bottom: 31px; width: 1183px; margin-top: 32px;}
 </style>
 
 
@@ -210,7 +213,7 @@ fcnt = 1;
         <div class="option">
             <div>
                 <form id="mapform">
-                    키워드 : <input type="text" value="이태원 맛집" id="keyword" size="15"> 
+                    키워드 : <input type="text" value="대전 맛집" id="keyword" size="15"> 
                     <button type="button" id="mapbtn">검색하기</button> 
                 </form>
             </div>

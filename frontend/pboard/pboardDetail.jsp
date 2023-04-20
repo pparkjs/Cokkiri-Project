@@ -19,7 +19,16 @@
 <script src="<%=request.getContextPath() %>/js/jquery-3.6.4.min.js"></script>
 <script src="<%=request.getContextPath() %>/js/pbView.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=783f45435dd899b6746abc88c415eb86&libraries=services"></script>
+<style type="text/css">
+.maptext{
+	margin-bottom: 110px;
+	background: white;
+	border: 1px solid black;
+	border-radius: 5px;
+}
+</style>
 </head>
+
 <script >
 
 boardId = `<%=pbList.get(0).getPboard_id()%>`;
@@ -44,7 +53,6 @@ $(function(){
 	
 	$('#delete').on('click', function(){
 		if(confirm('정말 삭제하시겠습니까?')){ // 확인누르면 true반환 취소 누르면 false반환
-			alert(<%=pbList.get(0).getPboard_id()%>);
 			location.href="<%=request.getContextPath()%>/DeletePboard.do?pbId=<%=pbList.get(0).getPboard_id()%>";
 		}
 	})
@@ -150,7 +158,7 @@ if(writerVo.getMem_image()!=null){
 				<%} %>
 			</div>
 			<br>
-			<div id="map" style="width: 100%; height: 430px; border-top: 1px solid lightgray;" ></div>
+			<div id="map" style="width: 805px; height: 430px; border-top: 1px solid lightgray; margin:0 auto;" ></div>
 			
 			
 			<div id="pcommentdiv">
@@ -175,14 +183,19 @@ var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니
 var markerPosition  = new kakao.maps.LatLng<%=pbList.get(0).getPboard_addr()%>; 
 
 //마커를 생성합니다
-var marker = new kakao.maps.Marker({
-position: markerPosition
+var marker = new kakao.maps.Marker({position: markerPosition});
+var content = "<div class='maptext'>"+"<%=pbList.get(0).getPboard_title()%>"+"</div>"
+//커스텀 오버레이를 생성합니다
+var position = new kakao.maps.LatLng<%=pbList.get(0).getPboard_addr()%>;  
+var customOverlay = new kakao.maps.CustomOverlay({
+    position: position,
+    content: content   
 });
 
+// 커스텀 오버레이를 지도에 표시합니다
+customOverlay.setMap(map);
 //마커가 지도 위에 표시되도록 설정합니다
 marker.setMap(map);
-
-
 
 </script>
 
