@@ -10,9 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import service.memberService.IMemberService;
+import service.memberService.MemberServiceImpl;
 import service.pboardService.IPboardService;
 import service.pboardService.PboardServiceImpl;
 import service.sboardService.ISboardService;
+import vo.MemberVO;
 import vo.PboardVO;
 
 @WebServlet("/pboardDetail.do")
@@ -27,11 +30,15 @@ public class PboardDetail extends HttpServlet {
 		
 		List<PboardVO> list = service.pboardSelect(pId);
 		
+		IMemberService mservice = MemberServiceImpl.getInstance();
+		MemberVO writer = mservice.selectMemberinfo(list.get(0).getMem_id());
+		
 //		request.setAttribute("list", list);
 		
 		HttpSession session = request.getSession();
 		
 		session.setAttribute("pbList", list);
+		session.setAttribute("writer", writer);
 //		session.setAttribute("pboardId", pId);
 		
 		response.sendRedirect(request.getContextPath() + "/pboard/pboardDetail.jsp");

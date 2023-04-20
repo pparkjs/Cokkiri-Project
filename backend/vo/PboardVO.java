@@ -12,7 +12,15 @@ public class PboardVO {
 	private String pboard_rdate;
 	private String pboard_addr;
 	private int pboard_fimg;
+	private MemberVO writer;
 	
+	
+	public MemberVO getWriter() {
+		return writer;
+	}
+	public void setWriter(MemberVO writer) {
+		this.writer = writer;
+	}
 	// 이미지 테이블의 컬럼 추가
 	private int pimg_id;
 	private String pimg_origin_name;

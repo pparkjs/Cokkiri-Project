@@ -10,7 +10,7 @@
 
 <% List<PboardVO> pbList = (List<PboardVO>)session.getAttribute("pbList"); %>
 <% MemberVO memVo = (MemberVO)session.getAttribute("memberVo"); %>
- 
+<% MemberVO writerVo = (MemberVO)session.getAttribute("writer"); %>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -92,14 +92,20 @@ function imageView(){
 	</div>
 	
 	
+<% 
+String profilesrc="../images/기본프로필.png";
 
+if(writerVo.getMem_image()!=null){
+    profilesrc=request.getContextPath()+"/profileImageView.do?mem_id="+writerVo.getMem_id();
+}
+%>
 
 <div class="main_body">
 	<div class="feed_box">
 		<div class="feed_name">
 			<div class="profile_box">
 				<img class="profile_img"
-					src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHYYkHVAza2xsjRZ977X0TE-LGNLaFM9uY0A&usqp=CAU">
+					src="<%=profilesrc%>">
 			</div>
 			<span class="feed_name_txt"><%=pbList.get(0).getMem_id()%> </span>
 			<p class="m_date"><%= pbList.get(0).getPboard_cdate() %></p>

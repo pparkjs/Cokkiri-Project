@@ -231,7 +231,14 @@ function notifyCheckView(mr){
 				src=`../images/default.PNG`	
 				if(typeof v.pboard_fimg!="undefined"&& v.pboard_fimg!=null&&v.pboard_fimg!=""){
 					src=`${mypath}/Pimage.do?imgno=`+v.pboard_fimg;
-				}			
+				}
+				
+				profilesrc="../images/기본프로필.png";
+				
+				if(typeof v.writer.mem_image!="undefined"&& v.writer.mem_image!=null&&v.writer.mem_image!=""){
+				    profilesrc=`${mypath}/profileImageView.do?mem_id=`+v.writer.mem_id;
+				}
+				      					
 			    feed += ` <div class="feedbox">
 			 				<div class="f_img">
 								<img class="feed_img" src="${src}">
@@ -239,7 +246,7 @@ function notifyCheckView(mr){
 							<div class="feed_main">
 								<div class="innerbox">
 									<div class="top">
-										<img class="profile" src="${mypath}/images/프로필-40px.png">
+										<img class="profile" src="${profilesrc}">
 										<p class="writer" id="${v.mem_id}">${v.mem_id}</p>
 										<p class="date">${v.pboard_cdate}</p>
 									</div>
