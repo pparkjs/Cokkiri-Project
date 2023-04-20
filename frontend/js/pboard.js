@@ -2,6 +2,9 @@
  * 
  */
 
+
+
+
 //흘러간 시간대별 날짜 계산하기
  function elapsedTime(date) {
         const start = new Date(date);
@@ -204,6 +207,30 @@ function notifyCheckView(mr){
 }
 
 
+
+// 맵 위치 저장 
+function saveLocation(){
+	$.ajax({
+		url : `${mypath}/PboardWrite.do`,
+		type : 'get',
+		data : {"title" : title,
+				"content" : content,
+				"place" : place				
+		},
+		
+		success : function(res){
+			alert(res)
+			
+			
+		},
+		
+		error : function(xhr){
+			alert("상태 : " + xhr.status);
+		},
+		dataType : 'json'
+		
+	})
+}
 
 
 //게시글 리스트 가져오기

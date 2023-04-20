@@ -58,7 +58,7 @@ select A.* from
 				   #{pboard_title},
 				   #{pboard_content},
 				   0, 
-				   sysdate, null, null, null)
+				   sysdate, null, null, #{pboard_addr})
 </insert>
 
 <!-- 게시글 업데이트 -->

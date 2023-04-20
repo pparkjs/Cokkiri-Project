@@ -23,6 +23,7 @@ mypath = "<%=request.getContextPath() %>";
 fcnt = 1;
 
 	$(function() {
+	
 		
 		//제목 글자수 제한
 		$('#v1').on('keyup', function(){
@@ -45,13 +46,14 @@ fcnt = 1;
 			}
 		})
 		
-	
+		
+		
 
 		$('.upload_btn').on('click', function() {
 
 			title = $('#v1').val();
 			content = $('#v2').val();
-//  			address = $('#v3').val();
+	  		address = $('#v3').val();
 
 			econtent = content.replace(/\n/g, "<br>");
 
@@ -64,7 +66,22 @@ fcnt = 1;
  				alert("제목 또는 내용을 입력하세요.")
  			}
 		}) 
-			
+		
+		
+		$('#psearch').on('click', function(){
+			address = $('#v3').val();
+			test(address);
+			alert(address + "을 위치로 설정합니다 위치 저장을 눌러주세요 !")
+		})
+		
+		
+	
+		$('#saveBtn').on('click', function(){
+			alert("위치가 저장되었습니다 !")
+		})
+		
+	
+		
 		//파일 미리보기
 		$(document).on('change','.file', function(){
 	 		readURL(this);
@@ -142,11 +159,10 @@ fcnt = 1;
 			
  			<div class="place" > 
 				<div id="clickLatlng" style="border-bottom: 2px solid lightgray;"></div> 
- 					<div class="text" style="margin-top: 30px;">장소 검색 
-<!--  						<input type="text" id="v1" class="pb_searchplace" name=place placeholder=" 주소를 입력해주세요" style="width:300px; height:30px; ">  -->
-					</div>	 
-					<div> 
-						<input type="submit" class="saveBtn" value="위치 저장하기" style= "margin-left: 1020px; margin-bottom: 20px; border-radius:20px; width:100px; height:30px; background: white;">
+ 					<div class="text" style="margin-top: 30px; margin-bottom: 30px;">장소 검색 
+ 						<input type="text" id="v3" class="pb_searchplace" name=place placeholder=" 주소를 입력해주세요">
+ 						<img id="psearch" src="<%=request.getContextPath()%>/images/돋보기.png">  				 
+						<input type="button" class="saveBtn" value="위치 저장하기">
 					</div> 
 			<div id="map" style="width: 60%; height: 400px; margin-left : 300px;"></div> 
 			</div>	 
@@ -159,15 +175,96 @@ fcnt = 1;
 </div>
 
 
-<script>
- 		var container = document.getElementById('map');
- 		var options = {
- 			center: new kakao.maps.LatLng(36.350710442653956, 127.38473542742071),
- 			level: 5
- 		};
+ <script> 
+ 	
+	 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+ 	 mapOption = {
+	     center: new kakao.maps.LatLng(36.350536229269395, 127.3849643404652), // 지도의 중심좌표
+	     level: 3 // 지도의 확대 레벨
+	 };  
 
- 		var map = new kakao.maps.Map(container, options);
-</script>
+	 //지도를 생성  
+ 	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+ 	//주소-좌표 변환 객체 생성
+ 	var geocoder = new kakao.maps.services.Geocoder();
+
+	 //주소로 좌표를 검색
+ 	geocoder.addressSearch('대전 중구 계룡로 860-9', function(result, status) {
+			
+// 	 		console.log("y",result[0].y )
+// 			console.log("x",result[0].x )
+		 // 정상적으로 검색이 완료됐으면 
+	 	 if (status === kakao.maps.services.Status.OK) {
+		     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+		
+		     // 결과값으로 받은 위치를 마커로 표시
+		     var marker = new kakao.maps.Marker({
+		         map: map,
+		         position: coords
+		     });
+		
+		     // 인포윈도우로 장소에 대한 설명을 표시
+		     var infowindow = new kakao.maps.InfoWindow({
+		         content: '<div style="width:150px;text-align:center;padding:6px 0;">Here!</div>'
+		     });
+		     
+		     infowindow.open(map, marker);
+		
+		     // 지도의 중심을 결과값으로 받은 위치로 이동
+		     map.setCenter(coords);
+		 } 
+	 });    
+
+	 function test(addr){
+// 		 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+// 	 		mapOption = {
+// 	     center: new kakao.maps.LatLng(36.350536229269395, 127.3849643404652), // 지도의 중심좌표
+// 	     level: 3 // 지도의 확대 레벨
+// 		 };  
+
+// 		 //지도를 생성  
+	 	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	 	//주소-좌표 변환 객체 생성
+	 	var geocoder = new kakao.maps.services.Geocoder();
+
+		 //주소로 좌표를 검색
+	 	geocoder.addressSearch(addr, function(result, status) {
+
+			 // 정상적으로 검색이 완료됐으면 
+		 	 if (status === kakao.maps.services.Status.OK) {
+		
+			     var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			
+			     // 결과값으로 받은 위치를 마커로 표시
+			     var marker = new kakao.maps.Marker({
+			         map: map,
+			         position: coords
+			     });
+			
+			     // 인포윈도우로 장소에 대한 설명을 표시
+			     var infowindow = new kakao.maps.InfoWindow({
+			         content: '<div style="width:150px;text-align:center;padding:6px 0;">Here!</div>'
+			     });
+			     
+			     infowindow.open(map, marker);
+			
+			     // 지도의 중심을 결과값으로 받은 위치로 이동
+			     map.setCenter(coords);
+			 } 
+		 });  
+	 }
+ 
+ 
+// 	var container = document.getElementById('map'); 
+// 		var options = { 
+//  			center: new kakao.maps.LatLng(36.350458261169265, 127.38468962516492),
+//   			level: 3
+// 		}; 
+
+//  		var map = new kakao.maps.Map(container, options); 
+ </script> 
 
 
 
