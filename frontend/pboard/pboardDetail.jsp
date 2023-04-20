@@ -111,7 +111,7 @@ function imageView(){
 
 		<div class="feed_content">
 			<p class="feed_txt">
-				<b><%=pbList.get(0).getMem_id()%></b> <%=pbList.get(0).getPboard_content()%>
+				 <%=pbList.get(0).getPboard_content()%>
 			</p>
 		</div>
 		
